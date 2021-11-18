@@ -2,14 +2,20 @@ const express = require('express');
 const sequelize = require("./config/connection.js")
 const session = require("express-session");
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 
 const app = express();
+const socketServer = require('./controllers/socketServer');
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+socketServer(io);
 const PORT = process.env.PORT || 3001;
 
 const models = require('./models');
 const routes = require("./controllers");
 
-app.use(express.static("public"));
+app.use(express.static("/client/public"));
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
@@ -29,7 +35,7 @@ app.use(express.json());
 app.use(routes)
 
 sequelize.sync({ force: false }).then(function() {
-    app.listen(PORT, function() {
+    httpServer.listen(PORT, function() {
     console.log('App listening on PORT ' + PORT);
     });
 });
