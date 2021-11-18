@@ -2,7 +2,18 @@ import logo from "./logo.svg";
 import "./App.css";
 import React, {useState, useEffect} from "react";
 import Card from "./Card";
+import { io } from "socket.io-client";
 const axios = require("axios");
+const socket = io("http://localhost:3001",{
+  transports: ["websocket"],
+  extraHeaders: {
+    "my-custom-header": "1234"
+  }
+});
+
+socket.on('greeting', (greeting) => {
+  console.log(greeting);
+});
 
 function App() {
   const [data, setData] = React.useState(null);
