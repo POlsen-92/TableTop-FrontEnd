@@ -1,7 +1,51 @@
 const express = require("express");
 const router = express.Router();
-const { User, Note } = require("../../models");
+const { User } = require("../../models");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+router.post("/", async (req, res) => {
+  
+  try {
+
+    const { username, email, password } = req.body;
+
+    if (!(email && password && username)) {
+      res.status(400).send("All input is required");
+    }
+
+    const oldUser = await User.findOne({
+      where: {
+        email: email,
+      },
+    })
+
+    if (oldUser) {
+      return res.status(409).send("User Already Exist. Please Login");
+    }
+
+    const user = await User.create({
+      username,
+      password,
+      email: email.toLowerCase(),
+    })
+
+    const token = jwt.sign(
+      { id: user.id, email },
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: "2h",
+      }
+    );
+   
+    user.dataValues.token = token;
+    res.status(201).json(user);
+  } catch (err) {
+    console.log(err);
+  }
+ 
+});
 
 //get all users
 
@@ -20,105 +64,49 @@ router.get("/", (req, res) => {
     });
 });
 
-//create user
-
-router.post("/", (req, res) => {
-  User.create({
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email,
-  })
-    .then((newUser) => {
-      res.json(newUser);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err: "an error occurred" });
-    });
-});
-
 //log a user in
 
-router.post("/login", (req, res) => {
-  User.findOne({
-    where: {
-      email: req.body.email,
-    },
-  })
-    .then((foundUser) => {
-      if (!foundUser) {
-        return req.session.destroy(() => {
-          return res.status(401).json({ err: "invalid email or password" });
-        });
-      }
-      if (!req.body.password) {
-        return req.session.destroy(() => {
-          return res.status(401).json({ err: "invalid email or password" });
-        });
-      }
-      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-        req.session.user = {
-          id: foundUser.id,
-          email: foundUser.email,
-          username: foundUser.username,
-        };
-        return res.json({
-          id: foundUser.id,
-          username: foundUser.username,
-          email: foundUser.email,
-        });
-      } else {
-        return req.session.destroy(() => {
-          return res.status(401).json({ err: "invalid email or password" });
-        });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err: "an error occurred" });
+router.post("/login", async (req, res) => {
+
+  try {
+   
+    const { email, password } = req.body;
+   
+    if (!(email && password)) {
+      res.status(400).send("All input is required");
+    }
+ 
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
     });
-});
 
-//log out a user
+    if (user && (await bcrypt.compareSync(password, user.password))) {
+    
+      const token = jwt.sign(
+        { user_id: user.id, email },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
 
-router.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect("/");
-});
+      user.dataValues.token = token;
 
-//get a user and there associated notes
+      res.status(200).json(user);
+    } else {
+    res.status(400).send("Invalid Credentials");
+    }
+  } catch (err) {
+    console.log(err);
+  }
 
-router.get("/:id", (req, res) => {
-  User.findOne({
-    where: {
-      id: req.params.id,
-    },
-    include: [Note],
-  })
-    .then((data) => {
-      if (data) {
-        res.json(data);
-      } else {
-        res.status(404).json({ err: "no such user found!" });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err: "an error occurred" });
-    });
 });
 
 //delete a user
 
 router.delete("/:id", (req, res) => {
-  if (!req.session.user) {
-    return res.status(403).json({ err: "not logged in" });
-  }
-  User.findByPk(req.params.id)
-    .then((found) => {
-      if (found.id !== req.session.user.id) {
-        return res.status(403).json({ err: "not your account" });
-      }
       User.destroy({
         where: {
           id: req.params.id,
@@ -136,10 +124,7 @@ router.delete("/:id", (req, res) => {
           res.status(500).json({ err: "an error occurred" });
         });
     })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ err: "an error occurred" });
-    });
-});
+
+
 
 module.exports = router;
