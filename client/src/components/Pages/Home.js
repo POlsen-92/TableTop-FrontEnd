@@ -38,7 +38,7 @@ function Home({ handlePageChange }) {
                     Learn More
                 </button>
             </section>
-            <form className="col-4 my-5 py-5" id="login-form"
+            <form className="col-4 my-5 py-5 text-center" id="login-form"
                 onSubmit={handleLoginSubmit}
                 >
                 <h4>Login</h4>

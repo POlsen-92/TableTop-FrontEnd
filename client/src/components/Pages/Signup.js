@@ -25,7 +25,7 @@ function Signup() {
       };
 
     return (
-        <form className="my-5 py-5" id="signup-form"
+        <form className="my-5 py-5 text-center" id="signup-form"
         onSubmit={handleSignupSubmit}
         >
             <h4>Signup</h4>
