@@ -1,5 +1,4 @@
 // CSS and React
-import "./App.css";
 import React, { useState } from "react";
 
 // Components

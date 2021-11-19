@@ -11,7 +11,7 @@ function Profile({ handlePageChange,handleCampaignChange }) {
 
     return (
     <div className="container">
-        <div className="row">
+        <div className="row text-center">
             <section className="col-4" id="campaigns">
                 <h3>Your Campaigns</h3>
                 <div id="campaign-filters">
