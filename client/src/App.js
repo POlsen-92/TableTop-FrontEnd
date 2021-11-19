@@ -1,9 +1,8 @@
 // CSS and React
 import "./App.css";
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 
 // Components
-import Card from "./Card";
 import Navbar from "./components/Navbar";
 import Home from "./components/Pages/Home";
 import News from "./components/News";
@@ -27,29 +26,18 @@ socket.on('greeting', (greeting) => {
 });
 
 // Axios declaration
-const axios = require("axios");
+// const axios = require("axios"); // This code was used as a test in the beginning (we may use it later)
 
 function App() {
-  const [data, setData] = React.useState(null);
-  const [isLoading, setLoading] = useState(true);
-  const [userData, setUserData] = useState();
+  // const [data, setData] = React.useState(null); // This code was used as a test in the beginning (we may use it later)
+  // const [isLoading, setLoading] = useState(true); // This code was used as a test in the beginning (we may use it later)
+  // const [userData, setUserData] = useState(); // This code was used as a test in the beginning (we may use it later)
   const [page, setPage] = useState('home');
   const [campaign, setCampaign] = useState(-1);
 
   const handlePageChange = (page) => setPage(page);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
-
-  axios.get("/test").then((response) => setData(response.data.message));
-  useEffect(() => {
-    axios.get("/api/users").then((response) => {
-      setUserData(response.data);
-      setLoading(false);
-    });
-  }, []);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  
   switch(page){
     case "home": return (
       <div className="App">
@@ -92,6 +80,14 @@ function App() {
       <div className="App">
         <Navbar handlePageChange={handlePageChange}/>
         <Campaign campaignId={campaign}/>
+      </div>
+    );
+
+    default: return( 
+      <div className="App">
+        <Navbar handlePageChange={handlePageChange}/>
+        <Home handlePageChange={handlePageChange}/>
+        <News/>
       </div>
     );
   }
