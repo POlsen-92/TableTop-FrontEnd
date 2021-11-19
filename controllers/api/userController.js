@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { User, Campaign, Character } = require("../../models");
+const { User, Campaign, Character, Blog, Comment } = require("../../models");
 const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -55,11 +55,45 @@ router.get("/", (req, res) => {
     });
 });
 
-// FIND USER BY ID
+// FIND USER BY ID - ALL
+router.get('/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, {
+      include: [Campaign, Character, Blog, Comment],
+    });
+    if (!userData) {
+      res.status(404).json({ message: 'No User found with that id!' });
+      return;
+    }
+    res.status(200).json(userData);
+  } 
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// FIND USER BY ID - GAME
 router.get('/:id', async (req, res) => {
   try {
     const userData = await User.findByPk(req.params.id, {
       include: [Campaign, Character],
+    });
+    if (!userData) {
+      res.status(404).json({ message: 'No User found with that id!' });
+      return;
+    }
+    res.status(200).json(userData);
+  } 
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// FIND USER BY ID - COMMUNITY
+router.get('/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, {
+      include: [Blog, Comment],
     });
     if (!userData) {
       res.status(404).json({ message: 'No User found with that id!' });
