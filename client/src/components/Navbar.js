@@ -19,7 +19,7 @@ function Navbar({ handlePageChange, loggedIn, setLoggedIn }) {
                 {loggedIn ? <button className="btn col-2 text-center" id="profile-link"
                     onClick={()=> handlePageChange('profile')}>
                     Profile
-                </button> : ``}
+                </button> : ''}
                 <button className="btn col-2 text-center" id="community-link"
                     onClick={()=> handlePageChange('community')}>
                     Community

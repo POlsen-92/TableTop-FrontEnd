@@ -30,8 +30,8 @@ function Profile({ handlePageChange,handleCampaignChange }) {
                 </ul>
             </section>
             <section className="col-4" id="profile-info">
-                <img src={getUserInfo.image_content} alt={""}/>
-                <button className="btn">Change Profile Picture</button><br/>
+                <img src={getUserInfo.image_content} width="200" height="auto" alt={""}/>
+                <button onClick={()=> handlePageChange('avatar')} className="btn">Change Profile Picture</button><br/>
                 <h2>{getUserInfo.username}</h2>
                 <button className="btn">Change Username</button><br/>
                 <button className="btn">Change Email</button><br/>

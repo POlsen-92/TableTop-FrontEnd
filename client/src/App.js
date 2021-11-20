@@ -10,6 +10,7 @@ import About from "./components/Pages/About";
 import Community from "./components/Pages/Community"
 import Profile from "./components/Pages/Profile"
 import Campaign from "./components/Pages/Campaign"
+import Avatar from './components/Pages/Avatar'
 
 // Socket configuration
 import { io } from "socket.io-client";
@@ -73,6 +74,13 @@ function App() {
       <div className="App">
         <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
         <Campaign campaignId={campaign}/>
+      </div>
+    );
+
+    case "avatar": return (
+      <div className="App">
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
+        <Avatar handlePageChange={handlePageChange}/>
       </div>
     );
 

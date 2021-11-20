@@ -8,11 +8,15 @@ body {
   background-image: url("./tabletop-role-playing-flat-lay-background-colorful-rpg-dices-character-sheet-tabletop-role-playing-flat-lay-background-160021541.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  color: white !important; 
+  color: white !important;
+  
 }
 
 button {
   color: white !important;
+  background: black !important;
+  border-radius: 25px !important;
+  opacity: 0.6 !important;
 }
 
 code {

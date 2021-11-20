@@ -40,6 +40,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+// FIND USER BY ID - AND UPDATE
+router.put('/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id);
+    if (!userData) {
+      res.status(404).json({ message: 'No User found with that id!' });
+      return;
+    }
+    const updateUser = await User.update(req.body, {where: {id:req.params.id}})
+    res.status(200).json(updateUser);
+  } 
+  catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //get all users
 router.get("/", (req, res) => {
   User.findAll()
