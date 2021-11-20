@@ -2,7 +2,10 @@ import React from "react";
 
 
 function Profile({ handlePageChange,handleCampaignChange }) {
-
+    
+            const getUserInfo = JSON.parse(localStorage.getItem("token"))
+            console.log(getUserInfo)   
+    
     function goToCampaign (event) {
             const id = event.target.parentElement.getAttribute('data-id');
             handleCampaignChange(id); // function declared in app.js
@@ -27,8 +30,9 @@ function Profile({ handlePageChange,handleCampaignChange }) {
                 </ul>
             </section>
             <section className="col-4" id="profile-info">
-                <img alt={""}/>
+                <img src={getUserInfo.image_content} alt={""}/>
                 <button className="btn">Change Profile Picture</button><br/>
+                <h2>{getUserInfo.username}</h2>
                 <button className="btn">Change Username</button><br/>
                 <button className="btn">Change Email</button><br/>
                 <button className="btn">Notifications</button>

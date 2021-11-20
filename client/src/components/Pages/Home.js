@@ -1,7 +1,23 @@
 import React, {useState} from "react";
-function Home({ handlePageChange }) {
+import useToken from '../../useToken';
+
+async function loginUser(credentials) {
+    return fetch('http://localhost:3001/api/users/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+   }
+
+function Home({ handlePageChange, amLoggedIn }) {
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const { setToken } = useToken();
 
     const handleLoginInputChange = (e) => {
         const { target } = e;
@@ -15,11 +31,20 @@ function Home({ handlePageChange }) {
         }
       };
 
-      const handleLoginSubmit = (e) => {
+      const handleLoginSubmit = async (e) => {
         e.preventDefault();
         setPassword('');
         setEmail('');
+        const token = await loginUser({
+            email,
+            password
+          });
+          setToken(token);
+          amLoggedIn();
+        handlePageChange('profile')
       };
+
+     
 
     return (
     <div className="container" id="home-div">
@@ -65,4 +90,4 @@ function Home({ handlePageChange }) {
     );
   }
   
-  export default Home;
+   export default Home;

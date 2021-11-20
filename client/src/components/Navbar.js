@@ -1,17 +1,25 @@
 import React from "react";
-function Navbar({ handlePageChange }) {
+
+function Navbar({ handlePageChange, loggedIn, setLoggedIn }) {  
+
+    const logout = () => {
+        localStorage.removeItem("token")
+        setLoggedIn(false)
+        handlePageChange('home')
+    }
+
     return (
     <div className="container">
         <nav className="border row p-3 mb-5 mt-4 d-flex align-items-center" id="navbar">
             <h1 className="col-4 text-start ps-4"
-                onClick={()=> handlePageChange('home')}>
+                onClick={()=> handlePageChange('')}>
                 Table Top
             </h1>
             <div className="col-8 text-end">
-                <button className="btn col-2 text-center" id="profile-link"
+                {loggedIn ? <button className="btn col-2 text-center" id="profile-link"
                     onClick={()=> handlePageChange('profile')}>
                     Profile
-                </button>
+                </button> : ``}
                 <button className="btn col-2 text-center" id="community-link"
                     onClick={()=> handlePageChange('community')}>
                     Community
@@ -20,10 +28,13 @@ function Navbar({ handlePageChange }) {
                     onClick={()=> handlePageChange('about')}>
                     About
                 </button>
-                <button className="btn col-2 text-center"
+                {!loggedIn ? <button className="btn col-2 text-center"
                     onClick={()=> handlePageChange('signup')}>
                     Signup
-                </button>
+                </button> : <button className="btn col-2 text-center"
+                    onClick={()=> logout()}>
+                    Logout
+                </button>}
             </div>
         </nav>
     </div>

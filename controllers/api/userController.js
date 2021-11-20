@@ -8,7 +8,7 @@ require('dotenv').config();
 //Create New User
 router.post("/", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, image_content } = req.body;
     if (!(email && password && username)) {
       res.status(400).send("All input is required");
     }
@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
       username,
       password,
       email: email.toLowerCase(),
+      image_content,
     })
     const token = jwt.sign(
       { id: user.id, email },

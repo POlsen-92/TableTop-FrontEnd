@@ -5,6 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./tabletop-role-playing-flat-lay-background-colorful-rpg-dices-character-sheet-tabletop-role-playing-flat-lay-background-160021541.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white !important; 
+}
+
+button {
+  color: white !important;
 }
 
 code {

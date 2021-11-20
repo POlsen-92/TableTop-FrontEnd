@@ -1,8 +1,23 @@
 import React, {useState} from "react";
-function Signup() {
+import useToken from '../../useToken';
+
+async function createUser(credentials) {
+    return fetch('http://localhost:3001/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+   } 
+
+function Signup( {handlePageChange, amLoggedIn} ) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    
+    const { setToken } = useToken();
 
     const handleSignupInputChange = (e) => {
         const { target } = e;
@@ -18,10 +33,19 @@ function Signup() {
         }
       };
 
-      const handleSignupSubmit = (e) => {
+      const handleSignupSubmit = async (e) => {
         e.preventDefault();
         setPassword('');
         setEmail('');
+        const newUser = await createUser({
+            username,
+            email,
+            password,
+            "image_content": "https://avatars.dicebear.com/api/pixel-art/asdff.svg"
+        })
+        setToken(newUser)
+        amLoggedIn();
+        handlePageChange('profile')
       };
 
     return (
