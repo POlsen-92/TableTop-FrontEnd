@@ -10,6 +10,7 @@ import About from "./components/Pages/About";
 import Community from "./components/Pages/Community"
 import Profile from "./components/Pages/Profile"
 import Campaign from "./components/Pages/Campaign"
+import Avatar from './components/Pages/Avatar'
 
 // Socket configuration
 import { io } from "socket.io-client";
@@ -31,61 +32,62 @@ function App() {
   // const [data, setData] = React.useState(null); // This code was used as a test in the beginning (we may use it later)
   // const [isLoading, setLoading] = useState(true); // This code was used as a test in the beginning (we may use it later)
   // const [userData, setUserData] = useState(); // This code was used as a test in the beginning (we may use it later)
-  const [page, setPage] = useState('home');
+  const [page, setPage] = useState('');
   const [campaign, setCampaign] = useState(-1);
-
+  const [loggedIn, setLoggedIn] = useState(false)
+  const amLoggedIn = ()=> setLoggedIn(true);
   const handlePageChange = (page) => setPage(page);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
   
   switch(page){
-    case "home": return (
-      <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
-        <Home handlePageChange={handlePageChange}/>
-        <News/>
-      </div>
-    );
 
     case "signup": return (
       <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
-        <Signup handlePageChange={handlePageChange}/>
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
+        <Signup handlePageChange={handlePageChange} amLoggedIn={amLoggedIn}/>
         <News/>
       </div>
     );
     
     case "about": return(
       <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
         <About/>
       </div>
     );
 
     case "community": return (
       <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
         <Community/>
       </div>
     );
 
     case "profile": return (
       <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
         <Profile handleCampaignChange={handleCampaignChange} handlePageChange={handlePageChange}/>
       </div>
     );
 
     case "campaign": return (
       <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
         <Campaign campaignId={campaign}/>
+      </div>
+    );
+
+    case "avatar": return (
+      <div className="App">
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
+        <Avatar handlePageChange={handlePageChange}/>
       </div>
     );
 
     default: return( 
       <div className="App">
-        <Navbar handlePageChange={handlePageChange}/>
-        <Home handlePageChange={handlePageChange}/>
+        <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
+        <Home handlePageChange={handlePageChange} amLoggedIn={amLoggedIn}/>
         <News/>
       </div>
     );

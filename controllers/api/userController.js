@@ -8,7 +8,7 @@ require('dotenv').config();
 //Create New User
 router.post("/", async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, image_content } = req.body;
     if (!(email && password && username)) {
       res.status(400).send("All input is required");
     }
@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
       username,
       password,
       email: email.toLowerCase(),
+      image_content,
     })
     const token = jwt.sign(
       { id: user.id, email },
@@ -36,6 +37,22 @@ router.post("/", async (req, res) => {
     res.status(201).json(user);
   } catch (err) {
     console.log(err);
+  }
+});
+
+// FIND USER BY ID - AND UPDATE
+router.put('/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id);
+    if (!userData) {
+      res.status(404).json({ message: 'No User found with that id!' });
+      return;
+    }
+    const updateUser = await User.update(req.body, {where: {id:req.params.id}})
+    res.status(200).json(updateUser);
+  } 
+  catch (err) {
+    res.status(500).json(err);
   }
 });
 

@@ -14,11 +14,7 @@ const PORT = process.env.PORT || 3001;
 const models = require("./models");
 const routes = require("./controllers");
 
-const corsOptions = {
-  origin: "http://localhost:3000",
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.static("/client/public"));
 
