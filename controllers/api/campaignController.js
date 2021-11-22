@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, User, Comment} = require('../../models');
+const { Blog, User, Comment, Campaign, Character } = require('../../models');
 
 // The `http://localhost:3000/api/campaign` endpoint
 
@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     try {
       const campaignData = await Campaign.create({
         name: req.body.name,
-        gm_id: req.session.user.id,
+        gm_id: req.session.user.id, //TODO: Need to fix this to reflect token use rather than sessions
         user_id: [],  //Also not sure about this one
         description: req.body.description,
         picture: req.body.picture
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
 //READ CAMPAIGN
 router.get('/', async (req, res) => {
     try {
-      const campaignData = await Character.findAll({
+      const campaignData = await Campaign.findAll({
         include: [User, Character],
       });
       res.status(200).json(campaignData);
@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
 
   router.get('/:id', async (req, res) => {
     try {
-      const campaignData = await Character.findByPk(req.params.id, {
+      const campaignData = await Campaign.findByPk(req.params.id, {
         include: [User, Character],
       });
   
@@ -49,10 +49,10 @@ router.get('/', async (req, res) => {
     }
   });
 
-//UPDATE CAMPAIGN
+//UPDATE CAMPAIGN 
 router.put('/:id', async (req, res) => {
     try {
-      const campaignData = await Character.update(req.body, {
+      const campaignData = await Campaign.update(req.body, {
         where: {
           id: req.params.id,
         },
@@ -68,13 +68,13 @@ router.put('/:id', async (req, res) => {
   });
 
 
-//DELETE CAMPAIGN
+//DELETE CAMPAIGN 
 router.delete('/:id', async (req, res) => {
     try {
-      const campaignData = await Character.destroy({
+      const campaignData = await Campaign.destroy({
         where: {
           id: req.params.id,
-          user_id: req.session.user.id
+          user_id: req.session.user.id //TODO: Need to fix this to reflect token use rather than sessions
         },
       });
       if (!campaignData) {

@@ -1,5 +1,5 @@
 // CSS and React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -11,6 +11,7 @@ import Community from "./components/Pages/Community"
 import Profile from "./components/Pages/Profile"
 import Campaign from "./components/Pages/Campaign"
 import Avatar from './components/Pages/Avatar'
+import NewBlogPost from "./components/Pages/NewBlogPost";
 
 // Socket configuration
 import { io } from "socket.io-client";
@@ -39,6 +40,12 @@ function App() {
   const handlePageChange = (page) => setPage(page);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
   
+  useEffect(()=> {
+    const getUserInfo = JSON.parse(localStorage.getItem("token"))
+    if (getUserInfo) amLoggedIn();
+  })
+
+
   switch(page){
 
     case "signup": return (
@@ -59,7 +66,8 @@ function App() {
     case "community": return (
       <div className="App">
         <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
-        <Community/>
+        <Community />
+        <NewBlogPost handlePageChange={handlePageChange}/>
       </div>
     );
 
@@ -87,7 +95,7 @@ function App() {
     default: return( 
       <div className="App">
         <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
-        <Home handlePageChange={handlePageChange} amLoggedIn={amLoggedIn}/>
+        <Home handlePageChange={handlePageChange} amLoggedIn={amLoggedIn} loggedIn={loggedIn}/>
         <News/>
       </div>
     );

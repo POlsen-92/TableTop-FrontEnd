@@ -156,7 +156,7 @@ router.post("/login", async (req, res) => {
 // FIND A SINGLE USER USING LOGIN CREDENTIALS  
 router.get('/info', async (req, res) => {
   try {
-    const userData = await User.findByPk(req.session.user.id, {
+    const userData = await User.findByPk(req.session.user.id, { //TODO: Need to fix this to reflect token use rather than sessions
       include: [Campaign, Character]
     });
     if (!userData) {

@@ -4,19 +4,7 @@ const { Blog, User, Comment} = require('../../models');
 // The `http://localhost:3000/api/blogs` endpoint
 
 // create a new Blog  
-router.post('/', async (req, res) => {
-    try {
-      const blogData = await Blog.create({
-        name: req.body.name,
-        description: req.body.description,
-        user_id: req.session.user.id
-      })
-      res.status(200).json(blogData)
-    } catch(err) {
-        console.log(err);
-        res.status(400).json({ message: "an error occured", err: err });
-      };
-  });
+
 
 // find all Blogs. be sure to include its associated User and Comments
 router.get('/', async (req, res) => {
@@ -36,12 +24,12 @@ router.get('/:id', async (req, res) => {
     const blogData = await Blog.findByPk(req.params.id, {
       include: [User, Comment],
     });
-
+    
     if (!blogData) {
       res.status(404).json({ message: 'No Blog found with that id!' });
       return;
     }
-
+    
     res.status(200).json(blogData);
   } catch (err) {
     res.status(500).json(err);
@@ -85,5 +73,18 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.post('/:id', async (req, res) => {
+  try {
+      const blogData = await Blog.create({
+        title: req.body.title,
+        description: req.body.description,
+        UserId: req.params.id
+      })
+      res.status(200).json(blogData)
+    } catch(err) {
+        console.log(err);
+        res.status(400).json({ message: "an error occured", err: err });
+      };
+  });
 
 module.exports = router;
