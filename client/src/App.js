@@ -1,5 +1,5 @@
 // CSS and React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Components
 import Navbar from "./components/Navbar";
@@ -40,6 +40,12 @@ function App() {
   const handlePageChange = (page) => setPage(page);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
   
+  useEffect(()=> {
+    const getUserInfo = JSON.parse(localStorage.getItem("token"))
+    if (getUserInfo) amLoggedIn();
+  })
+
+
   switch(page){
 
     case "signup": return (
@@ -89,7 +95,7 @@ function App() {
     default: return( 
       <div className="App">
         <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
-        <Home handlePageChange={handlePageChange} amLoggedIn={amLoggedIn}/>
+        <Home handlePageChange={handlePageChange} amLoggedIn={amLoggedIn} loggedIn={loggedIn}/>
         <News/>
       </div>
     );
