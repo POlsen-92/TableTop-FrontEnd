@@ -16,22 +16,22 @@ function Navbar({ handlePageChange, loggedIn, setLoggedIn }) {
                 Table Top
             </h1>
             <div className="col-8 text-end">
-                {loggedIn ? <button className="btn col-2 text-center" id="profile-link"
+                {loggedIn ? <button className="btn col-2 text-center m-1" id="profile-link"
                     onClick={()=> handlePageChange('profile')}>
                     Profile
                 </button> : ''}
-                <button className="btn col-2 text-center" id="community-link"
+                <button className="btn col-2 text-center m-1" id="community-link"
                     onClick={()=> handlePageChange('community')}>
                     Community
                 </button>
-                <button className="btn col-2 text-center" id="about-link"
+                <button className="btn col-2 text-center m-1" id="about-link"
                     onClick={()=> handlePageChange('about')}>
                     About
                 </button>
-                {!loggedIn ? <button className="btn col-2 text-center"
+                {!loggedIn ? <button className="btn col-2 text-center m-1"
                     onClick={()=> handlePageChange('signup')}>
                     Signup
-                </button> : <button className="btn col-2 text-center"
+                </button> : <button className="btn col-2 text-center m-1"
                     onClick={()=> logout()}>
                     Logout
                 </button>}
