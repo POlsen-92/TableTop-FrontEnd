@@ -1,10 +1,24 @@
-import React from "react";
-
+import React, {useState} from "react";
+import CampaignFilters from "./../CampaignFilters";
 
 function Profile({ handlePageChange,handleCampaignChange }) {
-    
-            const getUserInfo = JSON.parse(localStorage.getItem("token"))
-            console.log(getUserInfo)   
+    console.log('everything shouldnt be breaking!!!!');
+    const userID = 14;
+    const camdata = [
+        {
+            name: "Book of Losers",
+            id:12,
+            gm_id:14
+        },
+        {
+            name: "Book of Winners",
+            id:13,
+            gm_id:19
+        }
+    ];
+
+    const getUserInfo = JSON.parse(localStorage.getItem("token"))
+    console.log(getUserInfo)   
     
     function goToCampaign (event) {
             const id = event.target.parentElement.getAttribute('data-id');
@@ -12,22 +26,42 @@ function Profile({ handlePageChange,handleCampaignChange }) {
             handlePageChange('campaign');
     }
 
+    const [campaignFilter,setCampaignFilter] = useState('all');
+    const [data, setData] = useState(camdata);
+    const [displayData,setDisplayData] = useState(camdata);
+    const handleCampaignFilterChange = (filter) => {
+        setCampaignFilter(filter);
+        const newArr = data.filter((campaign) => {
+            switch(filter){
+                case "gm":
+                    return campaign.gm_id === userID
+                case "player":
+                    return campaign.gm_id !== userID
+                case "all":
+                    return true;
+            }
+        });
+        setDisplayData(newArr);
+    }
+
     return (
     <div className="container">
         <div className="row text-center">
             <section className="col-4" id="campaigns">
                 <h3>Your Campaigns</h3>
-                <div id="campaign-filters">
-                    <button className="btn" id="gm-filter">GM Campaigns</button>
-                    <button className="btn" id="player-filter">Player Campaigns</button>
-                    <button className="btn" id="all-filter">All</button>
-                </div>
-                <ul id="campaign-list list-group-flush list-group">
-                    <li className="list-group-item list-group-item-action" id="example-campaign" data-id="5"
+                <CampaignFilters handleCampaignFilterChange={handleCampaignFilterChange}/>
+                {displayData.map((campaign) => {
+                        return (
+                            <li key={campaign.id} className="list-group-item list-group-item-action m-3" id="example-campaign"
+                                onClick={(event) => {goToCampaign(event)}}>
+                                <h4>{campaign.name}</h4>
+                            </li>
+                        )
+                })}
+                {/* <li key={campaign.id} className="list-group-item list-group-item-action" id="example-campaign"
                         onClick={(event) => {goToCampaign(event)}}>
-                        <h4>Book of Losers</h4>
-                    </li>
-                </ul>
+                        <h4>{campaign.name}</h4>
+                </li> */}
             </section>
             <section className="col-4" id="profile-info">
                 <img src={getUserInfo.image_content} width="200" height="auto" alt={""}/>
