@@ -58,28 +58,24 @@ function Profile({ handlePageChange,handleCampaignChange }) {
                             </li>
                         )
                 })}
-                {/* <li key={campaign.id} className="list-group-item list-group-item-action" id="example-campaign"
-                        onClick={(event) => {goToCampaign(event)}}>
-                        <h4>{campaign.name}</h4>
-                </li> */}
             </section>
             <section className="col-4" id="profile-info">
                 <img src={getUserInfo.image_content} width="200" height="auto" alt={""}/>
-                <button onClick={()=> handlePageChange('avatar')} className="btn">Change Profile Picture</button><br/>
                 <h2>{getUserInfo.username}</h2>
-                <button className="btn">Change Username</button><br/>
-                <button className="btn">Change Email</button><br/>
-                <button className="btn">Notifications</button>
+                <button onClick={()=> handlePageChange('avatar')} className="btn m-1">Change Profile Picture</button><br/>
+                <button className="btn m-1">Change Username</button><br/>
+                <button className="btn m-1">Change Email</button><br/>
+                <button className="btn m-1">Notifications</button>
             </section>
             <section className="col-4" id="character-presets">
             <h3>Your Campaigns</h3>
             <div id="preset-filters">
-                <input/>
-                <button className="btn" id="player-filter">Search</button>
-                <button className="btn" id="all-filter">Filters</button>
+                <input className="m-1"/>
+                <button className="btn m-1" id="player-filter">Search</button>
+                <button className="btn m-1" id="all-filter">Filters</button>
             </div>
             <ul id="presets-list list-group-flush list-group">
-                <li className="list-group-item list-group-item-action" id="example-preset"
+                <li className="list-group-item list-group-item-action m-3" id="example-preset"
                     onClick={() => handlePageChange('home')}>
                     <h4>Knight Rogue</h4>
                 </li>
