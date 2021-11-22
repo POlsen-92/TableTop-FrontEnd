@@ -12,7 +12,7 @@ async function loginUser(credentials) {
       .then(data => data.json())
    }
 
-function Home({ handlePageChange, amLoggedIn }) {
+function Home({ handlePageChange, loggedIn, amLoggedIn }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -63,6 +63,7 @@ function Home({ handlePageChange, amLoggedIn }) {
                     Learn More
                 </button>
             </section>
+            {!loggedIn ? 
             <form className="col-4 my-5 py-5 text-center" id="login-form"
                 onSubmit={handleLoginSubmit}
                 >
@@ -84,7 +85,7 @@ function Home({ handlePageChange, amLoggedIn }) {
                     />
                 <br/>
                 <button className="btn m-1" id="submit-login">Submit</button>
-            </form>
+            </form> : ''}
         </div>
     </div>
     );
