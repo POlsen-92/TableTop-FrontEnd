@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
     try {
       const characterData = await Character.create({
         name: req.body.name,
-        user_id: req.session.user.id,
+        user_id: req.session.user.id, //TODO: Need to fix this to reflect token use rather than sessions
         campaign_id: req.body.campaign.id, //not sure about this one
         race: req.body.race,
         class: req.body.class,
