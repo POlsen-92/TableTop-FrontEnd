@@ -11,6 +11,7 @@ import Community from "./components/Pages/Community"
 import Profile from "./components/Pages/Profile"
 import Campaign from "./components/Pages/Campaign"
 import Avatar from './components/Pages/Avatar'
+import NewBlogPost from "./components/Pages/NewBlogPost";
 
 // Socket configuration
 import { io } from "socket.io-client";
@@ -59,7 +60,8 @@ function App() {
     case "community": return (
       <div className="App">
         <Navbar handlePageChange={handlePageChange} setLoggedIn={setLoggedIn} loggedIn={loggedIn}/>
-        <Community/>
+        <Community />
+        <NewBlogPost handlePageChange={handlePageChange}/>
       </div>
     );
 
