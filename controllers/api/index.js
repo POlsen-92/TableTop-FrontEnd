@@ -5,7 +5,7 @@ const userRoutes = require("./userController");
 router.use("/users",userRoutes);
 
 const blogRoutes = require("./blogController");
-router.use("/blog",blogRoutes);
+router.use("/blogs",blogRoutes);
 
 const campaignRoutes = require("./campaignController");
 router.use("/campaigns",campaignRoutes);
