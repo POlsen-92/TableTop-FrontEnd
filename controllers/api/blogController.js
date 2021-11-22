@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
     const blogData = await Blog.findAll({
       include: [User, Comment],
     });
+    console.log("abnannananannana")
     res.status(200).json(blogData);
   } catch (err) {
     res.status(500).json(err);
