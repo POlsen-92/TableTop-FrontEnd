@@ -32,6 +32,14 @@ Campaign.hasMany(Character, {
 Character.belongsTo(Campaign, {
     foreignKey: 'campaign_id'
 })
+
+User.hasMany(Campaign, {
+    foreignKey: 'gm_id'
+})
+
+Campaign.belongsTo(User, {
+    foreignKey: 'gm_id'
+})
 // for the community page, Marco
 User.hasMany(Blog);
 

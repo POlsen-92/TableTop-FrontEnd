@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const { Blog, User, Comment, Campaign, Character } = require('../../models');
+const tokenAuth = require("../../middleware/tokenAuth");
 
-// The `http://localhost:3000/api/campaign` endpoint
+// The `http://localhost:3000/api/campaigns` endpoint
 
 //CREATE CAMPAIGN
-router.post('/', async (req, res) => {
+router.post('/', tokenAuth,  async (req, res) => {
     try {
       const campaignData = await Campaign.create({
         name: req.body.name,
-        gm_id: req.session.user.id, //TODO: Need to fix this to reflect token use rather than sessions
-        user_id: [],  //Also not sure about this one
+        gm_id: req.user.id, //TODO: Need to fix this to reflect token use rather than sessions
         description: req.body.description,
-        picture: req.body.picture
+        picture: ""
       })
       res.status(200).json(campaignData)
     } catch(err) {

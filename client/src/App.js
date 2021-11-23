@@ -209,6 +209,7 @@ function App() {
             handleCampaignChange={handleCampaignChange}
             handlePageChange={handlePageChange}
             userState={userState}
+            token={token}
           />
         </div>
       );
