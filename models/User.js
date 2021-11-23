@@ -30,7 +30,8 @@ User.init(
             },
         },
         image_content: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            default: 'https://avatars.dicebear.com/api/pixel-art/sdfsdfsdfsdfsdfs.svg'
         }
     },
     {

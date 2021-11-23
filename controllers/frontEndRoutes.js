@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const models = require("../models");
-const auth = require("../middleware/auth");
+const auth = require("../middleware/tokenAuth");
 
 router.get("/test", (req, res) => {
   res.json({ message: "Hello from server!" });

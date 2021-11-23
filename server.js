@@ -1,4 +1,5 @@
 const express = require("express");
+const allRoutes = require("./controllers");
 const sequelize = require("./config/connection.js");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -12,16 +13,20 @@ socketServer(io);
 const PORT = process.env.PORT || 3001;
 
 const models = require("./models");
-const routes = require("./controllers");
 
+//LOCAL
 app.use(cors());
 
-app.use(express.static("/client/public"));
+//DEPLOYED
+// app.use(cors({
+//     origin:["deployed URL"]
+// }))
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(routes);
+// Static directory
+app.use("/", allRoutes);
 
 sequelize.sync({ force: false }).then(function () {
   httpServer.listen(PORT, function () {
