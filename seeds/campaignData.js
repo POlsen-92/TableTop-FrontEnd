@@ -8,7 +8,7 @@ const seedCampaign = async () => {
         },
         {
           name: "the greats",
-          gm_id:4,
+          gm_id:1,
         },
       ]);
 };

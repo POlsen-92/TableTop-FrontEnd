@@ -14,13 +14,13 @@ const seedDatabase = async () => {
 
   await seedCampaign()
   console.log('\n----- CAMPAIGNS SEEDED -----\n');
-
+  
   await seedCharacter()
   console.log('\n----- CHARACTERS SEEDED -----\n');
-
+  
   await seedUserCampaign()
   console.log('\n----- USERCAMPAIGN SEEDED -----\n');
-
+  
   process.exit(0);
 };
 
