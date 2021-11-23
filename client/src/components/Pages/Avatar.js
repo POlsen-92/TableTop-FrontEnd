@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import API from "../../utils/API"
 
-function Avatar({handlePageChange}) {
+function Avatar(props) {
   const [imageURL, setImageURL] = useState("");
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -14,19 +15,10 @@ function Avatar({handlePageChange}) {
 
   const save = async (e) => {
     e.preventDefault();
-    const getUserInfo = JSON.parse(localStorage.getItem("token"))
-    getUserInfo.image_content=imageURL;
-    localStorage.setItem("token", JSON.stringify(getUserInfo));
-    await fetch(`http://localhost:3001/api/users/${getUserInfo.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(getUserInfo)
-      })
-        .then(data => data.json())
-     
-    handlePageChange('profile')
+    props.setUserState.image_content=imageURL;
+    API.update({image_content:imageURL}, props.token).then((res)=>{
+      props.handlePageChange('profile')
+    })
   };
 
   return (

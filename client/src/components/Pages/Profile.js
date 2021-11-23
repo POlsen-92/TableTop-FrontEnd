@@ -1,14 +1,12 @@
 import React, {useState} from "react";
 import CampaignFilters from "./../CampaignFilters";
 
-function Profile({ handlePageChange,handleCampaignChange }) {
-    console.log('everything shouldnt be breaking!!!!');
-    const userID = 14;
+function Profile(props) {
     const camdata = [
         {
             name: "Book of Losers",
             id:12,
-            gm_id:14
+            gm_id:2
         },
         {
             name: "Book of Winners",
@@ -17,13 +15,10 @@ function Profile({ handlePageChange,handleCampaignChange }) {
         }
     ];
 
-    const getUserInfo = JSON.parse(localStorage.getItem("token"))
-    console.log(getUserInfo)   
-    
     function goToCampaign (event) {
             const id = event.target.parentElement.getAttribute('data-id');
-            handleCampaignChange(id); // function declared in app.js
-            handlePageChange('campaign');
+            props.handleCampaignChange(id); // function declared in app.js
+            props.handlePageChange('campaign');
     }
 
     const [campaignFilter,setCampaignFilter] = useState('all');
@@ -34,9 +29,9 @@ function Profile({ handlePageChange,handleCampaignChange }) {
         const newArr = data.filter((campaign) => {
             switch(filter){
                 case "gm":
-                    return campaign.gm_id === userID
+                    return campaign.gm_id === props.userState.userid
                 case "player":
-                    return campaign.gm_id !== userID
+                    return campaign.gm_id !== props.userState.userid
                 case "all":
                     return true;
             }
@@ -60,12 +55,12 @@ function Profile({ handlePageChange,handleCampaignChange }) {
                 })}
             </section>
             <section className="col-4" id="profile-info">
-                <img src={getUserInfo.image_content} width="200" height="auto" alt={""}/>
-                <h2>{getUserInfo.username}</h2>
-                <button onClick={()=> handlePageChange('avatar')} className="btn m-1">Change Profile Picture</button><br/>
-                <button className="btn m-1">Change Username</button><br/>
-                <button className="btn m-1">Change Email</button><br/>
-                <button className="btn m-1">Notifications</button>
+                <img src={props.userState.image_content} width="200" height="auto" alt={""}/>
+                <button onClick={()=> props.handlePageChange('avatar')} className="btn">Change Profile Picture</button><br/>
+                <h2>{props.userState.username}</h2>
+                <button className="btn">Change Username</button><br/>
+                <button className="btn">Change Email</button><br/>
+                <button className="btn">Notifications</button>
             </section>
             <section className="col-4" id="character-presets">
             <h3>Your Campaigns</h3>
@@ -75,8 +70,8 @@ function Profile({ handlePageChange,handleCampaignChange }) {
                 <button className="btn m-1" id="all-filter">Filters</button>
             </div>
             <ul id="presets-list list-group-flush list-group">
-                <li className="list-group-item list-group-item-action m-3" id="example-preset"
-                    onClick={() => handlePageChange('home')}>
+                <li className="list-group-item list-group-item-action" id="example-preset"
+                    onClick={() => props.handlePageChange('home')}>
                     <h4>Knight Rogue</h4>
                 </li>
             </ul>
