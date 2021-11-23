@@ -55,15 +55,15 @@ function Profile(props) {
                 })}
             </section>
             <section className="col-4" id="profile-info">
-                <img src={props.userState.image_content} width="200" height="auto" alt={""}/>
-                <button onClick={()=> props.handlePageChange('avatar')} className="btn">Change Profile Picture</button><br/>
                 <h2>{props.userState.username}</h2>
-                <button className="btn">Change Username</button><br/>
-                <button className="btn">Change Email</button><br/>
-                <button className="btn">Notifications</button>
+                <img src={props.userState.image_content} width="200" height="auto" alt={""} className="m-1"/> <br/>
+                <button onClick={()=> props.handlePageChange('avatar')} className="btn m-1">Change Profile Picture</button><br/>
+                <button className="btn m-1">Change Username</button><br/>
+                <button className="btn m-1">Change Email</button><br/>
+                <button className="btn m-1">Notifications</button>
             </section>
             <section className="col-4" id="character-presets">
-            <h3>Your Campaigns</h3>
+            <h3>Your Presets</h3>
             <div id="preset-filters">
                 <input className="m-1"/>
                 <button className="btn m-1" id="player-filter">Search</button>
