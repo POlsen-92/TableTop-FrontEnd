@@ -1,19 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import CampaignFilters from "./../CampaignFilters";
+import API from "../../utils/API"
 
 function Profile(props) {
-    const camdata = [
-        {
-            name: "Book of Losers",
-            id:12,
-            gm_id:2
-        },
-        {
-            name: "Book of Winners",
-            id:13,
-            gm_id:19
-        }
-    ];
+    console.log(props.userState.id);
 
     function goToCampaign (event) {
             const id = event.target.parentElement.getAttribute('data-id');
@@ -22,22 +12,47 @@ function Profile(props) {
     }
 
     const [campaignFilter,setCampaignFilter] = useState('all');
-    const [data, setData] = useState(camdata);
-    const [displayData,setDisplayData] = useState(camdata);
+    const [data, setData] = useState([]);
+    const [displayData,setDisplayData] = useState([]);
+
     const handleCampaignFilterChange = (filter) => {
         setCampaignFilter(filter);
         const newArr = data.filter((campaign) => {
             switch(filter){
                 case "gm":
-                    return campaign.gm_id === props.userState.userid
+                    return campaign.gm_id === props.userState.id
                 case "player":
-                    return campaign.gm_id !== props.userState.userid
+                    return campaign.gm_id !== props.userState.id
                 case "all":
                     return true;
             }
         });
         setDisplayData(newArr);
     }
+
+    const createCampaign = () => {
+        const createdCampaign = {
+            name: "Untitled Campaign",
+            description: "Insert description here",
+        }
+        API.createCampaign(createdCampaign,props.token).then((res) => {
+            console.log(res);
+            setData([...data, res.data]);
+            console.log("i created a campaign!");
+        })
+    }
+
+    useEffect(()=> {
+        API.findSelf(props.token).then((res)=>{
+            console.log(res);
+            setData(res.data.Campaigns)
+        });
+    },[])
+
+    useEffect(()=>{
+        console.log("i am code that ran!");
+        handleCampaignFilterChange(campaignFilter);
+    },[data])
 
     return (
     <div className="container">
@@ -53,6 +68,7 @@ function Profile(props) {
                             </li>
                         )
                 })}
+                <button onClick={()=>{createCampaign()}}>Create Campaign</button>
             </section>
             <section className="col-4" id="profile-info">
                 <h2>{props.userState.username}</h2>

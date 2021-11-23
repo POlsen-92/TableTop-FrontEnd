@@ -20,7 +20,17 @@ const API = {
         return axios.put(`${URL_PREFIX}/api/users/update`,usrData,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
-    }
+    },
+    createCampaign:(cmpgnData,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/campaigns`,cmpgnData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
+    findSelf:(tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/users`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
 }
 
 export default API;
