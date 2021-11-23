@@ -16,7 +16,7 @@ function Navbar(props) {
         <div className="col-8 text-end">
           {props.userState.email ? (
             <button
-              className="btn col-2 text-center"
+              className="btn col-2 text-center m-1"
               id="profile-link"
               onClick={() => props.handlePageChange("profile")}
             >
@@ -26,14 +26,14 @@ function Navbar(props) {
             ""
           )}
           <button
-            className="btn col-2 text-center"
+            className="btn col-2 text-center m-1"
             id="community-link"
             onClick={() => props.handlePageChange("community")}
           >
             Community
           </button>
           <button
-            className="btn col-2 text-center"
+            className="btn col-2 text-center m-1"
             id="about-link"
             onClick={() => props.handlePageChange("about")}
           >
@@ -41,14 +41,14 @@ function Navbar(props) {
           </button>
           {!props.userState.email ? (
             <button
-              className="btn col-2 text-center"
+              className="btn col-2 text-center m-1"
               onClick={() => props.handlePageChange("signup")}
             >
               Signup
             </button>
           ) : (
             <button
-              className="btn col-2 text-center"
+              className="btn col-2 text-center m-1"
               onClick={() => props.logout()}
             >
               Logout
