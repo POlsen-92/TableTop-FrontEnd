@@ -36,6 +36,11 @@ const API = {
             "Authorization": `Bearer ${tkn}`
           }})
     },
+    deleteBlogPost:(blogData,tkn)=>{
+        return axios.delete(`${URL_PREFIX}/api/blogs/${blogData}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
 }
 
 export default API;

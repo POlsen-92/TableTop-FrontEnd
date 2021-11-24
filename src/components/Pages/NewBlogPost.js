@@ -14,7 +14,7 @@ import API from "../../utils/API"
 //       .then(data => data.json())
 //    } 
 
-function NewBlogPost( {handlePageChange,token,userState} ) {
+function NewBlogPost( {token,userState} ) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
@@ -46,15 +46,15 @@ function NewBlogPost( {handlePageChange,token,userState} ) {
         setTitle('');
         setDescription('');
         createBlogPost();
-        handlePageChange('community');
       };
 
     return (
+        <>
         <form className="my-5 py-5 text-center" id="signup-form"
         onSubmit={handleBlogSubmit}
         >
             <h4>New post!</h4>
-            <input className="m-1" id="username-signup"
+            <input className="m-6" id="username-signup"
                 value={title}
                 name="title"
                 onChange={handleBlogInputChange}
@@ -72,6 +72,7 @@ function NewBlogPost( {handlePageChange,token,userState} ) {
             <br/>
             <button className="btn" id="signup-btn">Submit</button>
         </form>
+          </>
         // <Form onSubmit={handleBlogSubmit}>
         // <Form.Group className="mb-3" controlId="username-signup"  value={title} name="title" onChange={handleBlogInputChange}>
         //   <Form.Label>Post Title</Form.Label>
