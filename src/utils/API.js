@@ -43,14 +43,11 @@ const API = {
     },
     deleteBlogPost:(blogData,tkn)=>{
         return axios.delete(`${URL_PREFIX}/api/blog/${blogData}`,{headers:{
-<<<<<<< HEAD
             "Authorization": `Bearer ${tkn}`
           }})
     },
     findCampaign:(id,tkn)=>{
         return axios.get(`${URL_PREFIX}/api/campaign/${id}`,{headers:{
-=======
->>>>>>> dev
             "Authorization": `Bearer ${tkn}`
           }})
     },
