@@ -1,8 +1,48 @@
-import React from "react";
-import {Link} from 'react-router-dom'
-
+import React, { useState } from "react";
+import {Link, useNavigate } from 'react-router-dom'
+import API from "../../utils/API";
 
 function Home(props) {
+    const navigate = useNavigate();
+
+    const [loginFormState, setLoginFormState] = useState({
+        email: "",
+        password: "",
+      });
+
+    const handleLoginChange = (event) => {
+        if (event.target.name === "email") {
+          setLoginFormState({
+            ...loginFormState,
+            email: event.target.value,
+          });
+        } else {
+          setLoginFormState({
+            ...loginFormState,
+            password: event.target.value,
+          });
+        }
+      };
+    
+      const handleLoginSubmit = (e) => {
+        e.preventDefault();
+        API.login(loginFormState)
+          .then((res) => {
+            props.setErrorMsg("");
+            props.setUserState({
+              username: res.data.user.username,
+              email: res.data.user.email,
+              id: res.data.user.id,
+              image_content: res.data.user.image_content,
+            });
+            props.setToken(res.data.token);
+            localStorage.setItem("token", res.data.token);
+            navigate('/profile')
+          })
+          .catch((err) => {
+            props.setErrorMsg("Wrong email and/or password");
+          });
+      };
 
     return (
     <div className="container" id="home-div">
@@ -25,25 +65,26 @@ function Home(props) {
             </section>
             {!props.userState.email ? 
             <form className="col-4 my-5 py-5 text-center" id="login-form"
-                onSubmit={props.submit}
+                onSubmit={handleLoginSubmit}
                 >
                 <h4>Login</h4>
                 <input className="m-1" id="email-login"
-                    value={props.loginState.email}
+                    value={loginFormState.email}
                     name="email"
-                    onChange={props.change}
+                    onChange={handleLoginChange}
                     type="email"
                     placeholder="email"
                     />
                 <br/>
                 <input className="m-1" id="password-login"
-                    value={props.loginState.password}
+                    value={loginFormState.password}
                     name="password"
-                    onChange={props.change}
+                    onChange={handleLoginChange}
                     type="password"
                     placeholder="password"
                     />
                 <br/>
+                <p>{props.errorMsg}</p>
                 <button className="btn m-1" id="submit-login">Submit</button>
             </form> : ''}
         </div>

@@ -14,7 +14,8 @@ import Campaign from "./components/Pages/Campaign";
 import Avatar from "./components/Pages/Avatar";
 import NewBlogPost from "./components/Pages/NewBlogPost";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.css'
+import "bootstrap/dist/css/bootstrap.css";
+
 
 // Socket configuration
 // import { io } from "socket.io-client";
@@ -48,15 +49,7 @@ function App() {
 
   const [token, setToken] = useState("");
 
-  const [loginFormState, setLoginFormState] = useState({
-    email: "",
-    password: "",
-  });
-  const [signupFormState, setSignupFormState] = useState({
-    email: "",
-    password: "",
-    username: "",
-  });
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const myToken = localStorage.getItem("token");
@@ -79,124 +72,71 @@ function App() {
     }
   }, []);
 
-  const handleLoginChange = (event) => {
-    if (event.target.name === "email") {
-      setLoginFormState({
-        ...loginFormState,
-        email: event.target.value,
-      });
-    } else {
-      setLoginFormState({
-        ...loginFormState,
-        password: event.target.value,
-      });
-    }
-  };
-  const handleSignupChange = (event) => {
-    if (event.target.name === "email") {
-      setSignupFormState({
-        ...signupFormState,
-        email: event.target.value,
-      });
-    } else if (event.target.name === "password") {
-      setSignupFormState({
-        ...signupFormState,
-        password: event.target.value,
-      });
-    } else {
-      setSignupFormState({
-        ...signupFormState,
-        username: event.target.value,
-      });
-    }
-  };
-
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    API.login(loginFormState)
-      .then((res) => {
-        setUserState({
-          username: res.data.user.username,
-          email: res.data.user.email,
-          id: res.data.user.id,
-          image_content: res.data.user.image_content,
-        });
-        setToken(res.data.token);
-        localStorage.setItem("token", res.data.token);
-        handlePageChange("profile");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
-    API.signup(signupFormState).then((res) => {
-      API.login(signupFormState)
-        .then((res) => {
-          console.log(res.data);
-          setUserState({
-            email: res.data.user.email,
-            id: res.data.user.id,
-          });
-          setToken(res.data.token);
-          localStorage.setItem("token", res.data.token);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
-  };
-
-  const logMeOut = () => {
-    setUserState({ username: "", email: "", id: 0 });
-    setToken("");
-    localStorage.removeItem("token");
-  };
-
   return (
     <Router>
       <div className="App">
-    <NavBar userState={userState} logout={logMeOut}/>
-    <Routes>
-      <Route path="/" element={<Home
-      userState={userState}
-      submit={handleLoginSubmit}
-      change={handleLoginChange}
-      loginState={loginFormState}
-      />} />
-      <Route path="/profile" element={<Profile
-       handleCampaignChange={handleCampaignChange}
-       userState={userState}
-       token={token}
-       />} />
-      <Route path="/about" element={<About/>} />
-      <Route path="/signup" 
-      element={<Signup 
-            
-            submit={handleSignupSubmit}
-            change={handleSignupChange}
-            signupState={signupFormState}
-            /> } />
-      <Route path="/campaign" element={<Campaign
-           campaignId={campaign}
-            />} />
-      <Route path="/avatar" element={<Avatar
-      userState={userState}
-      token={token}
-      setUserState={setUserState}
-      />} />
-      <Route path="/community" element={<Community/>} />  
-      <Route path="/newblogpost" 
-      element={
-            <NewBlogPost 
-            
-            userState={userState}
-            token={token} 
-            />}/> 
-    </Routes>
-    <News />
-    </div>
+        <NavBar 
+        setUserState={setUserState}
+        setToken={setToken}
+        userState={userState} 
+        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                errorMsg={errorMsg}
+                setErrorMsg={setErrorMsg}
+                userState={userState}
+                setUserState={setUserState}
+                setToken={setToken}
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Profile
+                handleCampaignChange={handleCampaignChange}
+                userState={userState}
+                token={token}
+              />
+            }
+          />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/signup"
+            element={
+              <Signup
+                setUserState={setUserState}
+                setToken={setToken}
+                setErrorMsg={setErrorMsg}
+                errorMsg={errorMsg}
+              />
+            }
+          />
+          <Route
+            path="/campaign"
+            element={<Campaign campaignId={campaign} />}
+          />
+          <Route
+            path="/avatar"
+            element={
+              <Avatar
+                userState={userState}
+                token={token}
+                setUserState={setUserState}
+              />
+            }
+          />
+          <Route path="/community" element={<Community />} />
+          <Route
+            path="/newblogpost"
+            element={<NewBlogPost userState={userState} token={token} />}
+          />
+        </Routes>
+        <News />
+      </div>
     </Router>
   );
   // switch (page) {
@@ -209,10 +149,10 @@ function App() {
   //           logout={logMeOut}
   //         />
   //         <Signup
-            // handlePageChange={handlePageChange}
-            // submit={handleSignupSubmit}
-            // change={handleSignupChange}
-            // signupState={signupFormState}
+  // handlePageChange={handlePageChange}
+  // submit={handleSignupSubmit}
+  // change={handleSignupChange}
+  // signupState={signupFormState}
   //         />
   //         <News />
   //       </div>
@@ -239,10 +179,10 @@ function App() {
   //           logout={logMeOut}
   //         />
   //         <Community />
-  //         <NewBlogPost 
-          // handlePageChange={handlePageChange}
-          // userState={userState}
-          // token={token} />
+  //         <NewBlogPost
+  // handlePageChange={handlePageChange}
+  // userState={userState}
+  // token={token} />
   //       </div>
   //     );
 
@@ -255,10 +195,10 @@ function App() {
   //           logout={logMeOut}
   //         />
   //         <Profile
-            // handleCampaignChange={handleCampaignChange}
-            // handlePageChange={handlePageChange}
-            // userState={userState}
-            // token={token}
+  // handleCampaignChange={handleCampaignChange}
+  // handlePageChange={handlePageChange}
+  // userState={userState}
+  // token={token}
   //         />
   //       </div>
   //     );
@@ -271,7 +211,7 @@ function App() {
   //           userState={userState}
   //           logout={logMeOut}
   //         />
-          // <Campaign campaignId={campaign} />
+  // <Campaign campaignId={campaign} />
   //       </div>
   //     );
 
@@ -284,10 +224,10 @@ function App() {
   //           logout={logMeOut}
   //         />
   //         <Avatar
-            // userState={userState}
-            // token={token}
-            // handlePageChange={handlePageChange}
-            // setUserState={setUserState}
+  // userState={userState}
+  // token={token}
+  // handlePageChange={handlePageChange}
+  // setUserState={setUserState}
   //         />
   //       </div>
   //     );
@@ -301,11 +241,11 @@ function App() {
   //           logout={logMeOut}
   //         />
   //         <Home
-            // handlePageChange={handlePageChange}
-            // userState={userState}
-            // submit={handleLoginSubmit}
-            // change={handleLoginChange}
-            // loginState={loginFormState}
+  // handlePageChange={handlePageChange}
+  // userState={userState}
+  // submit={handleLoginSubmit}
+  // change={handleLoginChange}
+  // loginState={loginFormState}
   //         />
   //         <News />
   //       </div>
