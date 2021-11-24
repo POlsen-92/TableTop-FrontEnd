@@ -2,15 +2,11 @@ import React, {useEffect, useState} from "react";
 import CampaignFilters from "./../CampaignFilters";
 import API from "../../utils/API"
 import {Link} from 'react-router-dom'
+import "../style/Profile.css"
 
 function Profile(props) {
-    console.log(props.userState.id);
-
-    function goToCampaign (event) {
-            const id = event.target.parentElement.getAttribute('data-id');
-            props.handleCampaignChange(id); // function declared in app.js
-            props.handlePageChange('campaign');
-    }
+    console.log('====================');
+    console.log(props);
 
     const [campaignFilter,setCampaignFilter] = useState('all');
     const [data, setData] = useState([]);
@@ -26,6 +22,8 @@ function Profile(props) {
                     return campaign.gm_id !== props.userState.id
                 case "all":
                     return true;
+                default:
+                    return true;
             }
         });
         setDisplayData(newArr);
@@ -39,19 +37,26 @@ function Profile(props) {
         API.createCampaign(createdCampaign,props.token).then((res) => {
             console.log(res);
             setData([...data, res.data]);
-            console.log("i created a campaign!");
         })
     }
 
-    useEffect(()=> {
-        API.findSelf(props.token).then((res)=>{
+    const deleteCampaign = (dltCmpgnId) => {
+        console.log(dltCmpgnId);
+        API.deleteCampaign(dltCmpgnId,props.token).then((res)=>{
             console.log(res);
-            setData(res.data.Campaigns)
         });
-    },[])
+    }
 
+    useEffect(()=> {
+        console.log(props.token);
+        API.findSelf(props.token).then((res)=>{
+            setData(res.data.Campaigns)
+        }).catch((err) => {
+            console.log(err);
+        });
+    },[props.token])
+            
     useEffect(()=>{
-        console.log("i am code that ran!");
         handleCampaignFilterChange(campaignFilter);
     },[data])
 
@@ -63,11 +68,18 @@ function Profile(props) {
                 <CampaignFilters handleCampaignFilterChange={handleCampaignFilterChange}/>
                 {displayData.map((campaign) => {
                         return (
-                            <Link to="/campaign" state={campaign.id}>
-                                <li key={campaign.id} className="list-group-item list-group-item-action m-3" id="example-campaign">
-                                    <h4>{campaign.name}</h4>
+                            <div className="campaign-list-box">
+                            <Link to="/campaign" state={campaign.id} className="d-inline">
+                                <li key={campaign.id} className="list-group-item list-group-item-action m-3" id="example-campaign" data-id={campaign.id}>
+                                    <h4 className="d-inline">{campaign.name}</h4>
                                 </li>
                             </Link>
+                            <button data-id={campaign.id} className="campaign-dlt-btn btn-danger"
+                                onClick={(e)=> {
+                                    deleteCampaign(e.target.getAttribute('data-id'));
+                                }}
+                            >X</button>
+                            </div>
                         )
                 })}
                 <button onClick={()=>{createCampaign()}}>Create Campaign</button>

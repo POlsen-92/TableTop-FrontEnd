@@ -35,9 +35,7 @@ function App() {
   // const [data, setData] = React.useState(null); // This code was used as a test in the beginning (we may use it later)
   // const [isLoading, setLoading] = useState(true); // This code was used as a test in the beginning (we may use it later)
   // const [userData, setUserData] = useState(); // This code was used as a test in the beginning (we may use it later)
-  const [page, setPage] = useState("");
   const [campaign, setCampaign] = useState(-1);
-  const handlePageChange = (page) => setPage(page);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
 
   const [userState, setUserState] = useState({
@@ -117,7 +115,7 @@ function App() {
           />
           <Route
             path="/campaign"
-            element={<Campaign campaignId={campaign} />}
+            element={<Campaign token={token} userState={userState} campaignId={campaign} />}
           />
           <Route
             path="/avatar"

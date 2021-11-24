@@ -26,6 +26,11 @@ const API = {
             "Authorization": `Bearer ${tkn}`
           }})
     },
+    deleteCampaign:(cmpgnData,tkn)=>{
+        return axios.delete(`${URL_PREFIX}/api/campaigns/${cmpgnData}`,cmpgnData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
     findSelf:(tkn)=>{
         return axios.get(`${URL_PREFIX}/api/users`,{headers:{
             "Authorization": `Bearer ${tkn}`
