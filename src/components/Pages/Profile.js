@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import CampaignFilters from "./../CampaignFilters";
+import CampaignFilters from "../CampaignFilters";
 import API from "../../utils/API"
 import {Link} from 'react-router-dom'
 
