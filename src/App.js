@@ -51,7 +51,7 @@ function App() {
 
   useEffect(() => {
     const myToken = localStorage.getItem("token");
-
+    console.log("IM RUNNING!")
     if (myToken) {
       API.getProfile(myToken)
         .then((res) => {
@@ -68,7 +68,7 @@ function App() {
           localStorage.removeItem("token");
         });
     }
-  }, []);
+  },[]);
 
   return (
     <Router>
@@ -127,7 +127,7 @@ function App() {
               />
             }
           />
-          <Route path="/community" element={<Community />} />
+          <Route path="/community" element={<Community userState={userState} token={token}/>} />
           <Route
             path="/newblogpost"
             element={<NewBlogPost userState={userState} token={token} />}
