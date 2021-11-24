@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import API from "../../utils/API"
+import {Link, useNavigate} from 'react-router-dom'
 
 function Avatar(props) {
   const [imageURL, setImageURL] = useState("");
@@ -12,13 +13,13 @@ function Avatar(props) {
       `https://avatars.dicebear.com/api/${e.target[0].value}/${rando}.svg`
     );
   };
-
+  const navigate = useNavigate();
   const save = async (e) => {
     e.preventDefault();
     props.setUserState.image_content=imageURL;
     API.update({image_content:imageURL}, props.token).then((res)=>{
-      props.handlePageChange('profile')
-    })
+       
+    });
   };
 
   return (
@@ -44,9 +45,11 @@ function Avatar(props) {
           Rando
         </button>
       </form>
-      <button onClick={save} className="btn" id="start-now-btn">
+      <Link to="/profile">
+      <button onClick={save}  className="btn" id="start-now-btn">
         Save
       </button>
+      </Link>
       </section>
         </div>
     </div>

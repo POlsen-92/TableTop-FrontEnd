@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import API from "./utils/API";
 
 // Components
-import Navbar from "./components/Navbar";
+import NavBar from "./components/NavBar";
 import Home from "./components/Pages/Home";
 import News from "./components/News";
 import Signup from "./components/Pages/Signup";
@@ -13,6 +13,8 @@ import Profile from "./components/Pages/Profile";
 import Campaign from "./components/Pages/Campaign";
 import Avatar from "./components/Pages/Avatar";
 import NewBlogPost from "./components/Pages/NewBlogPost";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.css'
 
 // Socket configuration
 // import { io } from "socket.io-client";
@@ -150,118 +152,165 @@ function App() {
     setUserState({ username: "", email: "", id: 0 });
     setToken("");
     localStorage.removeItem("token");
-    handlePageChange("");
   };
 
-  switch (page) {
-    case "signup":
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <Signup
-            handlePageChange={handlePageChange}
+  return (
+    <Router>
+      <div className="App">
+    <NavBar userState={userState} logout={logMeOut}/>
+    <Routes>
+      <Route path="/" element={<Home
+      userState={userState}
+      submit={handleLoginSubmit}
+      change={handleLoginChange}
+      loginState={loginFormState}
+      />} />
+      <Route path="/profile" element={<Profile
+       handleCampaignChange={handleCampaignChange}
+       userState={userState}
+       token={token}
+       />} />
+      <Route path="/about" element={<About/>} />
+      <Route path="/signup" 
+      element={<Signup 
+            
             submit={handleSignupSubmit}
             change={handleSignupChange}
             signupState={signupFormState}
-          />
-          <News />
-        </div>
-      );
+            /> } />
+      <Route path="/campaign" element={<Campaign
+           campaignId={campaign}
+            />} />
+      <Route path="/avatar" element={<Avatar
+      userState={userState}
+      token={token}
+      setUserState={setUserState}
+      />} />
+      <Route path="/community" element={<Community/>} />  
+      <Route path="/newblogpost" 
+      element={
+            <NewBlogPost 
+            
+            userState={userState}
+            token={token} 
+            />}/> 
+    </Routes>
+    <News />
+    </div>
+    </Router>
+  );
+  // switch (page) {
+  //   case "signup":
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+  //         <Signup
+            // handlePageChange={handlePageChange}
+            // submit={handleSignupSubmit}
+            // change={handleSignupChange}
+            // signupState={signupFormState}
+  //         />
+  //         <News />
+  //       </div>
+  //     );
 
-    case "about":
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <About />
-        </div>
-      );
+  //   case "about":
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+  //         <About />
+  //       </div>
+  //     );
 
-    case "community":
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <Community />
-          <NewBlogPost handlePageChange={handlePageChange} />
-        </div>
-      );
+  //   case "community":
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+  //         <Community />
+  //         <NewBlogPost 
+          // handlePageChange={handlePageChange}
+          // userState={userState}
+          // token={token} />
+  //       </div>
+  //     );
 
-    case "profile":
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <Profile
-            handleCampaignChange={handleCampaignChange}
-            handlePageChange={handlePageChange}
-            userState={userState}
-            token={token}
-          />
-        </div>
-      );
+  //   case "profile":
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+  //         <Profile
+            // handleCampaignChange={handleCampaignChange}
+            // handlePageChange={handlePageChange}
+            // userState={userState}
+            // token={token}
+  //         />
+  //       </div>
+  //     );
 
-    case "campaign":
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <Campaign campaignId={campaign} />
-        </div>
-      );
+  //   case "campaign":
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+          // <Campaign campaignId={campaign} />
+  //       </div>
+  //     );
 
-    case "avatar":
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <Avatar
-            userState={userState}
-            token={token}
-            handlePageChange={handlePageChange}
-            setUserState={setUserState}
-          />
-        </div>
-      );
+  //   case "avatar":
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+  //         <Avatar
+            // userState={userState}
+            // token={token}
+            // handlePageChange={handlePageChange}
+            // setUserState={setUserState}
+  //         />
+  //       </div>
+  //     );
 
-    default:
-      return (
-        <div className="App">
-          <Navbar
-            handlePageChange={handlePageChange}
-            userState={userState}
-            logout={logMeOut}
-          />
-          <Home
-            handlePageChange={handlePageChange}
-            userState={userState}
-            submit={handleLoginSubmit}
-            change={handleLoginChange}
-            loginState={loginFormState}
-          />
-          <News />
-        </div>
-      );
-  }
+  //   default:
+  //     return (
+  //       <div className="App">
+  //         <Navbar
+  //           handlePageChange={handlePageChange}
+  //           userState={userState}
+  //           logout={logMeOut}
+  //         />
+  //         <Home
+            // handlePageChange={handlePageChange}
+            // userState={userState}
+            // submit={handleLoginSubmit}
+            // change={handleLoginChange}
+            // loginState={loginFormState}
+  //         />
+  //         <News />
+  //       </div>
+  //     );
+  // }
 }
 
 export default App;

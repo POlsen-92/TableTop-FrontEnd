@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import CampaignFilters from "./../CampaignFilters";
 import API from "../../utils/API"
+import {Link} from 'react-router-dom'
 
 function Profile(props) {
     console.log(props.userState.id);
@@ -73,7 +74,7 @@ function Profile(props) {
             <section className="col-4" id="profile-info">
                 <h2>{props.userState.username}</h2>
                 <img src={props.userState.image_content} width="200" height="auto" alt={""} className="m-1"/> <br/>
-                <button onClick={()=> props.handlePageChange('avatar')} className="btn m-1">Change Profile Picture</button><br/>
+                <Link to="/avatar"><button className="btn m-1">Change Profile Picture</button></Link><br/>
                 <button className="btn m-1">Change Username</button><br/>
                 <button className="btn m-1">Change Email</button><br/>
                 <button className="btn m-1">Notifications</button>
