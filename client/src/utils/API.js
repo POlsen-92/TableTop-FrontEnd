@@ -31,6 +31,11 @@ const API = {
             "Authorization": `Bearer ${tkn}`
           }})
     },
+    createNewBlogPost:(blogData,tkn,userId)=>{
+        return axios.post(`${URL_PREFIX}/api/blogs/${userId}`,blogData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
 }
 
 export default API;

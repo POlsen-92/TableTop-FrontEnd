@@ -1,23 +1,22 @@
 import React, {useState} from "react";
+import API from "../../utils/API"
 
+// async function createBlog(content) {
+//     const getUserInfo = await JSON.parse(localStorage.getItem("token"))
+//     console.log(getUserInfo)
+//     return fetch(`http://localhost:3001/api/blogs/${getUserInfo.id}`, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(content)
+//     })
+//       .then(data => data.json())
+//    } 
 
-async function createBlog(content) {
-    const getUserInfo = await JSON.parse(localStorage.getItem("token"))
-    console.log(getUserInfo)
-    return fetch(`http://localhost:3001/api/blogs/${getUserInfo.id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(content)
-    })
-      .then(data => data.json())
-   } 
-
-function NewBlogPost( {handlePageChange} ) {
+function NewBlogPost( {handlePageChange,token,userState} ) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [UserId, setUserId] = useState('');
 
     const handleBlogInputChange = (e) => {
         const { target } = e;
@@ -31,15 +30,23 @@ function NewBlogPost( {handlePageChange} ) {
         }
       };
 
+      const createBlogPost = () => {
+        const createdPost = {
+            title,
+            description,
+        }
+        API.createNewBlogPost(createdPost,token,userState.id).then((res) => {
+            console.log(res);
+            console.log("I created a Post!");
+        })
+    }
+
       const handleBlogSubmit = async (e) => {
         e.preventDefault();
         setTitle('');
         setDescription('');
-        const newBlog = await createBlog({
-            title,
-            description
-        })
-        handlePageChange('community')
+        createBlogPost();
+        handlePageChange('community');
       };
 
     return (
@@ -62,8 +69,22 @@ function NewBlogPost( {handlePageChange} ) {
                 type="text"
                 placeholder="description"
             />
+            <br/>
             <button className="btn" id="signup-btn">Submit</button>
         </form>
+        // <Form onSubmit={handleBlogSubmit}>
+        // <Form.Group className="mb-3" controlId="username-signup"  value={title} name="title" onChange={handleBlogInputChange}>
+        //   <Form.Label>Post Title</Form.Label>
+        //   <Form.Control type="text" placeholder="EX: Looking for a group!"/>
+        // </Form.Group>
+        // <Form.Group className="mb-3" controlId="email-signup" value={description} name="description" onChange={handleBlogInputChange}>
+        //   <Form.Label>Post content</Form.Label>
+        //   <Form.Control as="textarea" rows={3} />
+        // </Form.Group>
+        // <Button variant="primary" type="submit">
+        // Submit
+        // </Button>
+        // </Form>
     );
   }
   

@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 
 
 function Home(props) {
@@ -11,14 +12,16 @@ function Home(props) {
                     <h4 className="text-start">Quick catchy thing about our site</h4>
                     <p className="text-start"> Less quick explanation about our site and it will be saying something totally cool</p>
                 </div>
-                {!props.userState.email ? <button className="btn" id="start-now-btn"
-                    onClick={()=> props.handlePageChange('signup')}>
+                {!props.userState.email ? <Link to="/Signup"><button className="btn" id="start-now-btn">
                     Start Now
-                </button> : ''}
-                <button className="btn ms-3" id="learn-more-btn"
-                    onClick={()=> props.handlePageChange('about')}>
+                </button>
+                </Link>
+                 : ''}
+                 <Link to="/About">
+                <button className="btn ms-3" id="learn-more-btn">
                     Learn More
                 </button>
+                </Link>
             </section>
             {!props.userState.email ? 
             <form className="col-4 my-5 py-5 text-center" id="login-form"
