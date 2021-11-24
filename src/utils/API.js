@@ -27,7 +27,7 @@ const API = {
           }})
     },
     deleteCampaign:(cmpgnData,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/campaign/${cmpgnData}`,cmpgnData,{headers:{
+        return axios.delete(`${URL_PREFIX}/api/campaign/${cmpgnData}`,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
@@ -43,6 +43,11 @@ const API = {
     },
     deleteBlogPost:(blogData,tkn)=>{
         return axios.delete(`${URL_PREFIX}/api/blog/${blogData}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
+    findCampaign:(id,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/campaign/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },

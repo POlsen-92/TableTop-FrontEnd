@@ -41,10 +41,11 @@ function Profile(props) {
     }
 
     const deleteCampaign = (dltCmpgnId) => {
-        console.log(dltCmpgnId);
         API.deleteCampaign(dltCmpgnId,props.token).then((res)=>{
             console.log(res);
         });
+        const updatedData = data.filter((campaign)=> campaign.id !== Number(dltCmpgnId));
+        setData(updatedData);
     }
 
     useEffect(()=> {
@@ -69,7 +70,7 @@ function Profile(props) {
                 {displayData.map((campaign) => {
                         return (
                             <div className="campaign-list-box">
-                            <Link to="/campaign" state={campaign.id} className="d-inline">
+                            <Link to={{pathname:`/campaign/${campaign.id}`}} className="d-inline">
                                 <li key={campaign.id} className="list-group-item list-group-item-action m-3" id="example-campaign" data-id={campaign.id}>
                                     <h4 className="d-inline">{campaign.name}</h4>
                                 </li>

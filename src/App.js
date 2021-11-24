@@ -114,7 +114,7 @@ function App() {
             }
           />
           <Route
-            path="/campaign"
+            path="/campaign/:id"
             element={<Campaign token={token} userState={userState} campaignId={campaign} />}
           />
           <Route
