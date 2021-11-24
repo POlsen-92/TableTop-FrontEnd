@@ -7,6 +7,6 @@ function News() {
         </section>
     </div>
     );
-  }
-  
-  export default News;
+}
+
+export default News;
