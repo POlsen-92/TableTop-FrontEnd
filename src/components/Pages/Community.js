@@ -5,10 +5,10 @@ import API from "../../utils/API"
 
 function Community({token,userState}) {
     const [posts, setPosts] = useState([])
-    const [currentPost, setCurrentPost] = useState()
+    
     console.log(posts);
     useEffect(()=>{
-        axios.get('http://localhost:3001/api/blogs/')
+        axios.get('http://localhost:3001/api/blog/')
         .then(res=> {
             console.log(res)
             setPosts(res.data)
