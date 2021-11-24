@@ -42,7 +42,7 @@ const API = {
           }})
     },
     deleteBlogPost:(blogData,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/blogs/${blogData}`,{headers:{
+        return axios.delete(`${URL_PREFIX}/api/blog/${blogData}`,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
