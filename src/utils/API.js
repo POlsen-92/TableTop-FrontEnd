@@ -6,38 +6,38 @@ const URL_PREFIX = "http://localhost:3001"
 
 const API = {
     getProfile: (tkn)=>{
-        return axios.get(`${URL_PREFIX}/api/users/profile`,{headers:{
+        return axios.get(`${URL_PREFIX}/api/user/profile`,{headers:{
         "Authorization": `Bearer ${tkn}`
       }})
     },
     login:(usrData)=>{
-        return  axios.post(`${URL_PREFIX}/api/users/login`,usrData)
+        return  axios.post(`${URL_PREFIX}/api/user/login`,usrData)
     },
     signup:(usrData)=>{
-        return  axios.post(`${URL_PREFIX}/api/users/signup`,usrData)
+        return  axios.post(`${URL_PREFIX}/api/user/signup`,usrData)
     },
     update:(usrData,tkn)=>{
-        return axios.put(`${URL_PREFIX}/api/users/update`,usrData,{headers:{
+        return axios.put(`${URL_PREFIX}/api/user/update`,usrData,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
     createCampaign:(cmpgnData,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/campaigns`,cmpgnData,{headers:{
+        return axios.post(`${URL_PREFIX}/api/campaign`,cmpgnData,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
     deleteCampaign:(cmpgnData,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/campaigns/${cmpgnData}`,cmpgnData,{headers:{
+        return axios.delete(`${URL_PREFIX}/api/campaign/${cmpgnData}`,cmpgnData,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
     findSelf:(tkn)=>{
-        return axios.get(`${URL_PREFIX}/api/users`,{headers:{
+        return axios.get(`${URL_PREFIX}/api/user`,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
     createNewBlogPost:(blogData,tkn,userId)=>{
-        return axios.post(`${URL_PREFIX}/api/blogs/${userId}`,blogData,{headers:{
+        return axios.post(`${URL_PREFIX}/api/blog/${userId}`,blogData,{headers:{
             "Authorization": `Bearer ${tkn}`
           }})
     },
