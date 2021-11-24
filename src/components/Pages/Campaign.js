@@ -1,6 +1,6 @@
 import React from "react";
-function Campaign({ campaignId }) {
-
+function Campaign(props) {
+    console.log(props)
     const gmID = 4;
     const userID = 3;
 

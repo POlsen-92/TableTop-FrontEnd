@@ -63,10 +63,11 @@ function Profile(props) {
                 <CampaignFilters handleCampaignFilterChange={handleCampaignFilterChange}/>
                 {displayData.map((campaign) => {
                         return (
-                            <li key={campaign.id} className="list-group-item list-group-item-action m-3" id="example-campaign"
-                                onClick={(event) => {goToCampaign(event)}}>
-                                <h4>{campaign.name}</h4>
-                            </li>
+                            <Link to="/campaign" state={campaign.id}>
+                                <li key={campaign.id} className="list-group-item list-group-item-action m-3" id="example-campaign">
+                                    <h4>{campaign.name}</h4>
+                                </li>
+                            </Link>
                         )
                 })}
                 <button onClick={()=>{createCampaign()}}>Create Campaign</button>
