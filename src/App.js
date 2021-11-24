@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import API from "./utils/API";
 
 // Components
-import NavBar from "./components/NavBar";
+import NavBar from "./components/Navbar";
 import Home from "./components/Pages/Home";
 import News from "./components/News";
 import Signup from "./components/Pages/Signup";
