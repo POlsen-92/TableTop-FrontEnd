@@ -28,6 +28,7 @@ function Home(props) {
         e.preventDefault();
         API.login(loginFormState)
           .then((res) => {
+            console.log(res);
             props.setErrorMsg("");
             props.setUserState({
               username: res.data.user.username,

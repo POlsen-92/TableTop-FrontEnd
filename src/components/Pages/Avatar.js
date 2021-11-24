@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import API from "../../utils/API"
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 function Avatar(props) {
   const [imageURL, setImageURL] = useState("");
@@ -13,7 +13,6 @@ function Avatar(props) {
       `https://avatars.dicebear.com/api/${e.target[0].value}/${rando}.svg`
     );
   };
-  const navigate = useNavigate();
   const save = async (e) => {
     e.preventDefault();
     props.setUserState.image_content=imageURL;
@@ -28,7 +27,7 @@ function Avatar(props) {
         <section className="col-12" id="campaigns">
     
       <h2>Dashboard</h2>
-      <img src={imageURL} width="200" height="auto" />
+      <img src={imageURL} width="200" height="auto" alt=""/>
       <form onSubmit={handleFormSubmit} className="form">
         <select name="type" id="type">
           <option value="pixel-art">Pixel Art</option>
