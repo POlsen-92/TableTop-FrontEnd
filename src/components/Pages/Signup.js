@@ -1,38 +1,90 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React, { useState} from "react";
+import {useNavigate} from 'react-router-dom'
+import API from "../../utils/API";
+
 
 export default function Signup(props) {
+    const navigate = useNavigate();
+    const [signupFormState, setSignupFormState] = useState({
+        email: "",
+        password: "",
+        username: "",
+      });
+
+    const handleSignupChange = (event) => {
+        if (event.target.name === "email") {
+          setSignupFormState({
+            ...signupFormState,
+            email: event.target.value,
+          });
+        } else if (event.target.name === "password") {
+          setSignupFormState({
+            ...signupFormState,
+            password: event.target.value,
+          });
+        } else {
+          setSignupFormState({
+            ...signupFormState,
+            username: event.target.value,
+          });
+        }
+      };
+
+
+    const handleSignupSubmit = (e) => {
+        e.preventDefault();
+        API.signup(signupFormState)
+          .then((res) => {
+            console.log(res)
+            API.login(signupFormState)
+              .then((res) => {
+                props.setUserState({
+                  email: res.data.user.email,
+                  id: res.data.user.id,
+                });
+                props.setToken(res.data.token);
+                localStorage.setItem("token", res.data.token);
+                navigate('/profile')
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((err) => {
+            props.setErrorMsg("User already exists please login");
+          });
+      };
+
     return (
         <form className="my-5 py-5 text-center" id="signup-form"
-        onSubmit={props.submit}
+        onSubmit={handleSignupSubmit}
         >
             <h4>Signup</h4>
             <input className="m-1" id="username-signup"
-                value={props.signupState.username}
+                value={signupFormState.username}
                 name="username"
-                onChange={props.change}
+                onChange={handleSignupChange}
                 placeholder="username"
             />
             <br/>
             <input className="m-1" id="email-signup"
-                value={props.signupState.email}
+                value={signupFormState.email}
                 name="email"
-                onChange={props.change}
+                onChange={handleSignupChange}
                 type="email"
                 placeholder="email"
             />
             <br/>
             <input className="m-1" id="password-signup"
-                value={props.signupState.password}
+                value={signupFormState.password}
                 name="password"
-                onChange={props.change}
+                onChange={handleSignupChange}
                 type="password"
                 placeholder="password"
             /><br/>
             
-            <Link to="/Profile">
+            <p>{props.errorMsg}</p>
             <button className="btn" id="signup-btn">Submit</button>
-            </Link>
             
         </form>
     );
