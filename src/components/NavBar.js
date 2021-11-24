@@ -3,6 +3,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Nav, Navbar} from 'react-bootstrap'
 
 function NavBar(props) {
+
+  const logMeOut = () => {
+    props.setUserState({ username: "", email: "", id: 0 });
+    props.setToken("");
+    localStorage.removeItem("token");
+  };
+
   return (
     // <div className="container">
     //   <nav
@@ -70,7 +77,6 @@ function NavBar(props) {
       <Navbar.Toggle/>
       <Navbar.Collapse>
         <Nav>
-        <Nav.Link href= '/'>Home</Nav.Link>
         <Nav.Link href= '/About'>About</Nav.Link>
         <Nav.Link href= '/Community'>Community</Nav.Link>
         {props.userState.email ? (
@@ -86,7 +92,7 @@ function NavBar(props) {
           ) : (
             <Nav.Link
               href="/"
-              onClick={() => props.logout()}>
+              onClick={() => logMeOut()}>
               Logout
             </Nav.Link>
           )}
