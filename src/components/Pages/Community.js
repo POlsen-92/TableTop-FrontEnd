@@ -41,7 +41,7 @@ function Community({token,userState}) {
                     )
             })}
         </ul>
-        {!userState.email ? (
+        {userState.email ? (
            <Link to="/NewBlogPost">
            <button>
              New Post!
