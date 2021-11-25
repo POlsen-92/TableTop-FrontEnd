@@ -71,6 +71,11 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
+    createUserCampaign:(campaign_id,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/usercampaign/${campaign_id}`,{},{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
 }
 
 export default API;

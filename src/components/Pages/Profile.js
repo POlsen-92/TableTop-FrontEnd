@@ -31,13 +31,17 @@ function Profile(props) {
     }
 
     const createCampaign = () => {
+        setCampaignFilter('all');
         const createdCampaign = {
             name: "Untitled Campaign",
             description: "Insert description here",
         }
         API.createCampaign(createdCampaign,props.token).then((res) => {
-            console.log(res);
+            console.log("res1", res);
             setData([...data, res.data]);
+            API.createUserCampaign(res.data.id,props.token).then((response)=>{
+                console.log("res2", response);
+            })
         })
     }
 
@@ -49,8 +53,19 @@ function Profile(props) {
         setData(updatedData);
     }
 
+    const acceptInvite = (campid,id) => {
+        API.createUserCampaign(campid,props.token).then((res)=> {
+            API.deleteInvite(id,props.token);
+        })
+    }
+
+    const declineInvite = () => {
+
+    }
+
     useEffect(()=> {
         API.findSelf(props.token).then((res)=>{
+            console.log(res);
             setData(res.data.Campaigns)
         }).catch((err) => {
             console.log(err);
@@ -63,7 +78,13 @@ function Profile(props) {
 
     useEffect(()=>{
         API.findSelf(props.token).then((res)=>{
-            setInvites(res.data.Invites)
+            let tempInvites = res.data.Invites;
+            for (let i = 0; i < tempInvites.length; i++) {
+                API.findCampaign(tempInvites[i].campaign_id,props.token).then((res)=> {
+                    tempInvites[i].campaign_name = res.data.name;
+                    setInvites(tempInvites)
+                });
+            }
         })
     },[])
 
@@ -120,8 +141,8 @@ function Profile(props) {
                         return (
                             <div className="campaign-list-box">
                                 <li className="list-group-item list-group-item-action m-3">You are invited to: {invite.campaign_name}</li>
-                                <button className="btn">Accept</button>
-                                <button className="btn">Decline</button>
+                                <button className="btn" onClick={(e) => acceptInvite(e.target.getAttribute('data-campid'),e.target.getAttribute('data-id'))} data-campid={invite.campaign_id} data-id={invite.id}>Accept</button>
+                                <button className="btn" onClick={() => declineInvite()}>Decline</button>
                             </div>
                         )
                 })}
