@@ -34,22 +34,27 @@ const API = {
     findSelf:(tkn)=>{
         return axios.get(`${URL_PREFIX}/api/user`,{headers:{
             "Authorization": `Bearer ${tkn}`
-          }})
+        }})
     },
     createNewBlogPost:(blogData,tkn,userId)=>{
         return axios.post(`${URL_PREFIX}/api/blog/${userId}`,blogData,{headers:{
             "Authorization": `Bearer ${tkn}`
-          }})
+        }})
     },
     deleteBlogPost:(blogData,tkn)=>{
         return axios.delete(`${URL_PREFIX}/api/blog/${blogData}`,{headers:{
             "Authorization": `Bearer ${tkn}`
-          }})
+        }})
     },
     findCampaign:(id,tkn)=>{
         return axios.get(`${URL_PREFIX}/api/campaign/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
-          }})
+        }})
+    },
+    updateCampaign:(id,update,tkn)=>{
+        return axios.put(`${URL_PREFIX}/api/campaign/${id}`,update,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
     },
 }
 
