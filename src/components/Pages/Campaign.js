@@ -13,6 +13,7 @@ function Campaign(props) {
     const [nameEdit,setNameEdit] = useState('');
     const [descEdit,setDescEdit] = useState('');
     const [invite,setInvite] = useState('');
+    const [users,setUsers] = useState([]);
 
     useEffect(() =>{
         API.findCampaign(id,props.token).then((res)=>{
@@ -22,6 +23,7 @@ function Campaign(props) {
             setNameEdit(res.data.name);
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
+            setUsers(res.data.Users);
         })
     },[])
 
@@ -60,9 +62,9 @@ function Campaign(props) {
                 <h2>GM</h2>
                 <h4>gm_username</h4>
                 <h2>Players</h2>
-                <h4>player1_username</h4>
-                <h4>userplayer2</h4>
-                <h4>someotherUser</h4>
+                {users.map((user)=>{
+                    return (<h4>{user.name}</h4>)
+                })}
             </div>
             <div className="border col-3 m-1 text-center">
                 <h2>Your Character(s)</h2>
