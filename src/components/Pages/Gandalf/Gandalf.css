@@ -1,0 +1,237 @@
+@keyframes floating {
+  to {
+    top: 33%;
+  }
+}
+body {
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  font-family: "Open Sans";
+}
+body h1 {
+  font-size: 2.5em;
+}
+
+.message {
+  position:relative;
+  top: 100%;
+  color: red;
+}
+.gandalf {
+  font-size: 1vw;
+  position: fixed;
+  width: 25em;
+  height: 25em;
+  margin: 0 auto;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: floating 1s infinite alternate ease-in-out;
+}
+.gandalf div {
+  position: absolute;
+}
+.gandalf::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25em;
+  height: 25em;
+  background-color: #1a2130;
+  border-radius: 50%;
+}
+.gandalf .fireball {
+  bottom: -0.625em;
+  left: 3.125em;
+  width: 18.75em;
+  height: 6.25em;
+  border-radius: 50%;
+  background: radial-gradient(#efac41, #de8531, #6c1305, black);
+  border: 0.313em solid #000;
+}
+.gandalf .skirt {
+  bottom: 3.125em;
+  left: 6.25em;
+  border-bottom: 14.375em solid #ededed;
+  border-left: 6.25em solid transparent;
+  border-right: 6.25em solid transparent;
+  filter: drop-shadow(0 0 0.375em #d4d4d4);
+}
+.gandalf .skirt::before {
+  content: "";
+  position: absolute;
+  background-color: #ededed;
+  width: 6.25em;
+  height: 1.313em;
+  top: 14.375em;
+  left: 0px;
+  border-bottom-right-radius: 180%;
+  border-bottom-left-radius: 100%;
+}
+.gandalf .skirt::after {
+  content: "";
+  position: absolute;
+  background-color: #ededed;
+  width: 6.25em;
+  height: 1.75em;
+  top: 14.375em;
+  left: -6.25em;
+  border-bottom-right-radius: 80%;
+  border-bottom-left-radius: 180%;
+}
+.gandalf .sleeves::before,
+.gandalf .sleeves::after {
+  content: "";
+  position: absolute;
+  border-bottom: 4.375em solid #ededed;
+  filter: drop-shadow(0 0 0.375em #d4d4d4);
+}
+.gandalf .sleeves::before {
+  top: 8.125em;
+  left: 11.938em;
+  border-left: 6.25em solid transparent;
+  border-right: 2.5em solid transparent;
+  transform: rotate(-34deg);
+}
+.gandalf .sleeves::after {
+  top: 7.938em;
+  left: 4.375em;
+  border-left: 2.5em solid transparent;
+  border-right: 6.25em solid transparent;
+  transform: rotate(41deg);
+}
+.gandalf .shoulders {
+  background-color: #ededed;
+  border-radius: 50%;
+  width: 6.25em;
+  height: 8.125em;
+  left: 9.375em;
+  top: 7.5em;
+}
+.gandalf .shoulders .hand {
+  width: 2.063em;
+  height: 1.625em;
+  border-radius: 50%;
+  background-color: #ffd8ad;
+  top: -0.375em;
+}
+.gandalf .shoulders .left {
+  left: -4.375em;
+  transform: rotate(-20deg);
+}
+.gandalf .shoulders .left::after {
+  content: "";
+  position: absolute;
+  background-color: #e6e6e6;
+  width: 11.625em;
+  height: 0.5em;
+  border-radius: 0.25em;
+  transform: rotate(-105deg);
+  transform-origin: bottom;
+  top: -4.5em;
+  left: -5.5em;
+}
+.gandalf .shoulders .right {
+  right: -4.375em;
+  transform: rotate(20deg);
+}
+.gandalf .shoulders .right::after {
+  content: "";
+  position: absolute;
+  background-color: #bf5507;
+  width: 15.625em;
+  height: 0.313em;
+  border-radius: 0.156em;
+  transform: rotate(-78deg);
+  transform-origin: left;
+  bottom: -6.25em;
+  left: 0;
+}
+.gandalf .head {
+  width: 5em;
+  height: 5.625em;
+  top: 5em;
+  left: 10em;
+  background-color: #ffd8ad;
+  border-radius: 50%;
+}
+.gandalf .head::before,
+.gandalf .head::after {
+  content: "";
+  position: absolute;
+  background-color: #000;
+}
+.gandalf .head::before {
+  width: 0.813em;
+  height: 0.313em;
+  border-radius: 0.188em;
+  top: 2.625em;
+  left: 1.375em;
+  transform: rotate(19deg);
+}
+.gandalf .head::after {
+  width: 0.813em;
+  height: 0.313em;
+  border-radius: 0.188em;
+  top: 2.625em;
+  right: 1.375em;
+  transform: rotate(-19deg);
+}
+.gandalf .head .hair {
+  width: 4.375em;
+  height: 1.875em;
+  background-color: #c2beb5;
+  border-radius: 50%;
+  top: 0px;
+  left: 0.313em;
+}
+.gandalf .head .hair::before,
+.gandalf .head .hair::after {
+  content: "";
+  position: absolute;
+  background-color: #c2beb5;
+  filter: drop-shadow(0.125em 0.313em 0 #aba599);
+}
+.gandalf .head .hair::before {
+  top: 0.813em;
+  left: -1em;
+  width: 1.563em;
+  height: 6.25em;
+  border-top-left-radius: 2.125em;
+  border-top-right-radius: 0.938em;
+  border-bottom-left-radius: 6.25em;
+  border-bottom-right-radius: 1.25em;
+  transform: rotate(8deg);
+}
+.gandalf .head .hair::after {
+  top: 0.813em;
+  right: -1em;
+  width: 1.563em;
+  height: 6.25em;
+  border-top-left-radius: 0.938em;
+  border-top-right-radius: 2.125em;
+  border-bottom-left-radius: 1.25em;
+  border-bottom-right-radius: 6.25em;
+  transform: rotate(-10deg);
+}
+.gandalf .head .beard {
+  top: 4em;
+  left: 0.313em;
+  border-top: 5em solid #c2beb5;
+  border-left: 2.188em solid transparent;
+  border-right: 2.188em solid transparent;
+  border-radius: 1.875em;
+  filter: drop-shadow(0.125em 0.313em 0 #aba599);
+}
+.gandalf .head .beard::before {
+  content: "";
+  position: absolute;
+  background-color: pink;
+  width: 1.25em;
+  height: 0.313em;
+  border-radius: 40%;
+  top: -4.375em;
+  left: -0.563em;
+}
