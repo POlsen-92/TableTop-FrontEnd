@@ -12,6 +12,7 @@ function Campaign(props) {
     const [edit,setEdit] = useState(false);
     const [nameEdit,setNameEdit] = useState('');
     const [descEdit,setDescEdit] = useState('');
+    const [invite,setInvite] = useState('');
 
     useEffect(() =>{
         API.findCampaign(id,props.token).then((res)=>{
@@ -34,6 +35,18 @@ function Campaign(props) {
         setCampaignDesc(descEdit);
         setEdit(false);
     }
+
+    const sendInvite = () => {
+        API.findUserByEmail(invite,props.token).then((res)=>{
+            const inviteObj = {
+                campaign_id: id,
+                user_id:res.data.id,
+                campaign_name: campaignName,
+            }
+            API.createInvite(inviteObj,props.token).then((res)=>console.log(res));
+        })
+    }
+
     return (
     <div className="container">
         {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
@@ -55,6 +68,10 @@ function Campaign(props) {
                 <h2>Your Character(s)</h2>
                 <h4>YourCharacterName</h4>
             </div>
+        </div>
+        <div className="row">
+            <input value={invite} onChange={(e)=>setInvite(e.target.value)}/>
+            <button className="btn m-1" onClick={()=>sendInvite()}>Invite User</button>
         </div>
     </div>
     );

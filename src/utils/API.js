@@ -56,6 +56,21 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
+    createInvite:(invite,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/invite/`, invite,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    deleteInvite:(id,tkn)=>{
+        return axios.delete(`${URL_PREFIX}/api/invite/${id}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    findUserByEmail:(email,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/user/${email}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
 }
 
 export default API;

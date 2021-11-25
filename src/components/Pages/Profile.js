@@ -11,6 +11,7 @@ function Profile(props) {
     const [campaignFilter,setCampaignFilter] = useState('all');
     const [data, setData] = useState([]);
     const [displayData,setDisplayData] = useState([]);
+    const [invites,setInvites] = useState([]);
 
     const handleCampaignFilterChange = (filter) => {
         setCampaignFilter(filter);
@@ -49,7 +50,6 @@ function Profile(props) {
     }
 
     useEffect(()=> {
-        console.log(props.token);
         API.findSelf(props.token).then((res)=>{
             setData(res.data.Campaigns)
         }).catch((err) => {
@@ -60,6 +60,12 @@ function Profile(props) {
     useEffect(()=>{
         handleCampaignFilterChange(campaignFilter);
     },[data])
+
+    useEffect(()=>{
+        API.findSelf(props.token).then((res)=>{
+            setInvites(res.data.Invites)
+        })
+    },[])
 
     return (
     <div className="container">
@@ -107,6 +113,19 @@ function Profile(props) {
                 </li>
             </ul>
             </section>
+        </div>
+        <div className="row">
+            <ul className="presets-list list-group-flush list-group">
+            {invites.map((invite) => {
+                        return (
+                            <div className="campaign-list-box">
+                                <li className="list-group-item list-group-item-action m-3">You are invited to: {invite.campaign_name}</li>
+                                <button className="btn">Accept</button>
+                                <button className="btn">Decline</button>
+                            </div>
+                        )
+                })}
+            </ul>
         </div>
     </div>
     );
