@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {Link, useNavigate } from 'react-router-dom'
 import API from "../../utils/API";
+import Gandalf from "./Gandalf/Gandalf"
 
 function Home(props) {
     const navigate = useNavigate();
@@ -57,7 +58,7 @@ function Home(props) {
                     Start Now
                 </button>
                 </Link>
-                 : ''}
+                 : null}
                  <Link to="/About">
                 <button className="btn ms-3" id="learn-more-btn">
                     Learn More
@@ -66,8 +67,9 @@ function Home(props) {
             </section>
             {!props.userState.email ? 
             <form className="col-4 my-5 py-5 text-center" id="login-form"
-                onSubmit={handleLoginSubmit}
-                >
+            onSubmit={handleLoginSubmit}
+            >
+              {props.errorMsg?<Gandalf/>:null}
                 <h4>Login</h4>
                 <input className="m-1" id="email-login"
                     value={loginFormState.email}
@@ -87,7 +89,7 @@ function Home(props) {
                 <br/>
                 <p>{props.errorMsg}</p>
                 <button className="btn m-1" id="submit-login">Submit</button>
-            </form> : ''}
+            </form> : null}
         </div>
     </div>
     );
