@@ -5,49 +5,47 @@ const URL_PREFIX = "http://localhost:3001"
 // const URL_PREFIX = "https://reactauthdemo-back.herokuapp.com"
 
 const API = {
-    getProfile: (tkn)=>{
-        return axios.get(`${URL_PREFIX}/api/user/profile`,{headers:{
-        "Authorization": `Bearer ${tkn}`
-      }})
-    },
-    login:(usrData)=>{
-        return  axios.post(`${URL_PREFIX}/api/user/login`,usrData)
-    },
+    // ~~~~~~~~~~~~~~~~~~~~~~~USER ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     signup:(usrData)=>{
         return  axios.post(`${URL_PREFIX}/api/user/signup`,usrData)
     },
-    update:(usrData,tkn)=>{
-        return axios.put(`${URL_PREFIX}/api/user/update`,usrData,{headers:{
-            "Authorization": `Bearer ${tkn}`
-          }})
-    },
-    createCampaign:(cmpgnData,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/campaign`,cmpgnData,{headers:{
-            "Authorization": `Bearer ${tkn}`
-          }})
-    },
-    deleteCampaign:(cmpgnData,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/campaign/${cmpgnData}`,{headers:{
-            "Authorization": `Bearer ${tkn}`
-          }})
+    login:(usrData)=>{
+        return  axios.post(`${URL_PREFIX}/api/user/login`,usrData)
     },
     findSelf:(tkn)=>{
         return axios.get(`${URL_PREFIX}/api/user`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    createNewBlogPost:(blogData,tkn,userId)=>{
-        return axios.post(`${URL_PREFIX}/api/blog/${userId}`,blogData,{headers:{
+    findUserByEmail:(email,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/user/email${email}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    deleteBlogPost:(blogData,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/blog/${blogData}`,{headers:{
+    getProfile: (tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/user/profile`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
+    },
+    update:(usrData,tkn)=>{
+        return axios.put(`${URL_PREFIX}/api/user/update`,usrData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
+    deleteUser:(tkn)=>{
+        return axios.delete(`${URL_PREFIX}/api/user`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
+
+    // ~~~~~~~~~~~~~~~~~~~~~CAMPAIGN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
+    createCampaign:(cmpgnData,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/campaign`,cmpgnData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
     },
     findCampaign:(id,tkn)=>{
-        return axios.get(`${URL_PREFIX}/api/campaign/${id}`,{headers:{
+        return axios.get(`${URL_PREFIX}/api/campaign/id${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
@@ -56,6 +54,30 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
+    deleteCampaign:(cmpgnData,tkn)=>{
+        return axios.delete(`${URL_PREFIX}/api/campaign/${cmpgnData}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
+
+    // ~~~~~~~~~~~~~~~~~~~~~USERCAMPAIGN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
+    createUserCampaign:(campaign_id,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/usercampaign/${campaign_id}`,{},{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    gmDelUserCampaign:(campaign_id,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`,{},{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    userDelUserCampaign:(campaign_id,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`,{},{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~INVITE ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
     createInvite:(invite,tkn)=>{
         return axios.post(`${URL_PREFIX}/api/invite/`, invite,{headers:{
             "Authorization": `Bearer ${tkn}`
@@ -66,13 +88,73 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    findUserByEmail:(email,tkn)=>{
-        return axios.get(`${URL_PREFIX}/api/user/${email}`,{headers:{
+
+    // ~~~~~~~~~~~~~~~~~~~~~CHARACTER ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
+    createCharacter: (charData,campaign_id,tkn) => {
+        return axios.post(`${URL_PREFIX}/api/character/camp${campaign_id}`, charData, {headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    createUserCampaign:(campaign_id,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/usercampaign/${campaign_id}`,{},{headers:{
+    updateCharacter: (charData,id,tkn) => {
+        return axios.put(`${URL_PREFIX}/api/character/update${id}`, charData, {headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    deleteCharacter: (charData,id,tkn) => {
+        return axios.delete(`${URL_PREFIX}/api/character/${id}`, charData, {headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+
+    // ~~~~~~~~~~~~~~~~~~~~~INVENTORY ROUTES~~~~~~~~~~~~~~~~~~~~~~~~// 
+    // TODO: BACK END ROUTES HAVEN'T BEEN COMPLETED
+    // createInventory: (inventData,tkn) => {
+    //     return axios.post(`${URL_PREFIX}/api/inventory`, {headers:{
+    //         "Authorization": `Bearer ${tkn}`
+    //     }})
+    // },
+    // updateInventory: (inventData,tkn) => {
+    //     return axios.put(`${URL_PREFIX}/api/inventory`, {headers:{
+    //         "Authorization": `Bearer ${tkn}`
+    //     }})
+    // },
+    // deleteInventory: (inventData,tkn) => {
+    //     return axios.delete(`${URL_PREFIX}/api/inventory`, {headers:{
+    //         "Authorization": `Bearer ${tkn}`
+    //     }})
+    // },
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~BLOG ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+    createNewBlogPost:(blogData,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/blog`,blogData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    updateBlogPost:(id,update,tkn)=>{
+        return axios.put(`${URL_PREFIX}/api/blog/${id}`,update,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    deleteBlogPost:(blogData,tkn)=>{
+        return axios.delete(`${URL_PREFIX}/api/blog/${blogData}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+
+    // ~~~~~~~~~~~~~~~~~~~~~COMMENT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
+        // TODO: BACK END ROUTES HAVEN'T BEEN COMPLETED
+    createComment: (commentData,tkn) => {
+        return axios.post(`${URL_PREFIX}/api/comment`, commentData,  {headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    updateComment: (id,commentData,tkn) => {
+        return axios.put(`${URL_PREFIX}/api/comment/${id}`, commentData, {headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    deleteComment: (id,commentData,tkn) => {
+        return axios.delete(`${URL_PREFIX}/api/comment/${id}`, commentData, {headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
