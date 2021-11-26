@@ -11,7 +11,6 @@ import About from "./components/Pages/About";
 import Community from "./components/Pages/Community";
 import Profile from "./components/Pages/Profile";
 import Campaign from "./components/Pages/Campaign";
-import Avatar from "./components/Pages/Avatar";
 import NewBlogPost from "./components/Pages/NewBlogPost";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
@@ -116,16 +115,6 @@ function App() {
           <Route
             path="/campaign/:id"
             element={<Campaign token={token} userState={userState} campaignId={campaign} />}
-          />
-          <Route
-            path="/avatar"
-            element={
-              <Avatar
-                userState={userState}
-                token={token}
-                setUserState={setUserState}
-              />
-            }
           />
           <Route path="/community" element={<Community userState={userState} token={token}/>} />
           <Route
