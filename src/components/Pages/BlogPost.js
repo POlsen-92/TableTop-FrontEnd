@@ -90,6 +90,7 @@ function BlogPost(props) {
                 type="text"
                 placeholder="description"
             />
+            <button className="btn" id="signup-btn">Submit</button>
             </form>
        </div>
     </div>
