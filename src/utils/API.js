@@ -140,11 +140,16 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
+    findBlogPost:(id,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/blog/${id}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
 
     // ~~~~~~~~~~~~~~~~~~~~~COMMENT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
         // TODO: BACK END ROUTES HAVEN'T BEEN COMPLETED
-    createComment: (commentData,tkn) => {
-        return axios.post(`${URL_PREFIX}/api/comment`, commentData,  {headers:{
+    createComment: (id,commentData,tkn) => {
+        return axios.post(`${URL_PREFIX}/api/comment/${id}`, commentData,  {headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
@@ -153,8 +158,8 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    deleteComment: (id,commentData,tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/comment/${id}`, commentData, {headers:{
+    deleteComment: (id,tkn) => {
+        return axios.delete(`${URL_PREFIX}/api/comment/${id}`, {headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },

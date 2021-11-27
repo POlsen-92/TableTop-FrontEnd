@@ -34,10 +34,15 @@ function Community({token,userState}) {
             {
                 posts.map((post) => {
                      return ( 
+                        <Link
+                        to={{ pathname: `/BlogPost/${post.id}` }}
+                        className="d-inline"
+                      >
                          <div>
                      <li key={post.id}>{post.title}-{post.description}--{post.User.username}</li> 
                      <button onClick = {(e) =>{deleteBlogPost(e.target.getAttribute("data-id"))}} data-id={post.id} >yrrrr</button>
-                        </div>                      
+                        </div> 
+                        </Link>                     
                     )
             })}
         </ul>
