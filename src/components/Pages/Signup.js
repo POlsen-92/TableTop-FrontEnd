@@ -9,6 +9,7 @@ export default function Signup(props) {
         email: "",
         password: "",
         username: "",
+        confirmPassword: "",
       });
 
     const handleSignupChange = (event) => {
@@ -22,25 +23,37 @@ export default function Signup(props) {
             ...signupFormState,
             password: event.target.value,
           });
-        } else {
+        } else if(event.target.name === "username") {
           setSignupFormState({
             ...signupFormState,
             username: event.target.value,
           });
+        } else {
+          setSignupFormState({
+            ...signupFormState,
+            confirmPassword: event.target.value,
+          })
         }
       };
 
 
     const handleSignupSubmit = (e) => {
         e.preventDefault();
+        if (signupFormState.password !== signupFormState.confirmPassword) {
+          props.setErrorMsg("Passwords don't match")
+        } else if (signupFormState.password.length < 8) {
+          props.setErrorMsg("Password needs to be a least 8 characters");
+        } else {
         API.signup(signupFormState)
           .then((res) => {
-            console.log(res)
+            props.setErrorMsg("");
             API.login(signupFormState)
               .then((res) => {
                 props.setUserState({
+                  username: res.data.user.username,
                   email: res.data.user.email,
                   id: res.data.user.id,
+                  image_content: res.data.user.image_content
                 });
                 props.setToken(res.data.token);
                 localStorage.setItem("token", res.data.token);
@@ -53,7 +66,7 @@ export default function Signup(props) {
           .catch((err) => {
             props.setErrorMsg("User already exists please login");
           });
-      };
+      }};
 
     return (
         <form className="my-5 py-5 text-center" id="signup-form"
@@ -81,6 +94,13 @@ export default function Signup(props) {
                 onChange={handleSignupChange}
                 type="password"
                 placeholder="password"
+            /><br/>
+            <input className="m-1" id="confirmPassword-signup"
+                value={signupFormState.confirmPassword}
+                name="confirmPassword"
+                onChange={handleSignupChange}
+                type="password"
+                placeholder="confirm password"
             /><br/>
             
             <p>{props.errorMsg}</p>
