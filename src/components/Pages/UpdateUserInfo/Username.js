@@ -25,7 +25,6 @@ function Username(props) {
                 value={updateFormState}
                 name="username"
                 onChange={handleUpdateChange}
-                placeholder={props.userState.username}
             />
             <button className="btn" id="start-now-btn">
               Save
