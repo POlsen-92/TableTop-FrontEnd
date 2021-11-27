@@ -10,7 +10,7 @@ function BlogPost(props) {
     const [postTitle,setPostTitle] = useState('');
     const [postDescription,setPostDescription] = useState('');
     const [postComments,setPostComments] = useState([]);
-    const [commentDescription,setCommentDescription] = useState('');
+    const [description,setDescription] = useState('');
 
 
     useEffect(() =>{
@@ -24,22 +24,22 @@ function BlogPost(props) {
 
     const handleCommentInputChange = (e) => {
         const { target } = e;
-        const newcommentDescription = target.description;
-        setCommentDescription(newcommentDescription);
+        const newcommentDescription = target.value;
+        setDescription(newcommentDescription);
         }
 
         
     const handleCommentSubmit = async (e) => {
             e.preventDefault();
-            setCommentDescription('');
+            setDescription('');
             createComment();
           };
 
     const createComment = () => {
         const createdComment = {
-            commentDescription,
+             description,
         }
-        API.createComment(createdComment,props.token).then((res) => {
+        API.createComment(id,createdComment,props.token).then((res) => {
             console.log(res);
             console.log("I created a comment!");
         })
@@ -84,7 +84,7 @@ function BlogPost(props) {
        <h4>Reply to this thread!</h4>
        
             <input className="m-1" id="new-comment"
-                value={commentDescription}
+                value={description}
                 name="description"
                 onChange={handleCommentInputChange}
                 type="text"
