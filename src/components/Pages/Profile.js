@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import "../style/Profile.css";
 import Avatar from "./UpdateUserInfo/Avatar";
 import Username from "./UpdateUserInfo/Username"
+import Password from "./UpdateUserInfo/Password"
+import Email from "./UpdateUserInfo/Email"
 
 function Profile(props) {
   console.log("====================");
@@ -18,7 +20,10 @@ function Profile(props) {
   const [updatePic, setUpdatePic] = useState(false);
   const [username, setUsername] = useState("");
   const [updateUsername, setUpdateUsername] = useState(false);
-
+  const [updatePassword, setUpdatePassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [updateEmail, setUpdateEmail] = useState(false);
+  
   const handleCampaignFilterChange = (filter) => {
     setCampaignFilter(filter);
     const newArr = data.filter((campaign) => {
@@ -70,6 +75,11 @@ function Profile(props) {
   const declineInvite = () => {};
 
   useEffect(() => {
+    //this was causing an error if it tried before the token was filled so I added
+    //the if
+    if (!props.token) {
+      console.log('profile line 74 no token')
+    } else {
     API.findSelf(props.token)
       .then((res) => {
         console.log(res);
@@ -77,7 +87,7 @@ function Profile(props) {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}
   }, [props.token]);
 
   useEffect(() => {
@@ -85,6 +95,11 @@ function Profile(props) {
   }, [data]);
 
   useEffect(() => {
+    //this was causing an error if it tried before the token was filled so I added
+    //the if
+    if (!props.token) {
+      console.log('profile line 92 no token')
+    } else {
     API.findSelf(props.token).then((res) => {
       let tempInvites = res.data[0].Invites;
       for (let i = 0; i < tempInvites.length; i++) {
@@ -95,8 +110,8 @@ function Profile(props) {
           }
         );
       }
-    });
-  }, []);
+    });}
+  }, [props.token]);
 
   return (
     <div className="container">
@@ -144,6 +159,7 @@ function Profile(props) {
         </section>
         <section className="col-4" id="profile-info">
           <h2>{username ? username : props.userState.username}</h2>
+          <h2>{email ? email : props.userState.email}</h2>
           <img
             src={imageURL ? imageURL : props.userState.image_content}
             width="200"
@@ -177,9 +193,28 @@ function Profile(props) {
                 username={username}
                 setUsername={setUsername}
           />
-          ): null}
-          <button className="btn m-1">Change Email</button>
+          ): null}<button onClick={() => setUpdatePassword(!updatePassword)} className="btn m-1">Change Password</button>
           <br />
+          {updatePassword ? (
+            <Password
+                userState={props.userState}
+                setUserState={props.setUserState}
+                token={props.token}
+                setUpdatePassword={setUpdatePassword}
+                email={email}
+                setEmail = {setEmail}
+          />
+          ): null}
+          <button onClick={() => setUpdateEmail(!updateEmail)} className="btn m-1">Change Email</button>
+          <br />
+          {updateEmail ? (
+            <Email
+                userState={props.userState}
+                token={props.token}
+                setUpdateEmail={setUpdateEmail}
+                setEmail={setEmail}
+          />
+          ): null})
           <button className="btn m-1">Notifications</button>
         </section>
         <section className="col-4" id="character-presets">
