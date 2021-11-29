@@ -101,6 +101,7 @@ function Profile(props) {
       console.log('profile line 92 no token')
     } else {
     API.findSelf(props.token).then((res) => {
+      console.log(res);
       let tempInvites = res.data[0].Invites;
       for (let i = 0; i < tempInvites.length; i++) {
         API.findCampaign(tempInvites[i].campaign_id, props.token).then(
