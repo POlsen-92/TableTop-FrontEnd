@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import API from "./utils/API";
 
 // Components
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/Pages/Home";
 import News from "./components/News";
@@ -12,8 +14,7 @@ import Community from "./components/Pages/Community";
 import Profile from "./components/Pages/Profile";
 import Campaign from "./components/Pages/Campaign";
 import NewBlogPost from "./components/Pages/NewBlogPost";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.css";
+import Character from "./components/Pages/Character";
 import BlogPost from "./components/Pages/BlogPost";
 import Gameplay from "./components/Pages/Gameplay";
 
@@ -131,6 +132,10 @@ const tokenFromStor = localStorage.getItem("token")
           <Route
             path="/play/:id"
             element={<Gameplay userState={userState} token={token} />}
+          />
+          <Route
+            path="/createcharacter"
+            element={<Character userState={userState} token={token} />}
           />
         </Routes>
         <News />
