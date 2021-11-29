@@ -129,7 +129,7 @@ const tokenFromStor = localStorage.getItem("token")
             element={<NewBlogPost userState={userState} token={token} />}
           />
           <Route
-            path="/play"
+            path="/play/:id"
             element={<Gameplay userState={userState} token={token} />}
           />
         </Routes>
