@@ -8,22 +8,21 @@ function Character() {
 
     const [inputs, setInputs] = useState({
         charName: "",
+        pers: "",
         race: "",
+        subRace: "",
+        background: "",
         clas: "",
+        subClas: "",
+        feats: "",
         str: "",
         dex: "",
         cons: "",
         int: "",
         wis: "",
         char: "",
-        armor: "",
-        init: "",
         speed: "",
         hp: "",
-        tempHP: "",
-        atks: "",
-        pers: "",
-        feat: "",
     });
 
     const handleChange = (e) => {
@@ -58,11 +57,35 @@ function Character() {
                 onChange={handleChange}
                 />
             </label>
+            <label>SubRace
+                <input
+                type="text" 
+                name="subRace"
+                value={inputs.subRace || ""}
+                onChange={handleChange}
+                />
+            </label>
+            <label>Background
+                <input
+                type="text" 
+                name="background"
+                value={inputs.background || ""}
+                onChange={handleChange}
+                />
+            </label>
             <label>Class
                 <input
                 type="text" 
                 name="clas"
                 value={inputs.clas || ""}
+                onChange={handleChange}
+                />
+            </label>
+            <label>Class
+                <input
+                type="text" 
+                name="subClas"
+                value={inputs.subClas || ""}
                 onChange={handleChange}
                 />
             </label>
@@ -146,35 +169,11 @@ function Character() {
                 onChange={handleChange}
                 />
             </label>
-            <label>Temp HitPoints
-                <input
-                type="text" 
-                name="tempHP"
-                value={inputs.tempHP || ""}
-                onChange={handleChange}
-                />
-            </label>
-            <label>Attacks & SpellCasting
-                <input
-                type="text" 
-                name="atks"
-                value={inputs.atks || ""}
-                onChange={handleChange}
-                />
-            </label>
             <label>Personality/Ideals/Flaws
                 <input
                 type="text" 
                 name="pers"
                 value={inputs.pers || ""}
-                onChange={handleChange}
-                />
-            </label>
-            <label>Features/Traits
-                <input
-                type="text" 
-                name="feat"
-                value={inputs.feat || ""}
                 onChange={handleChange}
                 />
             </label>
