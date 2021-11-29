@@ -18,7 +18,7 @@ const API = {
         }})
     },
     findUserByEmail:(email,tkn)=>{
-        return axios.get(`${URL_PREFIX}/api/user/email/${email}`,{headers:{
+        return axios.get(`${URL_PREFIX}/api/user/email${email}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
