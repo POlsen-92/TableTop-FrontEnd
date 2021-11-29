@@ -16,6 +16,7 @@ function Campaign(props) {
     const [descEdit,setDescEdit] = useState('');
     const [invite,setInvite] = useState('');
     const [users,setUsers] = useState([]);
+    const [inviteMsg,setInviteMsg] = useState("");
 
     useEffect(() =>{
         API.findCampaign(id,props.token).then((res)=>{
@@ -44,9 +45,15 @@ function Campaign(props) {
         API.findUserByEmail(invite,props.token).then((res)=>{
             const inviteObj = {
                 campaign_id: id,
-                user_id:res.data[0].id,
+                user_id:res.data.id,
             }
-            API.createInvite(inviteObj,props.token).then((response)=>console.log("invite res", response));
+            API.createInvite(inviteObj,props.token).then((response)=>{
+                setInvite("");
+                setInviteMsg("Invite Sent");
+                setTimeout(() => {
+                    setInviteMsg("")
+                },5000);
+            });
         })
     }
 
@@ -72,10 +79,7 @@ function Campaign(props) {
                 <h4>YourCharacterName</h4>
             </div>
         </div>
-        <div className="row">
-            <input value={invite} onChange={(e)=>setInvite(e.target.value)}/>
-            <button className="btn m-1" onClick={()=>sendInvite()}>Invite User</button>
-        </div>
+        {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e)=>setInvite(e.target.value)}/><button className="btn m-1" onClick={()=>sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>): ""}
     </div>
     );
   }
