@@ -62,17 +62,17 @@ const API = {
 
     // ~~~~~~~~~~~~~~~~~~~~~USERCAMPAIGN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
     createUserCampaign:(campaign_id,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/usercampaign/${campaign_id}`,{},{headers:{
+        return axios.post(`${URL_PREFIX}/api/usercampaign/`,campaign_id,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
     gmDelUserCampaign:(campaign_id,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`,{},{headers:{
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
     userDelUserCampaign:(campaign_id,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`,{},{headers:{
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
