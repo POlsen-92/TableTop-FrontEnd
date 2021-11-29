@@ -15,6 +15,7 @@ import NewBlogPost from "./components/Pages/NewBlogPost";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import BlogPost from "./components/Pages/BlogPost";
+import Gameplay from "./components/Pages/Gameplay";
 
 
 // Socket configuration
@@ -125,6 +126,10 @@ function App() {
           <Route
             path="/newblogpost"
             element={<NewBlogPost userState={userState} token={token} />}
+          />
+          <Route
+            path="/play"
+            element={<Gameplay userState={userState} token={token} />}
           />
         </Routes>
         <News />

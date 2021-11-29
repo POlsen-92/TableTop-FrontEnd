@@ -42,12 +42,12 @@ function Campaign(props) {
 
     const sendInvite = () => {
         API.findUserByEmail(invite,props.token).then((res)=>{
+            console.log("email res", res);
             const inviteObj = {
                 campaign_id: id,
-                user_id:res.data.id,
-                campaign_name: campaignName,
+                user_id:res.data[0].id,
             }
-            API.createInvite(inviteObj,props.token).then((res)=>console.log(res));
+            API.createInvite(inviteObj,props.token).then((response)=>console.log("invite res", response));
         })
     }
 
