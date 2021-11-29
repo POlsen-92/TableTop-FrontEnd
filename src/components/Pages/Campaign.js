@@ -6,7 +6,7 @@ import API from "../../utils/API";
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
     console.log(props);
-
+    const navigate = useNavigate();
     const { id } = useParams();
 
     const [campaignName,setCampaignName] = useState('');
@@ -18,8 +18,6 @@ function Campaign(props) {
     const [invite,setInvite] = useState('');
     const [users,setUsers] = useState([]);
     const [inviteMsg,setInviteMsg] = useState("");
-
-    const navigate=useNavigate();
 
     useEffect(() =>{
         API.findCampaign(id,props.token).then((res)=>{
@@ -68,7 +66,12 @@ function Campaign(props) {
     <div className="container">
         {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
         <div className="row">
-            <button className="col-2 btn my-1 me-1">Launch Campaign</button>
+            <button 
+                className="col-2 btn m-1"
+                onClick={()=>{
+                    navigate(`/play/${id}`)
+                }}
+            >Launch Campaign</button>
             {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={()=>save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={()=>setEdit(true)}>Edit Campaign</button>)) : ""}
             <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
         </div>
