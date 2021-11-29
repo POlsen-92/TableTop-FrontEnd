@@ -12,29 +12,39 @@ export default function Signup(props) {
         confirmPassword: "",
       });
 
-    const handleSignupChange = (event) => {
-        if (event.target.name === "email") {
-          setSignupFormState({
-            ...signupFormState,
-            email: event.target.value,
-          });
-        } else if (event.target.name === "password") {
-          setSignupFormState({
-            ...signupFormState,
-            password: event.target.value,
-          });
-        } else if(event.target.name === "username") {
-          setSignupFormState({
-            ...signupFormState,
-            username: event.target.value,
-          });
-        } else {
-          setSignupFormState({
-            ...signupFormState,
-            confirmPassword: event.target.value,
-          })
-        }
-      };
+    // old way
+    // const handleSignupChange = (event) => {
+    //     if (event.target.name === "email") {
+    //       setSignupFormState({
+    //         ...signupFormState,
+    //         email: event.target.value,
+    //       });
+    //     } else if (event.target.name === "password") {
+    //       setSignupFormState({
+    //         ...signupFormState,
+    //         password: event.target.value,
+    //       });
+    //     } else if(event.target.name === "username") {
+    //       setSignupFormState({
+    //         ...signupFormState,
+    //         username: event.target.value,
+    //       });
+    //     } else {
+    //       setSignupFormState({
+    //         ...signupFormState,
+    //         confirmPassword: event.target.value,
+    //       })
+    //     }
+    //   };
+
+    //new way
+      const handleSignupChange = e => {
+        const {name, value} = e.target;
+        setSignupFormState({
+          ...signupFormState,
+          [name]:value
+        })
+      }
 
 
     const handleSignupSubmit = (e) => {
