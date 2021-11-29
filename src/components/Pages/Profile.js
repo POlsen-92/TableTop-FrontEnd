@@ -83,7 +83,7 @@ function Profile(props) {
     API.findSelf(props.token)
       .then((res) => {
         console.log(res);
-        setData(res.data[0].Campaigns);
+        setData(res.data.Campaigns);
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +102,7 @@ function Profile(props) {
     } else {
     API.findSelf(props.token).then((res) => {
       console.log(res);
-      let tempInvites = res.data[0].Invites;
+      let tempInvites = res.data.Invites;
       for (let i = 0; i < tempInvites.length; i++) {
         API.findCampaign(tempInvites[i].campaign_id, props.token).then(
           (res) => {
