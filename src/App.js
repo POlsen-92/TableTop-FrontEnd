@@ -53,6 +53,7 @@ function App() {
   useEffect(() => {
     const myToken = localStorage.getItem("token");
     console.log("IM RUNNING!")
+    console.log(myToken);
     if (myToken) {
       API.getProfile(myToken)
         .then((res) => {
@@ -70,7 +71,7 @@ function App() {
         });
     }
   },[]);
-
+const tokenFromStor = localStorage.getItem("token")
   return (
     <Router>
       <div className="App">
@@ -98,7 +99,7 @@ function App() {
               <Profile
                 handleCampaignChange={handleCampaignChange}
                 userState={userState}
-                token={token}
+                token={tokenFromStor}
               />
             }
           />

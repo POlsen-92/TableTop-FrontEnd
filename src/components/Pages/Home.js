@@ -49,7 +49,7 @@ function Home(props) {
             });
             props.setToken(res.data.token);
             localStorage.setItem("token", res.data.token);
-            navigate('/profile')
+            navigate('/')
           })
           .catch((err) => {
             props.setErrorMsg("Wrong email and/or password");
