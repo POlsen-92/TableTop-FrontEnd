@@ -62,17 +62,18 @@ const API = {
 
     // ~~~~~~~~~~~~~~~~~~~~~USERCAMPAIGN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
     createUserCampaign:(campaign_id,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/usercampaign/`,campaign_id,{headers:{
+        console.log(campaign_id);
+        return axios.post(`${URL_PREFIX}/api/usercampaign`,{campaign_id,},{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
     gmDelUserCampaign:(campaign_id,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`,{headers:{
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`,{},{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
     userDelUserCampaign:(campaign_id,tkn)=>{
-        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`,{headers:{
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`,{},{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
@@ -84,6 +85,7 @@ const API = {
         }})
     },
     deleteInvite:(id,tkn)=>{
+        console.log("i am trying to delete this invite");
         return axios.delete(`${URL_PREFIX}/api/invite/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
