@@ -11,19 +11,29 @@ function Home(props) {
         password: "",
       });
 
-    const handleLoginChange = (event) => {
-        if (event.target.name === "email") {
-          setLoginFormState({
-            ...loginFormState,
-            email: event.target.value,
-          });
-        } else {
-          setLoginFormState({
-            ...loginFormState,
-            password: event.target.value,
-          });
-        }
-      };
+    // old way
+    // const handleLoginChange = (event) => {
+    //     if (event.target.name === "email") {
+    //       setLoginFormState({
+    //         ...loginFormState,
+    //         email: event.target.value,
+    //       });
+    //     } else {
+    //       setLoginFormState({
+    //         ...loginFormState,
+    //         password: event.target.value,
+    //       });
+    //     }
+    //   };
+
+    // new way
+    const handleLoginChange = e => {
+      const {name, value} = e.target;
+      setLoginFormState({
+        ...loginFormState,
+        [name]:value
+      })
+    }
     
       const handleLoginSubmit = (e) => {
         e.preventDefault();

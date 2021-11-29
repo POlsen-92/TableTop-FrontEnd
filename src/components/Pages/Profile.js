@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CampaignFilters from "./../CampaignFilters";
 import API from "../../utils/API";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../style/Profile.css";
 import Avatar from "./UpdateUserInfo/Avatar";
 import Username from "./UpdateUserInfo/Username"
@@ -112,6 +112,14 @@ function Profile(props) {
       }
     });}
   }, [props.token]);
+
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    if(!props.token){
+      navigate("/")
+    }
+  },[props.token])
 
   return (
     <div className="container">
