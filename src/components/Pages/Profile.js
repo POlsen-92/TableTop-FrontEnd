@@ -67,12 +67,32 @@ function Profile(props) {
   };
 
   const acceptInvite = (campid, id) => {
-    API.createUserCampaign(campid, props.token).then((res) => {
-      API.deleteInvite(id, props.token);
+    API.createUserCampaign(campid, props.token).then(() => {
+      API.deleteInvite(id, props.token).then(()=>{
+        API.findCampaign(campid,props.token).then((res)=> {
+          setData([...data,res.data]);
+          removeInvite(id);
+        })
+      });
     });
   };
 
-  const declineInvite = () => {};
+  const declineInvite = (id) => {
+    API.deleteInvite(id, props.token).then(()=>{
+      removeInvite(id);
+    });
+  };
+
+  const removeInvite = (id) => {
+    console.log("invites",invites);
+    const newInvites = invites.filter((invite)=>{
+      console.log(invite.id);
+      console.log(id);
+      return invite.id!=id;
+    });
+    console.log("newInvites",newInvites);
+    setInvites(newInvites);
+  }
 
   useEffect(() => {
     //this was causing an error if it tried before the token was filled so I added
@@ -269,7 +289,11 @@ function Profile(props) {
                 >
                   Accept
                 </button>
-                <button className="btn" onClick={() => declineInvite()}>
+                <button 
+                  className="btn" 
+                  onClick={(e) => declineInvite(e.target.getAttribute("data-id"))}
+                  data-id={invite.id}
+                >
                   Decline
                 </button>
               </div>
