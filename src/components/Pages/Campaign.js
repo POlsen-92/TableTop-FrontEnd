@@ -42,7 +42,6 @@ function Campaign(props) {
 
     const sendInvite = () => {
         API.findUserByEmail(invite,props.token).then((res)=>{
-            console.log("email res", res);
             const inviteObj = {
                 campaign_id: id,
                 user_id:res.data[0].id,
