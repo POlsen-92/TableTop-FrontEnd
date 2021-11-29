@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import API from "../../utils/API";
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
     console.log(props);
+
     const { id } = useParams();
 
     const [campaignName,setCampaignName] = useState('');
@@ -18,6 +19,8 @@ function Campaign(props) {
     const [users,setUsers] = useState([]);
     const [inviteMsg,setInviteMsg] = useState("");
 
+    const navigate=useNavigate();
+
     useEffect(() =>{
         API.findCampaign(id,props.token).then((res)=>{
             console.log(res);
@@ -29,6 +32,10 @@ function Campaign(props) {
             setUsers(res.data.Users);
         })
     },[])
+
+    const createCharacter = () => {
+        navigate('/createcharacter')
+    }
 
     const save = () => {
         const update = {
@@ -63,6 +70,7 @@ function Campaign(props) {
         <div className="row">
             <button className="col-2 btn my-1 me-1">Launch Campaign</button>
             {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={()=>save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={()=>setEdit(true)}>Edit Campaign</button>)) : ""}
+            <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
         </div>
         <div className="row">
             {edit ? (<input id="cmpgnDesc-edit" className="col-4 m-1" value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<p className="border col-4 m-1">{campaignDesc}</p>)}
