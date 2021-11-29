@@ -1,0 +1,8 @@
+* {
+  color: black !important;
+}
+
+li {
+  display: inline-block;
+  list-style: none;
+}
