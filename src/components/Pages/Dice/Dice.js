@@ -20,7 +20,8 @@ const removeDice = () => {
 }
 
 return (
-    <div class="container">
+    <div id="diceContainer" className="container">
+        More dice?
         <button onClick={addDice}>+</button>
         {diceList.length > 0 ? 
         <button onClick={removeDice}>-</button>

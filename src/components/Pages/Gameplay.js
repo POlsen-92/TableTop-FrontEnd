@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from "react";
 import { useParams } from "react-router-dom"
+import Character from "./Character/Character.js";
 
 function Gameplay(props) {
     console.log(props);
@@ -48,6 +49,7 @@ function Gameplay(props) {
                 </form>
             </div>
         </div>
+        <Character/>
     </div>
     );
   }
