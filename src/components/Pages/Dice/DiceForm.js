@@ -74,8 +74,8 @@ function App() {
   }, [updateFormState]);
 
   return (
-    <div className="DiceForm">
-      <section style={{background:"gray"}} className="card" style={{ width: "24rem" }}>
+    <div>
+      <section id="diceform" className="card" style={{ width: "24rem" }}>
       <div className="card-img-top">
         <ul id="list">
           {updateFormState
