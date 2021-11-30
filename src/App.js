@@ -15,6 +15,7 @@ import Profile from "./components/Pages/Profile";
 import Campaign from "./components/Pages/Campaign";
 import NewBlogPost from "./components/Pages/NewBlogPost";
 import Character from "./components/Pages/Character/Character";
+import Catalog from "./components/Pages/Catalog/Catalog";
 import BlogPost from "./components/Pages/BlogPost";
 import Gameplay from "./components/Pages/Gameplay";
 
@@ -135,6 +136,10 @@ const tokenFromStor = localStorage.getItem("token")
           <Route
             path="/createcharacter"
             element={<Character userState={userState} token={token} />}
+          />
+          <Route
+            path="/addCatalog"
+            element={<Catalog userState={userState} token={token} />}
           />
         </Routes>
         <News />

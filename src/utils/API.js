@@ -97,6 +97,15 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
+    findCharacter: (id) => {
+        return axios.get(`${URL_PREFIX}/api/character/id${id}`)
+    },
+    findCharacterbyUser: (user_id) => {
+        return axios.get(`${URL_PREFIX}/api/character/user${user_id}`)
+    },
+    findCharacterbyCampaign: (campaign_id) => {
+        return axios.get(`${URL_PREFIX}/api/character/camp${campaign_id}`)
+    },
     updateCharacter: (charData,id,tkn) => {
         return axios.put(`${URL_PREFIX}/api/character/update${id}`, charData, {headers:{
             "Authorization": `Bearer ${tkn}`
@@ -114,7 +123,12 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    findInventory:(id,tkn)=>{
+    findInventoryItem:(id,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/inventory/${id}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    findInventorybyChar:(id,tkn)=>{
         return axios.get(`${URL_PREFIX}/api/inventory/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
@@ -137,7 +151,12 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    findSpell:(id,tkn)=>{
+    findSingleSpell:(id,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/spell/${id}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    findSpellbyChar:(id,tkn)=>{
         return axios.get(`${URL_PREFIX}/api/spell/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
@@ -160,7 +179,12 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    findFeature:(id,tkn)=>{
+    findSingleFeature:(id,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/feature/${id}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    findFeaturebyChar:(id,tkn)=>{
         return axios.get(`${URL_PREFIX}/api/feature/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
@@ -183,7 +207,12 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    findProficiency:(id,tkn)=>{
+    findSingleProficiency:(id,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/proficiency/${id}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
+    },
+    findProficiencybyChar:(id,tkn)=>{
         return axios.get(`${URL_PREFIX}/api/proficiency/${id}`,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
@@ -224,7 +253,6 @@ const API = {
     },
 
     // ~~~~~~~~~~~~~~~~~~~~~COMMENT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
-        // TODO: BACK END ROUTES HAVEN'T BEEN COMPLETED
     createComment: (id,commentData,tkn) => {
         return axios.post(`${URL_PREFIX}/api/comment/${id}`, commentData,  {headers:{
             "Authorization": `Bearer ${tkn}`

@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Dice from "../Dice/Dice.js";
+import { useParams, useNavigate } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css";
 import "./Catalog.css";
+import API from "../../../utils/API";
 
 
-export default function Catalog() {
+export default function Catalog(props) {
 
+    const { id } = useParams();
 
+    useEffect(() =>{
+        API.findInventory(id,props.token).then((res)=>{
+            console.log(res)
+        })
+    },[])
 
     // ~~~~~~~~~~~~~~INVENTORY~~~~~~~~~~~~~~//
-    const [inventInputs, setInventInputs] = ({
+    const [inventInputs, setInventInputs] = useState({
         name: '',
         type: '',
         description: '',
@@ -35,7 +41,7 @@ export default function Catalog() {
     }
 
     // ~~~~~~~~~~~~~~SPELLS~~~~~~~~~~~~~~//
-    const [spellInputs, setSpellInputs] = ({
+    const [spellInputs, setSpellInputs] = useState({
         name: '',
         type: '',
         description: '',
@@ -57,7 +63,7 @@ export default function Catalog() {
     }
 
     // ~~~~~~~~~~~~~~FEATURES~~~~~~~~~~~~~~//
-    const [featInputs, setFeatInputs] = ({
+    const [featInputs, setFeatInputs] = useState({
         name: '',
         type: '',
         description: '',
@@ -75,7 +81,7 @@ export default function Catalog() {
     }
 
     // ~~~~~~~~~~~~~~PROFICIENCIES~~~~~~~~~~~~~~//
-    const [profInputs, setProfInputs] = ({
+    const [profInputs, setProfInputs] = useState({
         name: '',
         type: '',
         description: '',
@@ -339,7 +345,7 @@ export default function Catalog() {
                 </form>
             )
         } else {
-
+            return ('')
         }
     }
 
@@ -349,10 +355,27 @@ export default function Catalog() {
 
     return (
         <div className="container">
-        <h1>Add To Character</h1>
-
-        
-    </div>
+            <div className="row">
+                <div className="col">
+                    <h1>Add To Character</h1>
+                    <select onChange={pickCatalogType}>
+                    <option key="10">Choose Type</option>
+                        <option key="1" value="Equipment">
+                            Equipment
+                        </option>
+                        <option key="2" value="Spell">
+                            Spell
+                        </option>
+                        <option key="3" value="Feature">
+                            Feature
+                        </option>
+                        <option key="4" value="Proficiency">
+                            Proficiency
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
     )
 }
 
