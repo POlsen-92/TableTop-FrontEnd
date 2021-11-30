@@ -17,17 +17,20 @@ function Campaign(props) {
     const [descEdit,setDescEdit] = useState('');
     const [invite,setInvite] = useState('');
     const [users,setUsers] = useState([]);
+    const [characters,setCharacters] = useState([]);
     const [inviteMsg,setInviteMsg] = useState("");
 
     useEffect(() =>{
         API.findCampaign(id,props.token).then((res)=>{
-            // console.log(res);
+            console.log(res);
             setCampaignName(res.data.name);
             setCampaignDesc(res.data.description);
             setNameEdit(res.data.name);
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
             setUsers(res.data.Users);
+            setCharacters(res.data.Characters);
+            console.log(res.data.Characters)
         })
     },[])
 
@@ -82,12 +85,14 @@ function Campaign(props) {
                 <h4>gm_username</h4>
                 <h2>Players</h2>
                 {users.map((user)=>{
-                    return (<h4>{user.name}</h4>)
+                    return (<h4>{user.username}</h4>)
                 })}
             </div>
             <div className="border col-3 m-1 text-center">
                 <h2>Your Character(s)</h2>
-                <h4>YourCharacterName</h4>
+                {characters.map((character) => {
+                    return (<h4>{character.charName}</h4>);
+                })}
             </div>
         </div>
         {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e)=>setInvite(e.target.value)}/><button className="btn m-1" onClick={()=>sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>): ""}
