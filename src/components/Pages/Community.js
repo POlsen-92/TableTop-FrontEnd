@@ -12,7 +12,7 @@ function Community({token,userState}) {
     useEffect(()=>{
         axios.get('http://localhost:3001/api/blog/')
         .then(res=> {
-            console.log(res)
+            // console.log(res)
             setPosts(res.data)
         })
         .catch(err => {
@@ -24,8 +24,8 @@ function Community({token,userState}) {
 
     const deleteBlogPost = (deletedPost) => {
         API.deleteBlogPost(deletedPost,token).then((res) => {
-            console.log(res);
-            console.log("I deleted a Post!");
+            // console.log(res);
+            // console.log("I deleted a Post!");
             window.location.reload(false);
         })
     }

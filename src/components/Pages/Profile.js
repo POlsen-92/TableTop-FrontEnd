@@ -9,8 +9,8 @@ import Password from "./UpdateUserInfo/Password"
 import Email from "./UpdateUserInfo/Email"
 
 function Profile(props) {
-  console.log("====================");
-  console.log(props);
+  // console.log("====================");
+  // console.log(props);
 
   const [campaignFilter, setCampaignFilter] = useState("all");
   const [data, setData] = useState([]);
@@ -48,17 +48,17 @@ function Profile(props) {
       description: "Insert description here",
     };
     API.createCampaign(createdCampaign, props.token).then((res) => {
-      console.log("res1", res);
+      // console.log("res1", res);
       setData([...data, res.data]);
       API.createUserCampaign(res.data.id, props.token).then((response) => {
-        console.log("res2", response);
+        // console.log("res2", response);
       });
     });
   };
 
   const deleteCampaign = (dltCmpgnId) => {
     API.deleteCampaign(dltCmpgnId, props.token).then((res) => {
-      console.log(res);
+      // console.log(res);
     });
     const updatedData = data.filter(
       (campaign) => campaign.id !== Number(dltCmpgnId)
@@ -84,13 +84,13 @@ function Profile(props) {
   };
 
   const removeInvite = (id) => {
-    console.log("invites",invites);
+    // console.log("invites",invites);
     const newInvites = invites.filter((invite)=>{
-      console.log(invite.id);
-      console.log(id);
+      // console.log(invite.id);
+      // console.log(id);
       return invite.id!=id;
     });
-    console.log("newInvites",newInvites);
+    // console.log("newInvites",newInvites);
     setInvites(newInvites);
   }
 
@@ -102,7 +102,7 @@ function Profile(props) {
     } else {
     API.findSelf(props.token)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setData(res.data.Campaigns);
       })
       .catch((err) => {
@@ -121,7 +121,7 @@ function Profile(props) {
       console.log('profile line 92 no token')
     } else {
     API.findSelf(props.token).then((res) => {
-      console.log(res);
+      // console.log(res);
       let tempInvites = res.data.Invites;
       for (let i = 0; i < tempInvites.length; i++) {
         API.findCampaign(tempInvites[i].campaign_id, props.token).then(

@@ -52,8 +52,8 @@ function App() {
 
   useEffect(() => {
     const myToken = localStorage.getItem("token");
-    console.log("IM RUNNING!")
-    console.log(myToken);
+    // console.log("IM RUNNING!")
+    // console.log(myToken);
     if (myToken) {
       API.getProfile(myToken)
         .then((res) => {
