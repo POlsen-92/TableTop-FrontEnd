@@ -39,8 +39,8 @@ function NewBlogPost( {token,userState} ) {
             description,
         }
         API.createNewBlogPost(createdPost,token,userState.id).then((res) => {
-            console.log(res);
-            console.log("I created a Post!");
+            // console.log(res);
+            // console.log("I created a Post!");
             navigate("/community")
         })
     }
