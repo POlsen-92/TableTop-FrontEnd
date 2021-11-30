@@ -42,6 +42,7 @@ function BlogPost(props) {
         API.createComment(id,createdComment,props.token).then((res) => {
             console.log(res);
             console.log("I created a comment!");
+            window.location.reload(false);
         })
     }
 
@@ -69,7 +70,12 @@ function BlogPost(props) {
                 <div>
                     {comment.body}---{comment.User.username}
                 </div>
-                <button onClick = {(e) =>{deleteComment(e.target.getAttribute("data-id"))}} data-id={comment.id} >delete comment</button>
+                {props.userState.username === comment.User.username ? (
+                    <button onClick = {(e) =>{deleteComment(e.target.getAttribute("data-id"))}} data-id={comment.id} >delete comment</button>
+
+                    ) : (
+                                    ''
+                                )}    
                 <br/>
                 <br/>
                 <br/>
