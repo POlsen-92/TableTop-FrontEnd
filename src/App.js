@@ -20,18 +20,17 @@ import Gameplay from "./components/Pages/Gameplay";
 
 
 // Socket configuration
-// import { io } from "socket.io-client";
-// import { sign } from "jsonwebtoken";
-// const socket = io("http://localhost:3001", {
-//   transports: ["websocket"],
-//   extraHeaders: {
-//     "my-custom-header": "1234",
-//   },
-// });
+import { io } from "socket.io-client";
+const socket = io("http://localhost:3001", {
+  transports: ["websocket"],
+  extraHeaders: {
+    "my-custom-header": "1234",
+  },
+});
 
-// socket.on("greeting", (greeting) => {
-//   console.log(greeting);
-// });
+socket.on("greeting", (greeting) => {
+  console.log(greeting);
+});
 
 function App() {
   // const [data, setData] = React.useState(null); // This code was used as a test in the beginning (we may use it later)
@@ -131,7 +130,7 @@ const tokenFromStor = localStorage.getItem("token")
           />
           <Route
             path="/play/:id"
-            element={<Gameplay userState={userState} token={token} />}
+            element={<Gameplay userState={userState} token={token} socket={socket}/>}
           />
           <Route
             path="/createcharacter"
