@@ -34,7 +34,7 @@ function Campaign(props) {
     },[])
 
     const createCharacter = () => {
-        navigate('/createcharacter')
+        navigate(`/createcharacter/${id}`)
     }
 
     const save = () => {

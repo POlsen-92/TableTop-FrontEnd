@@ -134,7 +134,7 @@ const tokenFromStor = localStorage.getItem("token")
             element={<Gameplay userState={userState} token={token} socket={socket}/>}
           />
           <Route
-            path="/createcharacter"
+            path="/createcharacter/:id"
             element={<Character userState={userState} token={token} />}
           />
           <Route
