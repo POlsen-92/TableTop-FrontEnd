@@ -14,7 +14,7 @@ import Community from "./components/Pages/Community";
 import Profile from "./components/Pages/Profile";
 import Campaign from "./components/Pages/Campaign";
 import NewBlogPost from "./components/Pages/NewBlogPost";
-import Character from "./components/Pages/Character";
+import Character from "./components/Pages/Character/Character";
 import BlogPost from "./components/Pages/BlogPost";
 import Gameplay from "./components/Pages/Gameplay";
 

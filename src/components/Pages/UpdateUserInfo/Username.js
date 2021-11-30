@@ -10,7 +10,7 @@ function Username(props) {
       
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        props.setUsername(updateFormState);
+        props.setUsername(updateFormState); 
     API.update({ username: updateFormState }, props.token).then((res) => {  
     });
     props.setUpdateUsername(false);
