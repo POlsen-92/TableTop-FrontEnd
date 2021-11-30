@@ -1,8 +1,8 @@
 #character {
     background: url('./another-rough-old-and-worn-parchment-paper.jpg');
     background-position: center;
-    color:black
-    
+    color:black;
+    text-align: center;
 }
 
 #raceinfo {
