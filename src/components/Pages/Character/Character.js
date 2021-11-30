@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Dice from "../Dice/Dice.js";
+import API from "../../../utils/API"
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Character.css";
 
-export default function Character() {
+export default function Character(props) {
   const [races, setRaces] = useState([]);
   const [classes, setClasses] = useState([]);
   const [apiResponse, setApiResponse] = useState([]);
@@ -31,6 +33,7 @@ export default function Character() {
     charisma: 0,
     speed: 0,
     hitpoints: 0,
+    // proficiency: [],
   });
   const [subraces, setSubRaces] = useState([]);
   const [subclasses, setSubClasses] = useState([]);
@@ -187,9 +190,38 @@ export default function Character() {
     });
   };
 
-  const saveCharacter = () => {
+  // const checkcontrol = (e) => {
+  //   let tempArray = characterInfo.proficiency
+  //   console.log(e.target.textContent)
+  //   setCharacterInfo({
+  //     ...characterInfo,
+  //     proficiency:[]
+  //   })
+  //   if (tempArray.includes(e.target.textContent)) {
+  //     let index = tempArray.indexOf(e.target.textContent) 
+  //     tempArray.splice(index,1)
+  //   } else {
+  //     tempArray.push(e.target.textContent)
+  //   }
     
-  }
+   
+  //   setCharacterInfo({
+  //     ...characterInfo,
+  //     proficiency:tempArray
+  //   })
+  //   console.log(characterInfo.proficiency)
+  // };
+
+  
+
+  const saveCharacter = () => {
+    const campaignId = window.location.toString().split("/")[
+      window.location.toString().split("/").length - 1
+    ];
+    API.createCharacter(characterInfo,campaignId,props.token)
+    console.log(characterInfo)
+
+  };
 
   useEffect(() => {
     axios.get("https://www.dnd5eapi.co/api/races").then((response) => {
@@ -202,34 +234,9 @@ export default function Character() {
   }, []);
 
   return (
-    <div className="container">
+    <div id="character" className="container">
       <div className="row">
-        <div className="col">
-          <div>
-            <select onChange={fillSubRaces}>
-              <option key="111">Choose Race</option>
-              {races.map((race, index) => {
-                return (
-                  <option key={index} value={race.name}>
-                    {race.name}
-                  </option>
-                );
-              })}
-            </select>
-            {subraces.length > 0 ? (
-              <select onChange={pickSubRace}>
-                <option key="99">Choose Sub-Race</option>
-                {subraces.map((race, index) => {
-                  return (
-                    <option key={index} value={race.index}>
-                      {race.name}
-                    </option>
-                  );
-                })}
-              </select>
-            ) : null}
-          </div>
-
+        <div id="classinfo" className="col">
           <div>
             <select onChange={fillSubClasses}>
               <option key="111">Choose Class</option>
@@ -255,15 +262,6 @@ export default function Character() {
             ) : null}
           </div>
 
-          <button
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            Reset
-          </button>
-        </div>
-        <div id="classinfo" className="col">
           {classapiResponse.length !== 0 ? (
             <div>
               <h3>Hit Die</h3>
@@ -272,21 +270,50 @@ export default function Character() {
               {classapiResponse.saving_throws.map((items, index) => {
                 return <p key={index}>{items.name}</p>;
               })}
-              <h3>Proficiency Choices</h3> (choose 2)
-              {classapiResponse.proficiency_choices[0].from.map(
-                (items, index) => {
-                  return <p key={index}>{items.name}</p>;
-                }
-              )}
-              {subclassResponse.desc ? 
-              <h3>Sub-Class Description</h3>
-              : null}
+              <h3>Proficiency Choices</h3> (choose{" "}
+              {classapiResponse.proficiency_choices[0].choose})
+              <ul>
+                {classapiResponse.proficiency_choices[0].from.map(
+                  (items, index) => {
+                    return (
+                      <>
+                        <li key={index}>{items.name}</li>
+                      </>
+                    );
+                  }
+                )}
+              </ul>
+              {subclassResponse.desc ? <h3>Sub-Class Description</h3> : null}
               {subclassResponse.desc}
             </div>
           ) : null}
         </div>
         <div id="raceinfo" className="col">
           <div>
+            <div>
+              <select onChange={fillSubRaces}>
+                <option key="111">Choose Race</option>
+                {races.map((race, index) => {
+                  return (
+                    <option key={index} value={race.name}>
+                      {race.name}
+                    </option>
+                  );
+                })}
+              </select>
+              {subraces.length > 0 ? (
+                <select onChange={pickSubRace}>
+                  <option key="99">Choose Sub-Race</option>
+                  {subraces.map((race, index) => {
+                    return (
+                      <option key={index} value={race.index}>
+                        {race.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              ) : null}
+            </div>
             {apiResponse.length !== 0 ? (
               <div>
                 <div>
@@ -351,6 +378,13 @@ export default function Character() {
         </div>
         <div className="col">
           Character <button onClick={saveCharacter}>Save</button>
+          <button
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Reset
+          </button>
           <form className="form-group" onChange={handleCharacterChange}>
             <label for="charName">Character Name:</label>
             <input name="charName" value={characterInfo.charName} />
@@ -382,6 +416,12 @@ export default function Character() {
             <input name="class" value={characterInfo.class} />
             <label for="subClass">Sub-Class:</label>
             <input name="subClass" value={characterInfo.subClass} />
+            {/* <label for="proficiency">Proficiencies:</label>
+            <ul>
+            {characterInfo.proficiency.map((items,index)=>{
+              return <li key={index}>{items}</li>
+            })}
+            </ul> */}
             <label for="level">Level:</label>
             <input type="number" name="level" value={characterInfo.level} />
             <label for="strength">Strength:</label>
