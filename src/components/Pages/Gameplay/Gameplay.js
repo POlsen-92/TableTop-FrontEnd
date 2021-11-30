@@ -1,6 +1,9 @@
 import React, {useState,useEffect} from "react";
 import { useParams } from "react-router-dom"
-import Character from "./Character/Character.js";
+import Character from "../Character/Character";
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import Gameboard from "./Gameboard/Gameboard"
 
 function Gameplay(props) {
     console.log(props);
@@ -27,9 +30,13 @@ function Gameplay(props) {
     return (
     <div className="container-fluid p-0 m-0 border border-3 border-danger">
         <div className="row p-0 m-0">
-            <div className="col-3 border border-primary border-4"><h1></h1></div>
-            <div className="col-7 border border-info border-4"></div>
-            <div className="col-2 border border-success border-4">
+            <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
+            <div className="col-7 border border-info border-4 gameboard" style={{ backgroundImage: `url(https://64.media.tumblr.com/2267f9cbe894a43c5d7170200035bfee/tumblr_p3yb76ZWh61x3jozbo1_1280.jpg)` }}>
+                <DndProvider backend={HTML5Backend}>
+					<Gameboard/>
+				</DndProvider>
+            </div>
+            <div className="col-2 border border-success border-4 mini-menu">
                 <ul className="chat">
                     {chat.map((entry)=>{
                         return(

@@ -16,7 +16,7 @@ import Campaign from "./components/Pages/Campaign";
 import NewBlogPost from "./components/Pages/NewBlogPost";
 import Character from "./components/Pages/Character/Character";
 import BlogPost from "./components/Pages/BlogPost";
-import Gameplay from "./components/Pages/Gameplay";
+import Gameplay from "./components/Pages/Gameplay/Gameplay";
 
 
 // Socket configuration
