@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import API from "../../utils/API"
+import { useNavigate } from "react-router-dom";
 
 // async function createBlog(content) {
 //     const getUserInfo = await JSON.parse(localStorage.getItem("token"))
@@ -17,6 +18,8 @@ import API from "../../utils/API"
 function NewBlogPost( {token,userState} ) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+
+    const navigate=useNavigate();
 
     const handleBlogInputChange = (e) => {
         const { target } = e;
@@ -38,6 +41,7 @@ function NewBlogPost( {token,userState} ) {
         API.createNewBlogPost(createdPost,token,userState.id).then((res) => {
             console.log(res);
             console.log("I created a Post!");
+            navigate("/community")
         })
     }
 
@@ -70,7 +74,10 @@ function NewBlogPost( {token,userState} ) {
                 placeholder="description"
             />
             <br/>
+                        
             <button className="btn" id="signup-btn">Submit</button>
+            
+            
         </form>
           </>
         // <Form onSubmit={handleBlogSubmit}>
