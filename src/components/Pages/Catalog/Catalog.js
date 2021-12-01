@@ -10,10 +10,10 @@ export default function Catalog(props) {
     const { id } = useParams();
 
     useEffect(() =>{
-        API.findInventory(id,props.token).then((res)=>{
+        API.findInventorybyChar(id,props.token).then((res)=>{
             console.log(res)
         })
-    },[])
+    },[id,props.token])
 
     // ~~~~~~~~~~~~~~INVENTORY~~~~~~~~~~~~~~//
     const [inventInputs, setInventInputs] = useState({
@@ -103,9 +103,11 @@ export default function Catalog(props) {
     }
 
 // ~~~~~~~~~~~~~~CHOICES~~~~~~~~~~~~~~//
+
+const [choice,setChoice] = useState('')
     const pickCatalogType = (e) => {
         if (e.target.value === "Equipment") {
-            return (
+            setChoice (
                 <form onSubmit={addInvent}>
                     <label>Name
                         <input
@@ -191,7 +193,7 @@ export default function Catalog(props) {
                 </form>
             )
         } else if (e.target.value === "Spell") {
-            return (
+            setChoice (
                 <form onSubmit={addSpell}>
                     <label>Name
                         <input
@@ -253,7 +255,7 @@ export default function Catalog(props) {
                 </form>
             )
         } else if (e.target.value === "Feature") {
-            return (
+            setChoice (
                 <form onSubmit={addFeat}>
                     <label>Name
                         <input
@@ -283,7 +285,7 @@ export default function Catalog(props) {
                 </form>
             )
         } else if (e.target.value === "Proficiency") {
-            return (
+            setChoice (
                 <form onSubmit={addProf}>
                     <label>Name
                         <input
@@ -344,8 +346,6 @@ export default function Catalog(props) {
                     <input type="submit" />
                 </form>
             )
-        } else {
-            return ('')
         }
     }
 
@@ -359,20 +359,21 @@ export default function Catalog(props) {
                 <div className="col">
                     <h1>Add To Character</h1>
                     <select onChange={pickCatalogType}>
-                    <option key="10">Choose Type</option>
-                        <option key="1" value="Equipment">
-                            Equipment
-                        </option>
-                        <option key="2" value="Spell">
-                            Spell
-                        </option>
-                        <option key="3" value="Feature">
-                            Feature
-                        </option>
-                        <option key="4" value="Proficiency">
-                            Proficiency
-                        </option>
+                        <option key="10">Choose Type</option>
+                            <option key="1" value="Equipment">
+                                Equipment
+                            </option>
+                            <option key="2" value="Spell">
+                                Spell
+                            </option>
+                            <option key="3" value="Feature">
+                                Feature
+                            </option>
+                            <option key="4" value="Proficiency">
+                                Proficiency
+                            </option>
                     </select>
+                    <div>{choice}</div>
                 </div>
             </div>
         </div>

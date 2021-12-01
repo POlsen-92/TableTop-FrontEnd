@@ -2,7 +2,8 @@ import axios from "axios";
 //local
 const URL_PREFIX = "http://localhost:3001"
 //delploy
-// const URL_PREFIX = "https://reactauthdemo-back.herokuapp.com"
+// const URL_PREFIX = "https://table-top-be.herokuapp.com/"
+
 
 const API = {
     // ~~~~~~~~~~~~~~~~~~~~~~~USER ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -19,12 +20,13 @@ const API = {
             }
         })
     },
-    findUserByEmail: (email, tkn) => {
-        return axios.get(`${URL_PREFIX}/api/user/email${email}`, {
-            headers: {
-                "Authorization": `Bearer ${tkn}`
-            }
-        })
+    findUserById:(id)=>{
+        return axios.get(`${URL_PREFIX}/api/user/id${id}`)
+    },
+    findUserByEmail:(email,tkn)=>{
+        return axios.get(`${URL_PREFIX}/api/user/email${email}`,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
     },
     getProfile: (tkn) => {
         return axios.get(`${URL_PREFIX}/api/user/profile`, {
@@ -79,13 +81,11 @@ const API = {
     },
 
     // ~~~~~~~~~~~~~~~~~~~~~USERCAMPAIGN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
-    createUserCampaign: (campaign_id, tkn) => {
-        console.log(campaign_id);
-        return axios.post(`${URL_PREFIX}/api/usercampaign`, { campaign_id, }, {
-            headers: {
-                "Authorization": `Bearer ${tkn}`
-            }
-        })
+    createUserCampaign:(campaign_id,tkn)=>{
+        // console.log(campaign_id);
+        return axios.post(`${URL_PREFIX}/api/usercampaign`,{campaign_id,},{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
     },
     gmDelUserCampaign: (campaign_id, tkn) => {
         return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`, {}, {
@@ -266,12 +266,10 @@ const API = {
 
 
     // ~~~~~~~~~~~~~~~~~~~~~PROFICIENCY ROUTES~~~~~~~~~~~~~~~~~~~~~~~//
-    createNewProficiency: (proficiencyData, tkn) => {
-        return axios.post(`${URL_PREFIX}/api/proficiency`, proficiencyData, {
-            headers: {
-                "Authorization": `Bearer ${tkn}`
-            }
-        })
+    createNewProficiency:(id,proficiencyData,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/proficiency/${id}`,proficiencyData,{headers:{
+            "Authorization": `Bearer ${tkn}`
+        }})
     },
     findSingleProficiency: (id, tkn) => {
         return axios.get(`${URL_PREFIX}/api/proficiency/${id}`, {

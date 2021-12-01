@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import API from "../../utils/API";
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
@@ -29,10 +29,11 @@ function Campaign(props) {
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
             setUsers(res.data.Users);
-            setCharacters(res.data.Characters);
+            const myChars = res.data.Characters.filter((character)=>character.user_id == props.userState.id)
+            setCharacters(myChars);
             console.log(res.data.Characters)
         })
-    }, [])
+    },[id,props.token])
 
     const createCharacter = () => {
         navigate(`/createcharacter/${id}`)
@@ -66,34 +67,80 @@ function Campaign(props) {
     }
 
     return (
-        <div className="container">
-            {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e) => setNameEdit(e.target.value)} />) : (<h1 className="row">{campaignName}</h1>)}
-            <div className="row">
-                <button
-                    className="col-2 btn m-1"
-                    onClick={() => {
-                        navigate(`/play/${id}`)
-                    }}
-                >Launch Campaign</button>
-                {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={() => save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={() => setEdit(true)}>Edit Campaign</button>)) : ""}
-                <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
+    <div className="container">
+        {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
+        <div className="row">
+            <button 
+                className="col-2 btn m-1"
+                onClick={()=>{
+                    navigate(`/play/${id}`)
+                }}
+            >Launch Campaign</button>
+            {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={()=>save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={()=>setEdit(true)}>Edit Campaign</button>)) : ""}
+            <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
+        </div>
+        <div className="row">
+            {edit ? (<input id="cmpgnDesc-edit" className="col-4 m-1" value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<p className="border col-4 m-1">{campaignDesc}</p>)}
+            <div className="border col-4 m-1 text-center">
+                <h2>GM</h2>
+                <h4>gm_username</h4>
+                <h2>Players</h2>
+                {users.map((user)=>{
+                    if (props.userState.id === user.id) {
+                        return (
+                          <Link
+                            to={{ pathname: `/Profile`}}
+                            className="d-inline"
+                          >
+                            <li
+                              key={user.id}
+                              className="list-group-item list-group-item-action m-3"
+                              id="user"
+                              data-id={user.id}
+                            >
+                              <h4>{user.username}</h4>
+                            </li>
+                          </Link>
+                        )
+                    } else {
+                        return (
+                            <Link
+                              to={{ pathname: `/profile/${user.id}`}}
+                              className="d-inline"
+                            >
+                              <li
+                                key={user.id}
+                                className="list-group-item list-group-item-action m-3"
+                                id="user"
+                                data-id={user.id}
+                              >
+                                <h4>{user.username}</h4>
+                              </li>
+                            </Link>
+                          )
+                    }
+                })}
             </div>
-            <div className="row">
-                {edit ? (<input id="cmpgnDesc-edit" className="col-4 m-1" value={descEdit} onChange={(e) => setDescEdit(e.target.value)} />) : (<p className="border col-4 m-1">{campaignDesc}</p>)}
-                <div className="border col-4 m-1 text-center">
-                    <h2>GM</h2>
-                    <h4>gm_username</h4>
-                    <h2>Players</h2>
-                    {users.map((user) => {
-                        return (<h4>{user.username}</h4>)
-                    })}
-                </div>
-                <div className="border col-3 m-1 text-center">
-                    <h2>Your Character(s)</h2>
-                    {characters.map((character) => {
-                        return (<h4>{character.charName}</h4>);
-                    })}
-                </div>
+            <div className="border col-3 m-1 text-center">
+                <h2>Character(s)</h2>
+                {characters.map((character) => {
+                    return (
+                        <Link
+                        to={{ pathname: `/character/${character.id}` }}
+                        className="d-inline"
+                      >
+                        <li
+                          key={character.id}
+                          className="list-group-item list-group-item-action m-3"
+                          id="character"
+                          data-id={character.id}
+                        >
+                          <h4>{character.charName}</h4>
+                        </li>
+                      </Link>
+                    );
+                })}
+            </div>
             </div>
             {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
         </div>
