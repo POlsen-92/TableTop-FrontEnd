@@ -33,7 +33,7 @@ function Campaign(props) {
             setCharacters(myChars);
             console.log(res.data.Characters)
         })
-    },[id,props.token])
+    },[id,props])
 
     const createCharacter = () => {
         navigate(`/createcharacter/${id}`)
