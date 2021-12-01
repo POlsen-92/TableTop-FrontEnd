@@ -32,7 +32,11 @@ export default function Character({ token }) {
     hitpoints: 0,
   });
 
-  const [currentPage, setCurrentPage] = useState();
+  const [currentPage, setCurrentPage] = useState({
+    current: "Home",
+    left: "Homebrew",
+    right: "Race"
+  });
   const [apiResponse, setApiResponse] = useState([]);
   const [subraceResponse, setSubraceResponse] = useState([]);
   const [proficiencies, setProficiencies] = useState([]);
@@ -40,34 +44,64 @@ export default function Character({ token }) {
   const [subclassResponse, setSubclassResponse] = useState([]);
 
   const pageHandler = (e) => {
-    if (e.target.textContent === "←") {
-      switch (currentPage) {
+    if (e.target.value === "left") {
+      switch (currentPage.current) {
         default:
-          setCurrentPage("Homebrew");
+          setCurrentPage({
+            current: "Homebrew",
+            left: "Class",
+            right: "Home"});
           break;
         case "Homebrew":
-          setCurrentPage("Race");
+          setCurrentPage({
+            current: "Class",
+            left: "Race",
+            right: "Homebrew"
+          });
           break;
         case "Race":
-          setCurrentPage("Class");
+          setCurrentPage({
+            current: "Home",
+            left: "Homebrew:",
+            right: "Race"
+          });
           break;
         case "Class":
-          setCurrentPage();
+          setCurrentPage({
+            current: "Race",
+            left: "Home",
+            right: "Class"
+          });
           break;
       }
     } else {
-      switch (currentPage) {
+      switch (currentPage.current) {
         default:
-          setCurrentPage("Class");
-          break;
-        case "Class":
-          setCurrentPage("Race");
-          break;
-        case "Race":
-          setCurrentPage("Homebrew");
+          setCurrentPage({
+            current: "Race",
+            left: "Home",
+            right: "Class"});
           break;
         case "Homebrew":
-          setCurrentPage();
+          setCurrentPage({
+            current: "Home",
+            left: "Homebrew",
+            right: "Race"
+          });
+          break;
+        case "Race":
+          setCurrentPage({
+            current: "Class",
+            left: "Race",
+            right: "Homebrew"
+          });
+          break;
+        case "Class":
+          setCurrentPage({
+            current: "Homebrew",
+            left: "Class",
+            right: "Home"
+          });
           break;
       }
     }
@@ -76,19 +110,20 @@ export default function Character({ token }) {
   return (
     <div className="mainPage">
       <div class="characterHeader">
-        <button onClick={pageHandler}>&#8592;</button>
+        <button value="left" onClick={pageHandler}>&#8592;{currentPage.left}</button>
         <h1>Create Character</h1>
-        <button onClick={pageHandler}>&#8594;</button>
+        <button value="right" onClick={pageHandler}>{currentPage.right}&#8594;</button>
       </div>
-      {!currentPage ? 'Homebrew to the left, Character Journey to the right' : null}
-      {currentPage === "Homebrew" ? (
+      {currentPage.current === "Home" ? 'Homebrew to the left, Character Journey to the right' : null}
+      {currentPage.current === "Homebrew" ? (
         <Homebrew
           characterInfo={characterInfo}
           setCharacterInfo={setCharacterInfo}
           token={token}
+          proficiencies={proficiencies}
         />
       ) : null}
-      {currentPage === "Race" ? (
+      {currentPage.current === "Race" ? (
         <Race
           characterInfo={characterInfo}
           setCharacterInfo={setCharacterInfo}
@@ -98,7 +133,7 @@ export default function Character({ token }) {
           setSubraceResponse={setSubraceResponse}
         />
       ) : null}
-      {currentPage === "Class" ? (
+      {currentPage.current === "Class" ? (
         <Class
           characterInfo={characterInfo}
           setCharacterInfo={setCharacterInfo}

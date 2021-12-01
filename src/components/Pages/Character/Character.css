@@ -42,5 +42,16 @@
     margin: 0 !important;
 }
 
+.form-group p, #tooltip p{
+    /* font-size: 2em; */
+    font-family: sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    
+}
+
+.classInfo li {
+    display: block;
+}
 
   

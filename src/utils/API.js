@@ -1,8 +1,8 @@
 import axios from "axios";
 //local
-const URL_PREFIX = "http://localhost:3001"
+// const URL_PREFIX = "http://localhost:3001"
 //delploy
-// const URL_PREFIX = "https://reactauthdemo-back.herokuapp.com"
+const URL_PREFIX = "https://table-top-be.herokuapp.com/"
 
 const API = {
     // ~~~~~~~~~~~~~~~~~~~~~~~USER ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -205,8 +205,8 @@ const API = {
 
 
     // ~~~~~~~~~~~~~~~~~~~~~PROFICIENCY ROUTES~~~~~~~~~~~~~~~~~~~~~~~//
-    createNewProficiency:(proficiencyData,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/proficiency`,proficiencyData,{headers:{
+    createNewProficiency:(id,proficiencyData,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/proficiency/${id}`,proficiencyData,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },
