@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import { useParams, useNavigate } from "react-router-dom"
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "./CharacterView.css";
 import API from "../../../utils/API";
@@ -13,11 +15,6 @@ export default function CharacterView(props) {
         navigate('/addCatalog')
     }
 
-    useEffect(() => {
-        API.findInventory(id, props.token).then((res) => {
-            console.log(res);
-        })
-    }, [])
     const [inventory,setInventory] = useState([]);
     const [spell,setSpell] = useState([]);
     const [feature,setFeature] = useState([]);
@@ -27,10 +24,10 @@ export default function CharacterView(props) {
     useEffect(() =>{
         API.findCharacter(id).then((res)=>{
             console.log(res);
-            setInventory(res.data.Inventorys);
+            setInventory(res.data.Inventories);
             setSpell(res.data.Spells);
             setFeature(res.data.Features);
-            setProficiency(res.data.Proficiencys);
+            setProficiency(res.data.Proficiencies);
             setCharacter(res.data)
         })
     },[id])
@@ -47,47 +44,68 @@ export default function CharacterView(props) {
                     </div>
                     <div className="row">
                         <div className="col">
-                            <h3>Information</h3>
-                                    <ul>
-                                        <li className="">
-                                        <h4>Race: {character.race}</h4>
-                                        </li> <br />
-                                        <li className="">
-                                        <h4>SubRace: {character.subrace}</h4>
-                                        </li><br />
-                                        <li className="">
-                                        <h4>Class: {character.class}</h4>
-                                        </li><br />
-                                        <li className="">
-                                        <h4>SubClass:{character.subclass}</h4>
-                                        </li><br />
-                                        <li className="">
-                                        <h4>Age: {character.age}</h4>
-                                        </li><br />
-                                        <li className="">
-                                        <h4>Alignment: {character.alignment}</h4>
-                                        </li><br />
-                                        <li className="">
-                                        <h4>Background: {character.background}</h4>
-                                        </li><br />
-                                        <li className="">
-                                        <h4>Personality: {character.personality}</h4>
-                                        </li>
-                                    </ul>
-                        </div>
-                        <div className="col">
-                            <h3>Spells</h3>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                            <h3>Proficiencies</h3>
-                        </div>
-                        <div className="col">
-                            <h3>Features</h3>
-                        </div>
-                        <div className="col">
-                            <h3>Inventory</h3>
+                        <Tabs defaultIndex={0} onSelect={index => console.log(index)}>
+                            <TabList>
+                                <Tab>Information</Tab>
+                                <Tab>Proficiencies and Features</Tab>
+                                <Tab>Spells</Tab>
+                                <Tab>Inventory</Tab>
+                            </TabList>
+                            <TabPanel>
+                                <li className="">
+                                    <h4>Race: {character.race}</h4>
+                                </li> <br />
+                                <li className="">
+                                    <h4>SubRace: {character.subrace}</h4>
+                                </li><br />
+                                <li className="">
+                                    <h4>Class: {character.class}</h4>
+                                </li><br />
+                                <li className="">
+                                    <h4>SubClass:{character.subclass}</h4>
+                                </li><br />
+                                <li className="">
+                                    <h4>Age: {character.age}</h4>
+                                </li><br />
+                                <li className="">
+                                    <h4>Alignment: {character.alignment}</h4>
+                                </li><br />
+                                <li className="">
+                                    <h4>Background: {character.background}</h4>
+                                </li><br />
+                                <li className="">
+                                    <h4>Personality: {character.personality}</h4>
+                                </li>
+                            </TabPanel>
+                            <TabPanel>
+                                <div>
+                                    {proficiency.map((prof)=>{
+                                        return(<h4>{prof.name}</h4>
+                                            )
+                                        })}
+                                    {feature.map((feat)=>{
+                                        return(<h4>{feat.name}</h4>
+                                            )
+                                        })}
+                                </div>
+                            </TabPanel>
+                            <TabPanel>
+                            <div>
+                                {spell.map((spell)=>{
+                                    return(<h4>{spell.name}</h4>
+                                        )
+                                    })}
+                            </div>
+                            </TabPanel>
+                            <TabPanel>
+                            <div>
+                                {inventory.map((item)=>{
+                                    return(<h4>{item.name}</h4>
+                                        )
+                                    })}
+                            </div>
+                            </TabPanel>
+                            </Tabs>
                         </div>
                     </div>
                 </div>
