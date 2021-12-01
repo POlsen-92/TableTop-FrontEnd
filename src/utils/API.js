@@ -205,8 +205,8 @@ const API = {
 
 
     // ~~~~~~~~~~~~~~~~~~~~~PROFICIENCY ROUTES~~~~~~~~~~~~~~~~~~~~~~~//
-    createNewProficiency:(proficiencyData,tkn)=>{
-        return axios.post(`${URL_PREFIX}/api/proficiency`,proficiencyData,{headers:{
+    createNewProficiency:(id,proficiencyData,tkn)=>{
+        return axios.post(`${URL_PREFIX}/api/proficiency/${id}`,proficiencyData,{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
     },

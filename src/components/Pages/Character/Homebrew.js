@@ -3,9 +3,14 @@ import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import API from "../../../utils/API";
 import { useNavigate } from "react-router-dom";
+import Dice from "../Dice/Dice"
 
-
-export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
+export default function Homebrew({
+  characterInfo,
+  setCharacterInfo,
+  token,
+  proficiencies,
+}) {
   const navigate = useNavigate();
   const handleCharacterChange = (e) => {
     const { name, value } = e.target;
@@ -18,8 +23,19 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
     const campaignId = window.location.toString().split("/")[
       window.location.toString().split("/").length - 1
     ];
-    API.createCharacter(characterInfo, campaignId, token);
-    console.log(characterInfo);
+    API.createCharacter(characterInfo, campaignId, token).then((res) => {
+      console.log(res.data.id);
+
+      proficiencies.map((items) => {
+        const data = {
+          name: items,
+        };
+        API.createNewProficiency(res.data.id, data, token).then((res) => {
+          console.log(res.data);
+        });
+      });
+    });
+
     navigate(`/campaign/${campaignId}`);
   };
   return (
@@ -32,18 +48,19 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
       >
         Reset
       </button>
+      <Dice/>
       <form className="form-group" onChange={handleCharacterChange}>
         <div className="row">
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="charName">Character Name:</label>
-            <input name="charName" value={characterInfo.charName} />
+            <input name="charName" defaultValue={characterInfo.charName} />
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <div data-tip data-for="personality">
               <label for="personality">Personality:</label>
               <textarea
                 name="personality"
-                value={characterInfo.personality}
+                defaultValue={characterInfo.personality}
                 placeholder="Fill me out"
               ></textarea>
               <ReactTooltip id="personality">
@@ -60,24 +77,24 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="age">Age:</label>
-            <input type="number" name="age" value={characterInfo.age} />
+            <input type="number" name="age" defaultValue={characterInfo.age} />
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="race">Race:</label>
-            <input name="race" value={characterInfo.race} />
+            <input name="race" defaultValue={characterInfo.race} />
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="subRace">Sub-Race:</label>
-            <input name="subRace" value={characterInfo.subRace} />
+            <input name="subRace" defaultValue={characterInfo.subRace} />
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <div data-tip data-for="alignment">
               <label for="alignment">Alignment:</label>
               <textarea
                 name="alignment"
-                value={characterInfo.alignment}
+                defaultValue={characterInfo.alignment}
                 placeholder="Fill me out"
               ></textarea>
               <ReactTooltip id="alignment">
@@ -99,7 +116,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <label for="background">Background:</label>
               <textarea
                 name="background"
-                value={characterInfo.background}
+                defaultValue={characterInfo.background}
                 placeholder="Fill me out"
               ></textarea>
               <ReactTooltip id="background">
@@ -119,17 +136,21 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="class">Class:</label>
-            <input name="class" value={characterInfo.class} />
+            <input name="class" defaultValue={characterInfo.class} />
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="subClass">Sub-Class:</label>
-            <input name="subClass" value={characterInfo.subClass} />
+            <input name="subClass" defaultValue={characterInfo.subClass} />
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <label for="level">Level:</label>
-            <input type="number" name="level" value={characterInfo.level} />
+            <input
+              type="number"
+              name="level"
+              defaultValue={characterInfo.level}
+            />
           </div>
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <div data-tip data-for="strength">
@@ -137,7 +158,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <input
                 type="number"
                 name="strength"
-                value={characterInfo.strength}
+                defaultValue={characterInfo.strength}
               />
               <ReactTooltip id="strength">
                 <p>
@@ -160,7 +181,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <input
                 type="number"
                 name="dexterity"
-                value={characterInfo.dexterity}
+                defaultValue={characterInfo.dexterity}
               />
               <ReactTooltip id="dexterity">
                 <p>
@@ -183,7 +204,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <input
                 type="number"
                 name="constitution"
-                value={characterInfo.constitution}
+                defaultValue={characterInfo.constitution}
               />
               <ReactTooltip id="constitution">
                 <p>
@@ -205,7 +226,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <input
                 type="number"
                 name="intelligence"
-                value={characterInfo.intelligence}
+                defaultValue={characterInfo.intelligence}
               />
               <ReactTooltip id="intelligence">
                 <p>
@@ -224,7 +245,11 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <div data-tip data-for="wisdom">
               <label for="wisdom">Wisdom:</label>
-              <input type="number" name="wisdom" value={characterInfo.wisdom} />
+              <input
+                type="number"
+                name="wisdom"
+                defaultValue={characterInfo.wisdom}
+              />
               <ReactTooltip id="wisdom">
                 <p>
                   Wisdom reflects how attuned you are to the world around you
@@ -246,7 +271,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <input
                 type="number"
                 name="charisma"
-                value={characterInfo.charisma}
+                defaultValue={characterInfo.charisma}
               />
               <ReactTooltip id="charisma">
                 <p>
@@ -268,7 +293,11 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
           <div className="col-sm-12 col-lg-6 col-xl-3">
             <div data-tip data-for="speed">
               <label for="speed">Speed:</label>
-              <input type="number" name="speed" value={characterInfo.speed} />
+              <input
+                type="number"
+                name="speed"
+                defaultValue={characterInfo.speed}
+              />
               <ReactTooltip id="speed">
                 <p>
                   Every character and monster has a speed, which is the distance
@@ -286,7 +315,7 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
               <input
                 type="number"
                 name="hitpoints"
-                value={characterInfo.hitpoints}
+                defaultValue={characterInfo.hitpoints}
               />
               <ReactTooltip id="hitpoints">
                 <p>
@@ -301,6 +330,15 @@ export default function Homebrew({ characterInfo, setCharacterInfo, token }) {
                 </p>
               </ReactTooltip>
             </div>
+          </div>
+          <div className="col-sm-12 col-lg-6 col-xl-3">
+            <label for="proficiencies">Proficiencies</label>
+            <textarea
+              readOnly
+              name="proficiencies"
+              defaultValue={proficiencies}
+              placeholder="Pick on the character page"
+            ></textarea>
           </div>
         </div>
       </form>
