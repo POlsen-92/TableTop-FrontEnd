@@ -29,7 +29,8 @@ function Campaign(props) {
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
             setUsers(res.data.Users);
-            setCharacters(res.data.Characters);
+            const myChars = res.data.Characters.filter((character)=>character.user_id == props.userState.id)
+            setCharacters(myChars);
             console.log(res.data.Characters)
         })
     },[id,props.token])
