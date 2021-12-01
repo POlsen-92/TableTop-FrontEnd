@@ -12,9 +12,11 @@ import Signup from "./components/Pages/Signup";
 import About from "./components/Pages/About";
 import Community from "./components/Pages/Community";
 import Profile from "./components/Pages/Profile";
+import OtherProfile from "./components/Pages/Profile/Profile(Other)";
 import Campaign from "./components/Pages/Campaign";
 import NewBlogPost from "./components/Pages/NewBlogPost";
-import Character from "./components/Pages/Character/Character";
+import Character from "./components/Pages/Character/Character"
+import CharacterView from "./components/Pages/Character/CharacterView";
 import Catalog from "./components/Pages/Catalog/Catalog";
 import BlogPost from "./components/Pages/BlogPost";
 import Gameplay from "./components/Pages/Gameplay/Gameplay";
@@ -104,6 +106,16 @@ const tokenFromStor = localStorage.getItem("token")
               />
             }
           />
+          <Route
+            path="/profile/:id"
+            element={
+              <OtherProfile
+                handleCampaignChange={handleCampaignChange}
+                userState={userState}
+                token={tokenFromStor}
+              />
+            }
+          />
           <Route path="/about" element={<About />} />
           <Route
             path="/signup"
@@ -119,6 +131,10 @@ const tokenFromStor = localStorage.getItem("token")
           <Route
             path="/campaign/:id"
             element={<Campaign token={token} userState={userState} campaignId={campaign} />}
+          />
+          <Route
+            path="/character/:id"
+            element={<CharacterView token={token} userState={userState} />}
           />
           <Route
             path="/blogpost/:id"
