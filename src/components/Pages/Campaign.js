@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom"
 import API from "../../utils/API";
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
@@ -33,7 +33,7 @@ function Campaign(props) {
             setCharacters(myChars);
             console.log(res.data.Characters)
         })
-    },[])
+    },[id,props.token])
 
     const createCharacter = () => {
         navigate(`/createcharacter/${id}`)
@@ -86,13 +86,59 @@ function Campaign(props) {
                 <h4>gm_username</h4>
                 <h2>Players</h2>
                 {users.map((user)=>{
-                    return (<h4>{user.username}</h4>)
+                    if (props.userState.id === user.id) {
+                        return (
+                          <Link
+                            to={{ pathname: `/Profile`}}
+                            className="d-inline"
+                          >
+                            <li
+                              key={user.id}
+                              className="list-group-item list-group-item-action m-3"
+                              id="user"
+                              data-id={user.id}
+                            >
+                              <h4>{user.username}</h4>
+                            </li>
+                          </Link>
+                        )
+                    } else {
+                        return (
+                            <Link
+                              to={{ pathname: `/profile/${user.id}`}}
+                              className="d-inline"
+                            >
+                              <li
+                                key={user.id}
+                                className="list-group-item list-group-item-action m-3"
+                                id="user"
+                                data-id={user.id}
+                              >
+                                <h4>{user.username}</h4>
+                              </li>
+                            </Link>
+                          )
+                    }
                 })}
             </div>
             <div className="border col-3 m-1 text-center">
-                <h2>Your Character(s)</h2>
+                <h2>Character(s)</h2>
                 {characters.map((character) => {
-                    return (<h4>{character.charName}</h4>);
+                    return (
+                        <Link
+                        to={{ pathname: `/character/${character.id}` }}
+                        className="d-inline"
+                      >
+                        <li
+                          key={character.id}
+                          className="list-group-item list-group-item-action m-3"
+                          id="character"
+                          data-id={character.id}
+                        >
+                          <h4>{character.charName}</h4>
+                        </li>
+                      </Link>
+                    );
                 })}
             </div>
         </div>

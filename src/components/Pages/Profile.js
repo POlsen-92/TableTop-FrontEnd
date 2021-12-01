@@ -89,7 +89,7 @@ function Profile(props) {
     const newInvites = invites.filter((invite)=>{
       // console.log(invite.id);
       // console.log(id);
-      return invite.id!=id;
+      return invite.id!==id;
     });
     // console.log("newInvites",newInvites);
     setInvites(newInvites);
@@ -121,10 +121,8 @@ function Profile(props) {
   }, [data]);
 
   useEffect(() => {
-    //this was causing an error if it tried before the token was filled so I added
-    //the if
     if (!props.token) {
-      console.log('profile line 92 no token')
+      console.log('No Token')
     } else {
     API.findSelf(props.token).then((res) => {
       // console.log(res);
@@ -146,7 +144,7 @@ function Profile(props) {
     if(!props.token){
       navigate("/")
     }
-  },[props.token])
+  },[props.token, navigate])
 
   return (
     <div className="container">

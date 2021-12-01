@@ -20,7 +20,7 @@ function BlogPost(props) {
             setPostDescription(res.data[0].description);
             setPostComments(res.data[1]);
         })
-    },[])
+    },[id,props.token])
 
     const handleCommentInputChange = (e) => {
         const { target } = e;
