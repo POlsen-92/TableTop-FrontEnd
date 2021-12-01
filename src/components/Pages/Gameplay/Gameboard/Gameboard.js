@@ -1,0 +1,1 @@
+export { BoardApp as default } from './BoardApp'

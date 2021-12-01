@@ -1,0 +1,9 @@
+
+li {
+  display: inline-block;
+  list-style: none;
+}
+
+#diceform {
+  background: grey;
+}
