@@ -3,6 +3,7 @@ import CampaignFilters from "./../CampaignFilters";
 import API from "../../utils/API";
 import { Link, useNavigate } from "react-router-dom";
 import "../style/Profile.css";
+import "bootstrap/dist/css/bootstrap.css";
 import Avatar from "./UpdateUserInfo/Avatar";
 import Username from "./UpdateUserInfo/Username"
 import Password from "./UpdateUserInfo/Password"
@@ -149,8 +150,12 @@ function Profile(props) {
 
   return (
     <div className="container">
+      <div className="col-12 ">
+        <h1 className="text-center m-2">{username ? username : props.userState.username}</h1>
+        <h2 className="text-center m-2">{email ? email : props.userState.email}</h2>
+      </div>
       <div className="row text-center">
-        <section className="col-4" id="campaigns">
+        <section className="col-4 border" id="campaigns">
           <h3>Your Campaigns</h3>
           <CampaignFilters
             handleCampaignFilterChange={handleCampaignFilterChange}
@@ -160,7 +165,7 @@ function Profile(props) {
               <div className="campaign-list-box">
                 <Link
                   to={{ pathname: `/campaign/${campaign.id}` }}
-                  className="d-inline"
+                  className="d-inline d-flex justify-content-center"
                 >
                   <li
                     key={campaign.id}
@@ -192,8 +197,6 @@ function Profile(props) {
           </button>
         </section>
         <section className="col-4" id="profile-info">
-          <h2>{username ? username : props.userState.username}</h2>
-          <h2>{email ? email : props.userState.email}</h2>
           <img
             src={imageURL ? imageURL : props.userState.image_content}
             width="200"
@@ -248,14 +251,27 @@ function Profile(props) {
               setUpdateEmail={setUpdateEmail}
               setEmail={setEmail}
             />
-          ) : null})
+          ) : null}
           <button className="btn m-1">Notifications</button>
         </section>
-        <section className="col-4" id="all-characters-list">
+        <section className="col-4 border" id="all-characters-list">
           <h3>Your Characters</h3>
           <ul>
             {allMyCharacters.map((character)=>{
-              return (<li><h5>{character.charName}</h5><h6>{character.Campaign.name}</h6></li>)
+              return (
+                <Link
+                  to={{ pathname: `/character/${character.id}` }}
+                  className="d-inline d-flex justify-content-center"
+                  >
+                  <li key={character.id}
+                    className="list-group-item list-group-item-action m-3"
+                    id="character"
+                    data-id={character.id}>
+                    <h5>{character.charName}</h5>
+                    <h6>{character.Campaign.name}</h6>
+                  </li>
+                </Link>
+              )
             })}
           </ul>
         </section>

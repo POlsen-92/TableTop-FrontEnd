@@ -46,13 +46,16 @@ export default function Profile(props) {
       };
 
     useEffect(() => {
-    handleCampaignFilterChange(campaignFilter);
-    }, [campaigns]);
+      handleCampaignFilterChange(campaignFilter);
+    }, [campaignFilter]);
 
     return (
         <div className="container">
+          <div className="col-12 ">
+            <h1 className="text-center m-4">{username}</h1>
+          </div>
         <div className="row text-center">
-          <section className="col-4" id="campaigns">
+          <section className="col-4 border" id="campaigns">
             <h3>Campaigns</h3>
             <CampaignFilters
               handleCampaignFilterChange={handleCampaignFilterChange}
@@ -62,7 +65,7 @@ export default function Profile(props) {
                 <div className="campaign-list-box">
                   <Link
                     to={{ pathname: `/campaign/${campaign.id}` }}
-                    className="d-inline"
+                    className="d-inline d-flex justify-content-center"
                   >
                     <li
                       key={campaign.id}
@@ -78,8 +81,6 @@ export default function Profile(props) {
             })}
           </section>
           <section className="col-4" id="profile-info">
-            <h2>{username}</h2>
-            <h2>{email}</h2>
             <img
               src={picture}
               width="200"
@@ -89,13 +90,13 @@ export default function Profile(props) {
             />{" "}
             <br />
           </section>
-          <section className="col-4" id="character">
+          <section className="col-4 border" id="character">
             <h3>Characters</h3>
                 {characters.map((character) => {
                     return (
                         <Link
                         to={{ pathname: `/character/${character.id}` }}
-                        className="d-inline"
+                        className="d-inline d-flex justify-content-center"
                       >
                         <li
                           key={character.id}

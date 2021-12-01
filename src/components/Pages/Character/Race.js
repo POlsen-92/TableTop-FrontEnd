@@ -132,6 +132,7 @@ export default function Race({
       setRaces(response.data.results);
     });
   }, [!races]);
+  
   return (
     <div>
       <div>
