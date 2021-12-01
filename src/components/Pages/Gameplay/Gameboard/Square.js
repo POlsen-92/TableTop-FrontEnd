@@ -9,8 +9,9 @@ export const Square = ({ black, children }) => {
     const backgroundColor = black ? 'black' : 'white';
     const color = black ? 'white' : 'black';
     return (<div style={{
-            ...squareStyle,
-        }}>
-			{children}
-		</div>);
+        ...squareStyle,
+    }}>
+        {/* this is the issue maybe*/}
+        {children}
+    </div>);
 };

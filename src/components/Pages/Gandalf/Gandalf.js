@@ -3,7 +3,7 @@ import "./Gandalf.css";
 
 export default function Gandalf() {
 
-   return (
+  return (
     <>
       <div className="gandalf">
         <div className="fireball"></div>
@@ -17,10 +17,10 @@ export default function Gandalf() {
           <div className="hair"></div>
           <div className="beard"></div>
         </div>
-      <div className="message">
-        <h4>403 - You Shall Not Pass</h4>
-        <h6>Uh oh, Gandalf says you have a wrong username or password!</h6>
-      </div>
+        <div className="message">
+          <h4>403 - You Shall Not Pass</h4>
+          <h6>Uh oh, Gandalf says you have a wrong username or password!</h6>
+        </div>
       </div>
     </>
   );

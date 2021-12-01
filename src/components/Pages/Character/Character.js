@@ -194,7 +194,7 @@ export default function Character(props) {
 
   const proficienciesControl = (e) => {
     if (proficiencies.includes(e.target.textContent)) {
-      setProficiencies([proficiencies.filter((items)=>{
+      setProficiencies([proficiencies.filter((items) => {
         return items !== e.target.textContent
       })])
     } else {
@@ -203,7 +203,7 @@ export default function Character(props) {
   };
 
   const saveCharacter = () => {
-    
+
     const campaignId = window.location.toString().split("/")[
       window.location.toString().split("/").length - 1
     ];
@@ -273,11 +273,11 @@ export default function Character(props) {
                 )}
               </ul>
               <h3>Chosen Proficiencies</h3>
-            <ul>
-              {proficiencies.map((items, index) => {
-                return <li key={index}>{items}</li>;
-              })}
-            </ul>
+              <ul>
+                {proficiencies.map((items, index) => {
+                  return <li key={index}>{items}</li>;
+                })}
+              </ul>
               {subclassResponse.desc ? <h3>Sub-Class Description</h3> : null}
               {subclassResponse.desc}
             </div>
@@ -330,38 +330,38 @@ export default function Character(props) {
                   <h3>Race Ability Bonuses</h3>
                   {apiResponse.ability_bonuses
                     ? apiResponse.ability_bonuses.map((bonus, index) => {
-                        return (
-                          <p key={index}>
-                            {bonus.ability_score.name}:{bonus.bonus}
-                            <button
-                              data-ability={bonus.ability_score.name}
-                              data-amt={bonus.bonus}
-                              onClick={addBonusToCharacter}
-                            >
-                              Add
-                            </button>
-                          </p>
-                        );
-                      })
+                      return (
+                        <p key={index}>
+                          {bonus.ability_score.name}:{bonus.bonus}
+                          <button
+                            data-ability={bonus.ability_score.name}
+                            data-amt={bonus.bonus}
+                            onClick={addBonusToCharacter}
+                          >
+                            Add
+                          </button>
+                        </p>
+                      );
+                    })
                     : null}
                   {subraceResponse.ability_bonuses ? (
                     <h3>Sub-Race Ability Bonuses</h3>
                   ) : null}
                   {subraceResponse.ability_bonuses
                     ? subraceResponse.ability_bonuses.map((bonus, index) => {
-                        return (
-                          <p key={index}>
-                            {bonus.ability_score.name}:{bonus.bonus}
-                            <button
-                              data-ability={bonus.ability_score.name}
-                              data-amt={bonus.bonus}
-                              onClick={addBonusToCharacter}
-                            >
-                              Add
-                            </button>
-                          </p>
-                        );
-                      })
+                      return (
+                        <p key={index}>
+                          {bonus.ability_score.name}:{bonus.bonus}
+                          <button
+                            data-ability={bonus.ability_score.name}
+                            data-amt={bonus.bonus}
+                            onClick={addBonusToCharacter}
+                          >
+                            Add
+                          </button>
+                        </p>
+                      );
+                    })
                     : null}
                 </div>
               </div>

@@ -23,7 +23,7 @@ function Profile(props) {
   const [updatePassword, setUpdatePassword] = useState(false);
   const [email, setEmail] = useState("");
   const [updateEmail, setUpdateEmail] = useState(false);
-  
+
   const handleCampaignFilterChange = (filter) => {
     setCampaignFilter(filter);
     const newArr = data.filter((campaign) => {
@@ -68,9 +68,9 @@ function Profile(props) {
 
   const acceptInvite = (campid, id) => {
     API.createUserCampaign(campid, props.token).then(() => {
-      API.deleteInvite(id, props.token).then(()=>{
-        API.findCampaign(campid,props.token).then((res)=> {
-          setData([...data,res.data]);
+      API.deleteInvite(id, props.token).then(() => {
+        API.findCampaign(campid, props.token).then((res) => {
+          setData([...data, res.data]);
           removeInvite(id);
         })
       });
@@ -78,17 +78,17 @@ function Profile(props) {
   };
 
   const declineInvite = (id) => {
-    API.deleteInvite(id, props.token).then(()=>{
+    API.deleteInvite(id, props.token).then(() => {
       removeInvite(id);
     });
   };
 
   const removeInvite = (id) => {
     // console.log("invites",invites);
-    const newInvites = invites.filter((invite)=>{
+    const newInvites = invites.filter((invite) => {
       // console.log(invite.id);
       // console.log(id);
-      return invite.id!=id;
+      return invite.id != id;
     });
     // console.log("newInvites",newInvites);
     setInvites(newInvites);
@@ -100,14 +100,15 @@ function Profile(props) {
     if (!props.token) {
       console.log('profile line 74 no token')
     } else {
-    API.findSelf(props.token)
-      .then((res) => {
-        // console.log(res);
-        setData(res.data.Campaigns);
-      })
-      .catch((err) => {
-        console.log(err);
-      });}
+      API.findSelf(props.token)
+        .then((res) => {
+          // console.log(res);
+          setData(res.data.Campaigns);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [props.token]);
 
   useEffect(() => {
@@ -120,27 +121,28 @@ function Profile(props) {
     if (!props.token) {
       console.log('profile line 92 no token')
     } else {
-    API.findSelf(props.token).then((res) => {
-      // console.log(res);
-      let tempInvites = res.data.Invites;
-      for (let i = 0; i < tempInvites.length; i++) {
-        API.findCampaign(tempInvites[i].campaign_id, props.token).then(
-          (res) => {
-            tempInvites[i].campaign_name = res.data.name;
-            setInvites(tempInvites);
-          }
-        );
-      }
-    });}
+      API.findSelf(props.token).then((res) => {
+        // console.log(res);
+        let tempInvites = res.data.Invites;
+        for (let i = 0; i < tempInvites.length; i++) {
+          API.findCampaign(tempInvites[i].campaign_id, props.token).then(
+            (res) => {
+              tempInvites[i].campaign_name = res.data.name;
+              setInvites(tempInvites);
+            }
+          );
+        }
+      });
+    }
   }, [props.token]);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!props.token){
+  useEffect(() => {
+    if (!props.token) {
       navigate("/")
     }
-  },[props.token])
+  }, [props.token])
 
   return (
     <div className="container">
@@ -215,35 +217,35 @@ function Profile(props) {
           <br />
           {updateUsername ? (
             <Username
-                userState={props.userState}
-                setUserState={props.setUserState}
-                token={props.token}
-                setUpdateUsername={setUpdateUsername}
-                username={username}
-                setUsername={setUsername}
-          />
-          ): null}<button onClick={() => setUpdatePassword(!updatePassword)} className="btn m-1">Change Password</button>
+              userState={props.userState}
+              setUserState={props.setUserState}
+              token={props.token}
+              setUpdateUsername={setUpdateUsername}
+              username={username}
+              setUsername={setUsername}
+            />
+          ) : null}<button onClick={() => setUpdatePassword(!updatePassword)} className="btn m-1">Change Password</button>
           <br />
           {updatePassword ? (
             <Password
-                userState={props.userState}
-                setUserState={props.setUserState}
-                token={props.token}
-                setUpdatePassword={setUpdatePassword}
-                email={email}
-                setEmail = {setEmail}
-          />
-          ): null}
+              userState={props.userState}
+              setUserState={props.setUserState}
+              token={props.token}
+              setUpdatePassword={setUpdatePassword}
+              email={email}
+              setEmail={setEmail}
+            />
+          ) : null}
           <button onClick={() => setUpdateEmail(!updateEmail)} className="btn m-1">Change Email</button>
           <br />
           {updateEmail ? (
             <Email
-                userState={props.userState}
-                token={props.token}
-                setUpdateEmail={setUpdateEmail}
-                setEmail={setEmail}
-          />
-          ): null})
+              userState={props.userState}
+              token={props.token}
+              setUpdateEmail={setUpdateEmail}
+              setEmail={setEmail}
+            />
+          ) : null})
           <button className="btn m-1">Notifications</button>
         </section>
         <section className="col-4" id="character-presets">
@@ -289,8 +291,8 @@ function Profile(props) {
                 >
                   Accept
                 </button>
-                <button 
-                  className="btn" 
+                <button
+                  className="btn"
                   onClick={(e) => declineInvite(e.target.getAttribute("data-id"))}
                   data-id={invite.id}
                 >
