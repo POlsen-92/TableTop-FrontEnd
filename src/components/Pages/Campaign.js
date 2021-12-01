@@ -9,19 +9,19 @@ function Campaign(props) {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const [campaignName,setCampaignName] = useState('');
-    const [campaignDesc,setCampaignDesc] = useState('');
-    const [gmID,setGMID] = useState('');
-    const [edit,setEdit] = useState(false);
-    const [nameEdit,setNameEdit] = useState('');
-    const [descEdit,setDescEdit] = useState('');
-    const [invite,setInvite] = useState('');
-    const [users,setUsers] = useState([]);
-    const [characters,setCharacters] = useState([]);
-    const [inviteMsg,setInviteMsg] = useState("");
+    const [campaignName, setCampaignName] = useState('');
+    const [campaignDesc, setCampaignDesc] = useState('');
+    const [gmID, setGMID] = useState('');
+    const [edit, setEdit] = useState(false);
+    const [nameEdit, setNameEdit] = useState('');
+    const [descEdit, setDescEdit] = useState('');
+    const [invite, setInvite] = useState('');
+    const [users, setUsers] = useState([]);
+    const [characters, setCharacters] = useState([]);
+    const [inviteMsg, setInviteMsg] = useState("");
 
-    useEffect(() =>{
-        API.findCampaign(id,props.token).then((res)=>{
+    useEffect(() => {
+        API.findCampaign(id, props.token).then((res) => {
             console.log(res);
             setCampaignName(res.data.name);
             setCampaignDesc(res.data.description);
@@ -33,7 +33,7 @@ function Campaign(props) {
             setCharacters(myChars);
             console.log(res.data.Characters)
         })
-    },[id,props.token])
+    },[id,props])
 
     const createCharacter = () => {
         navigate(`/createcharacter/${id}`)
@@ -44,24 +44,24 @@ function Campaign(props) {
             name: nameEdit,
             description: descEdit,
         }
-        API.updateCampaign(id,update,props.token).then((res)=>console.log(res));
+        API.updateCampaign(id, update, props.token).then((res) => console.log(res));
         setCampaignName(nameEdit);
         setCampaignDesc(descEdit);
         setEdit(false);
     }
 
     const sendInvite = () => {
-        API.findUserByEmail(invite,props.token).then((res)=>{
+        API.findUserByEmail(invite, props.token).then((res) => {
             const inviteObj = {
                 campaign_id: id,
-                user_id:res.data.id,
+                user_id: res.data.id,
             }
-            API.createInvite(inviteObj,props.token).then((response)=>{
+            API.createInvite(inviteObj, props.token).then((response) => {
                 setInvite("");
                 setInviteMsg("Invite Sent");
                 setTimeout(() => {
                     setInviteMsg("")
-                },5000);
+                }, 5000);
             });
         })
     }
@@ -141,10 +141,10 @@ function Campaign(props) {
                     );
                 })}
             </div>
+            </div>
+            {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
         </div>
-        {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e)=>setInvite(e.target.value)}/><button className="btn m-1" onClick={()=>sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>): ""}
-    </div>
     );
-  }
-  
-  export default Campaign;
+}
+
+export default Campaign;

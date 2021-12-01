@@ -25,7 +25,7 @@ function Password(props) {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-  
+
     if (updateFormState.password !== updateFormState.confirmPassword) {
       setErrorMsg("Passwords don't match");
     } else if (updateFormState.password.length < 8) {
@@ -33,7 +33,7 @@ function Password(props) {
     } else {
       setErrorMsg("");
       API.update({ password: updateFormState.password }, props.token).then(
-        (res) => {}
+        (res) => { }
       );
       props.setUpdatePassword(false);
     }

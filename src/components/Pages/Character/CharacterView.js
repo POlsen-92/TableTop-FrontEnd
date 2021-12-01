@@ -8,11 +8,16 @@ export default function CharacterView(props) {
 
     const navigate = useNavigate();
     const { id } = useParams();
-    
+
     const addCatalog = () => {
         navigate('/addCatalog')
     }
 
+    useEffect(() => {
+        API.findInventory(id, props.token).then((res) => {
+            console.log(res);
+        })
+    }, [])
     const [inventory,setInventory] = useState([]);
     const [spell,setSpell] = useState([]);
     const [feature,setFeature] = useState([]);
@@ -87,5 +92,6 @@ export default function CharacterView(props) {
                     </div>
                 </div>
             </div>
+        
     )
 }

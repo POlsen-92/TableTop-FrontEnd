@@ -3,13 +3,13 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./EachDice.css";
 
 export default function Dice(props) {
-    const [diceNumber, setDiceNumber] = useState(1);
+  const [diceNumber, setDiceNumber] = useState(1);
 
-useEffect(() => {
+  useEffect(() => {
     let count = 0;
     const moving = setInterval(() => {
       setDiceNumber(Math.floor(1 + Math.random() * 10));
-      if (count >180) {
+      if (count > 180) {
         clearInterval(moving);
         setDiceNumber(props.dice);
       }
