@@ -24,7 +24,7 @@ import Gameplay from "./components/Pages/Gameplay/Gameplay";
 
 // Socket configuration
 import { io } from "socket.io-client";
-const socket = io("https://table-top-be.herokuapp.com/", {
+const socket = io("http://localhost:3001", {
   transports: ["websocket"],
   extraHeaders: {
     "my-custom-header": "1234",
