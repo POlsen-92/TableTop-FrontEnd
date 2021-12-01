@@ -2,16 +2,15 @@ import { useMemo } from 'react';
 import { Board } from './Board';
 import { Game } from './game';
 const containerStyle = {
-    width: 500,
-    height: 500,
+    height: '90vh',
     border: '1px solid gray',
 };
-/**
- * The Chessboard Tutorial Application
- */
+
+
 export const BoardApp = () => {
     const game = useMemo(() => new Game(), []);
+    const game2 = useMemo(() => new Game(), []);
     return (<div style={containerStyle}>
-			<Board game={game}/>
+			<Board game={game} game2={game2}/>
 		</div>);
 };

@@ -69,9 +69,9 @@ function Profile(props) {
 
   const acceptInvite = (campid, id) => {
     API.createUserCampaign(campid, props.token).then(() => {
-      API.deleteInvite(id, props.token).then(()=>{
-        API.findCampaign(campid,props.token).then((res)=> {
-          setData([...data,res.data]);
+      API.deleteInvite(id, props.token).then(() => {
+        API.findCampaign(campid, props.token).then((res) => {
+          setData([...data, res.data]);
           removeInvite(id);
         })
       });
@@ -79,14 +79,14 @@ function Profile(props) {
   };
 
   const declineInvite = (id) => {
-    API.deleteInvite(id, props.token).then(()=>{
+    API.deleteInvite(id, props.token).then(() => {
       removeInvite(id);
     });
   };
 
   const removeInvite = (id) => {
     // console.log("invites",invites);
-    const newInvites = invites.filter((invite)=>{
+    const newInvites = invites.filter((invite) => {
       // console.log(invite.id);
       // console.log(id);
       return invite.id!==id;
@@ -124,24 +124,25 @@ function Profile(props) {
     if (!props.token) {
       console.log('No Token')
     } else {
-    API.findSelf(props.token).then((res) => {
-      // console.log(res);
-      let tempInvites = res.data.Invites;
-      for (let i = 0; i < tempInvites.length; i++) {
-        API.findCampaign(tempInvites[i].campaign_id, props.token).then(
-          (res) => {
-            tempInvites[i].campaign_name = res.data.name;
-            setInvites(tempInvites);
-          }
-        );
-      }
-    });}
+      API.findSelf(props.token).then((res) => {
+        // console.log(res);
+        let tempInvites = res.data.Invites;
+        for (let i = 0; i < tempInvites.length; i++) {
+          API.findCampaign(tempInvites[i].campaign_id, props.token).then(
+            (res) => {
+              tempInvites[i].campaign_name = res.data.name;
+              setInvites(tempInvites);
+            }
+          );
+        }
+      });
+    }
   }, [props.token]);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!props.token){
+  useEffect(() => {
+    if (!props.token) {
       navigate("/")
     }
   },[props.token, navigate])
@@ -219,35 +220,35 @@ function Profile(props) {
           <br />
           {updateUsername ? (
             <Username
-                userState={props.userState}
-                setUserState={props.setUserState}
-                token={props.token}
-                setUpdateUsername={setUpdateUsername}
-                username={username}
-                setUsername={setUsername}
-          />
-          ): null}<button onClick={() => setUpdatePassword(!updatePassword)} className="btn m-1">Change Password</button>
+              userState={props.userState}
+              setUserState={props.setUserState}
+              token={props.token}
+              setUpdateUsername={setUpdateUsername}
+              username={username}
+              setUsername={setUsername}
+            />
+          ) : null}<button onClick={() => setUpdatePassword(!updatePassword)} className="btn m-1">Change Password</button>
           <br />
           {updatePassword ? (
             <Password
-                userState={props.userState}
-                setUserState={props.setUserState}
-                token={props.token}
-                setUpdatePassword={setUpdatePassword}
-                email={email}
-                setEmail = {setEmail}
-          />
-          ): null}
+              userState={props.userState}
+              setUserState={props.setUserState}
+              token={props.token}
+              setUpdatePassword={setUpdatePassword}
+              email={email}
+              setEmail={setEmail}
+            />
+          ) : null}
           <button onClick={() => setUpdateEmail(!updateEmail)} className="btn m-1">Change Email</button>
           <br />
           {updateEmail ? (
             <Email
-                userState={props.userState}
-                token={props.token}
-                setUpdateEmail={setUpdateEmail}
-                setEmail={setEmail}
-          />
-          ): null})
+              userState={props.userState}
+              token={props.token}
+              setUpdateEmail={setUpdateEmail}
+              setEmail={setEmail}
+            />
+          ) : null})
           <button className="btn m-1">Notifications</button>
         </section>
         <section className="col-4" id="all-characters-list">
@@ -280,8 +281,8 @@ function Profile(props) {
                 >
                   Accept
                 </button>
-                <button 
-                  className="btn" 
+                <button
+                  className="btn"
                   onClick={(e) => declineInvite(e.target.getAttribute("data-id"))}
                   data-id={invite.id}
                 >

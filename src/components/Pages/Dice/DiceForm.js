@@ -41,7 +41,7 @@ function App() {
     let count = 0;
     const moving = setInterval(() => {
       setRollTotal(Math.floor(1 + Math.random() * 10));
-      if (count >480) {
+      if (count > 480) {
         clearInterval(moving);
         setRollTotal(roll1.total);
       }
@@ -76,20 +76,20 @@ function App() {
   return (
     <div>
       <section id="diceform" className="card" style={{ width: "24rem" }}>
-      <div className="card-img-top">
-        <ul id="list">
-          {updateFormState
-            ? test().map((dice, index) => {
+        <div className="card-img-top">
+          <ul id="list">
+            {updateFormState
+              ? test().map((dice, index) => {
                 return (
                   <li key={index}>
                     <Dice dice={dice} />
                   </li>
                 );
               })
-            : null}
-          {rollTotal ? `= ${rollTotal}` : null}
-        </ul>
-      </div>
+              : null}
+            {rollTotal ? `= ${rollTotal}` : null}
+          </ul>
+        </div>
         <form onSubmit={handleFormSubmit} className="form">
           <input type="number" id="quantity" name="quantity" min="1" max="99" />
           d
@@ -142,7 +142,7 @@ function App() {
           <input type="submit" value="Submit" />
         </form>
       </section>
-      
+
     </div>
   );
 }
