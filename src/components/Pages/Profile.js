@@ -23,6 +23,7 @@ function Profile(props) {
   const [updatePassword, setUpdatePassword] = useState(false);
   const [email, setEmail] = useState("");
   const [updateEmail, setUpdateEmail] = useState(false);
+  const [allMyCharacters,setAllMyCharacters] = useState([]);
   
   const handleCampaignFilterChange = (filter) => {
     setCampaignFilter(filter);
@@ -102,13 +103,18 @@ function Profile(props) {
     } else {
     API.findSelf(props.token)
       .then((res) => {
-        // console.log(res);
+        // console.log("self",res);
         setData(res.data.Campaigns);
       })
       .catch((err) => {
         console.log(err);
       });}
-  }, [props.token]);
+    console.log(props.userState.id);
+    API.findCharacterbyUser(props.userState.id).then((response)=>{
+      console.log("mychars",response)
+      setAllMyCharacters(response.data);
+    });
+  }, [props]);
 
   useEffect(() => {
     handleCampaignFilterChange(campaignFilter);
@@ -246,30 +252,17 @@ function Profile(props) {
           ): null})
           <button className="btn m-1">Notifications</button>
         </section>
-        <section className="col-4" id="character-presets">
-          <h3>Your Presets</h3>
-          <div id="preset-filters">
-            <input className="m-1" />
-            <button className="btn m-1" id="player-filter">
-              Search
-            </button>
-            <button className="btn m-1" id="all-filter">
-              Filters
-            </button>
-          </div>
-          <ul id="presets-list list-group-flush list-group">
-            <li
-              className="list-group-item list-group-item-action"
-              id="example-preset"
-              onClick={() => props.handlePageChange("home")}
-            >
-              <h4>Knight Rogue</h4>
-            </li>
+        <section className="col-4" id="all-characters-list">
+          <h3>Your Characters</h3>
+          <ul>
+            {allMyCharacters.map((character)=>{
+              return (<li><h5>{character.charName}</h5><h6>{character.Campaign.name}</h6></li>)
+            })}
           </ul>
         </section>
       </div>
       <div className="row">
-        <ul className="presets-list list-group-flush list-group">
+        <ul className="invites-list list-group-flush list-group">
           {invites.map((invite) => {
             return (
               <div className="campaign-list-box">
