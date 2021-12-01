@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import { useParams, useNavigate } from "react-router-dom"
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "./CharacterView.css";
 import API from "../../../utils/API";
@@ -18,6 +20,7 @@ export default function CharacterView(props) {
     const [feature,setFeature] = useState([]);
     const [proficiency,setProficiency] = useState([]);
     const [character,setCharacter] = useState([]);
+    const [tabIndex, setTabIndex] = useState(0);
 
     useEffect(() =>{
         API.findCharacter(id).then((res)=>{
@@ -42,6 +45,14 @@ export default function CharacterView(props) {
                     </div>
                     <div className="row">
                         <div className="col">
+                        <Tabs selectedIndex={tabIndex} onSelect={index => setTabIndex(index)}>
+                            <TabList>
+                                <Tab>Character Information</Tab>
+                                <Tab>Title 2</Tab>
+                            </TabList>
+                            <TabPanel></TabPanel>
+                            <TabPanel></TabPanel>
+                            </Tabs>
                             <h3>Information</h3>
                                     <ul>
                                         <li className="">
