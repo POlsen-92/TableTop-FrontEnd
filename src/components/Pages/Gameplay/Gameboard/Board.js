@@ -34,10 +34,10 @@ export const Board = ({ game,game2 }) => {
     const [side,setSide] = useState(15)
     useEffect(function(){
         game.observe(setTokenPos)
-    });
-    useEffect(function(){
         game2.observe(setToken2Pos)
     });
+    // useEffect(function(){
+    // });
     function renderSquare(i) {
         const x = i % (side);
         const y = Math.floor(i / (side));
@@ -46,9 +46,10 @@ export const Board = ({ game,game2 }) => {
 				<BoardSquare x={x} y={y} game={game} key={array.join('')}>
                     {/* {tokens.map((token)=>{
                     return (<Token isToken={x === token.x && y === token.y} name={token.name} id={token.id}/>)    
-                    })} */}
-					<Token isToken={x === tokenX && y === tokenY} name={"cd"}/>
+                    })} */} 
                     <Token2 isToken={x === token2X && y === token2Y} name={"ms"}/>
+					<Token isToken={x === tokenX && y === tokenY} name={"cd"}/>
+                   
                     {/* <Token1 isToken={x === tokenX && y === tokenY}/> */}
 				</BoardSquare>
                 
