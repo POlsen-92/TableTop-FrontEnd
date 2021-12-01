@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate, Link } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
@@ -12,7 +12,7 @@ export default function CharacterView(props) {
     const { id } = useParams();
 
     const addCatalog = () => {
-        navigate('/addCatalog')
+        navigate(`/addCatalog/${id}`)
     }
 
     const [inventory,setInventory] = useState([]);
@@ -20,6 +20,8 @@ export default function CharacterView(props) {
     const [feature,setFeature] = useState([]);
     const [proficiency,setProficiency] = useState([]);
     const [character,setCharacter] = useState([]);
+    const [userId,setUserId] = useState('');
+    const [userButton, setUserButton] =useState('');
 
     useEffect(() =>{
         API.findCharacter(id).then((res)=>{
@@ -28,9 +30,37 @@ export default function CharacterView(props) {
             setSpell(res.data.Spells);
             setFeature(res.data.Features);
             setProficiency(res.data.Proficiencies);
+            setUserId(res.data.user_id)
             setCharacter(res.data)
         })
     },[id])
+
+    useEffect(() => {
+        if (props.userState.id === userId) {
+            setUserButton (
+              <Link
+                to={{ pathname: `/Profile`}}
+                className="d-inline"
+              >
+                <button className="col-2 btn my-1 me-1">User Profile</button>
+              </Link>
+            )
+        } else {
+            setUserButton (
+                <Link
+                  to={{ pathname: `/profile/${userId}`}}
+                  className="d-inline"
+                >
+                <button className="col-2 btn my-1 me-1">User Profile</button>
+                </Link>
+            )
+        }
+    },[props.userState.id,userId])
+
+    const campaignPage = () => {
+        navigate(`/campaign/${character.Campaign.id}`)
+    }
+
     return (
             <div className="container">
                 <div className="row">
@@ -38,6 +68,8 @@ export default function CharacterView(props) {
                         <h1>{character.charName}</h1>
                         <button className="col-2 btn my-1 me-1" >Edit Character</button>
                         <button className="col-2 btn my-1 me-1" onClick={addCatalog}>Add Catalog</button>
+                        {userButton}
+                        <button className="col-2 btn my-1 me-1" onClick={campaignPage}>Campaign Page</button>
                     </div>
                     <div className="col">
                         {character.image_content}

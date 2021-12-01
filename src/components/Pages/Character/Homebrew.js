@@ -19,6 +19,7 @@ export default function Homebrew({
       [name]: value,
     });
   };
+  
   const saveCharacter = () => {
     const campaignId = window.location.toString().split("/")[
       window.location.toString().split("/").length - 1
