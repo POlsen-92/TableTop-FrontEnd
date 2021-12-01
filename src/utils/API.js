@@ -62,7 +62,7 @@ const API = {
 
     // ~~~~~~~~~~~~~~~~~~~~~USERCAMPAIGN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
     createUserCampaign:(campaign_id,tkn)=>{
-        console.log(campaign_id);
+        // console.log(campaign_id);
         return axios.post(`${URL_PREFIX}/api/usercampaign`,{campaign_id,},{headers:{
             "Authorization": `Bearer ${tkn}`
         }})
