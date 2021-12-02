@@ -143,8 +143,8 @@ const API = {
             }
         })
     },
-    deleteCharacter: (charData, id, tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/character/${id}`, charData, {
+    deleteCharacter: (id, tkn) => {
+        return axios.delete(`${URL_PREFIX}/api/character/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
