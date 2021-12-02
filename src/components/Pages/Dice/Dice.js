@@ -20,7 +20,7 @@ function Test() {
     }
 
     return (
-        <div id="diceContainer" className="container">
+        <div id="diceContainer">
             More dice?
             <button onClick={addDice}>+</button>
             {diceList.length > 0 ?

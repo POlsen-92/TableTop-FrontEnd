@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
-import axios from "axios";
 import API from "../../../utils/API";
 import { useNavigate } from "react-router-dom";
-import Dice from "../Dice/Dice"
+import { DiceRoll } from "rpg-dice-roller";
+import useSound from "use-sound";
+import rollSound from "../Dice/diceSound.mp3";
+import { randomNameGenerator } from "./Namegen";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function Homebrew({
   characterInfo,
   setCharacterInfo,
   token,
   proficiencies,
+  classapiResponse,
+  apiResponse,
 }) {
   const navigate = useNavigate();
+  const [play] = useSound(rollSound);
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState(false);
+
   const handleCharacterChange = (e) => {
     const { name, value } = e.target;
     setCharacterInfo({
@@ -19,330 +32,719 @@ export default function Homebrew({
       [name]: value,
     });
   };
-  
-  const saveCharacter = () => {
-    const campaignId = window.location.toString().split("/")[
-      window.location.toString().split("/").length - 1
-    ];
-    API.createCharacter(characterInfo, campaignId, token).then((res) => {
-      console.log(res.data.id);
 
-      proficiencies.map((items) => {
-        const data = {
-          name: items,
-        };
-        API.createNewProficiency(res.data.id, data, token).then((res) => {
-          console.log(res.data);
-        });
-      });
+  const randomName = () => {
+    setCharacterInfo({
+      ...characterInfo,
+      charName: randomNameGenerator("sV'i"),
     });
-
-    navigate(`/campaign/${campaignId}`);
   };
+
+  const [backgroundState, setBackGroundState] = useState();
+  const [personalityState, setPersonalityState] = useState();
+  const [alignmentState, setAlignmentState] = useState();
+
+  const onBackgroundEditorStateChange = (editorState) => {
+    setBackGroundState(editorState);
+    const contentState = editorState.getCurrentContent();
+    setCharacterInfo({
+      ...characterInfo,
+      background: convertToRaw(contentState),
+    });
+  };
+  const onPersonalityEditorStateChange = (editorState) => {
+    setPersonalityState(editorState);
+    const contentState = editorState.getCurrentContent();
+    setCharacterInfo({
+      ...characterInfo,
+      personality: convertToRaw(contentState),
+    });
+  };
+  const onAlignmentEditorStateChange = (editorState) => {
+    setAlignmentState(editorState);
+    const contentState = editorState.getCurrentContent();
+    setCharacterInfo({
+      ...characterInfo,
+      alignment: convertToRaw(contentState),
+    });
+  };
+
+  const calculateHitpoints = () => {
+    const roll1 = new DiceRoll(1 + "d" + classapiResponse.hit_die);
+    console.log(
+      roll1.notation,
+      roll1.output
+        .split("[")
+        .pop()
+        .split("]")[0]
+        .split(",")
+        .map(function (item) {
+          return parseInt(item, 10);
+        })
+    );
+    let count = 0;
+    play();
+    const moving = setInterval(() => {
+      setCharacterInfo({
+        ...characterInfo,
+        hitpoints: Math.floor(1 + Math.random() * 10),
+      });
+      if (count > 110) {
+        clearInterval(moving);
+
+        setCharacterInfo({
+          ...characterInfo,
+          hitpoints: roll1.output
+            .split("[")
+            .pop()
+            .split("]")[0]
+            .split(",")
+            .map(function (item) {
+              return parseInt(item, 10);
+            }),
+        });
+      }
+      count++;
+    });
+  };
+
+  const calculateAttributes = (e) => {
+    const roll1 = new DiceRoll("4d6");
+    let output = roll1.output
+      .split("[")
+      .pop()
+      .split("]")[0]
+      .split(",")
+      .map(function (item) {
+        return parseInt(item, 10);
+      });
+    const min = Math.min(...output);
+    console.log(output, min);
+    let location = output.indexOf(min);
+    output.splice(location, 1);
+    const total = output.reduce((partial, item) => partial + item);
+    console.log(total);
+    let count = 0;
+    play();
+    const moving = setInterval(() => {
+      setCharacterInfo({
+        ...characterInfo,
+        [e.target.value]: Math.floor(1 + Math.random() * 10),
+      });
+      if (count > 110) {
+        clearInterval(moving);
+
+        setCharacterInfo({
+          ...characterInfo,
+          [e.target.value]: total,
+        });
+      }
+      count++;
+    });
+  };
+
+  const handleClose = (e) => {
+    if (!e){
+      setShow(false)
+      setError(false)
+    } else if (e.target.textContent === "Close") {
+      setShow(false);
+      setError(false);
+    } else {
+      const campaignId = window.location.toString().split("/")[
+        window.location.toString().split("/").length - 1
+      ];
+      API.createCharacter(characterInfo, campaignId, token).then((res) => {
+        console.log(res.data.id);
+        console.log(res.data);
+        if (proficiencies) {
+          proficiencies.map((items) => {
+            const data = {
+              name: items,
+            };
+            API.createNewProficiency(res.data.id, data, token).then((res) => {
+              console.log(res.data);
+              navigate(`/campaign/${campaignId}`);
+            });
+          });
+        } else {
+          navigate(`/campaign/${campaignId}`);
+        }
+      });
+    }
+  };
+
+  const handleShow = () => {
+    if (characterInfo.charName !== "") {
+      setShow(true);
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <div>
-      <button onClick={saveCharacter}>Save</button>
+      <button variant="primary" onClick={handleShow}>
+        Save
+      </button>
       <button
+        variant="primary"
         onClick={() => {
           window.location.reload();
         }}
       >
         Reset
       </button>
-      <Dice/>
-      <form className="form-group" onChange={handleCharacterChange}>
-        <div className="row">
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="charName">Character Name:</label>
-            <input name="charName" defaultValue={characterInfo.charName} />
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="personality">
-              <label for="personality">Personality:</label>
-              <textarea
-                name="personality"
-                defaultValue={characterInfo.personality}
-                placeholder="Fill me out"
-              ></textarea>
-              <ReactTooltip id="personality">
-                <p>
-                  Fleshing out your character's personality--the array of
-                  traits, mannerisms, habits, <br />
-                  belives, and flaws that give a person a unique identity--will
-                  help you bring them
-                  <br />
-                  to life as you play the game.
+
+      <div className="container">
+        <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4">
+          {/* <div className="card-group"> */}
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Character Name / Age</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="text"
+                    onChange={handleCharacterChange}
+                    name="charName"
+                    value={characterInfo.charName}
+                    className="bg-transparent"
+                  />
                 </p>
-              </ReactTooltip>
+                <p>
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="age"
+                    value={characterInfo.age}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button onClick={randomName} className="btn btn-primary">
+                  Random
+                </button>
+              </div>
             </div>
           </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="age">Age:</label>
-            <input type="number" name="age" defaultValue={characterInfo.age} />
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Race / Subrace</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="text"
+                    onChange={handleCharacterChange}
+                    name="race"
+                    value={characterInfo.race}
+                    className="bg-transparent"
+                  />
+                </p>
+                <p className="card-text">
+                  <input
+                    type="text"
+                    onChange={handleCharacterChange}
+                    name="subRace"
+                    value={characterInfo.subRace}
+                    className="bg-transparent"
+                  />
+                </p>
+
+                {apiResponse.ability_bonuses
+                  ? apiResponse.ability_bonuses.map((bonus, index) => {
+                      return (
+                        <p key={index}>
+                          {bonus.ability_score.name}:{bonus.bonus}
+                          <button
+                            data-ability={bonus.ability_score.name}
+                            data-amt={bonus.bonus}
+                            // onClick={addBonusToCharacter}
+                          >
+                            Add
+                          </button>
+                        </p>
+                      );
+                    })
+                  : null}
+              </div>
+              <div className="card-footer bg-transparent"></div>
+            </div>
           </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="race">Race:</label>
-            <input name="race" defaultValue={characterInfo.race} />
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Class / Subclass</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="text"
+                    onChange={handleCharacterChange}
+                    name="class"
+                    value={characterInfo.class}
+                    className="bg-transparent"
+                  />
+                </p>
+                <p className="card-text">
+                  <input
+                    type="text"
+                    onChange={handleCharacterChange}
+                    name="subClass"
+                    value={characterInfo.subClass}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent"></div>
+            </div>
           </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Proficiencies</div>
+              <div className="card-body">
+                <ul className="list-group list-group-flush">
+                  {proficiencies.map((items, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="list-group-item bg-transparent"
+                      >
+                        {items}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <div className="card-footer bg-transparent"></div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Level</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="text"
+                    onChange={handleCharacterChange}
+                    name="level"
+                    value={characterInfo.level}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent"></div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Speed</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="speed"
+                    value={characterInfo.speed}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent"></div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Hitpoints</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="hitpoints"
+                    value={characterInfo.hitpoints}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="hitpointsButton"
+                  className="btn btn-primary"
+                  onClick={calculateHitpoints}
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="hitpointsButton">
+                  <p>1d{classapiResponse.hit_die}</p>
+                  <p>
+                    Your character's hit points define how tough your character
+                    is in combat and other dangerous situations. Your <br />
+                    hit points are determined by your Hit Dice. At 1st level,
+                    your character has 1 Hit Die and the die type is <br />
+                    determined by your class. You start with hit points equal to
+                    the highest roll of that die, as indicated in your class
+                    <br />
+                    description.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Strength</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="strength"
+                    value={characterInfo.strength}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="strengthButton"
+                  className="btn btn-primary"
+                  onClick={calculateAttributes}
+                  value="strength"
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="strengthButton">
+                  <p>
+                    Each score is generated randomly by using the sum of the
+                    highest 3 out of 4 rolls of a 6 sided dice (4d6).
+                  </p>
+                  <p>
+                    Strength measures bodily power, athletic training, and the
+                    extent to which you can exert raw physical force.
+                    <br />
+                    A Strength check can model any attempt to lift, push, pull,
+                    or break something, to force your body through a space,
+                    <br />
+                    or to otherwise apply brute force to a situation. The
+                    Athletics skill reflects aptitude in certain kinds of
+                    Strength checks.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Dexterity</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="dexterity"
+                    value={characterInfo.dexterity}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="dexterityButton"
+                  className="btn btn-primary"
+                  onClick={calculateAttributes}
+                  value="dexterity"
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="dexterityButton">
+                  <p>
+                    Each score is generated randomly by using the sum of the
+                    highest 3 out of 4 rolls of a 6 sided dice (4d6).
+                  </p>
+                  <p>
+                    Dexterity measures agility, reflexes, and balance. A
+                    Dexterity check can model any attempt to move
+                    <br />
+                    nimbly, quickly, or quietly, or to keep from falling on
+                    tricky footing. The Acrobatics, Sleight of Hand, <br />
+                    and Stealth skills reflect aptitude in certain kinds of
+                    Dexterity checks.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Constitution</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="constitution"
+                    value={characterInfo.constitution}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="constitutionButton"
+                  className="btn btn-primary"
+                  onClick={calculateAttributes}
+                  value="constitution"
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="constitutionButton">
+                  <p>
+                    Each score is generated randomly by using the sum of the
+                    highest 3 out of 4 rolls of a 6 sided dice (4d6).
+                  </p>
+                  <p>
+                    Constitution measures health, stamina, and vital force.
+                    Constitution checks are uncommon,
+                    <br />
+                    and no skills apply to Constitution checks, because the
+                    endurance this ability represents is
+                    <br />
+                    largely passive rather than involving a specific effort on
+                    the part of a character or monster.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Intelligence</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="intelligence"
+                    value={characterInfo.intelligence}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="intelligenceButton"
+                  className="btn btn-primary"
+                  onClick={calculateAttributes}
+                  value="intelligence"
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="intelligenceButton">
+                  <p>
+                    Each score is generated randomly by using the sum of the
+                    highest 3 out of 4 rolls of a 6 sided dice (4d6).
+                  </p>
+                  <p>
+                    Intelligence measures mental acuity, accuracy of recall, and
+                    the ability to reason. An Intelligence
+                    <br />
+                    check comes into play when you need to draw on logic,
+                    education, memory, or deductive reasoning. <br />
+                    The Arcana, History, Investigation, Nature, and Religion
+                    skills reflect aptitude in certain kinds of <br />
+                    Intelligence checks.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Wisdom</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="wisdom"
+                    value={characterInfo.wisdom}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="wisdomButton"
+                  className="btn btn-primary"
+                  onClick={calculateAttributes}
+                  value="wisdom"
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="wisdomButton">
+                  <p>
+                    Each score is generated randomly by using the sum of the
+                    highest 3 out of 4 rolls of a 6 sided dice (4d6).
+                  </p>
+                  <p>
+                    Wisdom reflects how attuned you are to the world around you
+                    and represents perceptiveness and intuition.
+                    <br />
+                    A Wisdom check might reflect an effort to read body
+                    language, understand someone's feelings, notice <br />
+                    things about the environment, or care for an injured person.
+                    The Animal Handling, Insight, Medicine, <br />
+                    Perception, and Survival skills reflect aptitude in certain
+                    kinds of Wisdom checks.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          <div className="col">
+            <div
+              className="card bg-transparent h-100"
+              style={{ width: "18rem" }}
+            >
+              <div className="card-header">Charisma</div>
+              <div className="card-body">
+                <p className="card-text">
+                  <input
+                    type="number"
+                    onChange={handleCharacterChange}
+                    name="charisma"
+                    value={characterInfo.charisma}
+                    className="bg-transparent"
+                  />
+                </p>
+              </div>
+              <div className="card-footer bg-transparent">
+                <button
+                  data-tip
+                  data-for="charismaButton"
+                  className="btn btn-primary"
+                  onClick={calculateAttributes}
+                  value="charisma"
+                >
+                  Calculate
+                </button>
+                <ReactTooltip className="tooltip" id="charismaButton">
+                  <p>
+                    Each score is generated randomly by using the sum of the
+                    highest 3 out of 4 rolls of a 6 sided dice (4d6).
+                  </p>
+                  <p>
+                    Charisma measures your ability to interact effectively with
+                    others. It includes such factors as confidence <br />
+                    and eloquence, and it can represent a charming or commanding
+                    personality. A Charisma check might arise when <br />
+                    you try to influence or entertain others, when you try to
+                    make an impression or tell a convincing lie, or <br />
+                    when you are navigating a tricky social situation. The
+                    Deception, Intimidation, Performance, and Persuasion <br />
+                    skills reflect aptitude in certain kinds of Charisma checks.
+                  </p>
+                </ReactTooltip>
+              </div>
+            </div>
+          </div>
+          {/* </div> */}
+        </div>
+        <div className="row forms">
+          <h2>Character Background</h2>
+          <Editor
+            editorState={backgroundState}
+            onEditorStateChange={onBackgroundEditorStateChange}
+          />
         </div>
         <div className="row">
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="subRace">Sub-Race:</label>
-            <input name="subRace" defaultValue={characterInfo.subRace} />
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="alignment">
-              <label for="alignment">Alignment:</label>
-              <textarea
-                name="alignment"
-                defaultValue={characterInfo.alignment}
-                placeholder="Fill me out"
-              ></textarea>
-              <ReactTooltip id="alignment">
-                <p>
-                  A typical character has an alignment, which broadlly describes
-                  its moral and personal attitudes
-                  <br />
-                  Alignment is a combination of two factors: one identifies
-                  morality (good, evil, or neutral), and the
-                  <br />
-                  other describes attitudes toward society and order (lawful,
-                  chaotic, or neutral).
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="background">
-              <label for="background">Background:</label>
-              <textarea
-                name="background"
-                defaultValue={characterInfo.background}
-                placeholder="Fill me out"
-              ></textarea>
-              <ReactTooltip id="background">
-                <p>
-                  Every story has a beginning. Your character's background
-                  reveals where you came from, how you <br />
-                  became an adventurer, and your place in the world. Your
-                  fighter might have been a courageous
-                  <br />
-                  knight or a grizzled soldier. Your wizard coul dhave been a
-                  sage or an atrisan. Your rogue might <br />
-                  have gotten by as a guild thief or commanded audiences as a
-                  jester.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="class">Class:</label>
-            <input name="class" defaultValue={characterInfo.class} />
-          </div>
+          <h2>Character Personality</h2>
+          <Editor
+            editorState={personalityState}
+            onEditorStateChange={onPersonalityEditorStateChange}
+          />
         </div>
         <div className="row">
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="subClass">Sub-Class:</label>
-            <input name="subClass" defaultValue={characterInfo.subClass} />
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="level">Level:</label>
-            <input
-              type="number"
-              name="level"
-              defaultValue={characterInfo.level}
-            />
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="strength">
-              <label for="strength">Strength:</label>
-              <input
-                type="number"
-                name="strength"
-                defaultValue={characterInfo.strength}
-              />
-              <ReactTooltip id="strength">
-                <p>
-                  Strength measures bodily power, athletic training, and the
-                  extent to which you can exert raw physical force.
-                  <br />
-                  A Strength check can model any attempt to lift, push, pull, or
-                  break something, to force your body through a space,
-                  <br />
-                  or to otherwise apply brute force to a situation. The
-                  Athletics skill reflects aptitude in certain kinds of Strength
-                  checks.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="dexterity">
-              <label for="dexterity">Dexterity:</label>
-              <input
-                type="number"
-                name="dexterity"
-                defaultValue={characterInfo.dexterity}
-              />
-              <ReactTooltip id="dexterity">
-                <p>
-                  Dexterity measures agility, reflexes, and balance. A Dexterity
-                  check can model any attempt to move
-                  <br />
-                  nimbly, quickly, or quietly, or to keep from falling on tricky
-                  footing. The Acrobatics, Sleight of Hand, <br />
-                  and Stealth skills reflect aptitude in certain kinds of
-                  Dexterity checks.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
+          <h2>Character Alignment</h2>
+          <Editor
+            editorState={alignmentState}
+            onEditorStateChange={onAlignmentEditorStateChange}
+          />
         </div>
-        <div className="row">
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="constitution">
-              <label for="constitution">Constitution:</label>
-              <input
-                type="number"
-                name="constitution"
-                defaultValue={characterInfo.constitution}
-              />
-              <ReactTooltip id="constitution">
-                <p>
-                  Constitution measures health, stamina, and vital force.
-                  Constitution checks are uncommon,
-                  <br />
-                  and no skills apply to Constitution checks, because the
-                  endurance this ability represents is
-                  <br />
-                  largely passive rather than involving a specific effort on the
-                  part of a character or monster.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="intelligence">
-              <label for="intelligence">Intelligence:</label>
-              <input
-                type="number"
-                name="intelligence"
-                defaultValue={characterInfo.intelligence}
-              />
-              <ReactTooltip id="intelligence">
-                <p>
-                  Intelligence measures mental acuity, accuracy of recall, and
-                  the ability to reason. An Intelligence
-                  <br />
-                  check comes into play when you need to draw on logic,
-                  education, memory, or deductive reasoning. <br />
-                  The Arcana, History, Investigation, Nature, and Religion
-                  skills reflect aptitude in certain kinds of <br />
-                  Intelligence checks.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="wisdom">
-              <label for="wisdom">Wisdom:</label>
-              <input
-                type="number"
-                name="wisdom"
-                defaultValue={characterInfo.wisdom}
-              />
-              <ReactTooltip id="wisdom">
-                <p>
-                  Wisdom reflects how attuned you are to the world around you
-                  and represents perceptiveness and intuition.
-                  <br />
-                  A Wisdom check might reflect an effort to read body language,
-                  understand someone's feelings, notice <br />
-                  things about the environment, or care for an injured person.
-                  The Animal Handling, Insight, Medicine, <br />
-                  Perception, and Survival skills reflect aptitude in certain
-                  kinds of Wisdom checks.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="charisma">
-              <label for="charisma">Charisma:</label>
-              <input
-                type="number"
-                name="charisma"
-                defaultValue={characterInfo.charisma}
-              />
-              <ReactTooltip id="charisma">
-                <p>
-                  Charisma measures your ability to interact effectively with
-                  others. It includes such factors as confidence <br />
-                  and eloquence, and it can represent a charming or commanding
-                  personality. A Charisma check might arise when <br />
-                  you try to influence or entertain others, when you try to make
-                  an impression or tell a convincing lie, or <br />
-                  when you are navigating a tricky social situation. The
-                  Deception, Intimidation, Performance, and Persuasion <br />
-                  skills reflect aptitude in certain kinds of Charisma checks.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="speed">
-              <label for="speed">Speed:</label>
-              <input
-                type="number"
-                name="speed"
-                defaultValue={characterInfo.speed}
-              />
-              <ReactTooltip id="speed">
-                <p>
-                  Every character and monster has a speed, which is the distance
-                  in feet that the character or monster <br />
-                  can walk in 1 round. This number assumes short bursts of
-                  energetic movement in the midst of a life-threatening
-                  situation.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <div data-tip data-for="hitpoints">
-              <label for="hitpoints">Hitpoints:</label>
-              <input
-                type="number"
-                name="hitpoints"
-                defaultValue={characterInfo.hitpoints}
-              />
-              <ReactTooltip id="hitpoints">
-                <p>
-                  Your character's hit points define how tough your character is
-                  in combat and other dangerous situations. Your <br />
-                  hit points are determined by your Hit Dice. At 1st level, your
-                  character has 1 Hit Die and the die type is <br />
-                  determined by your class. You start with hit points equal to
-                  the highest roll of that die, as indicated in your class
-                  <br />
-                  description.
-                </p>
-              </ReactTooltip>
-            </div>
-          </div>
-          <div className="col-sm-12 col-lg-6 col-xl-3">
-            <label for="proficiencies">Proficiencies</label>
-            <textarea
-              readOnly
-              name="proficiencies"
-              defaultValue={proficiencies}
-              placeholder="Pick on the character page"
-            ></textarea>
-          </div>
-        </div>
-      </form>
+      </div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Save?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure? Once you save you won't be able to edit the race and
+          class.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={error} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Error!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          The character's name needs to be filled out before saving.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
