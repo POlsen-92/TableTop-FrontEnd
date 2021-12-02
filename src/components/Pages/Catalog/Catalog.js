@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from "react-tooltip";
 import 'react-tabs/style/react-tabs.css';
@@ -371,7 +371,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="text" 
                                     name="typicalspeakers"
-                                    defaultValue={profInputs.typicalspeakers || ""}
+                                    defaultValue={profInputs.typicalSpeakers || ""}
                                     onChange={handleProfChange}
                                     />
                                 </label><br />

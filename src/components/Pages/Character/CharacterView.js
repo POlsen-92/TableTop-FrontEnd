@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from "react-tooltip";
@@ -67,22 +67,22 @@ export default function CharacterView(props) {
 
     // ~~~~~~~~~~~~~~~CHAR INFO EDIT~~~~~~~~~~~~~~~~~~~~
     const [editChar, setEditChar] = useState(false);
-    const [nameEdit, setnameEdit] = useState('');
-    const [ageEdit, setageEdit] = useState('');
-    const [levelEdit, setlevelEdit] = useState('');
-    const [alignEdit, setalignEdit] = useState('');
-    const [bgEdit, setbgEdit] = useState('');
-    const [persEdit, setpersEdit] = useState('');
-    const [hpEdit, sethpEdit] = useState('');
-    const [chpEdit, setchpEdit] = useState('');
-    const [thpEdit, setthpEdit] = useState('');
-    const [strEdit, setstrEdit] = useState('');
-    const [dexEdit, setdexEdit] = useState('');
-    const [conEdit, setconEdit] = useState('');
-    const [intEdit, setintEdit] = useState('');
-    const [wisEdit, setwisEdit] = useState('');
-    const [chaEdit, setchaEdit] = useState('');
-    const [spdEdit, setspdEdit] = useState('');
+    const [nameEdit, setnameEdit] = useState();
+    const [ageEdit, setageEdit] = useState();
+    const [levelEdit, setlevelEdit] = useState();
+    const [alignEdit, setalignEdit] = useState();
+    const [bgEdit, setbgEdit] = useState();
+    const [persEdit, setpersEdit] = useState();
+    const [hpEdit, sethpEdit] = useState();
+    const [chpEdit, setchpEdit] = useState();
+    const [thpEdit, setthpEdit] = useState();
+    const [strEdit, setstrEdit] = useState();
+    const [dexEdit, setdexEdit] = useState();
+    const [conEdit, setconEdit] = useState();
+    const [intEdit, setintEdit] = useState();
+    const [wisEdit, setwisEdit] = useState();
+    const [chaEdit, setchaEdit] = useState();
+    const [spdEdit, setspdEdit] = useState();
 
 
     const charSave = () => {
@@ -108,20 +108,20 @@ export default function CharacterView(props) {
         console.log(id)
         API.updateCharacter(charUpdate,id, props.token).then((res) => console.log(res));
         setEditChar(false);
-        // window.location.reload(false)
+        window.location.reload(false)
     }
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~PROFICIENCIES EDIT~~~~~~~~~~~~~~~~~//
 
     const [editProf, setEditProf] = useState(false);
-    const [profNameEdit, setprofNameEdit] = useState('');
-    const [profDescEdit, setprofDescEdit] = useState('');
-    const [profTypeEdit, setprofTypeEdit] = useState('');
-    const [profSubTEdit, setprofSubTEdit] = useState('');
-    const [profAbilityEdit, setprofAbilityEdit] = useState('');
-    const [profScriptEdit, setprofScriptEdit] = useState('');
-    const [profTSEdit, setprofTSEdit] = useState('');
+    const [profNameEdit, setprofNameEdit] = useState();
+    const [profDescEdit, setprofDescEdit] = useState();
+    const [profTypeEdit, setprofTypeEdit] = useState();
+    const [profSubTEdit, setprofSubTEdit] = useState();
+    const [profAbilityEdit, setprofAbilityEdit] = useState();
+    const [profScriptEdit, setprofScriptEdit] = useState();
+    const [profTSEdit, setprofTSEdit] = useState();
 
     const profSave = (profId) => {
         const profUpdate = {
@@ -137,7 +137,7 @@ export default function CharacterView(props) {
         console.log(profId)
         API.updateProficiency(profId, profUpdate, props.token).then((res) => console.log(res));
         setEditProf(false);
-        // window.location.reload(false)
+        window.location.reload(false)
     }
 
 
@@ -196,40 +196,40 @@ export default function CharacterView(props) {
                                         {(character.subclass) ? (
                                             <h5>SubClass:{character.subclass}</h5>
                                         ) : ""}
-                                            <h5>Age:{editChar ? (<input className="row" defaultValue={character.age} onChange={(e)=>setageEdit(e.target.value)}/>) : 
-                                            (character.age)}</h5>
-                                            <h5>Level:{editChar ? (<input className="row" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
-                                            (character.level)}</h5>
-                                            <h5>Alignment: </h5>
-                                            {editChar ? (<input className="row" defaultValue={character.alignment} onChange={(e)=>setalignEdit(e.target.value)}/>) : 
-                                            (<p>{character.alignment}</p>)}
-                                            <h5>Background:{editChar ? (<input className="row" defaultValue={character.background} onChange={(e)=>setbgEdit(e.target.value)}/>) : 
-                                            (character.background)}</h5>
-                                            <h5>Personality: </h5>
-                                            <p>{editChar ? (<input className="row" defaultValue={character.personality} onChange={(e)=>setpersEdit(e.target.value)}/>) : 
-                                            (character.personality)}</p>
+                                        <h5>Age:{editChar ? (<input className="row" defaultValue={character.age} onChange={(e)=>setageEdit(e.target.value)}/>) : 
+                                        (character.age)}</h5>
+                                        <h5>Level:{editChar ? (<input className="row" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
+                                        (character.level)}</h5>
+                                        <h5>Alignment: </h5>
+                                        {editChar ? (<input className="row" defaultValue={character.alignment} onChange={(e)=>setalignEdit(e.target.value)}/>) : 
+                                        (<p>{character.alignment}</p>)}
+                                        <h5>Background:{editChar ? (<input className="row" defaultValue={character.background} onChange={(e)=>setbgEdit(e.target.value)}/>) : 
+                                        (character.background)}</h5>
+                                        <h5>Personality: </h5>
+                                        <p>{editChar ? (<input className="row" defaultValue={character.personality} onChange={(e)=>setpersEdit(e.target.value)}/>) : 
+                                        (character.personality)}</p>
                                     </div>
                                     <div className="col-4">
-                                            <h5>HitPoints:{editChar ? (<input className="row" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
-                                            (character.hitpoints)}</h5>
-                                            <h5>Current HP: {editChar ? (<input className="row" defaultValue={character.currhitpoints} onChange={(e)=>setchpEdit(e.target.value)}/>) : 
-                                            (character.currhitpoints)}</h5>
-                                            <h5>Temp HP: {editChar ? (<input className="row" defaultValue={character.temphitpoints} onChange={(e)=>setthpEdit(e.target.value)}/>) : 
-                                            (character.temphitpoints)}</h5>
-                                            <h5>Strength: {editChar ? (<input className="row" defaultValue={character.strength} onChange={(e)=>setstrEdit(e.target.value)}/>) : 
-                                            (character.strength)}</h5>
-                                            <h5>Dexterity: {editChar ? (<input className="row" defaultValue={character.dexterity} onChange={(e)=>setdexEdit(e.target.value)}/>) : 
-                                            (character.dexterity)}</h5>
-                                            <h5>Constitution: {editChar ? (<input className="row" defaultValue={character.constitution} onChange={(e)=>setconEdit(e.target.value)}/>) : 
-                                            (character.constitution)}</h5>
-                                            <h5>Intelligence: {editChar ? (<input className="row" defaultValue={character.intelligence} onChange={(e)=>setintEdit(e.target.value)}/>) : 
-                                            (character.intelligence)}</h5>
-                                            <h5>Wisdom: {editChar ? (<input className="row" defaultValue={character.wisdom} onChange={(e)=>setwisEdit(e.target.value)}/>) : 
-                                            (character.wisdom)}</h5>
-                                            <h5>Charisma: {editChar ? (<input className="row" defaultValue={character.charisma} onChange={(e)=>setchaEdit(e.target.value)}/>) : 
-                                            (character.charisma)}</h5>
-                                            <h5>Speed: {editChar ? (<input className="row" defaultValue={character.speed} onChange={(e)=>setspdEdit(e.target.value)}/>) : 
-                                            (character.speed)}</h5>
+                                        <h5>HitPoints:{editChar ? (<input className="row" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
+                                        (character.hitpoints)}</h5>
+                                        <h5>Current HP: {editChar ? (<input className="row" defaultValue={character.currhitpoints} onChange={(e)=>setchpEdit(e.target.value)}/>) : 
+                                        (character.currhitpoints)}</h5>
+                                        <h5>Temp HP: {editChar ? (<input className="row" defaultValue={character.temphitpoints} onChange={(e)=>setthpEdit(e.target.value)}/>) : 
+                                        (character.temphitpoints)}</h5>
+                                        <h5>Strength: {editChar ? (<input className="row" defaultValue={character.strength} onChange={(e)=>setstrEdit(e.target.value)}/>) : 
+                                        (character.strength)}</h5>
+                                        <h5>Dexterity: {editChar ? (<input className="row" defaultValue={character.dexterity} onChange={(e)=>setdexEdit(e.target.value)}/>) : 
+                                        (character.dexterity)}</h5>
+                                        <h5>Constitution: {editChar ? (<input className="row" defaultValue={character.constitution} onChange={(e)=>setconEdit(e.target.value)}/>) : 
+                                        (character.constitution)}</h5>
+                                        <h5>Intelligence: {editChar ? (<input className="row" defaultValue={character.intelligence} onChange={(e)=>setintEdit(e.target.value)}/>) : 
+                                        (character.intelligence)}</h5>
+                                        <h5>Wisdom: {editChar ? (<input className="row" defaultValue={character.wisdom} onChange={(e)=>setwisEdit(e.target.value)}/>) : 
+                                        (character.wisdom)}</h5>
+                                        <h5>Charisma: {editChar ? (<input className="row" defaultValue={character.charisma} onChange={(e)=>setchaEdit(e.target.value)}/>) : 
+                                        (character.charisma)}</h5>
+                                        <h5>Speed: {editChar ? (<input className="row" defaultValue={character.speed} onChange={(e)=>setspdEdit(e.target.value)}/>) : 
+                                        (character.speed)}</h5>
                                     </div>
                                     {(editChar ? (<button className="col-2 btn m-1" onClick={()=>charSave()}>Save</button>) : 
                                     (<button className="col-2 btn m-1" onClick={()=>setEditChar(true)}>Edit Character</button>))}
@@ -243,11 +243,13 @@ export default function CharacterView(props) {
                                         {proficiency.map((prof)=>{
                                             return(
                                                 <div className="col-4 ">
-                                                    <h5>{editProf ? 
+                                                    <h5>
+                                                        {editProf ? 
                                                         (<input className="row" defaultValue={prof.name} onChange={(e)=>setprofNameEdit(e.target.value)}/>) : 
                                                         (prof.name)}</h5> 
                                                     <h6>Description: </h6>
-                                                    <p>{editProf ? 
+                                                    <p>
+                                                        {editProf ? 
                                                         (<input className="row" defaultValue={prof.description} onChange={(e)=>setprofDescEdit(e.target.value)}/>) : 
                                                         (prof.description)}</p>
                                                     <h6>Type: 
@@ -265,13 +267,13 @@ export default function CharacterView(props) {
                                                     <h6>Typical Speakers: 
                                                         {editProf ? (<input className="row" defaultValue={prof.typicalSpeakers} onChange={(e)=>setprofTSEdit(e.target.value)}/>) : 
                                                         (prof.typicalSpeakers)}</h6>
-                                                    {editProf ? 
+                                                    {(prof.user_id === props.userState.id) ? (editProf ? 
                                                         (<button data-id={prof.id} className="prof-edt-btn m-1" onClick={(e)=>profSave(e.target.getAttribute("data-id"))}>Save</button>) :
-                                                        (<button className="m-1" onClick={()=>setEditProf(true)}>Edit</button>)}<br />
-                                                    <button data-id={prof.id} className="prof-dlt-btn"
-                                                    onClick={(e) => {
+                                                        (<button className="m-1" onClick={()=>setEditProf(true)}>Edit</button>)) : ''}
+                                                        {(prof.user_id === props.userState.id) ? (<button data-id={prof.id} className="prof-dlt-btn"
+                                                        onClick={(e) => {
                                                         API.deleteProficiency(e.target.getAttribute("data-id"),props.token).then(window.location.reload(false));}}>Delete
-                                                    </button>
+                                                    </button>) : ""}
                                                 </div>
                                             )
                                         })}

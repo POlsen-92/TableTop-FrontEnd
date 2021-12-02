@@ -150,7 +150,7 @@ function Profile(props) {
 
   return (
     <div className="container">
-      <div className="col-12 ">
+      <div className="col-12" >
         <h1 className="text-center m-2">{username ? username : props.userState.username}</h1>
         <h2 className="text-center m-2">{email ? email : props.userState.email}</h2>
       </div>
@@ -257,7 +257,7 @@ function Profile(props) {
         <section className="col-4 border" id="all-characters-list">
           <h3>Your Characters</h3>
           <ul>
-            {allMyCharacters.map((character)=>{
+            {allMyCharacters.map((character, index)=>{
               return (
                 <Link
                   to={{ pathname: `/character/${character.id}` }}
@@ -281,7 +281,7 @@ function Profile(props) {
           {invites.map((invite) => {
             return (
               <div className="campaign-list-box">
-                <li className="list-group-item list-group-item-action m-3">
+                <li key={invite.id} className="list-group-item list-group-item-action m-3">
                   You are invited to: {invite.campaign_name}
                 </li>
                 <button

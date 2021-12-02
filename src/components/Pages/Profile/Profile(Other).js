@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import CampaignFilters from "../../CampaignFilters";
 import API from "../../../utils/API";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Profile.css";
 
 export default function Profile(props) {
 
-    const navigate = useNavigate();
     const { id } = useParams();
 
 
     const [campaignFilter, setCampaignFilter] = useState("all");
     const [displayData, setDisplayData] = useState([]);
     const [username,setUsername] = useState('');
-    const [email,setEmail] = useState('');
     const [picture,setPicture] = useState('');
     const [campaigns,setCampaigns] = useState([]);
     const [characters,setCharacters] = useState([]);
@@ -21,7 +19,6 @@ export default function Profile(props) {
     useEffect(() => {
         API.findUserById(id).then((res)=>{
             setUsername(res.data.username);
-            setEmail(res.data.email);
             setCampaigns(res.data.Campaigns);
             setCharacters(res.data.Characters);
             setPicture(res.data.image_content)
