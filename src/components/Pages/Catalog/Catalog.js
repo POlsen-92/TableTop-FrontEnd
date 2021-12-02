@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import ReactTooltip from "react-tooltip";
+import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "./Catalog.css";
 import API from "../../../utils/API";
@@ -7,48 +10,62 @@ import API from "../../../utils/API";
 
 export default function Catalog(props) {
 
+    const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() =>{
-        API.findInventorybyChar(id,props.token).then((res)=>{
+        API.findCharacter(id).then((res)=>{
             console.log(res)
+            setCharacter(res.data)
         })
-    },[id,props.token])
+    },[id])
+
+    const [character,setCharacter] = useState([]);
+
+    const characterPage = () => {
+        navigate(`/character/${id}`)
+    }
 
     // ~~~~~~~~~~~~~~INVENTORY~~~~~~~~~~~~~~//
-    const [inventInputs, setInventInputs] = useState({
-        name: '',
-        type: '',
-        description: '',
-        properties: '',
-        cost: '',
-        weight: '',
-        armorClass: '',
-        strength: '',
-        stealth: '',
-        damage: '',
+    const [equipInputs, setEquipInputs] = useState({
+        name: "",
+        type: "",
+        description: "",
+        properties: "",
+        cost: 0,
+        weight: 0,
+        armorClass: 0,
+        strength: 0,
+        stealth: 0,
+        damage: 0,
     });
 
-    const handleInventChange = (e) => {
+    const handleEquipChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        setInventInputs({...inventInputs, [name]: value})
+        setEquipInputs({...equipInputs, [name]: value})
       }
 
     const addInvent = (e) => {
         e.preventDefault();
-        console.log(inventInputs)
+        API.createEquipment(id,equipInputs,props.token)
+         .then((res) => {
+             console.log(res.data)
+         })
+         .catch((err) => {
+             console.log(err)
+         })
     }
 
     // ~~~~~~~~~~~~~~SPELLS~~~~~~~~~~~~~~//
     const [spellInputs, setSpellInputs] = useState({
-        name: '',
-        type: '',
-        description: '',
-        level: '',
-        duration: '',
-        range: '',
-        attack: '',
+        name: "",
+        type: "",
+        description: "",
+        level: "",
+        duration: "",
+        range: "",
+        attack: 0,
     });
 
     const handleSpellChange = (e) => {
@@ -59,14 +76,20 @@ export default function Catalog(props) {
 
     const addSpell = (e) => {
         e.preventDefault();
-        console.log(spellInputs)
+        API.createSpell(id,spellInputs,props.token)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     // ~~~~~~~~~~~~~~FEATURES~~~~~~~~~~~~~~//
     const [featInputs, setFeatInputs] = useState({
-        name: '',
-        type: '',
-        description: '',
+        name: "",
+        type: "",
+        description: "",
     });
 
     const handleFeatChange = (e) => {
@@ -77,18 +100,24 @@ export default function Catalog(props) {
 
     const addFeat = (e) => {
         e.preventDefault();
-        console.log(featInputs)
+        API.createFeature(id,featInputs,props.token)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
 
     // ~~~~~~~~~~~~~~PROFICIENCIES~~~~~~~~~~~~~~//
     const [profInputs, setProfInputs] = useState({
-        name: '',
-        type: '',
-        description: '',
-        subtype: '',
-        ability: '',
-        script: '',
-        typicalSpeakers: '',
+        name: "",
+        type: "",
+        description: "",
+        subtype: "",
+        ability: "",
+        script: "",
+        typicalSpeakers: "",
     });
 
     const handleProfChange = (e) => {
@@ -99,281 +128,270 @@ export default function Catalog(props) {
 
     const addProf = (e) => {
         e.preventDefault();
-        console.log(profInputs)
+        API.createNewProficiency(id,profInputs,props.token)
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     }
-
-// ~~~~~~~~~~~~~~CHOICES~~~~~~~~~~~~~~//
-
-const [choice,setChoice] = useState('')
-    const pickCatalogType = (e) => {
-        if (e.target.value === "Equipment") {
-            setChoice (
-                <form onSubmit={addInvent}>
-                    <label>Name
-                        <input
-                        type="text" 
-                        name="name"
-                        value={inventInputs.name || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Type
-                        <input
-                        type="text" 
-                        name="type"
-                        value={inventInputs.type || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Description
-                        <input
-                        type="text" 
-                        name="description"
-                        value={inventInputs.description || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Properties
-                        <input
-                        type="text" 
-                        name="properties"
-                        value={inventInputs.properties || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Cost
-                        <input
-                        type="text" 
-                        name="cost"
-                        value={inventInputs.cost || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Weight
-                        <input
-                        type="text" 
-                        name="weight"
-                        value={inventInputs.weight || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>armorClass
-                        <input
-                        type="text" 
-                        name="armorClass"
-                        value={inventInputs.armorClass || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Strength
-                        <input
-                        type="text" 
-                        name="str"
-                        value={inventInputs.str || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Stealth
-                        <input
-                        type="text" 
-                        name="stealth"
-                        value={inventInputs.stealth || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <label>Damage
-                        <input
-                        type="text" 
-                        name="damage"
-                        value={inventInputs.damage || ""}
-                        onChange={handleInventChange}
-                        />
-                    </label>
-                    <input type="submit" />
-                </form>
-            )
-        } else if (e.target.value === "Spell") {
-            setChoice (
-                <form onSubmit={addSpell}>
-                    <label>Name
-                        <input
-                        type="text" 
-                        name="name"
-                        value={spellInputs.name || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <label>Type
-                        <input
-                        type="text" 
-                        name="type"
-                        value={spellInputs.type || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <label>Description
-                        <input
-                        type="text" 
-                        name="description"
-                        value={spellInputs.description || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <label>Level
-                        <input
-                        type="text" 
-                        name="level"
-                        value={spellInputs.level || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <label>Duration
-                        <input
-                        type="text" 
-                        name="duration"
-                        value={spellInputs.duration || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <label>Range
-                        <input
-                        type="text" 
-                        name="range"
-                        value={spellInputs.range || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <label>Attack
-                        <input
-                        type="text" 
-                        name="attack"
-                        value={spellInputs.attack || ""}
-                        onChange={handleSpellChange}
-                        />
-                    </label>
-                    <input type="submit" />
-                </form>
-            )
-        } else if (e.target.value === "Feature") {
-            setChoice (
-                <form onSubmit={addFeat}>
-                    <label>Name
-                        <input
-                        type="text" 
-                        name="name"
-                        value={featInputs.name || ""}
-                        onChange={handleFeatChange}
-                        />
-                    </label>
-                    <label>Type
-                        <input
-                        type="text" 
-                        name="type"
-                        value={featInputs.type || ""}
-                        onChange={handleFeatChange}
-                        />
-                    </label>
-                    <label>Description
-                        <input
-                        type="text" 
-                        name="description"
-                        value={featInputs.description || ""}
-                        onChange={handleFeatChange}
-                        />
-                    </label>
-                    <input type="submit" />
-                </form>
-            )
-        } else if (e.target.value === "Proficiency") {
-            setChoice (
-                <form onSubmit={addProf}>
-                    <label>Name
-                        <input
-                        type="text" 
-                        name="name"
-                        value={profInputs.name || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <label>Type
-                        <input
-                        type="text" 
-                        name="type"
-                        value={profInputs.type || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <label>Description
-                        <input
-                        type="text" 
-                        name="description"
-                        value={profInputs.description || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <label>SubType
-                        <input
-                        type="text" 
-                        name="subtype"
-                        value={profInputs.subtype || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <label>Ability
-                        <input
-                        type="text" 
-                        name="ability"
-                        value={profInputs.ability || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <label>Script
-                        <input
-                        type="text" 
-                        name="script"
-                        value={profInputs.script || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <label>Typical Speakers
-                        <input
-                        type="text" 
-                        name="typicalspeakers"
-                        value={profInputs.typicalspeakers || ""}
-                        onChange={handleProfChange}
-                        />
-                    </label>
-                    <input type="submit" />
-                </form>
-            )
-        }
-    }
-
-
-
-// ~~~~~~~~~~~~~~PAGE SHEET~~~~~~~~~~~~~~//
-
+   
     return (
         <div className="container">
             <div className="row">
                 <div className="col">
-                    <h1>Add To Character</h1>
-                    <select onChange={pickCatalogType}>
-                        <option key="10">Choose Type</option>
-                            <option key="1" value="Equipment">
-                                Equipment
-                            </option>
-                            <option key="2" value="Spell">
-                                Spell
-                            </option>
-                            <option key="3" value="Feature">
-                                Feature
-                            </option>
-                            <option key="4" value="Proficiency">
-                                Proficiency
-                            </option>
-                    </select>
-                    <div>{choice}</div>
+                    <h1>Add To {character.charName}</h1>
+                    <Tabs defaultIndex={0}>
+                        <TabList>
+                            <Tab>Equipment</Tab>
+                            <Tab>Spell</Tab>
+                            <Tab>Feature</Tab>
+                            <Tab>Proficiency</Tab>
+                        </TabList>
+                        <TabPanel>
+                            <form onSubmit={addInvent}>
+                                <label className="mx-2">Name
+                                <br /><input
+                                    className=""
+                                    type="text" 
+                                    name="name"
+                                    defaultValue={equipInputs.name || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Type
+                                <br /><input
+                                    type="text" 
+                                    name="type"
+                                    defaultValue={equipInputs.type || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Properties
+                                <br /><input
+                                    type="text" 
+                                    name="properties"
+                                    defaultValue={equipInputs.properties || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Cost
+                                <br /><input
+                                    type="number" 
+                                    name="cost"
+                                    defaultValue={equipInputs.cost || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Weight
+                                <br /><input
+                                    type="number" 
+                                    name="weight"
+                                    defaultValue={equipInputs.weight || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">armorClass
+                                <br /><input
+                                    type="number" 
+                                    name="armorClass"
+                                    defaultValue={equipInputs.armorClass || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Strength
+                                <br /><input
+                                    type="number" 
+                                    name="str"
+                                    defaultValue={equipInputs.str || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Stealth
+                                <br /><input
+                                    type="number" 
+                                    name="stealth"
+                                    defaultValue={equipInputs.stealth || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Damage
+                                <br /><input
+                                    type="number" 
+                                    name="damage"
+                                    defaultValue={equipInputs.damage || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label><br />
+                                <label className="mx-2">Description
+                                <br /><textarea
+                                    name="description"
+                                    type="text"
+                                    defaultValue={equipInputs.description || ""}
+                                    onChange={handleEquipChange}
+                                    />
+                                </label> <br />
+                                <input className="m-2" type="submit" />
+                            </form>
+                        </TabPanel>
+                        <TabPanel>
+                            <form onSubmit={addSpell}>
+                                <label className="mx-2">Name
+                                <br /><input
+                                    type="text" 
+                                    name="name"
+                                    defaultValue={spellInputs.name || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Type
+                                <br /><input
+                                    type="text" 
+                                    name="type"
+                                    defaultValue={spellInputs.type || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Level
+                                <br /><input
+                                    type="text" 
+                                    name="level"
+                                    defaultValue={spellInputs.level || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Duration
+                                <br /><input
+                                    type="text" 
+                                    name="duration"
+                                    defaultValue={spellInputs.duration || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Range
+                                <br /><input
+                                    type="text" 
+                                    name="range"
+                                    defaultValue={spellInputs.range || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Attack
+                                <br /><input
+                                    type="number" 
+                                    name="attack"
+                                    defaultValue={spellInputs.attack || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label><br />
+                                <label className="mx-2">Description
+                                <br /><textarea
+                                    type="text" 
+                                    name="description"
+                                    defaultValue={spellInputs.description || ""}
+                                    onChange={handleSpellChange}
+                                    />
+                                </label><br />
+                                <input className="m-2" type="submit" />
+                            </form>
+                        </TabPanel>
+                        <TabPanel>
+                            <form onSubmit={addFeat}>
+                                <label className="mx-2">Name
+                                <br /><input
+                                    type="text" 
+                                    name="name"
+                                    defaultValue={featInputs.name || ""}
+                                    onChange={handleFeatChange}
+                                    />
+                                </label> <br />
+                                <label className="mx-2">Type
+                                <br /><input
+                                    type="text" 
+                                    name="type"
+                                    defaultValue={featInputs.type || ""}
+                                    onChange={handleFeatChange}
+                                    />
+                                </label> <br />
+                                <label className="mx-2">Description
+                                <br /><textarea
+                                    type="text" 
+                                    name="description"
+                                    defaultValue={featInputs.description || ""}
+                                    onChange={handleFeatChange}
+                                    />
+                                </label> <br />
+                                <input className="m-2" type="submit" />
+                            </form>
+                        </TabPanel>
+                        <TabPanel>
+                            <form onSubmit={addProf}>
+                                <label className="mx-2">Name
+                                <br /><input
+                                    type="text" 
+                                    name="name"
+                                    defaultValue={profInputs.name || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Type
+                                <br /><input
+                                    type="text" 
+                                    name="type"
+                                    defaultValue={profInputs.type || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label>
+                                <label className="mx-2">SubType
+                                <br /><input
+                                    type="text" 
+                                    name="subtype"
+                                    defaultValue={profInputs.subtype || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Ability
+                                <br /><input
+                                    type="text" 
+                                    name="ability"
+                                    defaultValue={profInputs.ability || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Script
+                                <br /><input
+                                    type="text" 
+                                    name="script"
+                                    defaultValue={profInputs.script || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label>
+                                <label className="mx-2">Typical Speakers
+                                <br /><input
+                                    type="text" 
+                                    name="typicalspeakers"
+                                    defaultValue={profInputs.typicalSpeakers || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label><br />
+                                <label className="mx-2">Description
+                                <br /><textarea
+                                    type="text" 
+                                    name="description"
+                                    defaultValue={profInputs.description || ""}
+                                    onChange={handleProfChange}
+                                    />
+                                </label><br />
+                                <input className="m-2" type="submit" />
+                            </form>
+                        </TabPanel>
+                    </Tabs>
+                    <div>
+                        <br />
+                    <button data-tip data-for="character" className="col-2 btn my-1 me-1" onClick={characterPage}>Back</button>
+                    <ReactTooltip id="character"><p>Go Back to Character Sheet</p></ReactTooltip>
+                    </div>
                 </div>
             </div>
         </div>

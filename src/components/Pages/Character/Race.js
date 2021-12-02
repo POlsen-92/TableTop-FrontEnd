@@ -16,32 +16,36 @@ export default function Race({
   const [subraces, setSubRaces] = useState([]);
 
   const fillSubRaces = (e) => {
-    setCharacterInfo({
-      ...characterInfo,
-      race: e.target.value,
-      subRace: "None",
-    });
     setSubraceResponse([]);
     let target = e.target.value.toLowerCase();
     if (target === "choose race") {
       setApiResponse([]);
       setSubRaces([]);
+      setCharacterInfo({
+        ...characterInfo,
+        race: "",
+        subRace: "None"
+      })
       return;
+    } else {
+
+      axios
+        .get(`https://www.dnd5eapi.co/api/races/${target}`)
+        .then((response) => {
+          setApiResponse(response.data);
+          setCharacterInfo({
+              ...characterInfo,
+              race: e.target.value,
+              subRace: "None",
+              speed: response.data.speed
+          })
+          if (response.data.subraces.length === 0) {
+            setSubRaces([]);
+          } else {
+            setSubRaces(response.data.subraces);
+          }
+        });
     }
-    axios
-      .get(`https://www.dnd5eapi.co/api/races/${target}`)
-      .then((response) => {
-        setApiResponse(response.data);
-        setCharacterInfo({
-            ...characterInfo,
-            speed: response.data.speed
-        })
-        if (response.data.subraces.length === 0) {
-          setSubRaces([]);
-        } else {
-          setSubRaces(response.data.subraces);
-        }
-      });
   };
 
   const pickSubRace = (e) => {
@@ -131,7 +135,9 @@ export default function Race({
     axios.get("https://www.dnd5eapi.co/api/races").then((response) => {
       setRaces(response.data.results);
     });
+    
   }, [!races]);
+  
   return (
     <div>
       <div>

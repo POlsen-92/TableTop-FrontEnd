@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom"
 import API from "../../utils/API";
@@ -29,7 +28,7 @@ function Campaign(props) {
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
             setUsers(res.data.Users);
-            const myChars = res.data.Characters.filter((character)=>character.user_id == props.userState.id)
+            const myChars = res.data.Characters.filter((character)=>character.user_id === props.userState.id)
             setCharacters(myChars);
             console.log(res.data.Characters)
         })

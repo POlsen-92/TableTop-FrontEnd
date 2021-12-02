@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import CampaignFilters from "../../CampaignFilters";
 import API from "../../../utils/API";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Profile.css";
 
 export default function Profile(props) {
 
-    const navigate = useNavigate();
     const { id } = useParams();
 
 
     const [campaignFilter, setCampaignFilter] = useState("all");
     const [displayData, setDisplayData] = useState([]);
     const [username,setUsername] = useState('');
-    const [email,setEmail] = useState('');
     const [picture,setPicture] = useState('');
     const [campaigns,setCampaigns] = useState([]);
     const [characters,setCharacters] = useState([]);
@@ -21,7 +19,6 @@ export default function Profile(props) {
     useEffect(() => {
         API.findUserById(id).then((res)=>{
             setUsername(res.data.username);
-            setEmail(res.data.email);
             setCampaigns(res.data.Campaigns);
             setCharacters(res.data.Characters);
             setPicture(res.data.image_content)
@@ -46,13 +43,16 @@ export default function Profile(props) {
       };
 
     useEffect(() => {
-    handleCampaignFilterChange(campaignFilter);
-    }, [campaigns]);
+      handleCampaignFilterChange(campaignFilter);
+    }, [campaignFilter]);
 
     return (
         <div className="container">
+          <div className="col-12 ">
+            <h1 className="text-center m-4">{username}</h1>
+          </div>
         <div className="row text-center">
-          <section className="col-4" id="campaigns">
+          <section className="col-4 border" id="campaigns">
             <h3>Campaigns</h3>
             <CampaignFilters
               handleCampaignFilterChange={handleCampaignFilterChange}
@@ -62,7 +62,7 @@ export default function Profile(props) {
                 <div className="campaign-list-box">
                   <Link
                     to={{ pathname: `/campaign/${campaign.id}` }}
-                    className="d-inline"
+                    className="d-inline d-flex justify-content-center"
                   >
                     <li
                       key={campaign.id}
@@ -78,8 +78,6 @@ export default function Profile(props) {
             })}
           </section>
           <section className="col-4" id="profile-info">
-            <h2>{username}</h2>
-            <h2>{email}</h2>
             <img
               src={picture}
               width="200"
@@ -89,13 +87,13 @@ export default function Profile(props) {
             />{" "}
             <br />
           </section>
-          <section className="col-4" id="character">
+          <section className="col-4 border" id="character">
             <h3>Characters</h3>
                 {characters.map((character) => {
                     return (
                         <Link
                         to={{ pathname: `/character/${character.id}` }}
-                        className="d-inline"
+                        className="d-inline d-flex justify-content-center"
                       >
                         <li
                           key={character.id}

@@ -154,7 +154,7 @@ const tokenFromStor = localStorage.getItem("token")
             element={<Character userState={userState} token={token} />}
           />
           <Route
-            path="/addCatalog"
+            path="/addCatalog/:id"
             element={<Catalog userState={userState} token={token} />}
           />
         </Routes>
