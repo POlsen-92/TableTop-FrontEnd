@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import ReactTooltip from "react-tooltip";
 import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "./CharacterView.css";
@@ -67,7 +68,8 @@ export default function CharacterView(props) {
                     <div className="col">
                         <h1>{character.charName}</h1>
                         <button className="col-2 btn my-1 me-1" >Edit Character</button>
-                        <button className="col-2 btn my-1 me-1" onClick={addCatalog}>Add Catalog</button>
+                        <button className="col-2 btn my-1 me-1" onClick={addCatalog}>Add to Character
+                        <ReactTooltip ><p>Add Equipment, Spells, Proficiencies or Features</p></ReactTooltip></button>
                         {userButton}
                         <button className="col-2 btn my-1 me-1" onClick={campaignPage}>Campaign Page</button>
                     </div>
