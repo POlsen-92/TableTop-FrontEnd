@@ -151,36 +151,36 @@ const API = {
         })
     },
 
-    // ~~~~~~~~~~~~~~~~~~~~~INVENTORY ROUTES~~~~~~~~~~~~~~~~~~~~~~~~// 
-    createInventory: (inventData, tkn) => {
-        return axios.post(`${URL_PREFIX}/api/inventory`, inventData, {
+    // ~~~~~~~~~~~~~~~~~~~~~EQUIPMENT ROUTES~~~~~~~~~~~~~~~~~~~~~~~~// 
+    createEquipment: (id, equipData, tkn) => {
+        return axios.post(`${URL_PREFIX}/api/inventory/${id}`, equipData, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
         })
     },
-    findInventoryItem: (id, tkn) => {
+    findEquipmentItem: (id, tkn) => {
         return axios.get(`${URL_PREFIX}/api/inventory/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
         })
     },
-    findInventorybyChar: (id, tkn) => {
+    findEquipmentbyChar: (id, tkn) => {
         return axios.get(`${URL_PREFIX}/api/inventory/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
         })
     },
-    updateInventory: (id, inventData, tkn) => {
-        return axios.put(`${URL_PREFIX}/api/inventory/${id}`, inventData, {
+    updateEquipment: (id, equipData, tkn) => {
+        return axios.put(`${URL_PREFIX}/api/inventory/${id}`, equipData, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
         })
     },
-    deleteInventory: (id, tkn) => {
+    deleteEquipment: (id, tkn) => {
         return axios.delete(`${URL_PREFIX}/api/inventory/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
@@ -190,8 +190,8 @@ const API = {
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~SPELL ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-    createNewSpell: (spellData, tkn) => {
-        return axios.post(`${URL_PREFIX}/api/spell`, spellData, {
+    createSpell: (id,spellData, tkn) => {
+        return axios.post(`${URL_PREFIX}/api/spell/${id}`, spellData, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
@@ -228,8 +228,8 @@ const API = {
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~FEATURE ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~//
-    createNewFeature: (featureData, tkn) => {
-        return axios.post(`${URL_PREFIX}/api/feature`, featureData, {
+    createFeature: (id,featureData, tkn) => {
+        return axios.post(`${URL_PREFIX}/api/feature/${id}`, featureData, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }

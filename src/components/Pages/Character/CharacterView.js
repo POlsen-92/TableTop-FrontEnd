@@ -12,10 +12,6 @@ export default function CharacterView(props) {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const addCatalog = () => {
-        navigate(`/addCatalog/${id}`)
-    }
-
     const [inventory,setInventory] = useState([]);
     const [spell,setSpell] = useState([]);
     const [feature,setFeature] = useState([]);
@@ -62,6 +58,10 @@ export default function CharacterView(props) {
 
     const campaignPage = () => {
         navigate(`/campaign/${character.Campaign.id}`)
+    }
+
+    const addCatalog = () => {
+        navigate(`/addCatalog/${id}`)
     }
 
     return (
