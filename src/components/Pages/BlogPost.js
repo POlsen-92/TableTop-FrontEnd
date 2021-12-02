@@ -67,7 +67,7 @@ function BlogPost(props) {
                         postComments.map((comment) => {
                             return (
                                 <>
-                                    <div>
+                                    <div key={comment.id}>
                                         {comment.body}---{comment.User.username}
                                     </div>
                                     {props.userState.username === comment.User.username ? (
