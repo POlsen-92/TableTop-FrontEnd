@@ -8,6 +8,7 @@ import "./Character.css";
 import Class from "./Class";
 import Race from "./Race";
 import Homebrew from "./Homebrew";
+import draftToHtml from 'draftjs-to-html';
 
 export default function Character({ token }) {
   const [characterInfo, setCharacterInfo] = useState({
@@ -107,9 +108,15 @@ export default function Character({ token }) {
     }
   };
 
+  // const testfunct = () => {
+  //   let things = draftToHtml(characterInfo.background)
+  //   console.log(things)
+  //   if (things==="<p></p>") {return {_html: things}} else {return {_html: ""}}
+  // }
+
   return (
     <div className="mainPage">
-      <div class="characterHeader">
+      <div className="characterHeader">
         <button value="left" onClick={pageHandler}>&#8592;{currentPage.left}</button>
         <h1>Create Character</h1>
         <button value="right" onClick={pageHandler}>{currentPage.right}&#8594;</button>
@@ -121,6 +128,8 @@ export default function Character({ token }) {
           setCharacterInfo={setCharacterInfo}
           token={token}
           proficiencies={proficiencies}
+          classapiResponse={classapiResponse}
+          apiResponse={apiResponse}
         />
       ) : null}
       {currentPage.current === "Race" ? (
@@ -145,6 +154,9 @@ export default function Character({ token }) {
           setSubclassResponse={setSubclassResponse}
         />
       ) : null}
+    
+      {characterInfo.background ? <div dangerouslySetInnerHTML={{__html: draftToHtml(characterInfo.background)}}></div> : null}   
+    
     </div>
   );
 }
