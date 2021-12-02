@@ -9,60 +9,115 @@ const tableStyle = {
     display: 'flex',
     flexWrap: 'wrap',
 };
-const tokensList = [{
-    name:"cd",
-    x:1,
-    y:1,
-    id:0
-},
-{
-    name:"ms",
-    x:2,
-    y:2,
-    id:1
-},
-{
-    name:"MARK",
-    x:2,
-    y:4,
-    id:1
-},
-]
+// useEffect(()=>{
+
+//     const tokensList = [{
+//         tokenName:"cd",
+//         x:1,
+//         y:1,
+//         id:0
+//     },
+//     {
+//         tokenName:"ms",
+//         x:2,
+//         y:2,
+//         id:1
+//     },
+//     {
+//         tokenName:"MARK",
+//         x:2,
+//         y:4,
+//         id:2
+//     },
+// ]
+// })
 
  const Table = () => {
-    const [tokens, setTokens] = useState(tokensList);
-    const [coordinates,setCoordinates] = useState([]);
+    const [tokens, setTokens] = useState(
+        [{
+                tokenName:"cd",
+                x:1,
+                y:1,
+                id:0
+            },
+            {
+                tokenName:"ms",
+                x:2,
+                y:2,
+                id:1
+            },
+            {
+                tokenName:"MARK",
+                x:2,
+                y:4,
+                id:2
+            },
+        ]);
     const [side,setSide] = useState(15);
-    
-    useEffect(()=>{
-        const tempCords = tokens.map((token)=>{
-            return [token.x, token.y]
-        })
-        setCoordinates(tempCords);
-    },[tokens])
+    let squares = [];
+    // useEffect(()=>{
+
+    //     setTokens([{
+    //         tokenName:"cd",
+    //         x:1,
+    //         y:1,
+    //         id:0
+    //     },
+    //     {
+    //         tokenName:"ms",
+    //         x:2,
+    //         y:2,
+    //         id:1
+    //     },
+    //     {
+    //         tokenName:"MARK",
+    //         x:2,
+    //         y:4,
+    //         id:2
+    //     },
+    // ])
+    // },[])
+    // const [squares,setSquares] = useState([]);
     const dragHandler = (item,x,y) => {
-        const tempTokens = tokens;
+        console.log(item,x,y);
+        console.log(tokens);
+        const tempTokens = [...tokens]
         tempTokens[item.id].x = x;
         tempTokens[item.id].y = y;
+
+        console.log(tempTokens);
         setTokens(tempTokens);
+        
     }
+    useEffect(()=>{
+        console.log('use effect re render ran----')
+        // squares = [];
+        // for (let i = 0; i < (Math.pow(side,2)); i += 1) {
+        //     squares.push(renderSquare(i));
+        // }
+    },[tokens])   
     
     function renderSquare(i) {
         const x = i % (side);
         const y = Math.floor(i / (side));
-        let array = [x,y]
-        return (<div key={i} style={{ width: `${100/side}%`, height: `${100/side}%` }}>
-				<GridSquare x={x} y={y} dragHandler={dragHandler} key={array.join('')}>
-                    <Slot tokens={tokens} x={x} y={y} />)
-				</GridSquare>          
-			</div>);
-    }
+        let array = [x,y];
+        return ({
+            x,y,array,
+        });
+}
 
 
-    const squares = [];
-    for (let i = 0; i < (Math.pow(side,2)); i += 1) {
-        squares.push(renderSquare(i));
-    }
-    return <div style={tableStyle}>{squares}</div>;
+        for (let i = 0; i < (Math.pow(side,2)); i += 1) {
+            squares.push(renderSquare(i));
+        }
+        return <div style={tableStyle}>{squares.map((square,key)=>(
+            
+             <div key={key} style={{ width: `${100/side}%`, height: `${100/side}%` }}>
+            <GridSquare x={square.x} y={square.y} dragHandler={dragHandler} key={square.array.join('')}>
+                <Slot tokens={tokens} x={square.x} y={square.y}/>
+            </GridSquare>          
+        </div>)
+        )}</div>;
+
 };
-export default Table
+export default Table 

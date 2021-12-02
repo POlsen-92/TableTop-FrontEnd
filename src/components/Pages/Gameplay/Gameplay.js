@@ -6,6 +6,14 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import Table from "./VirTable/Table"
 import API from "../../../utils/API"
 
+const containerStyle = {
+    height: '90vh',
+    border: '1px solid gray',
+    backgroundImage: `url(https://64.media.tumblr.com/2267f9cbe894a43c5d7170200035bfee/tumblr_p3yb76ZWh61x3jozbo1_1280.jpg)`,
+    backgroundSize: '100% 100%'
+
+};
+
 function Gameplay(props) {
     console.log("my user_id",props.userState.id);
     const { socket } = props;
@@ -66,8 +74,8 @@ function Gameplay(props) {
     <div className="container-fluid p-0 m-0 border border-3 border-danger">
         <div className="row p-0 m-0">
             <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
-            <div className="col-7 border border-info border-4 gameboard" style={{ backgroundImage: `url(https://64.media.tumblr.com/2267f9cbe894a43c5d7170200035bfee/tumblr_p3yb76ZWh61x3jozbo1_1280.jpg)` }}>
-                <DndProvider backend={HTML5Backend}>
+            <div className="col-7 border border-info border-4 gameboard" style={containerStyle}>
+                <DndProvider  backend={HTML5Backend}>
 					<Table/>
 				</DndProvider>
             </div>
