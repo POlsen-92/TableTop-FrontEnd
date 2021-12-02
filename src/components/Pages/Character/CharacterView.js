@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import ReactTooltip from "react-tooltip";
 import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "./CharacterView.css";
@@ -42,7 +43,8 @@ export default function CharacterView(props) {
                 to={{ pathname: `/Profile`}}
                 className="d-inline"
               >
-                <button className="col-2 btn my-1 me-1">User Profile</button>
+                <button data-tip data-for="profile" className="col-2 btn my-1 me-1">User Profile</button>
+                <ReactTooltip id="profile"><p>Go to Your Profile</p></ReactTooltip>
               </Link>
             )
         } else {
@@ -51,7 +53,8 @@ export default function CharacterView(props) {
                   to={{ pathname: `/profile/${userId}`}}
                   className="d-inline"
                 >
-                <button className="col-2 btn my-1 me-1">User Profile</button>
+                <button data-tip data-for="profile" className="col-2 btn my-1 me-1">User Profile</button>
+                <ReactTooltip id="profile"><p>Go to User Profile</p></ReactTooltip>
                 </Link>
             )
         }
@@ -65,11 +68,13 @@ export default function CharacterView(props) {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <h1>{character.charName}</h1>
+                        <h1 className="my-4">{character.charName}</h1>
                         <button className="col-2 btn my-1 me-1" >Edit Character</button>
-                        <button className="col-2 btn my-1 me-1" onClick={addCatalog}>Add Catalog</button>
+                        <button data-tip data-for="catalog" className="col-2 btn my-1 me-1" onClick={addCatalog}>Add to Character</button>
+                        <ReactTooltip id="catalog"><p>Add Equipment, Spells, Proficiencies or Features</p></ReactTooltip>
                         {userButton}
-                        <button className="col-2 btn my-1 me-1" onClick={campaignPage}>Campaign Page</button>
+                        <button data-tip data-for="campaign" className="col-2 btn my-1 me-1" onClick={campaignPage}>Campaign Page</button>
+                        <ReactTooltip id="campaign"><p>Go to Campaign with this Character</p></ReactTooltip>
                     </div>
                     <div className="col">
                         {character.image_content}
@@ -84,57 +89,144 @@ export default function CharacterView(props) {
                                 <Tab>Inventory</Tab>
                             </TabList>
                             <TabPanel>
-                                <li className="">
-                                    <h4>Race: {character.race}</h4>
-                                </li> <br />
-                                <li className="">
-                                    <h4>SubRace: {character.subrace}</h4>
-                                </li><br />
-                                <li className="">
-                                    <h4>Class: {character.class}</h4>
-                                </li><br />
-                                <li className="">
-                                    <h4>SubClass:{character.subclass}</h4>
-                                </li><br />
-                                <li className="">
-                                    <h4>Age: {character.age}</h4>
-                                </li><br />
-                                <li className="">
-                                    <h4>Alignment: {character.alignment}</h4>
-                                </li><br />
-                                <li className="">
-                                    <h4>Background: {character.background}</h4>
-                                </li><br />
-                                <li className="">
-                                    <h4>Personality: {character.personality}</h4>
-                                </li>
+                                <div className="row">
+                                    <div className="col-8">
+                                        <li className="">
+                                            <h5>Race: {character.race}</h5>
+                                        </li> <br />
+                                        <li className="">
+                                            <h5>SubRace: {character.subrace}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Class: {character.class}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>SubClass:{character.subclass}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Age: {character.age}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Level: {character.level}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Alignment: {character.alignment}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Background: {character.background}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Personality: </h5>
+                                            <p>{character.personality}</p>
+                                        </li>
+                                    </div>
+                                    <div className="col-4">
+                                        <li className="">
+                                            <h5>HitPoints: {character.hitpoints}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Current HP: {character.currhitpoints}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Temp HP: {character.temphitpoints}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Strength: {character.strength}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Dexterity: {character.dexterity}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Constitution: {character.constitution}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Intelligence: {character.intelligence}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Wisdom: {character.wisdom}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Charisma: {character.charisma}</h5>
+                                        </li><br />
+                                        <li className="">
+                                            <h5>Speed: {character.speed}</h5>
+                                        </li>
+                                    </div>
+                                </div>
                             </TabPanel>
                             <TabPanel>
-                                <div>
-                                    {proficiency.map((prof)=>{
-                                        return(<h4>{prof.name}</h4>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <h4>Proficiencies</h4>
+                                        {proficiency.map((prof)=>{
+                                            return(
+                                                <div>
+                                                    <h5>{prof.name}</h5>
+                                                    <h6>{prof.description}</h6>
+                                                    <h6>{prof.type}</h6>
+                                                    <h6>{prof.subtype}</h6>
+                                                    <h6>{prof.ability}</h6>
+                                                    <h6>{prof.script}</h6>
+                                                    <h6>{prof.typicalSpeakers}</h6>
+                                                </div>
                                             )
                                         })}
-                                    {feature.map((feat)=>{
-                                        return(<h4>{feat.name}</h4>
+                                    </div>
+                                    <div className="col-6">
+                                        <h4>Features</h4>
+                                        {feature.map((feat)=>{
+                                            return(
+                                                <div>
+                                                    <h5>{feat.name}</h5>
+                                                    <h6>{feat.description}</h6>
+                                                    <h6>{feat.type}</h6>
+                                                </div>
                                             )
                                         })}
+                                    </div>
                                 </div>
                             </TabPanel>
                             <TabPanel>
                             <div>
+                            <h4>Spells</h4>
+                                <div className="row">
                                 {spell.map((spell)=>{
-                                    return(<h4>{spell.name}</h4>
+                                    return(
+                                        <div className="col-2">
+                                            <h5>{spell.name}</h5>
+                                            <h6>{spell.description}</h6>
+                                            <h6>{spell.type}</h6>
+                                            <h6>{spell.level}</h6>
+                                            <h6>{spell.duration}</h6>
+                                            <h6>{spell.range}</h6>
+                                            <h6>{spell.attack}</h6>
+                                        </div>
                                         )
                                     })}
+                                </div>
                             </div>
                             </TabPanel>
                             <TabPanel>
                             <div>
+                            <h4>Equipment</h4>
+                                <div className="row">
                                 {inventory.map((item)=>{
-                                    return(<h4>{item.name}</h4>
+                                    return(
+                                        <div className="col-2">
+                                            <h5>{item.name}</h5>
+                                            <h6>{item.type}</h6>
+                                            <h6>{item.description}</h6>
+                                            <h6>{item.properties}</h6>
+                                            <h6>{item.cost}</h6>
+                                            <h6>{item.weight}</h6>
+                                            <h6>{item.armorClass}</h6>
+                                            <h6>{item.strength}</h6>
+                                            <h6>{item.stealth}</h6>
+                                            <h6>{item.damage}</h6>
+                                        </div>
                                         )
                                     })}
+                                </div>
                             </div>
                             </TabPanel>
                             </Tabs>
