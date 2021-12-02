@@ -144,22 +144,85 @@ export default function CharacterView(props) {
 
     // ~~~~~~~~~~~~~~~~~~~~~~FEATURES EDIT~~~~~~~~~~~~~~~~~//
 
+    const [editFeat, setEditFeat] = useState(false);
+    const [featNameEdit, setfeatNameEdit] = useState();
+    const [featDescEdit, setfeatDescEdit] = useState();
+    const [featTypeEdit, setfeatTypeEdit] = useState();
 
 
-
-
-
+    const featSave = (featId) => {
+        const featUpdate = {
+            name: featNameEdit,
+            description: featDescEdit,
+            type: featTypeEdit,
+        }
+        console.log(featUpdate)
+        console.log(featId)
+        API.updateFeature(featId, featUpdate, props.token).then((res) => console.log(res));
+        setEditFeat(false);
+        window.location.reload(false)
+    }
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~SPELL EDIT~~~~~~~~~~~~~~~~~//
 
+    const [editSpell, setEditSpell] = useState(false);
+    const [spellNameEdit, setspellNameEdit] = useState();
+    const [spellDescEdit, setspellDescEdit] = useState();
+    const [spellTypeEdit, setspellTypeEdit] = useState();
+    const [spellLvlEdit, setspellLvlEdit] = useState();
+    const [spellDurEdit, setspellDurEdit] = useState();
+    const [spellRngeEdit, setspellRngeEdit] = useState();
+    const [spellAtkEdit, setspellAtkEdit] = useState();
 
 
-
-
-
+    const spellSave = (spellId) => {
+        const spellUpdate = {
+            name: spellNameEdit,
+            description: spellDescEdit,
+            type: spellTypeEdit,
+            level: spellLvlEdit,
+            duration: spellDurEdit,
+            range: spellRngeEdit,
+            attack: spellAtkEdit
+        }
+        console.log(spellUpdate)
+        console.log(spellId)
+        API.updateSpell(spellId, spellUpdate, props.token).then((res) => console.log(res));
+        setEditSpell(false);
+        window.location.reload(false)
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~~EQUIPMENT EDIT~~~~~~~~~~~~~~~~~//
+
+    const [editEquip, setEditEquip] = useState(false);
+    const [equipNameEdit, setequipNameEdit] = useState();
+    const [equipDescEdit, setequipDescEdit] = useState();
+    const [equipTypeEdit, setequipTypeEdit] = useState();
+    const [equipLvlEdit, setequipLvlEdit] = useState();
+    const [equipDurEdit, setequipDurEdit] = useState();
+    const [equipRngeEdit, setequipRngeEdit] = useState();
+    const [equipAtkEdit, setequipAtkEdit] = useState();
+
+
+    const equipSave = (equipId) => {
+        const equipUpdate = {
+            name: equipNameEdit,
+            description: equipDescEdit,
+            type: equipTypeEdit,
+            level: equipLvlEdit,
+            duration: equipDurEdit,
+            range: equipRngeEdit,
+            attack: equipAtkEdit
+        }
+        console.log(equipUpdate)
+        console.log(equipId)
+        API.updateEquipment(equipId, equipUpdate, props.token).then((res) => console.log(res));
+        setEditEquip(false);
+        window.location.reload(false)
+    }
+
+
 
     return (
             <div className="container">
