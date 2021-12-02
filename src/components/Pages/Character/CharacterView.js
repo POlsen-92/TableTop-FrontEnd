@@ -89,7 +89,7 @@ export default function CharacterView(props) {
                                 <Tab>Inventory</Tab>
                             </TabList>
                             <TabPanel>
-                                <div className="row">
+                                <div className="row border">
                                     <div className="col-8">
                                         <li className="">
                                             <h5>Race: {character.race}</h5>
@@ -158,48 +158,52 @@ export default function CharacterView(props) {
                                 <div className="row">
                                     <div className="col-6">
                                         <h4>Proficiencies</h4>
+                                        <div className="row border">
                                         {proficiency.map((prof)=>{
                                             return(
-                                                <div>
+                                                <div className="col-4 ">
                                                     <h5>{prof.name}</h5>
-                                                    <h6>{prof.description}</h6>
-                                                    <h6>{prof.type}</h6>
-                                                    <h6>{prof.subtype}</h6>
-                                                    <h6>{prof.ability}</h6>
-                                                    <h6>{prof.script}</h6>
-                                                    <h6>{prof.typicalSpeakers}</h6>
+                                                    <h6>Description: {prof.description}</h6>
+                                                    <h6>Type: {prof.type}</h6>
+                                                    <h6>SubType: {prof.subtype}</h6>
+                                                    <h6>Ability: {prof.ability}</h6>
+                                                    <h6>Script: {prof.script}</h6>
+                                                    <h6>Typical Speakers: {prof.typicalSpeakers}</h6>
                                                 </div>
                                             )
                                         })}
+                                        </div>
                                     </div>
                                     <div className="col-6">
                                         <h4>Features</h4>
+                                        <div className="row border">
                                         {feature.map((feat)=>{
                                             return(
-                                                <div>
+                                                <div className="col-4 ">
                                                     <h5>{feat.name}</h5>
-                                                    <h6>{feat.description}</h6>
-                                                    <h6>{feat.type}</h6>
+                                                    <h6>Description: {feat.description}</h6>
+                                                    <h6>Type: {feat.type}</h6>
                                                 </div>
                                             )
                                         })}
+                                        </div>
                                     </div>
                                 </div>
                             </TabPanel>
                             <TabPanel>
                             <div>
                             <h4>Spells</h4>
-                                <div className="row">
+                                <div className="row border">
                                 {spell.map((spell)=>{
                                     return(
-                                        <div className="col-2">
+                                        <div className="col-2 ">
                                             <h5>{spell.name}</h5>
-                                            <h6>{spell.description}</h6>
-                                            <h6>{spell.type}</h6>
-                                            <h6>{spell.level}</h6>
-                                            <h6>{spell.duration}</h6>
-                                            <h6>{spell.range}</h6>
-                                            <h6>{spell.attack}</h6>
+                                            <h6>Desc:{spell.description}</h6>
+                                            <h6>Type: {spell.type}</h6>
+                                            <h6>Level: {spell.level}</h6>
+                                            <h6>Attack:{spell.attack}</h6>
+                                            <h6>Duration: {spell.duration}</h6>
+                                            <h6>Range: {spell.range}</h6>
                                         </div>
                                         )
                                     })}
@@ -209,20 +213,20 @@ export default function CharacterView(props) {
                             <TabPanel>
                             <div>
                             <h4>Equipment</h4>
-                                <div className="row">
+                                <div className="row border">
                                 {inventory.map((item)=>{
                                     return(
-                                        <div className="col-2">
+                                        <div className="col-2 ">
                                             <h5>{item.name}</h5>
-                                            <h6>{item.type}</h6>
-                                            <h6>{item.description}</h6>
-                                            <h6>{item.properties}</h6>
-                                            <h6>{item.cost}</h6>
-                                            <h6>{item.weight}</h6>
-                                            <h6>{item.armorClass}</h6>
-                                            <h6>{item.strength}</h6>
-                                            <h6>{item.stealth}</h6>
-                                            <h6>{item.damage}</h6>
+                                            <h6>Desc: {item.description}</h6>
+                                            <h6>Type: {item.type}</h6>
+                                            <h6>Properties: {item.properties}</h6>
+                                            <h6>Cost: {item.cost}</h6>
+                                            <h6>Weight: {item.weight}</h6>
+                                            <h6>Damage: {item.damage}</h6>
+                                            <h6>Armor Class: {item.armorClass}</h6>
+                                            <h6>Strength: {item.strength}</h6>
+                                            <h6>Stealth: {item.stealth}</h6>
                                         </div>
                                         )
                                     })}
