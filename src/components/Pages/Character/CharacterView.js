@@ -76,7 +76,7 @@ export default function CharacterView(props) {
                     </div>
                     <div className="row">
                         <div className="col">
-                        <Tabs defaultIndex={0} onSelect={index => console.log(index)}>
+                        <Tabs defaultIndex={0}>
                             <TabList>
                                 <Tab>Information</Tab>
                                 <Tab>Proficiencies and Features</Tab>
