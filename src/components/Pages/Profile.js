@@ -50,11 +50,8 @@ function Profile(props) {
       description: "Insert description here",
     };
     API.createCampaign(createdCampaign, props.token).then((res) => {
-      // console.log("res1", res);
-      setData([...data, res.data]);
-      API.createUserCampaign(res.data.id, props.token).then((response) => {
-        // console.log("res2", response);
-      });
+      console.log("res1", res);
+      setData([...data, res.data[0]]);
     });
   };
 
