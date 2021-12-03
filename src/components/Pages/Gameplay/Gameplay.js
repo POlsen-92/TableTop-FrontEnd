@@ -13,16 +13,37 @@ const containerStyle = {
     backgroundSize: '100% 100%'
 
 };
-
 function Gameplay(props) {
     console.log("my user_id",props.userState.id);
     const { socket } = props;
     const { id } = useParams();
-
+    
     const [tab,setTab] = useState('characters');
     const [tabContents,setTabContents] = useState('');
     const [characters,setCharacters] = useState([]);
     const [CampaignName,setCampaignName] = useState('');
+    const [newToken, setNewToken] = useState('');
+    // function that creates the token being passed into each li of character name as an onclick 
+    function createToken(character){
+        API.findTokens(id).then((res)=>{
+             let data = res.data
+             console.log(character.charName)
+             console.log(data.length)
+        const createdToken = {
+            name:character.charName,
+            token_id:data.length,
+            x:0,
+            y:0
+        }
+        API.createToken(id, createdToken).then((res) => {
+            setNewToken(res.data)
+            console.log(res);
+            console.log("I created a token!");
+        })
+        })
+    }
+           
+    
 
     useEffect(()=>{
         socket.emit("join campaign room", id);
@@ -61,7 +82,7 @@ function Gameplay(props) {
                         <h1>characters!</h1>
                         <ul>
                             {characters.map((character)=>{
-                                return (<li>{character.charName}</li>)
+                                return (<li onClick={()=>createToken(character)}>{character.charName}</li>)
                             })}
                         </ul>
                     </div>
@@ -76,7 +97,8 @@ function Gameplay(props) {
             <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
             <div className="col-7 border border-info border-4 gameboard" style={containerStyle}>
                 <DndProvider  backend={HTML5Backend}>
-					<Table camp_id={id}/>
+					<Table camp_id={id} newToken={newToken}/>
+                    {/* <button onClick={()=>createToken()}>CREATE TOKEN</button> */}
 				</DndProvider>
             </div>
             <div className="col-2 border border-success border-4 mini-menu">

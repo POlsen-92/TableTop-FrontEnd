@@ -10,94 +10,42 @@ const tableStyle = {
     display: 'flex',
     flexWrap: 'wrap',
 };
-// useEffect(()=>{
 
-//     const tokensList = [{
-//         tokenName:"cd",
-//         x:1,
-//         y:1,
-//         id:0
-//     },
-//     {
-//         tokenName:"ms",
-//         x:2,
-//         y:2,
-//         id:1
-//     },
-//     {
-//         tokenName:"MARK",
-//         x:2,
-//         y:4,
-//         id:2
-//     },
-// ]
-// })
-
- const Table = ({camp_id}) => {
+ const Table = ({camp_id, newToken}) => {
      const [side,setSide] = useState(20);
      const [tokens, setTokens] = useState([]);
-     const [count,setCount] = useState(0);
-     
+    //  const [count,setCount] = useState(0)
+    //  setCount(1)
     useEffect(()=>{
         API.findTokens(camp_id).then((res)=>{
             setTokens(res.data)
             console.log(res.data ,"dataaaaaaaaaaaaaaaaaaaaaa")
             console.log('---------------------',tokens)
         })
-        setCount(1)
-    },[
-        // this lets it move only once
-        count
-    
-    ]);
+    },[newToken]);
     let squares = [];
-    // useEffect(()=>{
+    
+    const dragHandler = (tokensList,item,x,y,) => {
+        console.log(tokensList);
+        console.log(tokens) 
+        // setCount(1)
+        // if(tokensList ===[]){
 
-    //     setTokens([{
-    //         tokenName:"cd",
-    //         x:1,
-    //         y:1,
-    //         id:0
-    //     },
-    //     {
-    //         tokenName:"ms",
-    //         x:2,
-    //         y:2,
-    //         id:1
-    //     },
-    //     {
-    //         tokenName:"MARK",
-    //         x:2,
-    //         y:4,
-    //         id:2
-    //     },
-    // ])
-    // },[])
-    // const [squares,setSquares] = useState([]);
-    const dragHandler = (item,x,y) => {
-        setCount(2)
-        console.log(item,x,y);
-        console.log(tokens);
-        const tempTokens = [tokens]
-        tempTokens[item.id].x = x;
-        tempTokens[item.id].y = y;
-
-        console.log(tempTokens);
-        setTokens(tempTokens);
+            const tempTokens = [...tokens]
+            // console.log(tempTokens);
+            tempTokens[item.token_id].x = x;
+            tempTokens[item.token_id].y = y;
+            
+            setTokens(tempTokens);
+        // }
         
         API.updateToken(camp_id,{
-            id:item.id,
+            id:item.token_id,
             x:x,
             y:y
         })
+        setTokens([...tokens])
     }
-    // useEffect(()=>{
-    //     console.log('use effect re render ran----')
-    //     // squares = [];
-    //     // for (let i = 0; i < (Math.pow(side,2)); i += 1) {
-    //     //     squares.push(renderSquare(i));
-    //     // }
-    // },[tokens])   
     
     function renderSquare(i) {
         const x = i % (side);
@@ -115,7 +63,7 @@ const tableStyle = {
         return <div style={tableStyle}>{squares.map((square,key)=>(
             
              <div key={key} style={{ width: `${100/side}%`, height: `${100/side}%` }}>
-            <GridSquare x={square.x} y={square.y} dragHandler={dragHandler} key={square.array.join('')}>
+            <GridSquare x={square.x} y={square.y} tokens={tokens} dragHandler={dragHandler} key={square.array.join('')}>
                 <Slot tokens={tokens} x={square.x} y={square.y}/>
             </GridSquare>          
         </div>)
