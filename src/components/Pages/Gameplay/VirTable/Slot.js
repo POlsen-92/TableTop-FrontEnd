@@ -53,9 +53,9 @@ export const Slot = ({ x,y,tokens }) => {
         setToken(null)
         for (let i = 0; i < tokens.length; i++) {
             if(tokens[i].x === x && tokens[i].y === y) {
-                setTokenName(tokens[i].tokenName);
-                setToken(<Token tokenName={tokens[i].tokenName} id={tokens[i].id}/>);
-                console.log(`found token ${tokens.tokenName} at slot [${x}, ${y}]`);
+                setTokenName(tokens[i].name);
+                setToken(<Token name={tokens[i].name} id={tokens[i].id} x={tokens[i].x} y={tokens[i].y}/>);
+                console.log(`found token ${tokens[i].name} at slot [${x}, ${y}]`);
                 break; // don't need to iterate, we found our token
             }
         }
