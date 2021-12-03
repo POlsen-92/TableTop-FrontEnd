@@ -1,6 +1,6 @@
-.campaign-dlt-btn{
-    display: none;
-}
-.campaign-list-box:hover > button{
-    display: inline;
+
+
+#all-characters-list, #campaigns {
+    overflow: scroll;
+    height: 500px;
 }
