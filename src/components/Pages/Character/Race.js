@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactTooltip from "react-tooltip";
+// import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 

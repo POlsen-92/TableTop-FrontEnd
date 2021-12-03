@@ -10,13 +10,18 @@ import Password from "./UpdateUserInfo/Password"
 import Email from "./UpdateUserInfo/Email"
 
 function Profile(props) {
-  // console.log("====================");
-  // console.log(props);
 
-  const [campaignFilter, setCampaignFilter] = useState("all");
-  const [data, setData] = useState([]);
-  const [displayData, setDisplayData] = useState([]);
-  const [invites, setInvites] = useState([]);
+  const navigate = useNavigate();
+
+    //IF NOT SIGNED IN REDIRECT TO HOMEPAGE
+  useEffect(() => {
+    if (!props.token) {
+      navigate("/")
+    }
+  },[props.token, navigate])
+
+// ~~~~~~~~~~~~~~~USER INFORMATION~~~~~~~~~~~~~~~~~~~~~//
+
   const [imageURL, setImageURL] = useState("");
   const [updatePic, setUpdatePic] = useState(false);
   const [username, setUsername] = useState("");
@@ -26,6 +31,14 @@ function Profile(props) {
   const [updateEmail, setUpdateEmail] = useState(false);
   const [allMyCharacters,setAllMyCharacters] = useState([]);
   
+
+  // ~~~~~~~~~~~~~~~~CAMPAIGN INFORMATION ~~~~~~~~~~~~~~~~~~~~~~//
+
+  const [campaignFilter, setCampaignFilter] = useState("all");
+  const [data, setData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
+
+    //ALLOWS FOR USER TO LOOK BETWEEN CAMPAIGN TYPES (PLAYER/GM)
   const handleCampaignFilterChange = (filter) => {
     setCampaignFilter(filter);
     const newArr = data.filter((campaign) => {
@@ -43,6 +56,30 @@ function Profile(props) {
     setDisplayData(newArr);
   };
 
+    //FINDS ALL CAMPAIGNS AND ALL USERS
+  useEffect(() => {
+    if (!props.token) {
+      console.log('profile line 74 no token')
+    } else {
+    API.findSelf(props.token)
+      .then((res) => {
+        setData(res.data.Campaigns);
+      })
+      .catch((err) => {
+        console.log(err);
+      });}
+    API.findCharacterbyUser(props.userState.id).then((response)=>{
+      setAllMyCharacters(response.data);
+    });
+  }, [props]);
+
+  //DETERMINES WHAT CAMPAIGNS SHOW UP ON PAGE LOAD
+  useEffect(() => {
+    handleCampaignFilterChange(campaignFilter);
+  }, [data]);
+
+
+    //CREATES CAMPAIGN
   const createCampaign = () => {
     setCampaignFilter("all");
     const createdCampaign = {
@@ -50,83 +87,33 @@ function Profile(props) {
       description: "Insert description here",
     };
     API.createCampaign(createdCampaign, props.token).then((res) => {
-      // console.log("res1", res);
       setData([...data, res.data]);
-      API.createUserCampaign(res.data.id, props.token).then((response) => {
-        // console.log("res2", response);
+      API.createUserCampaign(res.data.id, props.token).catch((err)=>{
+        console.log(err)
       });
     });
   };
 
+    // DELETES CAMPAIGN
   const deleteCampaign = (dltCmpgnId) => {
-    API.deleteCampaign(dltCmpgnId, props.token).then((res) => {
-      // console.log(res);
-    });
+    API.deleteCampaign(dltCmpgnId, props.token)
     const updatedData = data.filter(
       (campaign) => campaign.id !== Number(dltCmpgnId)
     );
     setData(updatedData);
   };
 
-  const acceptInvite = (campid, id) => {
-    API.createUserCampaign(campid, props.token).then(() => {
-      API.deleteInvite(id, props.token).then(() => {
-        API.findCampaign(campid, props.token).then((res) => {
-          setData([...data, res.data]);
-          removeInvite(id);
-        })
-      });
-    });
-  };
 
-  const declineInvite = (id) => {
-    API.deleteInvite(id, props.token).then(() => {
-      removeInvite(id);
-    });
-  };
+// ~~~~~~~~~~~~~~~~INVITE INFORMATION ~~~~~~~~~~~~~~~~~~~~~~//
 
-  const removeInvite = (id) => {
-    // console.log("invites",invites);
-    const newInvites = invites.filter((invite) => {
-      // console.log(invite.id);
-      // console.log(id);
-      return invite.id!==id;
-    });
-    // console.log("newInvites",newInvites);
-    setInvites(newInvites);
-  }
+  const [invites, setInvites] = useState([]);
 
-  useEffect(() => {
-    //this was causing an error if it tried before the token was filled so I added
-    //the if
-    if (!props.token) {
-      console.log('profile line 74 no token')
-    } else {
-    API.findSelf(props.token)
-      .then((res) => {
-        // console.log("self",res);
-        setData(res.data.Campaigns);
-      })
-      .catch((err) => {
-        console.log(err);
-      });}
-    console.log(props.userState.id);
-    API.findCharacterbyUser(props.userState.id).then((response)=>{
-      console.log("mychars",response)
-      setAllMyCharacters(response.data);
-    });
-  }, [props]);
-
-  useEffect(() => {
-    handleCampaignFilterChange(campaignFilter);
-  }, [data]);
-
+  //FINDS ALL INVITES FOR USER
   useEffect(() => {
     if (!props.token) {
       console.log('No Token')
     } else {
       API.findSelf(props.token).then((res) => {
-        // console.log(res);
         let tempInvites = res.data.Invites;
         for (let i = 0; i < tempInvites.length; i++) {
           API.findCampaign(tempInvites[i].campaign_id, props.token).then(
@@ -140,20 +127,44 @@ function Profile(props) {
     }
   }, [props.token]);
 
-  const navigate = useNavigate();
+    //ACCEPTS INVITE
+  const acceptInvite = (campid, id) => {
+    API.createUserCampaign(campid, props.token).then(() => {
+      API.deleteInvite(id, props.token).then(() => {
+        API.findCampaign(campid, props.token).then((res) => {
+          setData([...data, res.data]);
+          removeInvite(id);
+        })
+      });
+    });
+  };
 
-  useEffect(() => {
-    if (!props.token) {
-      navigate("/")
-    }
-  },[props.token, navigate])
+    //DECLINES INVITE
+  const declineInvite = (id) => {
+    API.deleteInvite(id, props.token).then(() => {
+      removeInvite(id);
+    });
+  };
 
+    //REMOVES INVITE EITHER ON ACCEPT OR DELETE
+  const removeInvite = (id) => {
+    const newInvites = invites.filter((invite) => {
+      return invite.id!==id;
+    });
+    setInvites(newInvites);
+  }
+
+
+
+    //PAGE EXPRESSION
   return (
     <div className="container">
+      {/* USER USERNAME AND EMAIL */}
       <div className="col-12" >
         <h1 className="text-center m-2">{username ? username : props.userState.username}</h1>
         <h2 className="text-center m-2">{email ? email : props.userState.email}</h2>
       </div>
+      {/* CAMPAIGN INFORMATION FOR USER */}
       <div className="row text-center">
         <section className="col-4 border" id="campaigns">
           <h3>Your Campaigns</h3>
@@ -162,25 +173,22 @@ function Profile(props) {
           />
           {displayData.map((campaign) => {
             return (
-              <div className="campaign-list-box">
+              <div className="campaign-list-box" key={campaign.id}>
                 <Link
                   to={{ pathname: `/campaign/${campaign.id}` }}
                   className="d-inline d-flex justify-content-center"
                 >
                   <li
-                    key={campaign.id}
                     className="list-group-item list-group-item-action m-3"
                     id="example-campaign"
-                    data-id={campaign.id}
                   >
                     <h4 className="d-inline">{campaign.name}</h4>
                   </li>
                 </Link>
                 <button
-                  data-id={campaign.id}
                   className="campaign-dlt-btn btn-danger"
-                  onClick={(e) => {
-                    deleteCampaign(e.target.getAttribute("data-id"));
+                  onClick={() => {
+                    deleteCampaign(campaign.id);
                   }}
                 >
                   X
@@ -196,6 +204,7 @@ function Profile(props) {
             Create Campaign
           </button>
         </section>
+        {/* USER INFORMATION - EDIT IMAGE, USERNAME, PASSWORD, EMAIL  */}
         <section className="col-4" id="profile-info">
           <img
             src={imageURL ? imageURL : props.userState.image_content}
@@ -254,10 +263,11 @@ function Profile(props) {
           ) : null}
           <button className="btn m-1">Notifications</button>
         </section>
+        {/* ALL CHARACTERS FOR USER */}
         <section className="col-4 border" id="all-characters-list">
           <h3>Your Characters</h3>
           <ul>
-            {allMyCharacters.map((character, index)=>{
+            {allMyCharacters.map((character)=>{
               return (
                 <Link
                   to={{ pathname: `/character/${character.id}` }}
@@ -265,8 +275,7 @@ function Profile(props) {
                   >
                   <li key={character.id}
                     className="list-group-item list-group-item-action m-3"
-                    id="character"
-                    data-id={character.id}>
+                    id="character">
                     <h5>{character.charName}</h5>
                     <h6>{character.Campaign.name}</h6>
                   </li>
@@ -276,31 +285,29 @@ function Profile(props) {
           </ul>
         </section>
       </div>
+      {/* ALL INVITES FOR USER */}
       <div className="row">
         <ul className="invites-list list-group-flush list-group">
           {invites.map((invite) => {
             return (
-              <div className="campaign-list-box">
-                <li key={invite.id} className="list-group-item list-group-item-action m-3">
+              <div key={invite.id} className="campaign-list-box">
+                <li className="list-group-item list-group-item-action m-3">
                   You are invited to: {invite.campaign_name}
                 </li>
                 <button
                   className="btn"
-                  onClick={(e) =>
+                  onClick={() =>
                     acceptInvite(
-                      e.target.getAttribute("data-campid"),
-                      e.target.getAttribute("data-id")
+                      invite.campaign_id,
+                      invite.id
                     )
                   }
-                  data-campid={invite.campaign_id}
-                  data-id={invite.id}
                 >
                   Accept
                 </button>
                 <button
                   className="btn"
-                  onClick={(e) => declineInvite(e.target.getAttribute("data-id"))}
-                  data-id={invite.id}
+                  onClick={() => declineInvite(invite.id)}
                 >
                   Decline
                 </button>

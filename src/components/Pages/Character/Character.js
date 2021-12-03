@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import Dice from "../Dice/Dice.js";
+// import Dice from "../Dice/Dice.js";
 
-import ReactTooltip from "react-tooltip";
+// import ReactTooltip from "react-tooltip";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Character.css";
 import Class from "./Class";
