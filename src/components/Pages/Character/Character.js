@@ -130,6 +130,7 @@ export default function Character({ token }) {
           proficiencies={proficiencies}
           classapiResponse={classapiResponse}
           apiResponse={apiResponse}
+          subraceResponse={subraceResponse}
         />
       ) : null}
       {currentPage.current === "Race" ? (
