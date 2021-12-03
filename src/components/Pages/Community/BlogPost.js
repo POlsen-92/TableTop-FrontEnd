@@ -1,19 +1,20 @@
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import API from "../../../utils/API";
 import "./community.css";
 
 function BlogPost(props) {
 
     const { id } = useParams();
+    const navigate = useNavigate();
 
-    const [postData, setPostData] = useState('');
-    const [commentData, setCommentData] = useState('');
-    const [postTitle, setPostTitle] = useState('');
-    const [postDescription, setPostDescription] = useState('');
-    const [postComments, setPostComments] = useState([]);
-    const [description, setDescription] = useState('');
+    const communityPage = () => {
+        navigate(`/community`)
+    }
+
+    const [postData, setPostData] = useState([]);
+    const [commentData, setCommentData] = useState([]);
 
 
     useEffect(() => {
@@ -21,27 +22,31 @@ function BlogPost(props) {
             console.log(res.data)
             setPostData(res.data[0]);
             setCommentData(res.data[1]);
-            setPostTitle(res.data[0].title);
-            setPostDescription(res.data[0].description);
         })
     },[id,props.token])
 
+    const deleteBlogPost = (postId) => {
+
+    } 
+
+    const editBlogPost = (postId) => {
+
+    }
+
+
     const handleCommentInputChange = (e) => {
-        const { target } = e;
-        const newcommentDescription = target.value;
-        setDescription(newcommentDescription);
+
     }
 
 
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
-        setDescription('');
         createComment();
     };
 
     const createComment = () => {
         const createdComment = {
-            description,
+
         }
         API.createComment(id, createdComment, props.token).then((res) => {
             window.location.reload(false);
@@ -60,17 +65,23 @@ function BlogPost(props) {
         <>
             <div className="container">
                 <div>
-                    <h1>{postTitle}</h1>
+                    <h1>{postData.title}</h1>
+
                     <br />
-                    <p>{postDescription}</p>
-                    {/* {userState.username === post.User.username ? (
-                        <button onClick={(e) => { deleteBlogPost(e.target.getAttribute("data-id")) }} data-id={post.id} >Delete</button>) : ('')} */}
+                    <p>{postData.description}</p>
                 </div>
                 <br />
                 <br />
+                {props.userState.id === postData.user_id ? (
+                    <div>
+                        <button className="m-2" onClick={deleteBlogPost(id)} >Delete Post</button>
+                        <button className="m-2" onClick={editBlogPost(id)} >Edit Post</button>
+                        <button className="m-2" onClick={communityPage} >Back</button>
+                    </div>
+                    ) : (<button className="m-2" onClick={communityPage} >Back</button>)}
                 <div>
                     {
-                        postComments.map((comment) => {
+                        commentData.map((comment) => {
                             return (
                                 <>
                                     <div key={comment.id}>
@@ -96,7 +107,7 @@ function BlogPost(props) {
                         <h4>Reply to this thread!</h4>
 
                         <input className="m-1" id="new-comment"
-                            value={description}
+                            value={commentData.description}
                             name="description"
                             onChange={handleCommentInputChange}
                             type="text"
