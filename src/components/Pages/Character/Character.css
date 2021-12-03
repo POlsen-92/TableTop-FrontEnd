@@ -1,5 +1,7 @@
+
+
 .mainPage {
-    background: url('./another-rough-old-and-worn-parchment-paper.jpg');
+    background: url('./another-rough-old-and-worn-parchment-paper-min.jpg');
     background-repeat: no-repeat;
     color:black;
     text-align: center;
@@ -42,15 +44,35 @@
     align-items: center;
 }
 
-.form-group input, .form-group label, .form-group textarea {
+button {
+    box-sizing: border-box;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    background-color: transparent;
+    border-radius: 0.6em;
+    color: #e74c3c;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+  }
+  button:hover, button:focus {
+    color: #fff;
+    outline: 0;
+  }
 
-    text-align: left;
-    background: transparent;
-    border-top: none;
-    border-right: none;
-    border-left:none;
- 
-}
+button {
+    border-color: #3498db;
+    color: #fff;
+    box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+    -webkit-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+  }
+  button:hover {
+    box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+  }
+
 
 .tooltip p{
     
@@ -69,6 +91,14 @@ input[type=number] {
     width: 100px;
 }
 
-/* input[type=number]::-webkit-inner-spin-button {
-    opacity: 1
-} */
+.hide {
+    display:none;
+}
+
+#journey {
+    width: 75%; 
+    height: auto;
+    box-shadow: 0px 0px 10px 10px rgba(0,0,0,0.9);
+    border-radius: 25px;
+    margin-bottom: 100px;
+}
