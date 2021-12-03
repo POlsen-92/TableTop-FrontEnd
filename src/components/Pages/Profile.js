@@ -247,7 +247,7 @@ function Profile(props) {
         {/* ALL CHARACTERS FOR USER */}
         <section className="col-sm-12 col-md-4 border" id="all-characters-list">
           <h3>Your Characters</h3>
-          <ul>
+          <ul className="p-0">
             {allMyCharacters.map((character)=>{
               return (
                 <Link
@@ -255,7 +255,7 @@ function Profile(props) {
                   className="d-inline d-flex justify-content-center"
                   >
                   <li key={character.id}
-                    className="list-group-item list-group-item-action m-3"
+                    className="p-0 list-group-item list-group-item-action m-3"
                     id="character">
                     <h5>{character.charName}</h5>
                     <h6>{character.Campaign.name}</h6>
