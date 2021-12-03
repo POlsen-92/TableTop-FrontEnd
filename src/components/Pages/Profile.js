@@ -55,16 +55,6 @@ function Profile(props) {
     });
   };
 
-  const deleteCampaign = (dltCmpgnId) => {
-    API.deleteCampaign(dltCmpgnId, props.token).then((res) => {
-      // console.log(res);
-    });
-    const updatedData = data.filter(
-      (campaign) => campaign.id !== Number(dltCmpgnId)
-    );
-    setData(updatedData);
-  };
-
   const acceptInvite = (campid, id) => {
     API.createUserCampaign(campid, props.token).then(() => {
       API.deleteInvite(id, props.token).then(() => {
@@ -173,15 +163,6 @@ function Profile(props) {
                     <h4 className="d-inline">{campaign.name}</h4>
                   </li>
                 </Link>
-                <button
-                  data-id={campaign.id}
-                  className="campaign-dlt-btn btn-danger"
-                  onClick={(e) => {
-                    deleteCampaign(e.target.getAttribute("data-id"));
-                  }}
-                >
-                  X
-                </button>
               </div>
             );
           })}

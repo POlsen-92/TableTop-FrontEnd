@@ -65,6 +65,11 @@ function Campaign(props) {
         })
     }
 
+    const deleteCampaign = (dltCmpgnId) => {
+      API.deleteCampaign(dltCmpgnId, props.token);
+      navigate('/profile');
+    };
+
     return (
     <div className="container">
         {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
@@ -75,7 +80,8 @@ function Campaign(props) {
                     navigate(`/play/${id}`)
                 }}
             >Launch Campaign</button>
-            {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={()=>save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={()=>setEdit(true)}>Edit Campaign</button>)) : ""}
+            {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={()=>save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={()=>setEdit(true)}>Edit Campaign</button>)) : null}
+            {(gmID === props.userState.id) ? (<button className="col-2 btn m-1" onClick={()=>deleteCampaign(id)}>Delete Campaign</button>) : null}
             <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
         </div>
         <div className="row">
