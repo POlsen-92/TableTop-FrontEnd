@@ -44,32 +44,26 @@
     align-items: center;
 }
 
+
+
 button {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     box-sizing: border-box;
     -webkit-appearance: none;
        -moz-appearance: none;
             appearance: none;
     background-color: transparent;
-    border-radius: 0.6em;
-    color: #e74c3c;
-    cursor: pointer;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-  }
-  button:hover, button:focus {
-    color: #fff;
-    outline: 0;
-  }
-
-button {
     border-color: #3498db;
+    border-radius: 0.6em;
     color: #fff;
     box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
     -webkit-transition: all 150ms ease-in-out;
     transition: all 150ms ease-in-out;
   }
   button:hover {
+    outline: 0;
     box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
   }
 

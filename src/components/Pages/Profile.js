@@ -155,7 +155,7 @@ function Profile(props) {
       </div>
       {/* CAMPAIGN INFORMATION FOR USER */}
       <div className="row text-center">
-        <section className="col-sm-12 col-md-4 border" id="campaigns">
+        <section className="col-sm-12 col-md-4 border scrollMe" id="campaigns">
           <h3>Your Campaigns</h3>
           <CampaignFilters
             handleCampaignFilterChange={handleCampaignFilterChange}
@@ -245,7 +245,7 @@ function Profile(props) {
           <button className="btn m-1">Notifications</button>
         </section>
         {/* ALL CHARACTERS FOR USER */}
-        <section className="col-sm-12 col-md-4 border" id="all-characters-list">
+        <section className="col-sm-12 col-md-4 border scrollMe" id="all-characters-list">
           <h3>Your Characters</h3>
           <ul className="p-0">
             {allMyCharacters.map((character)=>{
