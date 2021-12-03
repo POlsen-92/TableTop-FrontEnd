@@ -169,7 +169,7 @@ export default function Class({
                         }
                       )}
                     </ul>
-                    <ReactTooltip id="skill-acrobatics">
+                    <ReactTooltip className="tooltip" id="skill-acrobatics">
                       <p>
                         Your Dexterity (Acrobatics) check covers your attempt to
                         stay on your feet <br />
@@ -182,7 +182,7 @@ export default function Class({
                         stunts, including dives, rolls, somersaults, and flips.
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-animal-handling">
+                    <ReactTooltip className="tooltip" id="skill-animal-handling">
                       <p>
                         When there is any question whether you can calm down a
                         domesticated animal, <br />
@@ -194,7 +194,7 @@ export default function Class({
                         maneuver.
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-arcana">
+                    <ReactTooltip className="tooltip" id="skill-arcana">
                       <p>
                         Your Intelligence (Arcana) check measures your ability
                         to recall lore about spells, <br />
@@ -203,14 +203,14 @@ export default function Class({
                         inhabitants of those planes.
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-athletics">
+                    <ReactTooltip className="tooltip" id="skill-athletics">
                       <p>
                         Your Strength (Athletics) check covers difficult
                         situations you encounter while <br />
                         climbing, jumping, or swimming.
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-deception">
+                    <ReactTooltip className="tooltip" id="skill-deception">
                       <p>
                         Your Charisma (Deception) check determines whether you
                         can convincingly hide the <br />
@@ -225,7 +225,7 @@ export default function Class({
                         straight face while telling a blatant lie.
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-history">
+                    <ReactTooltip className="tooltip" id="skill-history">
                       <p>
                         "Your Intelligence (History) check measures your ability
                         to recall lore about historical <br />
@@ -233,7 +233,7 @@ export default function Class({
                         disputes, recent wars, and lost civilizations."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-insight">
+                    <ReactTooltip  className="tooltip"id="skill-insight">
                       <p>
                         "Your Wisdom (Insight) check decides whether you can
                         determine the true intentions of a <br />
@@ -243,7 +243,7 @@ export default function Class({
                         changes in mannerisms."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-intimidation">
+                    <ReactTooltip className="tooltip" id="skill-intimidation">
                       <p>
                         "When you attempt to influence someone through overt
                         threats, hostile actions, and physical <br />
@@ -255,7 +255,7 @@ export default function Class({
                         vizier to reconsider a decision."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-investigation">
+                    <ReactTooltip className="tooltip" id="skill-investigation">
                       <p>
                         "When you look around for clues and make deductions
                         based on those clues, you make an <br />
@@ -269,20 +269,20 @@ export default function Class({
                         (Investigation) check."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-medicine">
+                    <ReactTooltip className="tooltip" id="skill-medicine">
                       <p>
                         "A Wisdom (Medicine) check lets you try to stabilize a
                         dying companion or diagnose an illness."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-nature">
+                    <ReactTooltip className="tooltip" id="skill-nature">
                       <p>
                         "Your Intelligence (Nature) check measures your ability
                         to recall lore about terrain, plants <br />
                         and animals, the weather, and natural cycles."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-perception">
+                    <ReactTooltip className="tooltip" id="skill-perception">
                       <p>
                         "Your Wisdom (Perception) check lets you spot, hear, or
                         otherwise detect the presence of something. <br />
@@ -297,7 +297,7 @@ export default function Class({
                         or candlelight under a closed secret door."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-performance">
+                    <ReactTooltip className="tooltip" id="skill-performance">
                       <p>
                         "Your Charisma (Performance) check determines how well
                         you can delight an audience with music, <br />
@@ -305,7 +305,7 @@ export default function Class({
                         entertainment."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-persuasion">
+                    <ReactTooltip className="tooltip" id="skill-persuasion">
                       <p>
                         "When you attempt to influence someone or a group of
                         people with tact, social graces, or good <br />
@@ -319,7 +319,7 @@ export default function Class({
                         crowd of townsfolk."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-religion">
+                    <ReactTooltip className="tooltip" id="skill-religion">
                       <p>
                         "Your Intelligence (Religion) check measures your
                         ability to recall lore about deities, rites <br />
@@ -327,7 +327,7 @@ export default function Class({
                         the practices of secret cults."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-sleight-of-hand">
+                    <ReactTooltip className="tooltip" id="skill-sleight-of-hand">
                       <p>
                         "Whenever you attempt an act of legerdemain or manual
                         trickery, such as planting something on <br />
@@ -339,7 +339,7 @@ export default function Class({
                         another person's pocket."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-stealth">
+                    <ReactTooltip className="tooltip" id="skill-stealth">
                       <p>
                         "Make a Dexterity (Stealth) check when you attempt to
                         conceal yourself from enemies, slink past <br />
@@ -347,7 +347,7 @@ export default function Class({
                         someone without being seen or heard."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip id="skill-survival">
+                    <ReactTooltip className="tooltip" id="skill-survival">
                       <p>
                         "The GM might ask you to make a Wisdom (Survival) check
                         to follow tracks, hunt wild game, guide <br />
@@ -376,6 +376,7 @@ export default function Class({
           </div>
         </div>
       ) : null}
+      <br/>
     </div>
   );
 }

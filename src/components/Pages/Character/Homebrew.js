@@ -10,6 +10,7 @@ import { randomNameGenerator } from "./Namegen";
 // import { EditorState, convertToRaw } from "draft-js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+let customDie = "choose";
 // import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function Homebrew({
@@ -25,6 +26,7 @@ export default function Homebrew({
   const [play] = useSound(rollSound);
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
+  const [noClass, setNoClass] = useState(false);
 
   const handleCharacterChange = (e) => {
     const { name, value } = e.target;
@@ -77,7 +79,17 @@ export default function Homebrew({
   // };
 
   const calculateHitpoints = () => {
-    const roll1 = new DiceRoll(1 + "d" + classapiResponse.hit_die);
+    if (!classapiResponse.hit_die) {
+      setNoClass(true);
+      customDie = document.getElementById("sides").value;
+      if (customDie === "choose") return;
+    }
+    setNoClass(false);
+    document.getElementById("sides").selectedIndex=0
+    const roll1 = new DiceRoll(
+      1 + "d" + (classapiResponse.hit_die || customDie)
+      );
+      customDie='choose'
     console.log(
       roll1.notation,
       roll1.output
@@ -96,7 +108,7 @@ export default function Homebrew({
         ...characterInfo,
         hitpoints: Math.floor(1 + Math.random() * 10),
       });
-      if (count > 110) {
+      if (count > 180) {
         clearInterval(moving);
 
         setCharacterInfo({
@@ -112,7 +124,7 @@ export default function Homebrew({
         });
       }
       count++;
-    });
+    }, 10);
   };
 
   // const checkBonus = (bonus) => {
@@ -145,6 +157,7 @@ export default function Homebrew({
 
   const calculateAttributes = (e) => {
     const roll1 = new DiceRoll("4d6");
+    console.log(roll1.output);
     let output = roll1.output
       .split("[")
       .pop()
@@ -165,7 +178,7 @@ export default function Homebrew({
         ...characterInfo,
         [e.target.value]: Math.floor(1 + Math.random() * 10),
       });
-      if (count > 110) {
+      if (count > 180) {
         clearInterval(moving);
 
         setCharacterInfo({
@@ -175,7 +188,7 @@ export default function Homebrew({
         // checkBonus(e.target.value);
       }
       count++;
-    });
+    }, 10);
   };
 
   const handleClose = (e) => {
@@ -190,6 +203,7 @@ export default function Homebrew({
         window.location.toString().split("/").length - 1
       ];
       API.createCharacter(characterInfo, campaignId, token).then((res) => {
+        
         console.log(res.data.id);
         console.log(res.data);
         if (proficiencies) {
@@ -202,9 +216,8 @@ export default function Homebrew({
               navigate(`/campaign/${campaignId}`);
             });
           });
-        } else {
-          navigate(`/campaign/${campaignId}`);
-        }
+        } 
+        navigate(`/campaign/${campaignId}`);
       });
     }
   };
@@ -219,11 +232,13 @@ export default function Homebrew({
 
   return (
     <div>
-      <button className="btn btn-primary" onClick={handleShow}>
+      <button variant="secondary" size="sm" onClick={handleShow}>
         Save
       </button>
+      {"    "}
       <button
-        className="btn btn-primary"
+        variant="secondary"
+        size="sm"
         onClick={() => {
           window.location.reload();
         }}
@@ -261,7 +276,12 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button onClick={randomName} className="btn btn-primary">
+                <button
+                  onClick={randomName}
+                  // className="btn btn-primary"
+                  variant="secondary"
+                  size="lg"
+                >
                   Random
                 </button>
               </div>
@@ -426,6 +446,34 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
+                <div className={noClass ? "" : "hide"}>
+                  Choose a class on the class screen or provide the number of
+                  sides you want to use:
+                  <select name="sides" id="sides">
+                    <option key="22" value="choose">
+                      Choose
+                    </option>
+                    <option key="33" value="4">
+                      4 Sides
+                    </option>
+                    <option key="44" value="6">
+                      6 Sides
+                    </option>
+                    <option key="55" value="8">
+                      8 Sides
+                    </option>
+                    <option key="66" value="10">
+                      10 Sides
+                    </option>
+                    <option key="77" value="12">
+                      12 Sides
+                    </option>
+                    <option key="88" value="20">
+                      20 Sides
+                    </option>
+                  </select>
+                </div>
+
                 <button
                   data-tip
                   data-for="hitpointsButton"
@@ -783,6 +831,7 @@ export default function Homebrew({
           </Button>
         </Modal.Footer>
       </Modal>
+      <br />
     </div>
   );
 }

@@ -240,6 +240,7 @@ export default function Race({
       ) : (
         <div></div>
       )}
+      <br/>
     </div>
   );
 }
