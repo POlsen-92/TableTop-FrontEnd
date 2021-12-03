@@ -10,7 +10,6 @@ function Community({ token, userState }) {
     useEffect(() => {
         axios.get('http://localhost:3001/api/blog/')
             .then(res => {
-                // console.log(res)
                 setPosts(res.data)
             })
             .catch(err => {
@@ -22,12 +21,10 @@ function Community({ token, userState }) {
 
     const deleteBlogPost = (deletedPost) => {
         API.deleteBlogPost(deletedPost, token).then((res) => {
-            // console.log(res);
-            // console.log("I deleted a Post!");
             window.location.reload(false);
         })
     }
-    // console.log(posts[0].User.username)
+
     return (
         <div className="container">
             <h1>Community!!!</h1>
@@ -35,7 +32,7 @@ function Community({ token, userState }) {
                 {
                     posts.map((post) => {
                         return (
-                            <div>
+                            <div key={post.id}>
                                 <Link
                                     to={{ pathname: `/BlogPost/${post.id}` }}
                                     className="d-inline"

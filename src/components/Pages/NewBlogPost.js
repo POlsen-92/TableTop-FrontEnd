@@ -2,19 +2,6 @@ import React, { useState } from "react";
 import API from "../../utils/API"
 import { useNavigate } from "react-router-dom";
 
-// async function createBlog(content) {
-//     const getUserInfo = await JSON.parse(localStorage.getItem("token"))
-//     console.log(getUserInfo)
-//     return fetch(`http://localhost:3001/api/blogs/${getUserInfo.id}`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(content)
-//     })
-//       .then(data => data.json())
-//    } 
-
 function NewBlogPost({ token, userState }) {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -39,9 +26,10 @@ function NewBlogPost({ token, userState }) {
             description,
         }
         API.createNewBlogPost(createdPost, token, userState.id).then((res) => {
-            // console.log(res);
-            // console.log("I created a Post!");
+            res.status(200)
             navigate("/community")
+        }).catch((err)=>{
+            console.log(err)
         })
     }
 

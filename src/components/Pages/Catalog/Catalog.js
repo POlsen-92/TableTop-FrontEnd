@@ -46,11 +46,12 @@ export default function Catalog(props) {
         setEquipInputs({...equipInputs, [name]: value})
       }
 
-    const addInvent = (e) => {
+    const addEquip = (e) => {
         e.preventDefault();
         API.createEquipment(id,equipInputs,props.token)
          .then((res) => {
              console.log(res.data)
+             window.location.reload(false)
          })
          .catch((err) => {
              console.log(err)
@@ -79,6 +80,7 @@ export default function Catalog(props) {
         API.createSpell(id,spellInputs,props.token)
         .then((res) => {
             console.log(res.data)
+            window.location.reload(false)
         })
         .catch((err) => {
             console.log(err)
@@ -103,6 +105,7 @@ export default function Catalog(props) {
         API.createFeature(id,featInputs,props.token)
         .then((res) => {
             console.log(res.data)
+            window.location.reload(false)
         })
         .catch((err) => {
             console.log(err)
@@ -131,6 +134,7 @@ export default function Catalog(props) {
         API.createNewProficiency(id,profInputs,props.token)
         .then((res) => {
             console.log(res.data)
+            window.location.reload(false)
         })
         .catch((err) => {
             console.log(err)
@@ -150,13 +154,13 @@ export default function Catalog(props) {
                             <Tab>Proficiency</Tab>
                         </TabList>
                         <TabPanel>
-                            <form onSubmit={addInvent}>
+                            <form onSubmit={addEquip}>
                                 <label className="mx-2">Name
                                 <br /><input
                                     className=""
                                     type="text" 
                                     name="name"
-                                    defaultValue={equipInputs.name || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -164,7 +168,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="text" 
                                     name="type"
-                                    defaultValue={equipInputs.type || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -172,7 +176,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="text" 
                                     name="properties"
-                                    defaultValue={equipInputs.properties || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -180,7 +184,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="number" 
                                     name="cost"
-                                    defaultValue={equipInputs.cost || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -188,15 +192,15 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="number" 
                                     name="weight"
-                                    defaultValue={equipInputs.weight || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
-                                <label className="mx-2">armorClass
+                                <label className="mx-2">Armor Class
                                 <br /><input
                                     type="number" 
                                     name="armorClass"
-                                    defaultValue={equipInputs.armorClass || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -204,7 +208,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="number" 
                                     name="str"
-                                    defaultValue={equipInputs.str || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -212,7 +216,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="number" 
                                     name="stealth"
-                                    defaultValue={equipInputs.stealth || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label>
@@ -220,7 +224,7 @@ export default function Catalog(props) {
                                 <br /><input
                                     type="number" 
                                     name="damage"
-                                    defaultValue={equipInputs.damage || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label><br />
@@ -228,11 +232,13 @@ export default function Catalog(props) {
                                 <br /><textarea
                                     name="description"
                                     type="text"
-                                    defaultValue={equipInputs.description || ""}
+                                    defaultValue=""
                                     onChange={handleEquipChange}
                                     />
                                 </label> <br />
-                                <input className="m-2" type="submit" />
+                                <button type="submit" className="col-2 btn my-1 me-1" >Submit</button>
+                                <button data-tip data-for="character" className="col-2 btn my-1 me-1" onClick={characterPage}>Back</button>
+                                <ReactTooltip id="character"><p>Go Back to Character Sheet</p></ReactTooltip>
                             </form>
                         </TabPanel>
                         <TabPanel>
@@ -293,7 +299,9 @@ export default function Catalog(props) {
                                     onChange={handleSpellChange}
                                     />
                                 </label><br />
-                                <input className="m-2" type="submit" />
+                                <button type="submit" className="col-2 btn my-1 me-1" >Submit</button>
+                                <button data-tip data-for="character" className="col-2 btn my-1 me-1" onClick={characterPage}>Back</button>
+                                <ReactTooltip id="character"><p>Go Back to Character Sheet</p></ReactTooltip>
                             </form>
                         </TabPanel>
                         <TabPanel>
@@ -322,7 +330,9 @@ export default function Catalog(props) {
                                     onChange={handleFeatChange}
                                     />
                                 </label> <br />
-                                <input className="m-2" type="submit" />
+                                <button type="submit" className="col-2 btn my-1 me-1" >Submit</button>
+                                <button data-tip data-for="character" className="col-2 btn my-1 me-1" onClick={characterPage}>Back</button>
+                                <ReactTooltip id="character"><p>Go Back to Character Sheet</p></ReactTooltip>
                             </form>
                         </TabPanel>
                         <TabPanel>
@@ -383,14 +393,14 @@ export default function Catalog(props) {
                                     onChange={handleProfChange}
                                     />
                                 </label><br />
-                                <input className="m-2" type="submit" />
+                                <button type="submit" className="col-2 btn my-1 me-1" >Submit</button>
+                                <button data-tip data-for="character" className="col-2 btn my-1 me-1" onClick={characterPage}>Back</button>
+                                <ReactTooltip id="character"><p>Go Back to Character Sheet</p></ReactTooltip>
                             </form>
                         </TabPanel>
                     </Tabs>
                     <div>
                         <br />
-                    <button data-tip data-for="character" className="col-2 btn my-1 me-1" onClick={characterPage}>Back</button>
-                    <ReactTooltip id="character"><p>Go Back to Character Sheet</p></ReactTooltip>
                     </div>
                 </div>
             </div>
