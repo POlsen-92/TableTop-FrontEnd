@@ -7,8 +7,8 @@ function BlogPost(props) {
 
     const { id } = useParams();
 
-    const [postData, setPostData] = useState('')
-    const [commentData, setCommentData] = useState('')
+    const [postData, setPostData] = useState('');
+    const [commentData, setCommentData] = useState('');
     const [postTitle, setPostTitle] = useState('');
     const [postDescription, setPostDescription] = useState('');
     const [postComments, setPostComments] = useState([]);
@@ -54,6 +54,7 @@ function BlogPost(props) {
             console.log(err)
         })
     }
+    
     return (
         <>
             <div className="container">
