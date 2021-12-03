@@ -3,17 +3,18 @@ import { ItemTypes } from '../Gameboard/ItemTypes';
 import { knightImage } from '../Gameboard/knightImage';
 
 const tokenStyle = {
-    fontSize: '2vw',
+    fontSize: '1vw',
     fontWeight: 'bold',
     cursor: 'move',
 };
-const Token = ({name,id,x,y}) => {
+const Token = ({name,token_id,x,y}) => {
     console.log(name,"DRAGGINGGGG")
+    // console.log(token_id);
     const [{ isDragging }, drag, preview] = useDrag(() => ({
         type: ItemTypes.TOKEN,
         item: {
             name: name,
-            id: id,
+            token_id: token_id,
             x:x,
             y:y,
         },
