@@ -87,20 +87,9 @@ function Profile(props) {
       description: "Insert description here",
     };
     API.createCampaign(createdCampaign, props.token).then((res) => {
-      setData([...data, res.data]);
-      API.createUserCampaign(res.data.id, props.token).catch((err)=>{
-        console.log(err)
-      });
+      console.log("res1", res);
+      setData([...data, res.data[0]]);
     });
-  };
-
-    // DELETES CAMPAIGN
-  const deleteCampaign = (dltCmpgnId) => {
-    API.deleteCampaign(dltCmpgnId, props.token)
-    const updatedData = data.filter(
-      (campaign) => campaign.id !== Number(dltCmpgnId)
-    );
-    setData(updatedData);
   };
 
 
@@ -185,14 +174,6 @@ function Profile(props) {
                     <h4 className="d-inline">{campaign.name}</h4>
                   </li>
                 </Link>
-                <button
-                  className="campaign-dlt-btn btn-danger"
-                  onClick={() => {
-                    deleteCampaign(campaign.id);
-                  }}
-                >
-                  X
-                </button>
               </div>
             );
           })}
