@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("./bg-images/blue-moon.jpg");
+  background-image: url("./blue-moon.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   color: white !important;
