@@ -88,14 +88,14 @@ const API = {
         }})
     },
     gmDelUserCampaign: (campaign_id, tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`, {}, {
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
         })
     },
     userDelUserCampaign: (campaign_id, tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`, {}, {
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
@@ -111,7 +111,6 @@ const API = {
         })
     },
     deleteInvite: (id, tkn) => {
-        // console.log("i am trying to delete this invite");
         return axios.delete(`${URL_PREFIX}/api/invite/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
@@ -143,8 +142,8 @@ const API = {
             }
         })
     },
-    deleteCharacter: (charData, id, tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/character/${id}`, charData, {
+    deleteCharacter: (id, tkn) => {
+        return axios.delete(`${URL_PREFIX}/api/character/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
@@ -360,6 +359,18 @@ const API = {
                 "Authorization": `Bearer ${tkn}`
             }
         })
+    },
+
+    // ~~~~~~~~~~~~~~~~~~~~~TOKEN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
+    createToken: (camp_id, token) => {
+        return axios.post(`${URL_PREFIX}/api/token/camp${camp_id}`, token, {
+        })
+    },
+    findTokens: (camp_id) => {
+        return axios.get(`${URL_PREFIX}/api/token/camp${camp_id}`)
+    },
+    updateToken: (id, token) => {
+        return axios.put(`${URL_PREFIX}/api/token/camp${id}`, token)
     },
 }
 

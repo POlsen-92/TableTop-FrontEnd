@@ -36,9 +36,6 @@ socket.on("greeting", (greeting) => {
 });
 
 function App() {
-  // const [data, setData] = React.useState(null); // This code was used as a test in the beginning (we may use it later)
-  // const [isLoading, setLoading] = useState(true); // This code was used as a test in the beginning (we may use it later)
-  // const [userData, setUserData] = useState(); // This code was used as a test in the beginning (we may use it later)
   const [campaign, setCampaign] = useState(-1);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
 
@@ -55,8 +52,6 @@ function App() {
 
   useEffect(() => {
     const myToken = localStorage.getItem("token");
-    // console.log("IM RUNNING!")
-    // console.log(myToken);
     if (myToken) {
       API.getProfile(myToken)
         .then((res) => {
@@ -162,118 +157,6 @@ const tokenFromStor = localStorage.getItem("token")
       </div>
     </Router>
   );
-  // switch (page) {
-  //   case "signup":
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  //         <Signup
-  // handlePageChange={handlePageChange}
-  // submit={handleSignupSubmit}
-  // change={handleSignupChange}
-  // signupState={signupFormState}
-  //         />
-  //         <News />
-  //       </div>
-  //     );
-
-  //   case "about":
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  //         <About />
-  //       </div>
-  //     );
-
-  //   case "community":
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  //         <Community />
-  //         <NewBlogPost
-  // handlePageChange={handlePageChange}
-  // userState={userState}
-  // token={token} />
-  //       </div>
-  //     );
-
-  //   case "profile":
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  //         <Profile
-  // handleCampaignChange={handleCampaignChange}
-  // handlePageChange={handlePageChange}
-  // userState={userState}
-  // token={token}
-  //         />
-  //       </div>
-  //     );
-
-  //   case "campaign":
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  // <Campaign campaignId={campaign} />
-  //       </div>
-  //     );
-
-  //   case "avatar":
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  //         <Avatar
-  // userState={userState}
-  // token={token}
-  // handlePageChange={handlePageChange}
-  // setUserState={setUserState}
-  //         />
-  //       </div>
-  //     );
-
-  //   default:
-  //     return (
-  //       <div className="App">
-  //         <Navbar
-  //           handlePageChange={handlePageChange}
-  //           userState={userState}
-  //           logout={logMeOut}
-  //         />
-  //         <Home
-  // handlePageChange={handlePageChange}
-  // userState={userState}
-  // submit={handleLoginSubmit}
-  // change={handleLoginChange}
-  // loginState={loginFormState}
-  //         />
-  //         <News />
-  //       </div>
-  //     );
-  // }
 }
 
 export default App;

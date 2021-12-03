@@ -111,10 +111,25 @@ export default function CharacterView(props) {
         window.location.reload(false)
     }
 
+    const deleteChar = () => {
+        if (window.confirm("Do You Really Want to Delete Your Character?")) {
+            API.deleteCharacter(id,props.token)
+            .then(res=>{
+                console.log(res.data)
+                alert("Character has been Deleted")
+                navigate(`/Profile`)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            alert("Character has Not Been Deleted")
+        }
+    }
+
 
     // ~~~~~~~~~~~~~~~~~~~~~~PROFICIENCIES EDIT~~~~~~~~~~~~~~~~~//
 
-    const [editProf, setEditProf] = useState(false);
+    const [editProf, setEditProf] = useState();
     const [profNameEdit, setprofNameEdit] = useState();
     const [profDescEdit, setprofDescEdit] = useState();
     const [profTypeEdit, setprofTypeEdit] = useState();
@@ -136,30 +151,153 @@ export default function CharacterView(props) {
         console.log(profUpdate)
         console.log(profId)
         API.updateProficiency(profId, profUpdate, props.token).then((res) => console.log(res));
-        setEditProf(false);
+        setEditProf();
         window.location.reload(false)
     }
 
-
+    const deleteProf = (profId) => {
+        if (window.confirm("Do You Really Want to Delete This Proficiency?")) {
+            API.deleteProficiency(profId,props.token).then(res=>{
+                console.log(res.data)
+                window.location.reload(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            alert("Proficiency has Not Been Deleted")
+        }
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~~FEATURES EDIT~~~~~~~~~~~~~~~~~//
 
+    const [editFeat, setEditFeat] = useState();
+    const [featNameEdit, setfeatNameEdit] = useState();
+    const [featDescEdit, setfeatDescEdit] = useState();
+    const [featTypeEdit, setfeatTypeEdit] = useState();
 
 
+    const featSave = (featId) => {
+        const featUpdate = {
+            name: featNameEdit,
+            description: featDescEdit,
+            type: featTypeEdit,
+        }
+        console.log(featUpdate)
+        console.log(featId)
+        API.updateFeature(featId, featUpdate, props.token).then((res) => console.log(res));
+        setEditFeat();
+        window.location.reload(false)
+    }
 
-
-
-
+    const deleteFeat = (featId) => {
+        if (window.confirm("Do You Really Want to Delete This Feature?")) {
+            API.deleteFeature(featId,props.token)
+            .then(res=>{
+                console.log(res.data)
+                window.location.reload(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            alert("Feature has Not Been Deleted")
+        }
+    }
 
     // ~~~~~~~~~~~~~~~~~~~~~~SPELL EDIT~~~~~~~~~~~~~~~~~//
 
+    const [editSpell, setEditSpell] = useState();
+    const [spellNameEdit, setspellNameEdit] = useState();
+    const [spellDescEdit, setspellDescEdit] = useState();
+    const [spellTypeEdit, setspellTypeEdit] = useState();
+    const [spellLvlEdit, setspellLvlEdit] = useState();
+    const [spellDurEdit, setspellDurEdit] = useState();
+    const [spellRngeEdit, setspellRngeEdit] = useState();
+    const [spellAtkEdit, setspellAtkEdit] = useState();
 
 
+    const spellSave = (spellId) => {
+        const spellUpdate = {
+            name: spellNameEdit,
+            description: spellDescEdit,
+            type: spellTypeEdit,
+            level: spellLvlEdit,
+            duration: spellDurEdit,
+            range: spellRngeEdit,
+            attack: spellAtkEdit
+        }
+        console.log(spellUpdate)
+        console.log(spellId)
+        API.updateSpell(spellId, spellUpdate, props.token).then((res) => console.log(res));
+        setEditSpell();
+        window.location.reload(false)
+    }
 
-
+    const deleteSpell = (spellId) => {
+        if (window.confirm("Do You Really Want to Delete This Spell?")) {
+            API.deleteSpell(spellId,props.token)
+            .then(res=>{
+                console.log(res.data)
+                window.location.reload(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            alert("Spell has Not Been Deleted")
+        }
+    }
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~EQUIPMENT EDIT~~~~~~~~~~~~~~~~~//
+
+    const [editEquip, setEditEquip] = useState();
+    const [equipNameEdit, setequipNameEdit] = useState();
+    const [equipDescEdit, setequipDescEdit] = useState();
+    const [equipTypeEdit, setequipTypeEdit] = useState();
+    const [equipPropEdit, setequipPropEdit] = useState();
+    const [equipCostEdit, setequipCostEdit] = useState();
+    const [equipWtEdit, setequipWtEdit] = useState();
+    const [equipDmgEdit, setequipDmgEdit] = useState();
+    const [equipArmEdit, setequipArmEdit] = useState();
+    const [equipStrEdit, setequipStrEdit] = useState();
+    const [equipStlEdit, setequipStlEdit] = useState();
+
+
+    const equipSave = (equipId) => {
+        const equipUpdate = {
+            name: equipNameEdit,
+            description: equipDescEdit,
+            type: equipTypeEdit,
+            properties: equipPropEdit,
+            cost: equipCostEdit,
+            weight: equipWtEdit,
+            damage: equipDmgEdit,
+            armorClass: equipArmEdit,
+            strength: equipStrEdit,
+            stealth: equipStlEdit,
+        }
+        console.log(equipUpdate)
+        console.log(equipId)
+        API.updateEquipment(equipId, equipUpdate, props.token).then((res) => console.log(res));
+        setEditEquip();
+        window.location.reload(false)
+    }
+
+    const deleteEquip = (equipId) => {
+        if (window.confirm("Do You Really Want to Delete This Item?")) {
+            API.deleteEquipment(equipId,props.token)
+            .then(res=>{
+                console.log(res.data)
+                window.location.reload(false)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            alert("Item has Not Been Deleted")
+        }
+    }
+
+
+// RETURN PAGE INFO
 
     return (
             <div className="container">
@@ -185,6 +323,7 @@ export default function CharacterView(props) {
                                 <Tab>Spells</Tab>
                                 <Tab>Inventory</Tab>
                             </TabList>
+                            {/* CHARACTER INFORMATION */}
                             <TabPanel>
                                 <div className="row border">
                                     <div className="col-8">
@@ -194,23 +333,23 @@ export default function CharacterView(props) {
                                         ) : ''}
                                         <h5>Class: {character.class}</h5>
                                         {(character.subclass) ? (
-                                            <h5>SubClass:{character.subclass}</h5>
+                                            <h5>SubClass: {character.subclass}</h5>
                                         ) : ""}
-                                        <h5>Age:{editChar ? (<input className="row" defaultValue={character.age} onChange={(e)=>setageEdit(e.target.value)}/>) : 
+                                        <h5>Age: {editChar ? (<input className="row" defaultValue={character.age} onChange={(e)=>setageEdit(e.target.value)}/>) : 
                                         (character.age)}</h5>
-                                        <h5>Level:{editChar ? (<input className="row" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
+                                        <h5>Level: {editChar ? (<input className="row" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
                                         (character.level)}</h5>
                                         <h5>Alignment: </h5>
                                         {editChar ? (<input className="row" defaultValue={character.alignment} onChange={(e)=>setalignEdit(e.target.value)}/>) : 
                                         (<p>{character.alignment}</p>)}
-                                        <h5>Background:{editChar ? (<input className="row" defaultValue={character.background} onChange={(e)=>setbgEdit(e.target.value)}/>) : 
+                                        <h5>Background: {editChar ? (<textarea className="row" defaultValue={character.background} onChange={(e)=>setbgEdit(e.target.value)}/>) : 
                                         (character.background)}</h5>
                                         <h5>Personality: </h5>
-                                        <p>{editChar ? (<input className="row" defaultValue={character.personality} onChange={(e)=>setpersEdit(e.target.value)}/>) : 
+                                        <p>{editChar ? (<textarea className="row" defaultValue={character.personality} onChange={(e)=>setpersEdit(e.target.value)}/>) : 
                                         (character.personality)}</p>
                                     </div>
                                     <div className="col-4">
-                                        <h5>HitPoints:{editChar ? (<input className="row" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
+                                        <h5>HitPoints: {editChar ? (<input className="row" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
                                         (character.hitpoints)}</h5>
                                         <h5>Current HP: {editChar ? (<input className="row" defaultValue={character.currhitpoints} onChange={(e)=>setchpEdit(e.target.value)}/>) : 
                                         (character.currhitpoints)}</h5>
@@ -231,10 +370,16 @@ export default function CharacterView(props) {
                                         <h5>Speed: {editChar ? (<input className="row" defaultValue={character.speed} onChange={(e)=>setspdEdit(e.target.value)}/>) : 
                                         (character.speed)}</h5>
                                     </div>
-                                    {(editChar ? (<button className="col-2 btn m-1" onClick={()=>charSave()}>Save</button>) : 
-                                    (<button className="col-2 btn m-1" onClick={()=>setEditChar(true)}>Edit Character</button>))}
+                                    {/* SAVE AND DELETE BUTTONS FOR CHARACTER */}
+                                    {(character.user_id === props.userState.id) ? (editChar ? 
+                                    (<button className="col-2 char-edt-btn m-1" onClick={()=>charSave()}>Save</button>) :
+                                    (<button className="col-2 m-1" onClick={()=>setEditChar(true)}>Edit Character</button>)) : ''}
+                                    {(character.user_id === props.userState.id) ? (<button className="col-2 char-dlt-btn m-1"
+                                    onClick={() => deleteChar()}>Delete Character
+                                    </button>) : ""}
                                 </div>
                             </TabPanel>
+                            {/* CHARACTER PROFICIENCIES */}
                             <TabPanel>
                                 <div className="row">
                                     <div className="col-6">
@@ -242,111 +387,112 @@ export default function CharacterView(props) {
                                         <div className="row border">
                                         {proficiency.map((prof)=>{
                                             return(
-                                                <div className="col-4 ">
+                                                <div className="col-4" key={(prof.id)}>
                                                     <h5>
-                                                        {editProf ? 
+                                                        {(editProf===prof.id) ? 
                                                         (<input className="row" defaultValue={prof.name} onChange={(e)=>setprofNameEdit(e.target.value)}/>) : 
                                                         (prof.name)}</h5> 
                                                     <h6>Description: </h6>
-                                                    <p>
-                                                        {editProf ? 
-                                                        (<input className="row" defaultValue={prof.description} onChange={(e)=>setprofDescEdit(e.target.value)}/>) : 
+                                                    <p> {(editProf===prof.id) ? 
+                                                        (<textarea className="row" defaultValue={prof.description} onChange={(e)=>setprofDescEdit(e.target.value)}/>) : 
                                                         (prof.description)}</p>
-                                                    <h6>Type: 
-                                                        {editProf ? (<input className="row" defaultValue={prof.type} onChange={(e)=>setprofTypeEdit(e.target.value)}/>) : 
+                                                    <h6>Type: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.type} onChange={(e)=>setprofTypeEdit(e.target.value)}/>) : 
                                                         (prof.type)}</h6>
-                                                    {editProf ? 
-                                                        (<h6>SubType: <input className="row" defaultValue={prof.subtype} onChange={(e)=>setprofSubTEdit(e.target.value)}/></h6>) : 
-                                                        (prof.subtype ? (<h6>SubType: {prof.subtype}</h6>) : '')}
-                                                    <h6>Ability: 
-                                                        {editProf ? (<input className="row" defaultValue={prof.ability} onChange={(e)=>setprofAbilityEdit(e.target.value)}/>) : 
+                                                    {(editProf===prof.id) ? (<h6>SubType: <input className="row" defaultValue={prof.subtype} onChange={(e)=>setprofSubTEdit(e.target.value)}/></h6>)    
+                                                        : (prof.subtype ? (<h6>SubType: {prof.subtype}</h6>) : '')}
+                                                    <h6>Ability: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.ability} onChange={(e)=>setprofAbilityEdit(e.target.value)}/>) : 
                                                         (prof.ability)}</h6>
-                                                    <h6>Script: 
-                                                        {editProf ? (<input className="row" defaultValue={prof.script} onChange={(e)=>setprofScriptEdit(e.target.value)}/>) : 
+                                                    <h6>Script: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.script} onChange={(e)=>setprofScriptEdit(e.target.value)}/>) : 
                                                         (prof.script)}</h6>
-                                                    <h6>Typical Speakers: 
-                                                        {editProf ? (<input className="row" defaultValue={prof.typicalSpeakers} onChange={(e)=>setprofTSEdit(e.target.value)}/>) : 
-                                                        (prof.typicalSpeakers)}</h6>
-                                                    {(prof.user_id === props.userState.id) ? (editProf ? 
-                                                        (<button data-id={prof.id} className="prof-edt-btn m-1" onClick={(e)=>profSave(e.target.getAttribute("data-id"))}>Save</button>) :
-                                                        (<button className="m-1" onClick={()=>setEditProf(true)}>Edit</button>)) : ''}
-                                                        {(prof.user_id === props.userState.id) ? (<button data-id={prof.id} className="prof-dlt-btn"
-                                                        onClick={(e) => {
-                                                        API.deleteProficiency(e.target.getAttribute("data-id"),props.token).then(window.location.reload(false));}}>Delete
+                                                    <h6>Typical Speakers: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.typicalSpeakers} onChange={(e)=>setprofTSEdit(e.target.value)}/>) : (prof.typicalSpeakers)}</h6>
+                                                {/* EDIT AND DELETE BUTTONS FOR PROFICIENCIES */}
+                                                    {(prof.user_id === props.userState.id) ? ((editProf===prof.id) ? 
+                                                        (<button className="prof-edt-btn m-1" onClick={(e)=>profSave(prof.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditProf(prof.id)}>Edit</button>)) : ''}
+                                                    {(prof.user_id === props.userState.id) ? (<button className="prof-dlt-btn"
+                                                    onClick={(e) => deleteProf(prof.id)}>Delete </button>) : ""}
+                                                </div>
+                                            )
+                                        })}
+                                        </div>
+                                    </div>
+                                    {/* CHARACTER FEATURES */}
+                                    <div className="col-6">
+                                        <h4>Features</h4>
+                                        <div className="row border">
+                                        {feature.map((feat)=>{
+                                            return(
+                                                <div className="col-4" key={feat.id}>
+                                                    <h5>{(editFeat===feat.id) ? (<input className="row" defaultValue={feat.name} onChange={(e)=>setfeatNameEdit(e.target.value)}/>) : (feat.name)}</h5>
+                                                    
+                                                    <h6>Description: </h6>
+                                                    <p>{(editFeat===feat.id) ? (<textarea className="row" defaultValue={feat.description} onChange={(e)=>setfeatDescEdit(e.target.value)}/>) : (feat.description)}</p>
+                                                    <h6>Type: {(editFeat===feat.id) ? (<textarea className="row" defaultValue={feat.type} onChange={(e)=>setfeatTypeEdit(e.target.value)}/>) : (feat.type)}</h6>
+                                                {/* EDIT AND DELETE BUTTONS FOR FEATURES */}
+                                                    {(feat.user_id === props.userState.id) ? ((editFeat===feat.id) ? 
+                                                        (<button className="feat-edt-btn m-1" onClick={(e)=>featSave(feat.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditFeat(feat.id)}>Edit</button>)) : ''}
+                                                    {(feat.user_id === props.userState.id) ? (<button className="feat-dlt-btn"
+                                                    onClick={(e) => deleteFeat(feat.id)}>Delete
                                                     </button>) : ""}
                                                 </div>
                                             )
                                         })}
                                         </div>
                                     </div>
-                                    <div className="col-6">
-                                        <h4>Features</h4>
-                                        <div className="row border">
-                                        {feature.map((feat)=>{
-                                            return(
-                                                <div className="col-4 ">
-                                                    <h5>{feat.name}</h5>
-                                                    <h6>Description: </h6>
-                                                    <p>{feat.description}</p>
-                                                    <h6>Type: {feat.type}</h6>
-                                                    <button data-id={feat.id} className="feat-dlt-btn"
-                                                    onClick={(e) => {
-                                                        API.deleteFeature(e.target.getAttribute("data-id"),props.token).then(window.location.reload(false));}}>Delete
-                                                    </button>
-                                                </div>
-                                            )
-                                        })}
-                                        </div>
-                                    </div>
                                 </div>
                             </TabPanel>
+                            {/* CHARACTER SPELLS */}
                             <TabPanel>
                             <div>
                             <h4>Spells</h4>
                                 <div className="row border">
                                 {spell.map((spell)=>{
                                     return(
-                                        <div className="col-2 ">
-                                            <h5>{spell.name}</h5>
+                                        <div className="col-2" key={spell.id}>
+                                            <h5>{(editSpell===spell.id) ? (<input className="row" defaultValue={spell.name} onChange={(e)=>setspellNameEdit(e.target.value)}/>) : (spell.name)}</h5>
                                             <h6>Desc:</h6>
-                                            <p>{spell.description}</p>
-                                            <h6>Type: {spell.type}</h6>
-                                            <h6>Level: {spell.level}</h6>
-                                            <h6>Attack:{spell.attack}</h6>
-                                            <h6>Duration: {spell.duration}</h6>
-                                            <h6>Range: {spell.range}</h6>
-                                            <button data-id={spell.id} className="spell-dlt-btn"
-                                            onClick={(e) => {
-                                                API.deleteSpell(e.target.getAttribute("data-id"),props.token).then(window.location.reload(false));}}>Delete
-                                            </button>
+                                            <p>{(editSpell===spell.id) ? (<input className="row" defaultValue={spell.description} onChange={(e)=>setspellDescEdit(e.target.value)}/>) : (spell.description)}</p>
+                                            <h6>Type: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.type} onChange={(e)=>setspellTypeEdit(e.target.value)}/>) : (spell.type)}</h6>
+                                            <h6>Level: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.level} onChange={(e)=>setspellLvlEdit(e.target.value)}/>) : (spell.level)}</h6>
+                                            <h6>Attack: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.attack} onChange={(e)=>setspellAtkEdit(e.target.value)}/>) : (spell.attack)}</h6>
+                                            <h6>Duration: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.duration} onChange={(e)=>setspellDurEdit(e.target.value)}/>) : (spell.duration)}</h6>
+                                            <h6>Range: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.range} onChange={(e)=>setspellRngeEdit(e.target.value)}/>) : (spell.range)}</h6>
+                                        {/* EDIT AND DELETE BUTTONS FOR SPELLS */}
+                                            {(spell.user_id === props.userState.id) ? ((editSpell===spell.id) ? 
+                                                (<button className="spell-edt-btn m-1" onClick={()=>spellSave(spell.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditSpell(spell.id)}>Edit</button>)) : ''}
+                                            {(spell.user_id === props.userState.id) ? (<button className="spell-dlt-btn"
+                                            onClick={() => deleteSpell(spell.id)}>Delete
+                                            </button>) : ""}
                                         </div>
                                         )
                                     })}
                                 </div>
                             </div>
                             </TabPanel>
+                            {/* CHARACTER EQUIPMENT */}
                             <TabPanel>
                             <div>
                             <h4>Equipment</h4>
                                 <div className="row border">
-                                {inventory.map((item)=>{
+                                {inventory.map((equip)=>{
                                     return(
-                                        <div className="col-2 ">
-                                            <h5>{item.name}</h5>
+                                        <div className="col-2" key={equip.id}>
+                                            <h5>{(editEquip===equip.id) ? (<input className="row" defaultValue={equip.name} onChange={(e)=>setequipNameEdit(e.target.value)}/>) : (equip.name)}</h5>
                                             <h6>Desc: </h6>
-                                            <p>{item.description}</p>
-                                            <h6>Type: {item.type}</h6>
-                                            <h6>Properties: {item.properties}</h6>
-                                            <h6>Cost: {item.cost}</h6>
-                                            <h6>Weight: {item.weight}</h6>
-                                            <h6>Damage: {item.damage}</h6>
-                                            <h6>Armor Class: {item.armorClass}</h6>
-                                            <h6>Strength: {item.strength}</h6>
-                                            <h6>Stealth: {item.stealth}</h6>
-                                            <button data-id={item.id} className="item-dlt-btn"
-                                            onClick={(e) => {
-                                                API.deleteEquipment(e.target.getAttribute("data-id"),props.token).then(window.location.reload(false));}}>Delete
-                                            </button>
+                                            <p>{(editEquip===equip.id) ? (<input className="row" defaultValue={equip.description} onChange={(e)=>setequipDescEdit(e.target.value)}/>) : (equip.description)}</p>
+                                            <h6>Type: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.type} onChange={(e)=>setequipTypeEdit(e.target.value)}/>) : (equip.type)}</h6>
+                                            <h6>Properties: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.properties} onChange={(e)=>setequipPropEdit(e.target.value)}/>) : (equip.properties)}</h6>
+                                            <h6>Cost: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.cost} onChange={(e)=>setequipCostEdit(e.target.value)}/>) : (equip.cost)}</h6>
+                                            <h6>Weight: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.weight} onChange={(e)=>setequipWtEdit(e.target.value)}/>) : (equip.weight)}</h6>
+                                            <h6>Damage: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.damage} onChange={(e)=>setequipDmgEdit(e.target.value)}/>) : (equip.damage)}</h6>
+                                            <h6>Armor Class: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.armorClass} onChange={(e)=>setequipArmEdit(e.target.value)}/>) : (equip.armorClass)}</h6>
+                                            <h6>Strength: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.strength} onChange={(e)=>setequipStrEdit(e.target.value)}/>) : (equip.strength)}</h6>
+                                            <h6>Stealth: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.stealth} onChange={(e)=>setequipStlEdit(e.target.value)}/>) : (equip.stealth)}</h6>
+                                        {/* EDIT AND DELETE BUTTONS FOR EQUIPMENT */}
+                                            {(equip.user_id === props.userState.id) ? ((editEquip===equip.id) ? 
+                                            (<button className="equip-edt-btn m-1" onClick={()=>equipSave(equip.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditEquip(equip.id)}>Edit</button>)) : ''}
+                                            {(equip.user_id === props.userState.id) ? (<button className="equip-dlt-btn"
+                                            onClick={() => deleteEquip(equip.id)}>Delete
+                                            </button>) : ""}
                                         </div>
                                         )
                                     })}

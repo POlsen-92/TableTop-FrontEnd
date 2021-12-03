@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import Dice from "../Dice/Dice.js";
-
-import ReactTooltip from "react-tooltip";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Character.css";
 import Class from "./Class";
 import Race from "./Race";
 import Homebrew from "./Homebrew";
-import draftToHtml from 'draftjs-to-html';
+import pointer from './pointer-min.png'
+import journey from './journey-min.jpg'
+
 
 export default function Character({ token }) {
   const [characterInfo, setCharacterInfo] = useState({
@@ -108,11 +107,16 @@ export default function Character({ token }) {
     }
   };
 
-  // const testfunct = () => {
-  //   let things = draftToHtml(characterInfo.background)
-  //   console.log(things)
-  //   if (things==="<p></p>") {return {_html: things}} else {return {_html: ""}}
-  // }
+  const display = () => {
+    return (
+      <div>
+        <h1>Begin your journey that way! <img src={pointer} height="100px" width="200px" alt="finger pointing"/> </h1><img id="journey" src={journey} alt="journey begins"/>
+      </div>
+
+    )
+
+  }
+
 
   return (
     <div className="mainPage">
@@ -121,7 +125,9 @@ export default function Character({ token }) {
         <h1>Create Character</h1>
         <button value="right" onClick={pageHandler}>{currentPage.right}&#8594;</button>
       </div>
-      {currentPage.current === "Home" ? 'Homebrew to the left, Character Journey to the right' : null}
+      {currentPage.current === "Home" ? display() : null}
+      
+       
       {currentPage.current === "Homebrew" ? (
         <Homebrew
           characterInfo={characterInfo}
@@ -130,6 +136,7 @@ export default function Character({ token }) {
           proficiencies={proficiencies}
           classapiResponse={classapiResponse}
           apiResponse={apiResponse}
+          subraceResponse={subraceResponse}
         />
       ) : null}
       {currentPage.current === "Race" ? (
@@ -154,8 +161,6 @@ export default function Character({ token }) {
           setSubclassResponse={setSubclassResponse}
         />
       ) : null}
-    
-      {characterInfo.background ? <div dangerouslySetInnerHTML={{__html: draftToHtml(characterInfo.background)}}></div> : null}   
     
     </div>
   );
