@@ -70,6 +70,12 @@ function Campaign(props) {
       navigate('/profile');
     };
 
+    const leaveCampaign = (campaign_id) => {
+      API.userDelUserCampaign(campaign_id, props.token).then((res)=>{
+        console.log(res);
+      })
+      navigate('/profile')
+    }
     return (
     <div className="container">
         {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
@@ -83,6 +89,7 @@ function Campaign(props) {
             {(gmID === props.userState.id) ? (edit ? (<button className="col-2 btn m-1" onClick={()=>save()}>Save</button>) : (<button className="col-2 btn m-1" onClick={()=>setEdit(true)}>Edit Campaign</button>)) : null}
             {(gmID === props.userState.id) ? (<button className="col-2 btn m-1" onClick={()=>deleteCampaign(id)}>Delete Campaign</button>) : null}
             <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
+            {(gmID !== props.userState.id) ? (<button className="col-2 btn my-1 me-1" onClick={()=> leaveCampaign(id)}>Leave Campaign</button>) : null}
         </div>
         <div className="row">
             {edit ? (<input id="cmpgnDesc-edit" className="col-4 m-1" value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<p className="border col-4 m-1">{campaignDesc}</p>)}
