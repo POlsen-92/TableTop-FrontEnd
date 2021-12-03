@@ -111,7 +111,6 @@ const API = {
         })
     },
     deleteInvite: (id, tkn) => {
-        // console.log("i am trying to delete this invite");
         return axios.delete(`${URL_PREFIX}/api/invite/${id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`

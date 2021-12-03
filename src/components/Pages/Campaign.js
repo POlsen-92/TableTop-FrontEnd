@@ -4,7 +4,7 @@ import API from "../../utils/API";
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
-    // console.log(props);
+  
     const navigate = useNavigate();
     const { id } = useParams();
 
