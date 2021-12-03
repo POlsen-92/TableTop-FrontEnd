@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactTooltip from "react-tooltip";
 import API from "../../../utils/API";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,11 @@ import { DiceRoll } from "rpg-dice-roller";
 import useSound from "use-sound";
 import rollSound from "../Dice/diceSound.mp3";
 import { randomNameGenerator } from "./Namegen";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+// import { Editor } from "react-draft-wysiwyg";
+// import { EditorState, convertToRaw } from "draft-js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function Homebrew({
   characterInfo,
@@ -19,6 +19,7 @@ export default function Homebrew({
   proficiencies,
   classapiResponse,
   apiResponse,
+  subraceResponse,
 }) {
   const navigate = useNavigate();
   const [play] = useSound(rollSound);
@@ -40,34 +41,40 @@ export default function Homebrew({
     });
   };
 
-  const [backgroundState, setBackGroundState] = useState();
-  const [personalityState, setPersonalityState] = useState();
-  const [alignmentState, setAlignmentState] = useState();
+  // const [backgroundState, setBackGroundState] = useState(() =>
+  //   EditorState.createEmpty()
+  // );
+  // const [personalityState, setPersonalityState] = useState(() =>
+  //   EditorState.createEmpty()
+  // );
+  // const [alignmentState, setAlignmentState] = useState(() =>
+  //   EditorState.createEmpty()
+  // );
 
-  const onBackgroundEditorStateChange = (editorState) => {
-    setBackGroundState(editorState);
-    const contentState = editorState.getCurrentContent();
-    setCharacterInfo({
-      ...characterInfo,
-      background: convertToRaw(contentState),
-    });
-  };
-  const onPersonalityEditorStateChange = (editorState) => {
-    setPersonalityState(editorState);
-    const contentState = editorState.getCurrentContent();
-    setCharacterInfo({
-      ...characterInfo,
-      personality: convertToRaw(contentState),
-    });
-  };
-  const onAlignmentEditorStateChange = (editorState) => {
-    setAlignmentState(editorState);
-    const contentState = editorState.getCurrentContent();
-    setCharacterInfo({
-      ...characterInfo,
-      alignment: convertToRaw(contentState),
-    });
-  };
+  // const onBackgroundEditorStateChange = (editorState) => {
+  //   setBackGroundState(editorState);
+  //   const contentState = editorState.getCurrentContent();
+  //   setCharacterInfo({
+  //     ...characterInfo,
+  //     background: convertToRaw(contentState),
+  //   });
+  // };
+  // const onPersonalityEditorStateChange = (editorState) => {
+  //   setPersonalityState(editorState);
+  //   const contentState = editorState.getCurrentContent();
+  //   setCharacterInfo({
+  //     ...characterInfo,
+  //     personality: convertToRaw(contentState),
+  //   });
+  // };
+  // const onAlignmentEditorStateChange = (editorState) => {
+  //   setAlignmentState(editorState);
+  //   const contentState = editorState.getCurrentContent();
+  //   setCharacterInfo({
+  //     ...characterInfo,
+  //     alignment: convertToRaw(contentState),
+  //   });
+  // };
 
   const calculateHitpoints = () => {
     const roll1 = new DiceRoll(1 + "d" + classapiResponse.hit_die);
@@ -108,6 +115,34 @@ export default function Homebrew({
     });
   };
 
+  // const checkBonus = (bonus) => {
+  //   console.log(bonus);
+  //   console.log(characterInfo.race, characterInfo.subrace);
+
+  //   switch (bonus) {
+  //     case "strength":
+  //       if (characterInfo.race === "Dragonborn" || "Half-Orc") {
+  //         setTimeout(() => {
+  //           setCharacterInfo({
+  //             ...characterInfo,
+  //             strength: characterInfo.strength + 2,
+  //           });
+  //         }, 1000);
+  //       } else if (characterInfo.race === "Human") {
+  //         setTimeout(() => {
+  //           setCharacterInfo({
+  //             ...characterInfo,
+  //             strength: characterInfo.strength + 1,
+  //           });
+  //         }, 1000);
+  //       }
+  //       break;
+  //     default:
+  //       console.log("default");
+  //       break;
+  //   }
+  // };
+
   const calculateAttributes = (e) => {
     const roll1 = new DiceRoll("4d6");
     let output = roll1.output
@@ -119,7 +154,6 @@ export default function Homebrew({
         return parseInt(item, 10);
       });
     const min = Math.min(...output);
-    console.log(output, min);
     let location = output.indexOf(min);
     output.splice(location, 1);
     const total = output.reduce((partial, item) => partial + item);
@@ -138,15 +172,16 @@ export default function Homebrew({
           ...characterInfo,
           [e.target.value]: total,
         });
+        // checkBonus(e.target.value);
       }
       count++;
     });
   };
 
   const handleClose = (e) => {
-    if (!e){
-      setShow(false)
-      setError(false)
+    if (!e) {
+      setShow(false);
+      setError(false);
     } else if (e.target.textContent === "Close") {
       setShow(false);
       setError(false);
@@ -184,11 +219,11 @@ export default function Homebrew({
 
   return (
     <div>
-      <button variant="primary" onClick={handleShow}>
+      <button className="btn btn-primary" onClick={handleShow}>
         Save
       </button>
       <button
-        variant="primary"
+        className="btn btn-primary"
         onClick={() => {
           window.location.reload();
         }}
@@ -257,23 +292,26 @@ export default function Homebrew({
                     className="bg-transparent"
                   />
                 </p>
-
-                {apiResponse.ability_bonuses
-                  ? apiResponse.ability_bonuses.map((bonus, index) => {
-                      return (
-                        <p key={index}>
-                          {bonus.ability_score.name}:{bonus.bonus}
-                          <button
-                            data-ability={bonus.ability_score.name}
-                            data-amt={bonus.bonus}
-                            // onClick={addBonusToCharacter}
-                          >
-                            Add
-                          </button>
-                        </p>
-                      );
-                    })
-                  : null}
+                <div>
+                  {apiResponse.ability_bonuses
+                    ? apiResponse.ability_bonuses.map((bonus, index) => {
+                        return (
+                          <p key={index}>
+                            {bonus.ability_score.name}:{bonus.bonus}
+                          </p>
+                        );
+                      })
+                    : null}
+                  {subraceResponse.ability_bonuses
+                    ? subraceResponse.ability_bonuses.map((bonus, index) => {
+                        return (
+                          <p key={index}>
+                            {bonus.ability_score.name}:{bonus.bonus}
+                          </p>
+                        );
+                      })
+                    : null}
+                </div>
               </div>
               <div className="card-footer bg-transparent"></div>
             </div>
@@ -692,7 +730,7 @@ export default function Homebrew({
           </div>
           {/* </div> */}
         </div>
-        <div className="row forms">
+        {/* <div className="row forms">
           <h2>Character Background</h2>
           <Editor
             editorState={backgroundState}
@@ -712,7 +750,7 @@ export default function Homebrew({
             editorState={alignmentState}
             onEditorStateChange={onAlignmentEditorStateChange}
           />
-        </div>
+        </div> */}
       </div>
 
       <Modal show={show} onHide={handleClose}>
