@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
+import "./community.css";
 
 function NewBlogPost({ token, userState }) {
     const [title, setTitle] = useState('');
