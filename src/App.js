@@ -10,15 +10,15 @@ import Home from "./components/Pages/Home";
 import News from "./components/News";
 import Signup from "./components/Pages/Signup";
 import About from "./components/Pages/About";
-import Community from "./components/Pages/Community";
+import Community from "./components/Pages/Community/Community";
 import Profile from "./components/Pages/Profile";
 import OtherProfile from "./components/Pages/Profile/Profile(Other)";
 import Campaign from "./components/Pages/Campaign";
-import NewBlogPost from "./components/Pages/NewBlogPost";
+import NewBlogPost from "./components/Pages/Community/NewBlogPost";
 import Character from "./components/Pages/Character/Character"
 import CharacterView from "./components/Pages/Character/CharacterView";
 import Catalog from "./components/Pages/Catalog/Catalog";
-import BlogPost from "./components/Pages/BlogPost";
+import BlogPost from "./components/Pages/Community/BlogPost";
 import Gameplay from "./components/Pages/Gameplay/Gameplay";
 
 

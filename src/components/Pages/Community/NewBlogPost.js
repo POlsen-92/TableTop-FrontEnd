@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import API from "../../utils/API"
+import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
+import "./community.css";
 
 function NewBlogPost({ token, userState }) {
     const [title, setTitle] = useState('');
@@ -42,11 +43,11 @@ function NewBlogPost({ token, userState }) {
 
     return (
         <>
-            <form className="my-5 py-5 text-center" id="signup-form"
+            <form className="my-5 py-5 text-center" id="blog-post"
                 onSubmit={handleBlogSubmit}
             >
                 <h4>New post!</h4>
-                <input className="m-6" id="username-signup"
+                <input className="m-6" id="blog-id"
                     value={title}
                     name="title"
                     onChange={handleBlogInputChange}
@@ -54,11 +55,10 @@ function NewBlogPost({ token, userState }) {
                     placeholder="title"
                 />
                 <br />
-                <input className="m-1" id="email-signup"
+                <textarea className="m-1" id="blog-content"
                     value={description}
                     name="description"
                     onChange={handleBlogInputChange}
-                    type="text"
                     placeholder="description"
                 />
                 <br />

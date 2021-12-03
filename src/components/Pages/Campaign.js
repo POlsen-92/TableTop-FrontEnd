@@ -104,11 +104,12 @@ function Campaign(props) {
             {(gmID !== props.userState.id) ? (<button className="col-2 btn my-1 me-1" onClick={()=> leaveCampaign(id)}>Leave Campaign</button>) : null}
         </div>
         <div className="row">
-            {edit ? (<input id="cmpgnDesc-edit" className="col-4 m-1" value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<p className="border col-4 m-1">{campaignDesc}</p>)}
-            <div className="border col-4 m-1 text-center">
+            {edit ? (<input id="cmpgnDesc-edit" className="col-sm-12 col-md-4 " value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<div className="border col-sm-12 col-md-4 ">{campaignDesc}</div>)}
+            <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>GM</h2>
                 <h4>gm_username</h4>
                 <h2>Players</h2>
+                <ul className="p-0">
                 {users.map((user)=>{
                     if (props.userState.id === user.id) {
                         return (
@@ -118,7 +119,7 @@ function Campaign(props) {
                           >
                             <li
                               key={user.id}
-                              className="list-group-item list-group-item-action m-3"
+                              className="list-group-item list-group-item-action mb-3"
                               id="user"
                               data-id={user.id}
                             >
@@ -134,7 +135,7 @@ function Campaign(props) {
                             >
                               <li
                                 key={user.id}
-                                className="list-group-item list-group-item-action m-3"
+                                className="list-group-item list-group-item-action mb-3"
                                 id="user"
                                 data-id={user.id}
                               >
@@ -143,10 +144,11 @@ function Campaign(props) {
                             </Link>
                           )
                     }
-                })}
+                })}</ul>
             </div>
-            <div className="border col-3 m-1 text-center">
+            <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>Character(s)</h2>
+                <ul className="p-0 m-0">
                 {characters.map((character) => {
                     return (
                         <Link
@@ -155,7 +157,7 @@ function Campaign(props) {
                       >
                         <li
                           key={character.id}
-                          className="list-group-item list-group-item-action m-3"
+                          className="list-group-item list-group-item-action mb-3"
                           id="character"
                           data-id={character.id}
                         >
@@ -163,7 +165,7 @@ function Campaign(props) {
                         </li>
                       </Link>
                     );
-                })}
+                })}</ul>
             </div>
             </div>
             {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}

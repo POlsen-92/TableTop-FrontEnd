@@ -1,12 +1,15 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
-import API from "../../utils/API";
+import API from "../../../utils/API";
+import "./community.css";
 
 function BlogPost(props) {
 
     const { id } = useParams();
 
+    const [postData, setPostData] = useState('');
+    const [commentData, setCommentData] = useState('');
     const [postTitle, setPostTitle] = useState('');
     const [postDescription, setPostDescription] = useState('');
     const [postComments, setPostComments] = useState([]);
@@ -15,9 +18,11 @@ function BlogPost(props) {
 
     useEffect(() => {
         API.findBlogPost(id, props.token).then((res) => {
+            console.log(res.data)
+            setPostData(res.data[0]);
+            setCommentData(res.data[1]);
             setPostTitle(res.data[0].title);
             setPostDescription(res.data[0].description);
-            setPostComments(res.data[1]);
         })
     },[id,props.token])
 
@@ -50,6 +55,7 @@ function BlogPost(props) {
             console.log(err)
         })
     }
+
     return (
         <>
             <div className="container">
@@ -57,6 +63,8 @@ function BlogPost(props) {
                     <h1>{postTitle}</h1>
                     <br />
                     <p>{postDescription}</p>
+                    {/* {userState.username === post.User.username ? (
+                        <button onClick={(e) => { deleteBlogPost(e.target.getAttribute("data-id")) }} data-id={post.id} >Delete</button>) : ('')} */}
                 </div>
                 <br />
                 <br />
