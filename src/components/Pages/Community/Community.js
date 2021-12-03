@@ -32,13 +32,13 @@ function Community({ token, userState }) {
     //Whose profile to go to if you click on a Username
     const [userButton, setUserButton] = useState('')
 
-    const UserButton = (postUserId) => {
-        if (userState.id === postUserId) {
-            navigate(`/Profile`)
-        } else {
-            navigate(`/profile/${postUserId}`)
-        }
-    }
+    // const UserButton = (postUserId) => {
+    //     if (userState.id === postUserId) {
+    //         navigate(`/Profile`)
+    //     } else {
+    //         navigate(`/profile/${postUserId}`)
+    //     }
+    // }
 
 
 
@@ -58,7 +58,7 @@ function Community({ token, userState }) {
                                         <div className="card-body">
                                             <p className="card-text">{post.description}</p>
                                             
-                                               <p onClick={UserButton}>{post.User.username}</p>
+                                               {/* <p onClick={UserButton(post.User.id)}>{post.User.username}</p> */}
                                         </div>
                                     </div> 
                                 <br />
