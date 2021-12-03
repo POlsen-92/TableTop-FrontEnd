@@ -7,13 +7,15 @@ const tokenStyle = {
     fontWeight: 'bold',
     cursor: 'move',
 };
-const Token = ({tokenName,id}) => {
-    console.log(tokenName,"DRAGGINGGGG")
+const Token = ({name,id,x,y}) => {
+    console.log(name,"DRAGGINGGGG")
     const [{ isDragging }, drag, preview] = useDrag(() => ({
         type: ItemTypes.TOKEN,
         item: {
-            name: tokenName,
-            id: id
+            name: name,
+            id: id,
+            x:x,
+            y:y,
         },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging(),
@@ -25,7 +27,7 @@ const Token = ({tokenName,id}) => {
             ...tokenStyle,
             opacity: isDragging ? 0.5 : 1,
         }}>
-            {tokenName}
+            {name}
         </div>
     </>);
 };

@@ -361,6 +361,18 @@ const API = {
             }
         })
     },
+
+    // ~~~~~~~~~~~~~~~~~~~~~TOKEN ROUTES~~~~~~~~~~~~~~~~~~~~~~~~//
+    createToken: (camp_id, token) => {
+        return axios.post(`${URL_PREFIX}/api/token/camp${camp_id}`, token, {
+        })
+    },
+    findTokens: (camp_id) => {
+        return axios.get(`${URL_PREFIX}/api/token/camp${camp_id}`)
+    },
+    updateToken: (id, token) => {
+        return axios.put(`${URL_PREFIX}/api/token/camp${id}`, token)
+    },
 }
 
 export default API;

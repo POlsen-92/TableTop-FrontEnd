@@ -76,7 +76,7 @@ function Gameplay(props) {
             <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
             <div className="col-7 border border-info border-4 gameboard" style={containerStyle}>
                 <DndProvider  backend={HTML5Backend}>
-					<Table/>
+					<Table camp_id={id}/>
 				</DndProvider>
             </div>
             <div className="col-2 border border-success border-4 mini-menu">
