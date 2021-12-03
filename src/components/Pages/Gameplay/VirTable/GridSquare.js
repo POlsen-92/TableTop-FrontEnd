@@ -3,15 +3,17 @@ import { Square } from './Square';
 import { ItemTypes } from '../Gameboard/ItemTypes';
 import { Overlay, OverlayType } from '../Gameboard/Overlay';
 
-export const GridSquare = ({ x, y, children,dragHandler,}) => {    
+export const GridSquare = ({ x, y,tokens,dragHandler, children}) => { 
+    // tokens are appearing here    
+    // console.log(tokens) 
     const [{isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.TOKEN,
-        drop: (item,monitor) => dragHandler(item,x,y),
+        drop: (item,monitor) => dragHandler(tokens,item,x,y),
          collect: (monitor) => ({
              isOver: !!monitor.isOver(),
 
          }),
-    }), []);
+    }), [tokens]);
 
     return (<div ref={drop}  role="Space" data-testid={`(${x},${y})`} style={{
         position: 'relative',
