@@ -33,20 +33,23 @@ function Community({ token, userState }) {
                     posts.map((post) => {
                         return (
                             <div key={post.id}>
-                                <Link
-                                    to={{ pathname: `/BlogPost/${post.id}` }}
-                                    className="d-inline"
-                                >
-                                    <div>
-                                        <li key={post.id}>{post.title}-{post.description}--{post.User.username}</li>
-                                    </div>
-                                </Link>
-                                {userState.username === post.User.username ? (
-                                    <button onClick={(e) => { deleteBlogPost(e.target.getAttribute("data-id")) }} data-id={post.id} >yrrrr</button>
+                                <Link to={{ pathname: `/BlogPost/${post.id}` }} className="d-inline">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            {post.title}
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">{post.description}</p>
+                                            <p>{post.User.username}</p>
+                                                {userState.username === post.User.username ? (
+                                                    <button onClick={(e) => { deleteBlogPost(e.target.getAttribute("data-id")) }} data-id={post.id} >yrrrr</button>
 
-                                ) : (
-                                    ''
-                                )}
+                                                ) : (
+                                                    ''
+                                                )}
+                                        </div>
+                                    </div> 
+                                </Link>
                             </div>
                         )
                     })}
