@@ -15,7 +15,6 @@ function BlogPost(props) {
 
     useEffect(() => {
         API.findBlogPost(id, props.token).then((res) => {
-            // console.log(res);
             setPostTitle(res.data[0].title);
             setPostDescription(res.data[0].description);
             setPostComments(res.data[1]);
@@ -40,16 +39,15 @@ function BlogPost(props) {
             description,
         }
         API.createComment(id, createdComment, props.token).then((res) => {
-            // console.log(res);
-            // console.log("I created a comment!");
             window.location.reload(false);
         })
     }
 
     const deleteComment = (deletedComment) => {
         API.deleteComment(deletedComment, props.token).then((res) => {
-            // console.log(res);
-            // console.log("I deleted a comment!");
+            res.status(200)
+        }).catch((err)=> {
+            console.log(err)
         })
     }
     return (

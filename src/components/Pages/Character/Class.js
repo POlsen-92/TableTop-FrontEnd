@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
-import reactDom from "react-dom";
+// import reactDom from "react-dom";
 
 export default function Class({
   characterInfo,
