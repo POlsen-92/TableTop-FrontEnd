@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import API from "../../utils/API"
+import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
 
 function NewBlogPost({ token, userState }) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { Link } from "react-router-dom";
-import API from "../../utils/API"
+import API from "../../../utils/API"
 
 function Community({ token, userState }) {
     const [posts, setPosts] = useState([])
@@ -33,23 +33,19 @@ function Community({ token, userState }) {
                     posts.map((post) => {
                         return (
                             <div key={post.id}>
-                                <Link to={{ pathname: `/BlogPost/${post.id}` }} className="d-inline">
-                                    <div class="card">
-                                        <div class="card-header">
+                                    <div className="card">
+                                        <div className="card-header">
+                                            <Link to={{ pathname: `/BlogPost/${post.id}` }} className="d-inline">
                                             {post.title}
+                                            </Link>
                                         </div>
-                                        <div class="card-body">
-                                            <p class="card-text">{post.description}</p>
+                                        <div className="card-body">
+                                            <p className="card-text">{post.description}</p>
                                             <p>{post.User.username}</p>
-                                                {userState.username === post.User.username ? (
-                                                    <button onClick={(e) => { deleteBlogPost(e.target.getAttribute("data-id")) }} data-id={post.id} >yrrrr</button>
-
-                                                ) : (
-                                                    ''
-                                                )}
+                                               
                                         </div>
                                     </div> 
-                                </Link>
+                                <br />
                             </div>
                         )
                     })}
