@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import CampaignFilters from "./../CampaignFilters";
 import API from "../../utils/API";
 import { Link, useNavigate } from "react-router-dom";
-import "../style/Profile.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Avatar from "./UpdateUserInfo/Avatar";
 import Username from "./UpdateUserInfo/Username"

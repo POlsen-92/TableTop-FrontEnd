@@ -3,15 +3,6 @@
     top: 33%;
   }
 }
-body {
-  background-color: #000;
-  color: #fff;
-  text-align: center;
-  font-family: "Open Sans";
-}
-body h1 {
-  font-size: 2.5em;
-}
 
 .message {
   position:relative;

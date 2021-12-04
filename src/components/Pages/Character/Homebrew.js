@@ -7,12 +7,9 @@ import useSound from "use-sound";
 import rollSound from "../Dice/diceSound.mp3";
 import { randomNameGenerator } from "./Namegen";
 import { Editor } from "@tinymce/tinymce-react";
-
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import reactDom from "react-dom";
+
 
 let customDie = "choose";
 
@@ -39,16 +36,6 @@ export default function Homebrew({
     charisma: 0,
     hitpoints: 0,
   });
-
-  const alignmentTooltip = (props) => {
-    <Tooltip {...props}>
-      A typical creater in the world has an alignment, which boradly describes
-      its moral and personal attitudes. Alignment is a combination of two
-      factors: one identifies morality (good, evil, or neutral), and the other
-      describes attitudes toward society and order (lawful, chaotic, and
-      neutral).
-    </Tooltip>;
-  };
 
   const handleBackgroundChange = (e) => {
     console.log("Content was updated:", e.target.getContent());
@@ -103,18 +90,6 @@ export default function Homebrew({
       1 + "d" + (classapiResponse.hit_die || customDie)
     );
     customDie = "choose";
-    console.log(
-      roll1.notation,
-      roll1.output
-        .split("[")
-        .pop()
-        .split("]")[0]
-        .split(",")
-        .map(function (item) {
-          return parseInt(item, 10);
-        })
-    );
-
     play();
     const moving = setInterval(() => {
       setRollingThunda({
@@ -124,19 +99,16 @@ export default function Homebrew({
     }, 10);
     setTimeout(() => {
       clearInterval(moving);
-      setRollingThunda({ ...rollingThunda, hitpoints: 0 });
+      
       setCharacterInfo({
         ...characterInfo,
-        hitpoints: roll1.output
+        hitpoints: parseInt(roll1.output
           .split("[")
           .pop()
           .split("]")[0]
-          .split(",")
-          .map(function (item) {
-            return parseInt(item, 10);
-          }),
+          .split(","))
       });
-    }, 3000);
+    }, 2300);
   };
 
   // const checkBonus = (bonus) => {
@@ -168,10 +140,7 @@ export default function Homebrew({
   // };
 
   const calculateAttributes = (e) => {
-    setCharacterInfo({
-      ...characterInfo,
-      [e.target.value]: 0,
-    });
+    
     const roll1 = new DiceRoll("4d6");
     console.log(roll1.output);
     let output = roll1.output
@@ -187,7 +156,6 @@ export default function Homebrew({
     output.splice(location, 1);
     const total = output.reduce((partial, item) => partial + item);
     console.log(total);
-    let count = 0;
     play();
     const moving = setInterval(() => {
       setRollingThunda({
@@ -262,7 +230,6 @@ export default function Homebrew({
 
       <div className="container">
         <div className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4 g-4">
-          {/* <div className="card-group"> */}
           <div className="col">
             <div
               className="card bg-transparent h-100"
@@ -292,7 +259,6 @@ export default function Homebrew({
               <div className="card-footer bg-transparent">
                 <button
                   onClick={randomName}
-                  // className="btn btn-primary"
                   variant="secondary"
                   size="lg"
                 >
@@ -492,14 +458,14 @@ export default function Homebrew({
                   </select>
                 </div>
 
-                <button
+                {!rollingThunda.hitpoints ? <button
                   data-tip
                   data-for="hitpointsButton"
                   className="btn btn-primary"
                   onClick={calculateHitpoints}
                 >
                   Calculate
-                </button>
+                </button> : null}
                 <ReactTooltip className="tooltip" id="hitpointsButton">
                   <p>1d{classapiResponse.hit_die}</p>
                   <p>
@@ -538,7 +504,7 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button
+              {!rollingThunda.strength ? <button
                   data-tip
                   data-for="strengthButton"
                   className="btn btn-primary"
@@ -546,7 +512,7 @@ export default function Homebrew({
                   value="strength"
                 >
                   Calculate
-                </button>
+                </button> : null}
                 <ReactTooltip className="tooltip" id="strengthButton">
                   <p>
                     Each score is generated randomly by using the sum of the
@@ -589,7 +555,7 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button
+              {!rollingThunda.dexterity ? <button
                   data-tip
                   data-for="dexterityButton"
                   className="btn btn-primary"
@@ -597,7 +563,7 @@ export default function Homebrew({
                   value="dexterity"
                 >
                   Calculate
-                </button>
+                </button> : null}
                 <ReactTooltip className="tooltip" id="dexterityButton">
                   <p>
                     Each score is generated randomly by using the sum of the
@@ -638,7 +604,7 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button
+              {!rollingThunda.constitution ? <button
                   data-tip
                   data-for="constitutionButton"
                   className="btn btn-primary"
@@ -646,7 +612,7 @@ export default function Homebrew({
                   value="constitution"
                 >
                   Calculate
-                </button>
+                </button> : null }
                 <ReactTooltip className="tooltip" id="constitutionButton">
                   <p>
                     Each score is generated randomly by using the sum of the
@@ -688,7 +654,7 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button
+              {!rollingThunda.intelligence ? <button
                   data-tip
                   data-for="intelligenceButton"
                   className="btn btn-primary"
@@ -696,7 +662,7 @@ export default function Homebrew({
                   value="intelligence"
                 >
                   Calculate
-                </button>
+                </button> : null}
                 <ReactTooltip className="tooltip" id="intelligenceButton">
                   <p>
                     Each score is generated randomly by using the sum of the
@@ -738,7 +704,7 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button
+              {!rollingThunda.wisdom ? <button
                   data-tip
                   data-for="wisdomButton"
                   className="btn btn-primary"
@@ -746,7 +712,7 @@ export default function Homebrew({
                   value="wisdom"
                 >
                   Calculate
-                </button>
+                </button> : null }
                 <ReactTooltip className="tooltip" id="wisdomButton">
                   <p>
                     Each score is generated randomly by using the sum of the
@@ -789,7 +755,7 @@ export default function Homebrew({
                 </p>
               </div>
               <div className="card-footer bg-transparent">
-                <button
+              {!rollingThunda.charisma ? <button
                   data-tip
                   data-for="charismaButton"
                   className="btn btn-primary"
@@ -797,7 +763,7 @@ export default function Homebrew({
                   value="charisma"
                 >
                   Calculate
-                </button>
+                </button> : null }
                 <ReactTooltip className="tooltip" id="charismaButton">
                   <p>
                     Each score is generated randomly by using the sum of the
