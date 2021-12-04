@@ -1,9 +1,24 @@
 
-li {
-  display: inline-block;
+/* li {
+  display: flex;
   list-style: none;
+} */
+
+#diceContainer select {
+  background: transparent;
+  border: none; 
 }
 
-#diceform {
-  background: grey;
+
+
+/* #quantity {
+  border-bottom: 1px black solid;
 }
+
+#diceContainer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+ 
+
+}  */

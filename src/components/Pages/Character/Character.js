@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-
-import Dice from "../Dice/Dice.js";
-
-import ReactTooltip from "react-tooltip";
+import createDOMPurify from "dompurify";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Character.css";
 import Class from "./Class";
 import Race from "./Race";
 import Homebrew from "./Homebrew";
+import pointer from "./pointer-min.png";
+import journey from "./journey-min.jpg";
 
 export default function Character({ token }) {
   const [characterInfo, setCharacterInfo] = useState({
@@ -35,7 +34,7 @@ export default function Character({ token }) {
   const [currentPage, setCurrentPage] = useState({
     current: "Home",
     left: "Homebrew",
-    right: "Race"
+    right: "Race",
   });
   const [apiResponse, setApiResponse] = useState([]);
   const [subraceResponse, setSubraceResponse] = useState([]);
@@ -50,27 +49,28 @@ export default function Character({ token }) {
           setCurrentPage({
             current: "Homebrew",
             left: "Class",
-            right: "Home"});
+            right: "Home",
+          });
           break;
         case "Homebrew":
           setCurrentPage({
             current: "Class",
             left: "Race",
-            right: "Homebrew"
+            right: "Homebrew",
           });
           break;
         case "Race":
           setCurrentPage({
             current: "Home",
             left: "Homebrew:",
-            right: "Race"
+            right: "Race",
           });
           break;
         case "Class":
           setCurrentPage({
             current: "Race",
             left: "Home",
-            right: "Class"
+            right: "Class",
           });
           break;
       }
@@ -80,47 +80,74 @@ export default function Character({ token }) {
           setCurrentPage({
             current: "Race",
             left: "Home",
-            right: "Class"});
+            right: "Class",
+          });
           break;
         case "Homebrew":
           setCurrentPage({
             current: "Home",
             left: "Homebrew",
-            right: "Race"
+            right: "Race",
           });
           break;
         case "Race":
           setCurrentPage({
             current: "Class",
             left: "Race",
-            right: "Homebrew"
+            right: "Homebrew",
           });
           break;
         case "Class":
           setCurrentPage({
             current: "Homebrew",
             left: "Class",
-            right: "Home"
+            right: "Home",
           });
           break;
       }
     }
   };
 
+  const display = () => {
+    return (
+      <div>
+        <h1>
+          Begin your journey that way!{" "}
+          <img
+            src={pointer}
+            height="100px"
+            width="200px"
+            alt="finger pointing"
+          />{" "}
+        </h1>
+        <img id="journey" src={journey} alt="journey begins" />
+      </div>
+    );
+  };
+
   return (
     <div className="mainPage">
-      <div class="characterHeader">
-        <button value="left" onClick={pageHandler}>&#8592;{currentPage.left}</button>
+      <br />
+      <div className="characterHeader">
+        <button value="left" onClick={pageHandler}>
+          &#8592;{currentPage.left}
+        </button>
         <h1>Create Character</h1>
-        <button value="right" onClick={pageHandler}>{currentPage.right}&#8594;</button>
+        <button value="right" onClick={pageHandler}>
+          {currentPage.right}&#8594;
+        </button>
       </div>
-      {currentPage.current === "Home" ? 'Homebrew to the left, Character Journey to the right' : null}
+      {currentPage.current === "Home" ? display() : null}
+
       {currentPage.current === "Homebrew" ? (
         <Homebrew
           characterInfo={characterInfo}
           setCharacterInfo={setCharacterInfo}
           token={token}
           proficiencies={proficiencies}
+          classapiResponse={classapiResponse}
+          apiResponse={apiResponse}
+          subraceResponse={subraceResponse}
         />
       ) : null}
       {currentPage.current === "Race" ? (

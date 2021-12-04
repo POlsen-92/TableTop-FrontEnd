@@ -2,7 +2,7 @@ import React from "react";
 import API from "../../../utils/API";
 
 function Avatar(props) {
-  
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     let rando =
@@ -38,9 +38,9 @@ function Avatar(props) {
             <button className="btn" id="start-now-btn">
               Rando
             </button>
-          <button onClick={save} className="btn" id="start-now-btn">
-            Save
-          </button>
+            <button onClick={save} className="btn" id="start-now-btn">
+              Save
+            </button>
           </form>
         </section>
       </div>

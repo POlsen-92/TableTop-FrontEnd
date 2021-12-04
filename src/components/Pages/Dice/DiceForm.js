@@ -3,7 +3,7 @@ import "./DiceForm.css";
 import { DiceRoll } from "rpg-dice-roller";
 import Dice from "./EachDice";
 import useSound from "use-sound";
-import rollSound from "./Untitled.mp3";
+import rollSound from "./diceSound.mp3";
 import "bootstrap/dist/css/bootstrap.css";
 
 function App() {
@@ -33,15 +33,16 @@ function App() {
     if (e.target[4].checked) {
       option = "max";
     }
-
+    console.log(e)
     const roll1 = new DiceRoll(
       e.target[0].value + "d" + e.target[1].value + option + e.target[5].value
     );
+    console.log(roll1)
     setUpdateFormState(roll1);
     let count = 0;
     const moving = setInterval(() => {
       setRollTotal(Math.floor(1 + Math.random() * 10));
-      if (count >480) {
+      if (count > 480) {
         clearInterval(moving);
         setRollTotal(roll1.total);
       }
@@ -74,34 +75,46 @@ function App() {
   }, [updateFormState]);
 
   return (
-    <div>
-      <section id="diceform" className="card" style={{ width: "24rem" }}>
-      <div className="card-img-top">
-        <ul id="list">
-          {updateFormState
-            ? test().map((dice, index) => {
+    <div class="Container">
+      
+        <div class="dice">
+          <ul id="list">
+            {updateFormState
+              ? test().map((dice, index) => {
                 return (
                   <li key={index}>
                     <Dice dice={dice} />
                   </li>
                 );
               })
-            : null}
-          {rollTotal ? `= ${rollTotal}` : null}
-        </ul>
-      </div>
+              : null}
+            {rollTotal ? `= ${rollTotal}` : null}
+          </ul>
+        </div>
         <form onSubmit={handleFormSubmit} className="form">
-          <input type="number" id="quantity" name="quantity" min="1" max="99" />
+          <select id="quantity" name="quantity">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+          </select>
+          {/* <input type="number" id="quantity" name="quantity" min="1" max="99" /> */}
           d
           <select name="sides" id="sides">
-            <option value="%">% Percentile Dice</option>
-            <option value="F">Fudge/Fate Dice</option>
-            <option value="4">4 Sides</option>
-            <option value="6">6 Sides</option>
-            <option value="8">8 Sides</option>
-            <option value="10">10 Sides</option>
-            <option value="12">12 Sides</option>
-            <option value="20">20 Sides</option>
+            <option value="%">&nbsp;% Percentile Dice</option>
+            <option value="F">&nbsp;Fudge/Fate Dice</option>
+            <option value="4">&nbsp;4 Sides</option>
+            <option value="6">&nbsp;6 Sides</option>
+            <option value="8">&nbsp;8 Sides</option>
+            <option value="10">&nbsp;10 Sides</option>
+            <option value="12">&nbsp;12 Sides</option>
+            <option value="20">&nbsp;20 Sides</option>
           </select>
           <input
             id="none"
@@ -129,20 +142,42 @@ function App() {
           />
           <label htmlFor="max">max</label>
           {showOptionQuantity ? (
-            <input
-              type="number"
-              id="optionQuantity"
-              name="OptionQuantity"
-              defaultValue="1"
-              min="1"
-              max="99"
-            />
+            <select id="optionQuantity" name="optionQuantity">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+            <option value="17">17</option>
+            <option value="18">18</option>
+            <option value="19">19</option>
+            <option value="20">20</option>
+        </select>
+            
+            // <input
+            //   type="number"
+            //   id="optionQuantity"
+            //   name="OptionQuantity"
+            //   defaultValue="1"
+            //   min="1"
+            //   max="99"
+            // />
           ) : null}
           <input onClick={clear} type="reset" value="Reset" />
           <input type="submit" value="Submit" />
         </form>
-      </section>
-      
+    
+
     </div>
   );
 }

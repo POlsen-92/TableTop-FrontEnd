@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactTooltip from "react-tooltip";
+// import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 
@@ -16,32 +16,35 @@ export default function Race({
   const [subraces, setSubRaces] = useState([]);
 
   const fillSubRaces = (e) => {
-    setCharacterInfo({
-      ...characterInfo,
-      race: e.target.value,
-      subRace: "None",
-    });
     setSubraceResponse([]);
     let target = e.target.value.toLowerCase();
     if (target === "choose race") {
       setApiResponse([]);
       setSubRaces([]);
-      return;
-    }
-    axios
-      .get(`https://www.dnd5eapi.co/api/races/${target}`)
-      .then((response) => {
-        setApiResponse(response.data);
-        setCharacterInfo({
-            ...characterInfo,
-            speed: response.data.speed
-        })
-        if (response.data.subraces.length === 0) {
-          setSubRaces([]);
-        } else {
-          setSubRaces(response.data.subraces);
-        }
+      setCharacterInfo({
+        ...characterInfo,
+        race: "",
+        subRace: "None",
       });
+      return;
+    } else {
+      axios
+        .get(`https://www.dnd5eapi.co/api/races/${target}`)
+        .then((response) => {
+          setApiResponse(response.data);
+          setCharacterInfo({
+            ...characterInfo,
+            race: e.target.value,
+            subRace: "None",
+            speed: response.data.speed,
+          });
+          if (response.data.subraces.length === 0) {
+            setSubRaces([]);
+          } else {
+            setSubRaces(response.data.subraces);
+          }
+        });
+    }
   };
 
   const pickSubRace = (e) => {
@@ -64,74 +67,75 @@ export default function Race({
         });
     }
   };
-  const addBonusToCharacter = (e) => {
-    e.target.disabled = true;
-    switch (e.target.getAttribute("data-ability")) {
-      case "STR":
-        setCharacterInfo({
-          ...characterInfo,
-          strength:
-            characterInfo.strength +
-            parseInt(e.target.getAttribute("data-amt")),
-        });
-        break;
-      case "DEX":
-        setCharacterInfo({
-          ...characterInfo,
-          dexterity:
-            characterInfo.dexterity +
-            parseInt(e.target.getAttribute("data-amt")),
-        });
-        break;
-      case "CON":
-        setCharacterInfo({
-          ...characterInfo,
-          constitution:
-            characterInfo.constitution +
-            parseInt(e.target.getAttribute("data-amt")),
-        });
-        break;
-      case "INT":
-        setCharacterInfo({
-          ...characterInfo,
-          intelligence:
-            characterInfo.intelligence +
-            parseInt(e.target.getAttribute("data-amt")),
-        });
-        break;
-      case "WIS":
-        setCharacterInfo({
-          ...characterInfo,
-          wisdom:
-            characterInfo.wisdom + parseInt(e.target.getAttribute("data-amt")),
-        });
-        break;
-      case "CHA":
-        setCharacterInfo({
-          ...characterInfo,
-          charisma:
-            characterInfo.charisma +
-            parseInt(e.target.getAttribute("data-amt")),
-        });
-        break;
-      default:
-        break;
-    }
-  };
+  // const addBonusToCharacter = (e) => {
+  //   e.target.disabled = true;
+  //   switch (e.target.getAttribute("data-ability")) {
+  //     case "STR":
+  //       setCharacterInfo({
+  //         ...characterInfo,
+  //         strength:
+  //           characterInfo.strength +
+  //           parseInt(e.target.getAttribute("data-amt")),
+  //       });
+  //       break;
+  //     case "DEX":
+  //       setCharacterInfo({
+  //         ...characterInfo,
+  //         dexterity:
+  //           characterInfo.dexterity +
+  //           parseInt(e.target.getAttribute("data-amt")),
+  //       });
+  //       break;
+  //     case "CON":
+  //       setCharacterInfo({
+  //         ...characterInfo,
+  //         constitution:
+  //           characterInfo.constitution +
+  //           parseInt(e.target.getAttribute("data-amt")),
+  //       });
+  //       break;
+  //     case "INT":
+  //       setCharacterInfo({
+  //         ...characterInfo,
+  //         intelligence:
+  //           characterInfo.intelligence +
+  //           parseInt(e.target.getAttribute("data-amt")),
+  //       });
+  //       break;
+  //     case "WIS":
+  //       setCharacterInfo({
+  //         ...characterInfo,
+  //         wisdom:
+  //           characterInfo.wisdom + parseInt(e.target.getAttribute("data-amt")),
+  //       });
+  //       break;
+  //     case "CHA":
+  //       setCharacterInfo({
+  //         ...characterInfo,
+  //         charisma:
+  //           characterInfo.charisma +
+  //           parseInt(e.target.getAttribute("data-amt")),
+  //       });
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
-  const addInfo = (e) => {
-    const { name } = e.target;
-    setCharacterInfo({
-      ...characterInfo,
-      [name]: e.target.getAttribute("data-info"),
-    });
-  };
+  // const addInfo = (e) => {
+  //   const { name } = e.target;
+  //   setCharacterInfo({
+  //     ...characterInfo,
+  //     [name]: e.target.getAttribute("data-info"),
+  //   });
+  // };
 
   useEffect(() => {
     axios.get("https://www.dnd5eapi.co/api/races").then((response) => {
       setRaces(response.data.results);
     });
   }, [!races]);
+
   return (
     <div>
       <div>
@@ -194,13 +198,6 @@ export default function Race({
               </div>
               <div className="col-sm-12 col-md-8">
                 {apiResponse.alignment}
-                <button
-                  name="alignment"
-                  onClick={addInfo}
-                  data-info={apiResponse.alignment}
-                >
-                  Add
-                </button>
               </div>
             </div>
             <div className="row">
@@ -210,16 +207,10 @@ export default function Race({
               <div className="col-sm-12 col-md-8">
                 {apiResponse.ability_bonuses
                   ? apiResponse.ability_bonuses.map((bonus, index) => {
+                      console.log(bonus.ability_score.name);
                       return (
                         <p key={index}>
                           {bonus.ability_score.name}:{bonus.bonus}
-                          <button
-                            data-ability={bonus.ability_score.name}
-                            data-amt={bonus.bonus}
-                            onClick={addBonusToCharacter}
-                          >
-                            Add
-                          </button>
                         </p>
                       );
                     })
@@ -238,13 +229,6 @@ export default function Race({
                       return (
                         <p key={index}>
                           {bonus.ability_score.name}:{bonus.bonus}
-                          <button
-                            data-ability={bonus.ability_score.name}
-                            data-amt={bonus.bonus}
-                            onClick={addBonusToCharacter}
-                          >
-                            Add
-                          </button>
                         </p>
                       );
                     })
@@ -256,6 +240,7 @@ export default function Race({
       ) : (
         <div></div>
       )}
+      <br/>
     </div>
   );
 }
