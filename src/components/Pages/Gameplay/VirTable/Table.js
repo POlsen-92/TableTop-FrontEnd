@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { GridSquare } from './GridSquare';
 import { Slot } from './Slot';
-import Token from './Token';
 import API from '../../../../utils/API';
-import { SelectionState } from 'draft-js';
+
 const tableStyle = {
     width: '100%',
     height: '100%',
