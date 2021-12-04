@@ -305,8 +305,15 @@ const API = {
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~BLOG ROUTES~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-    createNewBlogPost: (blogData, tkn) => {
+    createBlogPost: (blogData, tkn) => {
         return axios.post(`${URL_PREFIX}/api/blog`, blogData, {
+            headers: {
+                "Authorization": `Bearer ${tkn}`
+            }
+        })
+    },
+    findAllBlogPost: (tkn) => {
+        return axios.get(`${URL_PREFIX}/api/blog/`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
