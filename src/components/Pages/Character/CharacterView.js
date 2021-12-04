@@ -4,7 +4,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from "react-tooltip";
 import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
-import "./CharacterView.css";
 import API from "../../../utils/API";
 import DOMPurify from "dompurify";
 
