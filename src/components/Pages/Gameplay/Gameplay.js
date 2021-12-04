@@ -24,10 +24,11 @@ function Gameplay(props) {
     const [tabContents, setTabContents] = useState('');
     const [characters, setCharacters] = useState([]);
     const [CampaignName, setCampaignName] = useState('');
-    const [newToken, setNewToken] = useState('');
+    const [newToken, setNewToken] = useState(0);
     const [show, setShow] = useState(false);
     const [npcName,setNpcName] = useState('');
     const [tokensList, setTokensList] = useState([]);
+    const [deletedToken, setDeletedToken] = useState(0);
 
     // function that creates the token being passed into each li of character name as an onclick 
     function createToken(character) {
@@ -42,10 +43,11 @@ function Gameplay(props) {
                 y: 0
             }
             API.createToken(id, createdToken).then((res) => {
-                setNewToken(res.data)
+                setNewToken(2)
                 console.log(res);
                 console.log("I created a token!");
             })
+            setNewToken(0)
         })
     }
     // function that creates npc tokens
@@ -61,20 +63,23 @@ function Gameplay(props) {
                 y: 0
             }
             API.createToken(id, createdToken).then((res) => {
-                setNewToken(res.data)
+                setNewToken(1)
                 console.log(res);
                 console.log("I created a token!");
             })
+            setNewToken(0)
         })
     }
 
     // deletes token by token_id
-    function deleteNpcToken(token) {
-        console.log(token)
-            API.deleteToken(id,token).then((res) => {
+    function deleteNpcToken(token_id) {
+        console.log(token_id)
+            API.deleteToken(id,token_id).then((res) => {
+                setDeletedToken(1)
                 console.log(res);
                 console.log("I deleted a token!");
-            })   
+            })  
+            setDeletedToken(0)
     }
     
     // handles token form input change and updates state
@@ -113,7 +118,7 @@ function Gameplay(props) {
             console.log("tokensList", tokensList);
             setTokensList(tokensList);
         })
-    }, [props]);
+    }, [newToken,deletedToken]);
 
     useEffect(() => {
         switch (tab) {
@@ -154,16 +159,15 @@ function Gameplay(props) {
                 <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
                 <div className="col-7 border border-info border-4 gameboard" style={containerStyle}>
                     <DndProvider backend={HTML5Backend}>
-                        <Table camp_id={id} newToken={newToken} />
-                        <button onClick={() => setShow(true)}>CREATE NEW NPC TOKEN</button>
+                        <Table camp_id={id} newToken={newToken} deletedToken={deletedToken}/>
                     </DndProvider>
-                    <div>
-                        <h1>Tokens!</h1>
-                        <ul>
+                    <div className="row align-items-center justify-content-center">
+                        <ul class="list-group col-4 m-3">
                             {tokensList.map((token) => {
-                                return (<li onClick={() => deleteNpcToken(token)}>{token.name}</li>)
+                                return (<li class="list-group-item" onClick={() => deleteNpcToken(token.token_id)}>Click to delete---{token.name}</li>)
                             })}
                         </ul>
+                            <button onClick={() => setShow(true)}className="m-3 col-5 h-25 w-25">CREATE NEW NPC TOKEN</button>
                     </div>
                 </div>
                 <div className="col-2 border border-success border-4 mini-menu">
@@ -179,20 +183,19 @@ function Gameplay(props) {
             </div>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Save?</Modal.Title>
+                    <Modal.Title>Create a Token!</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                 <form className="my-5 py-5 text-center" id="signup-form">
-                <h4>New post!</h4>
+                <h4>Token Name</h4>
                 <input className="m-6" id="username-signup"
                     value={npcName}
                     name="npcName"
                     onChange={handleTokenInputChange}
                     type="text"
-                    placeholder="Enter your new token's name!"
+                    placeholder="Demagorgon"
                 />
-                <br />
-                <button className="btn" id="signup-btn">Submit</button>
+                
 
 
             </form>

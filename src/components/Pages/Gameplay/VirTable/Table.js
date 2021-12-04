@@ -11,7 +11,7 @@ const tableStyle = {
     flexWrap: 'wrap',
 };
 
- const Table = ({camp_id, newToken}) => {
+ const Table = ({camp_id, newToken,deletedToken}) => {
      const [side,setSide] = useState(20);
      const [tokens, setTokens] = useState([]);
     //  const [count,setCount] = useState(0)
@@ -22,7 +22,7 @@ const tableStyle = {
             console.log(res.data ,"dataaaaaaaaaaaaaaaaaaaaaa")
             console.log('---------------------',tokens)
         })
-    },[newToken]);
+    },[newToken,deletedToken]);
     let squares = [];
     
     const dragHandler = (tokensList,item,x,y,) => {
