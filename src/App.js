@@ -153,7 +153,7 @@ const tokenFromStor = localStorage.getItem("token")
             element={<Catalog userState={userState} token={token} />}
           />
         </Routes>
-        <News />
+        {/* <News /> */}
       </div>
     </Router>
   );
