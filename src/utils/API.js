@@ -87,15 +87,18 @@ const API = {
             "Authorization": `Bearer ${tkn}`
         }})
     },
-    gmDelUserCampaign: (campaign_id, tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`, {}, {
+    gmDelUserCampaign: (campaign_id, user_id, tkn) => {
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/gmdel${campaign_id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
+            },
+            data: {
+                user_id,
             }
         })
     },
     userDelUserCampaign: (campaign_id, tkn) => {
-        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`, {}, {
+        return axios.delete(`${URL_PREFIX}/api/usercampaign/userdel${campaign_id}`, {
             headers: {
                 "Authorization": `Bearer ${tkn}`
             }
