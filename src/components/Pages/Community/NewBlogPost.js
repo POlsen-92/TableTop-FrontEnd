@@ -3,63 +3,48 @@ import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
 import "./community.css";
 
-function NewBlogPost({ token, userState }) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+function NewBlogPost({ token }) {
 
     const navigate = useNavigate();
 
-    const handleBlogInputChange = (e) => {
-        const { target } = e;
-        const inputType = target.name;
-        const inputValue = target.value;
+    const [blogInputs, setBlogInputs] = useState({
+        title: "",
+        description: ""
+    })
 
-        if (inputType === 'title') {
-            setTitle(inputValue);
-        } else if (inputType === 'description') {
-            setDescription(inputValue);
-        }
+    const handleBlogInputChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setBlogInputs({...blogInputs, [name]: value})
     };
 
-    const createBlogPost = () => {
-        const createdPost = {
-            title,
-            description,
-        }
-        API.createNewBlogPost(createdPost, token, userState.id).then((res) => {
+    const createBlogPost = (e) => {
+        e.preventDefault();
+        API.createBlogPost(blogInputs, token).then((res) => {
             res.status(200)
-            navigate("/community")
         }).catch((err)=>{
             console.log(err)
-        })
+        });
+        navigate("/community")
     }
-
-    const handleBlogSubmit = async (e) => {
-        e.preventDefault();
-        setTitle('');
-        setDescription('');
-        createBlogPost();
-    };
 
     return (
         <>
             <form className="my-5 py-5 text-center" id="blog-post"
-                onSubmit={handleBlogSubmit}
+                onSubmit={createBlogPost}
             >
                 <h4>New post!</h4>
                 <input className="m-6" id="blog-id"
-                    value={title}
                     name="title"
                     onChange={handleBlogInputChange}
                     type="text"
-                    placeholder="title"
+                    placeholder="What Do You Want Your Blog To Be Called"
                 />
                 <br />
                 <textarea className="m-1" id="blog-content"
-                    value={description}
                     name="description"
                     onChange={handleBlogInputChange}
-                    placeholder="description"
+                    placeholder="What Do You Want To Say?"
                 />
                 <br />
 
