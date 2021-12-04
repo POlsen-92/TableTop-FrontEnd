@@ -375,6 +375,10 @@ const API = {
     updateToken: (id, token) => {
         return axios.put(`${URL_PREFIX}/api/token/camp${id}`, token)
     },
+    deleteToken: (id,token ) => {
+        return axios.delete(`${URL_PREFIX}/api/token/deleteone/camp${id}`,token, { 
+        })
+    },
 }
 
 export default API;
