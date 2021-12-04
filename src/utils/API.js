@@ -2,7 +2,7 @@ import axios from "axios";
 //local
 // const URL_PREFIX = "http://localhost:3001"
 //delploy
-const URL_PREFIX = "https://table-top-be.herokuapp.com/"
+const URL_PREFIX = "https://table-top-be.herokuapp.com"
 
 
 const API = {
