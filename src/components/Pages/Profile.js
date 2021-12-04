@@ -162,12 +162,13 @@ function Profile(props) {
           />
           {displayData.map((campaign) => {
             return (
-              <div className="campaign-list-box" key={campaign.id}>
+              <div className="campaign-list-box">
                 <Link
                   to={{ pathname: `/campaign/${campaign.id}` }}
                   className="d-inline d-flex justify-content-center"
                 >
                   <li
+                    key={campaign.id}
                     className="list-group-item list-group-item-action m-3"
                     id="example-campaign"
                   >
@@ -248,7 +249,7 @@ function Profile(props) {
         <section className="col-sm-12 col-md-4 border scrollMe" id="all-characters-list">
           <h3>Your Characters</h3>
           <ul className="p-0">
-            {allMyCharacters.map((character)=>{
+            {allMyCharacters ? allMyCharacters.map((character)=>{
               return (
                 <Link
                   to={{ pathname: `/character/${character.id}` }}
@@ -262,7 +263,7 @@ function Profile(props) {
                   </li>
                 </Link>
               )
-            })}
+            }):null}
           </ul>
         </section>
       </div>
@@ -271,8 +272,8 @@ function Profile(props) {
         <ul className="invites-list list-group-flush list-group">
           {invites.map((invite) => {
             return (
-              <div key={invite.id} className="campaign-list-box">
-                <li className="list-group-item list-group-item-action m-3">
+              <div className="campaign-list-box">
+                <li key={invite.id} className="list-group-item list-group-item-action m-3">
                   You are invited to: {invite.campaign_name}
                 </li>
                 <button

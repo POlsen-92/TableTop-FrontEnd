@@ -6,12 +6,15 @@ import { DiceRoll } from "rpg-dice-roller";
 import useSound from "use-sound";
 import rollSound from "../Dice/diceSound.mp3";
 import { randomNameGenerator } from "./Namegen";
-// import { Editor } from "react-draft-wysiwyg";
-// import { EditorState, convertToRaw } from "draft-js";
+import { Editor } from "@tinymce/tinymce-react";
+
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import reactDom from "react-dom";
+
 let customDie = "choose";
-// import "../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function Homebrew({
   characterInfo,
@@ -27,6 +30,47 @@ export default function Homebrew({
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
   const [noClass, setNoClass] = useState(false);
+  const [rollingThunda, setRollingThunda] = useState({
+    strength: 0,
+    dexterity: 0,
+    constitution: 0,
+    intelligence: 0,
+    wisdom: 0,
+    charisma: 0,
+    hitpoints: 0,
+  });
+
+  const alignmentTooltip = (props) => {
+    <Tooltip {...props}>
+      A typical creater in the world has an alignment, which boradly describes
+      its moral and personal attitudes. Alignment is a combination of two
+      factors: one identifies morality (good, evil, or neutral), and the other
+      describes attitudes toward society and order (lawful, chaotic, and
+      neutral).
+    </Tooltip>;
+  };
+
+  const handleBackgroundChange = (e) => {
+    console.log("Content was updated:", e.target.getContent());
+    setCharacterInfo({
+      ...characterInfo,
+      background: e.target.getContent(),
+    });
+  };
+  const handlePersonalityChange = (e) => {
+    console.log("Content was updated:", e.target.getContent());
+    setCharacterInfo({
+      ...characterInfo,
+      personality: e.target.getContent(),
+    });
+  };
+  const handleAlignmentChange = (e) => {
+    console.log("Content was updated:", e.target.getContent());
+    setCharacterInfo({
+      ...characterInfo,
+      alignment: e.target.getContent(),
+    });
+  };
 
   const handleCharacterChange = (e) => {
     const { name, value } = e.target;
@@ -43,53 +87,22 @@ export default function Homebrew({
     });
   };
 
-  // const [backgroundState, setBackGroundState] = useState(() =>
-  //   EditorState.createEmpty()
-  // );
-  // const [personalityState, setPersonalityState] = useState(() =>
-  //   EditorState.createEmpty()
-  // );
-  // const [alignmentState, setAlignmentState] = useState(() =>
-  //   EditorState.createEmpty()
-  // );
-
-  // const onBackgroundEditorStateChange = (editorState) => {
-  //   setBackGroundState(editorState);
-  //   const contentState = editorState.getCurrentContent();
-  //   setCharacterInfo({
-  //     ...characterInfo,
-  //     background: convertToRaw(contentState),
-  //   });
-  // };
-  // const onPersonalityEditorStateChange = (editorState) => {
-  //   setPersonalityState(editorState);
-  //   const contentState = editorState.getCurrentContent();
-  //   setCharacterInfo({
-  //     ...characterInfo,
-  //     personality: convertToRaw(contentState),
-  //   });
-  // };
-  // const onAlignmentEditorStateChange = (editorState) => {
-  //   setAlignmentState(editorState);
-  //   const contentState = editorState.getCurrentContent();
-  //   setCharacterInfo({
-  //     ...characterInfo,
-  //     alignment: convertToRaw(contentState),
-  //   });
-  // };
-
   const calculateHitpoints = () => {
+    setCharacterInfo({
+      ...characterInfo,
+      hitpoints: 0,
+    });
     if (!classapiResponse.hit_die) {
       setNoClass(true);
       customDie = document.getElementById("sides").value;
       if (customDie === "choose") return;
     }
     setNoClass(false);
-    document.getElementById("sides").selectedIndex=0
+    document.getElementById("sides").selectedIndex = 0;
     const roll1 = new DiceRoll(
       1 + "d" + (classapiResponse.hit_die || customDie)
-      );
-      customDie='choose'
+    );
+    customDie = "choose";
     console.log(
       roll1.notation,
       roll1.output
@@ -101,30 +114,29 @@ export default function Homebrew({
           return parseInt(item, 10);
         })
     );
-    let count = 0;
+
     play();
     const moving = setInterval(() => {
-      setCharacterInfo({
-        ...characterInfo,
+      setRollingThunda({
+        ...rollingThunda,
         hitpoints: Math.floor(1 + Math.random() * 10),
       });
-      if (count > 180) {
-        clearInterval(moving);
-
-        setCharacterInfo({
-          ...characterInfo,
-          hitpoints: roll1.output
-            .split("[")
-            .pop()
-            .split("]")[0]
-            .split(",")
-            .map(function (item) {
-              return parseInt(item, 10);
-            }),
-        });
-      }
-      count++;
     }, 10);
+    setTimeout(() => {
+      clearInterval(moving);
+      setRollingThunda({ ...rollingThunda, hitpoints: 0 });
+      setCharacterInfo({
+        ...characterInfo,
+        hitpoints: roll1.output
+          .split("[")
+          .pop()
+          .split("]")[0]
+          .split(",")
+          .map(function (item) {
+            return parseInt(item, 10);
+          }),
+      });
+    }, 3000);
   };
 
   // const checkBonus = (bonus) => {
@@ -156,6 +168,10 @@ export default function Homebrew({
   // };
 
   const calculateAttributes = (e) => {
+    setCharacterInfo({
+      ...characterInfo,
+      [e.target.value]: 0,
+    });
     const roll1 = new DiceRoll("4d6");
     console.log(roll1.output);
     let output = roll1.output
@@ -174,21 +190,20 @@ export default function Homebrew({
     let count = 0;
     play();
     const moving = setInterval(() => {
-      setCharacterInfo({
-        ...characterInfo,
+      setRollingThunda({
+        ...rollingThunda,
         [e.target.value]: Math.floor(1 + Math.random() * 10),
       });
-      if (count > 180) {
-        clearInterval(moving);
-
-        setCharacterInfo({
-          ...characterInfo,
-          [e.target.value]: total,
-        });
-        // checkBonus(e.target.value);
-      }
-      count++;
     }, 10);
+    setTimeout(() => {
+      clearInterval(moving);
+
+      setCharacterInfo({
+        ...characterInfo,
+        [e.target.value]: total,
+      });
+      // checkBonus(e.target.value);
+    }, 2300);
   };
 
   const handleClose = (e) => {
@@ -203,7 +218,6 @@ export default function Homebrew({
         window.location.toString().split("/").length - 1
       ];
       API.createCharacter(characterInfo, campaignId, token).then((res) => {
-        
         console.log(res.data.id);
         console.log(res.data);
         if (proficiencies) {
@@ -216,7 +230,7 @@ export default function Homebrew({
               navigate(`/campaign/${campaignId}`);
             });
           });
-        } 
+        }
         navigate(`/campaign/${campaignId}`);
       });
     }
@@ -440,7 +454,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="hitpoints"
-                    value={characterInfo.hitpoints}
+                    value={
+                      characterInfo.hitpoints
+                        ? characterInfo.hitpoints
+                        : rollingThunda.hitpoints
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -510,7 +528,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="strength"
-                    value={characterInfo.strength}
+                    value={
+                      characterInfo.strength
+                        ? characterInfo.strength
+                        : rollingThunda.strength
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -557,7 +579,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="dexterity"
-                    value={characterInfo.dexterity}
+                    value={
+                      characterInfo.dexterity
+                        ? characterInfo.dexterity
+                        : rollingThunda.dexterity
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -602,7 +628,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="constitution"
-                    value={characterInfo.constitution}
+                    value={
+                      characterInfo.constitution
+                        ? characterInfo.constitution
+                        : rollingThunda.constitution
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -648,7 +678,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="intelligence"
-                    value={characterInfo.intelligence}
+                    value={
+                      characterInfo.intelligence
+                        ? characterInfo.intelligence
+                        : rollingThunda.intelligence
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -694,7 +728,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="wisdom"
-                    value={characterInfo.wisdom}
+                    value={
+                      characterInfo.wisdom
+                        ? characterInfo.wisdom
+                        : rollingThunda.wisdom
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -741,7 +779,11 @@ export default function Homebrew({
                     type="number"
                     onChange={handleCharacterChange}
                     name="charisma"
-                    value={characterInfo.charisma}
+                    value={
+                      characterInfo.charisma
+                        ? characterInfo.charisma
+                        : rollingThunda.charisma
+                    }
                     className="bg-transparent"
                   />
                 </p>
@@ -778,27 +820,115 @@ export default function Homebrew({
           </div>
           {/* </div> */}
         </div>
-        {/* <div className="row forms">
-          <h2>Character Background</h2>
+        <div className="row justify-content-center">
+          <div data-tip data-for="background">
+            <h2>Background</h2>
+          </div>
+          <ReactTooltip className="tooltip" id="background">
+            <p>
+              Every story has a beginning. Your character's background reveals
+              where you came from, how you became an adventurer, and your place
+              in the world. Your fighter might have been a courageous knight or
+              a grizzled soldier. Your wizard could have been a sage or an
+              artisan. Your rogue might have gotten by as a guild thief or
+              commanded audiences as a jester. Choosing a background provides
+              you with important story cues about your character's identity.
+            </p>
+          </ReactTooltip>
           <Editor
-            editorState={backgroundState}
-            onEditorStateChange={onBackgroundEditorStateChange}
+            initialValue="<p>Write your story here!</p>"
+            apiKey={process.env.REACT_APP_TINYAPI}
+            init={{
+              height: 300,
+              width: "80%",
+              menubar: true,
+              skin: "oxide-dark",
+              content_css: "dark",
+              plugins: [
+                "advlist autolink lists link image",
+                "charmap print preview anchor help",
+                "searchreplace visualblocks code",
+                "insertdatetime media table paste wordcount",
+              ],
+              toolbar:
+                "undo redo | formatselect | bold italic | \
+            alignleft aligncenter alignright | \
+            bullist numlist outdent indent image | help",
+            }}
+            onChange={handleBackgroundChange}
           />
         </div>
-        <div className="row">
-          <h2>Character Personality</h2>
+        <div className="row justify-content-center">
+          <div data-tip data-for="personality">
+            <h2>Personality</h2>
+          </div>
+          <ReactTooltip className="tooltip" id="personality">
+            <p>
+              Fleshing out your character's personality--the array of traits,
+              mannerisms, habits, bliefs, and flaws that give a person a unique
+              identity--will help you bring them to life as you play the game.
+            </p>
+          </ReactTooltip>
           <Editor
-            editorState={personalityState}
-            onEditorStateChange={onPersonalityEditorStateChange}
+            initialValue="<p>What is your character's personality?</p>"
+            apiKey={process.env.REACT_APP_TINYAPI}
+            init={{
+              height: 300,
+              width: "80%",
+              menubar: true,
+              skin: "oxide-dark",
+              content_css: "dark",
+              plugins: [
+                "advlist autolink lists link image",
+                "charmap print preview anchor help",
+                "searchreplace visualblocks code",
+                "insertdatetime media table paste wordcount",
+              ],
+              toolbar:
+                "undo redo | formatselect | bold italic | \
+            alignleft aligncenter alignright | \
+            bullist numlist outdent indent image | help",
+            }}
+            onChange={handlePersonalityChange}
           />
         </div>
-        <div className="row">
-          <h2>Character Alignment</h2>
+        <div className="row justify-content-center">
+          <div data-tip data-for="alignment">
+            <h2>Alignment</h2>
+          </div>
+
+          <ReactTooltip className="tooltip" id="alignment">
+            <p>
+              A typical creater in the world has an alignment, which boradly
+              describes its moral and personal attitudes. Alignment is a
+              combination of two factors: one identifies morality (good, evil,
+              or neutral), and the other describes attitudes toward society and
+              order (lawful, chaotic, and neutral).
+            </p>
+          </ReactTooltip>
           <Editor
-            editorState={alignmentState}
-            onEditorStateChange={onAlignmentEditorStateChange}
+            initialValue="<p>What is your character's alignment?</p>"
+            apiKey={process.env.REACT_APP_TINYAPI}
+            init={{
+              height: 300,
+              width: "80%",
+              menubar: true,
+              skin: "oxide-dark",
+              content_css: "dark",
+              plugins: [
+                "advlist autolink lists link image",
+                "charmap print preview anchor help",
+                "searchreplace visualblocks code",
+                "insertdatetime media table paste wordcount",
+              ],
+              toolbar:
+                "undo redo | formatselect | bold italic | \
+            alignleft aligncenter alignright | \
+            bullist numlist outdent indent image | help",
+            }}
+            onChange={handleAlignmentChange}
           />
-        </div> */}
+        </div>
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -831,6 +961,8 @@ export default function Homebrew({
           </Button>
         </Modal.Footer>
       </Modal>
+      <br />
+      <br />
       <br />
     </div>
   );
