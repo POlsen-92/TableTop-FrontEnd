@@ -32,8 +32,14 @@ function Community({ token, userState }) {
 
 
     return (
-        <div className="container">
+        <div className="container my-4">
             <h1 className="m-3 text-center">Community!!!</h1>
+            {userState.email ? (
+                <Link to="/NewBlogPost" className="text-decoration-none textColor ">
+                    <button className="my-2">
+                        New Post!
+                    </button>
+                </Link>) : ('')}
                 {posts.map((post) => {
                     return (
                         <div key={post.id} className="textColor">
@@ -53,12 +59,6 @@ function Community({ token, userState }) {
                         </div>
                     )
                 })}
-            {userState.email ? (
-                <Link to="/NewBlogPost" className="text-decoration-none textColor">
-                    <button>
-                        New Post!
-                    </button>
-                </Link>) : ('')}
         </div>
     );
 }
