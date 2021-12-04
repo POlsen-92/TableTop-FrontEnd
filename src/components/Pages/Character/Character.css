@@ -68,13 +68,13 @@ button {
   }
 
 
-.tooltip p{
+.tooltip {
     
-    font-family: sans-serif;
-    font-weight: bold;
-    letter-spacing: 2px;
-    width: 300px;
-    
+    font-family: sans-serif !important;
+    font-weight: bold !important;
+    letter-spacing: 2px !important;
+    max-width: 300px !important;
+    width: 300px !important;
 }
 
 .classInfo li {

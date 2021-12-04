@@ -6,6 +6,7 @@ import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
 import "./CharacterView.css";
 import API from "../../../utils/API";
+import DOMPurify from "dompurify";
 
 export default function CharacterView(props) {
 
@@ -28,9 +29,21 @@ export default function CharacterView(props) {
             setFeature(res.data.Features);
             setProficiency(res.data.Proficiencies);
             setUserId(res.data.user_id)
-            setCharacter(res.data)
+            setCharacter(res.data)           
         })
     },[id])
+
+    useEffect(()=>{
+        if(character.background) {
+            setCharacter({...character,background: DOMPurify.sanitize(character.background)})
+        }
+        if(character.personality) {
+            setCharacter({...character,personality: DOMPurify.sanitize(character.personality)})
+        }
+        if(character.alignment) {
+            setCharacter({...character,alignment: DOMPurify.sanitize(character.alignment)})
+        }
+    },[])
 
     useEffect(() => {
         if (props.userState.id === userId) {
@@ -341,12 +354,12 @@ export default function CharacterView(props) {
                                         (character.level)}</h5>
                                         <h5>Alignment: </h5>
                                         {editChar ? (<input className="row" defaultValue={character.alignment} onChange={(e)=>setalignEdit(e.target.value)}/>) : 
-                                        (<p>{character.alignment}</p>)}
+                                        (<span dangerouslySetInnerHTML={{__html: character.alignment}}></span>)}
                                         <h5>Background: {editChar ? (<textarea className="row" defaultValue={character.background} onChange={(e)=>setbgEdit(e.target.value)}/>) : 
-                                        (character.background)}</h5>
+                                        (<span dangerouslySetInnerHTML={{__html: character.background}}></span>)}</h5>
                                         <h5>Personality: </h5>
                                         <p>{editChar ? (<textarea className="row" defaultValue={character.personality} onChange={(e)=>setpersEdit(e.target.value)}/>) : 
-                                        (character.personality)}</p>
+                                        (<span dangerouslySetInnerHTML={{__html: character.personality}}></span>)}</p>
                                     </div>
                                     <div className="col-4">
                                         <h5>HitPoints: {editChar ? (<input className="row" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
