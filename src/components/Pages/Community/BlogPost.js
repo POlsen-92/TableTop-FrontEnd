@@ -109,7 +109,7 @@ function BlogPost(props) {
 
     return (
         <div>
-            <div className="container">
+            <div className="container py-4">
                 <div>
                     {editBlog ? (<input className="row" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1>{postData.title}</h1>)}
                     <br />
@@ -124,35 +124,35 @@ function BlogPost(props) {
                         <button className="m-2" onClick={communityPage} >Back</button>
                     </div>
                     ) : (<button className="m-2" onClick={communityPage} >Back</button>)}
-                    <br />
                 <div>
+                <br />
                     {commentData.map((comment) => {
                         return (
                             <div>
                                 <div key={comment.id}>
-                                    {comment.body}---{comment.User.username}
-                                </div>
-                                <br />
+                                    <p>{comment.body}</p>
+                                    <p>{comment.User.username}</p>
                                 {props.userState.username === comment.User.username ? (
                                     <button onClick={() =>deleteComment(comment.id)} >delete comment</button>
-                                ) : ('')}
-                                <br />
-                                <br />
-                                <br />
+                                    ) : ('')}
+                                </div>
                             </div>
                         )
                     })}
-                    <form className="my-5 py-5 text-center" id="comment-form"
+                    <form className=" " id="comment-form"
                         onSubmit={createComment}>
-                        <h4>Reply to this thread!</h4>
-
-                        <input className="m-1" id="new-comment"
+                        <div className="">
+                            <h4>Reply to this thread!</h4>
+                        </div><br />
+                        <div className="">
+                        <textarea className="m-1" id="new-comment"
                             value={commentData.description}
                             name="description"
                             onChange={handleCommentInputChange}
                             type="text"
-                            placeholder="description"/>
+                            placeholder="description"/> <br />
                         <button className="btn" id="signup-btn">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
