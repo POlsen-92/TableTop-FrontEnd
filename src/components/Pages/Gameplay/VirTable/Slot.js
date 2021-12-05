@@ -60,7 +60,7 @@ export const Slot = ({ tokens,x,y }) => {
                 console.log(tokens[i]);
                 // setCurrentToken(tokens[i])
                 // console.log(currentToken)
-                setToken(<Token name={tokens[i].name} token_id={tokens[i].token_id} x={tokens[i].x} y={tokens[i].y}/>);
+                setToken(<Token name={tokens[i].name} token_id={tokens[i].token_id} x={tokens[i].x} y={tokens[i].y} image={tokens[i].image}/>);
                 // console.log(token)
                 console.log(`found token ${tokens[i].name} at slot [${x}, ${y}]`);
                 break; // don't need to iterate, we found our token
