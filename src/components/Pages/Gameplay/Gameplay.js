@@ -7,6 +7,8 @@ import Table from "./VirTable/Table"
 import API from "../../../utils/API"
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import direWolf from "./VirTable/direwolf.png"
+import bukavac from "./VirTable/bukavac.png"
 
 const containerStyle = {
     height: '90vh',
@@ -15,6 +17,10 @@ const containerStyle = {
     backgroundSize: '100% 100%'
 
 };
+// var direWolf = new Image();
+// direWolf.src = "./direwolf.png";
+
+console.log(direWolf,"-------------------------wolf");
 function Gameplay(props) {
     console.log("my user_id", props.userState.id);
     const { socket } = props;
@@ -29,6 +35,9 @@ function Gameplay(props) {
     const [npcName,setNpcName] = useState('');
     const [tokensList, setTokensList] = useState([]);
     const [deletedToken, setDeletedToken] = useState(0);
+    const [userSquares,setUserSquares] = useState(20)
+    const [currentImage,setCurrentImage] = useState('')
+    
 
     // function that creates the token being passed into each li of character name as an onclick 
     function createToken(character) {
@@ -53,6 +62,7 @@ function Gameplay(props) {
     // function that creates npc tokens
     
     function createNpcToken() {
+        // setCurrentImage(direWolf)
         API.findTokens(id).then((res) => {
             let data = res.data
             console.log(data.length)
@@ -60,7 +70,8 @@ function Gameplay(props) {
                 name: npcName,
                 token_id: data.length,
                 x: 0,
-                y: 0
+                y: 0,
+                image: bukavac,
             }
             API.createToken(id, createdToken).then((res) => {
                 setNewToken(1)
@@ -95,7 +106,10 @@ function Gameplay(props) {
     };
 
     // handles modal state on close
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setNpcName('');
+    }
 
     useEffect(() => {
         socket.emit("join campaign room", id);
@@ -125,7 +139,7 @@ function Gameplay(props) {
             case "compendium":
                 setTabContents(
                     <div>
-                        <h1>compendium!</h1>
+                        <h1 className="border text-center">Compendium</h1>
                     </div>
                 )
                 break;
@@ -133,20 +147,27 @@ function Gameplay(props) {
             case "settings":
                 setTabContents(
                     <div>
-                        <h1>settings!</h1>
+                        <h1 className="border text-center">Settings</h1>
                     </div>
                 )
                 break;
 
             default:
                 setTabContents(
-                    <div>
-                        <h1>characters!</h1>
-                        <ul>
+                    <div className="text-center ">
+                        <h1 className="border text-center shadow-lg">Characters</h1>
+                        <ul class="list-group " >
                             {characters.map((character) => {
-                                return (<li onClick={() => createToken(character)}>{character.charName}</li>)
+                                return (
+                                    < >
+                                <li className="text-center border list-group-item" >{character.charName}</li>
+                                <button onClick={() => createToken(character)} className="align-item-center mx-5">Place Token</button>
+                                    </>
+                                )
                             })}
                         </ul>
+                        <button onClick={() => setShow(true)}className="m-3 ">Create Custom Token</button>
+                        <img/>
                     </div>
                 )
                 break;
@@ -154,20 +175,26 @@ function Gameplay(props) {
     }, [tab, characters]);
     // let monsterList = []
     return (
-        <div className="container-fluid p-0 m-0 border border-3 border-danger">
+        <div className="container-fluid p-0 m-0 ">
             <div className="row p-0 m-0">
                 <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
-                <div className="col-7 border border-info border-4 gameboard" style={containerStyle}>
+                <div className="col-7 gameboard" style={containerStyle}>
                     <DndProvider backend={HTML5Backend}>
                         <Table camp_id={id} newToken={newToken} deletedToken={deletedToken}/>
                     </DndProvider>
-                    <div className="row align-items-center justify-content-center">
-                        <ul class="list-group col-4 m-3">
+                    <div className="row align-items-center justify-content-center border">
+                        <h2 className="text-center">Token List</h2>
+                        <ul class="list-group col-2 m-3 align-items-center justify-content-center">
                             {tokensList.map((token) => {
-                                return (<li class="list-group-item" onClick={() => deleteNpcToken(token.token_id)}>Click to delete---{token.name}</li>)
+                                return (
+                                    <div>
+                                <li class="list-group-item">{token.name}</li>
+                                <button onClick={() => deleteNpcToken(token.token_id)}>Delete Token</button>
+                                </div>
+                                )
                             })}
                         </ul>
-                            <button onClick={() => setShow(true)}className="m-3 col-5 h-25 w-25">CREATE NEW NPC TOKEN</button>
+
                     </div>
                 </div>
                 <div className="col-2 border border-success border-4 mini-menu">

@@ -3,25 +3,25 @@ function About() {
    const developerEntries = [
        {
            name: "Mark Lohse-Miranda",
-           title: "developer",
+           title: "Developer",
            location: "Washington",
            picture: "someurl",
        },
        {
            name: "Marco Shifflette",
-           title: "developer",
+           title: "Developer",
            location: "Washington",
            picture: "someurl",
        },
        {
            name: "Paige Olsen",
-           title: "developer",
+           title: "Developer",
            location: "Washington",
            picture: "someurl",
        },
        {
            name: "Carsdan Dvorachek",
-           title: "developer",
+           title: "Developer",
            location: "Florida",
            picture: "someurl",
        },
@@ -52,7 +52,7 @@ function About() {
            </div>
            <div className="row reason text-center">
                <h2>Why TableTop?</h2>
-               <p>As a group of developers we found that it was difficult to play Dungeons &amp; Dragons online. While there are ways to play, they either cost money, don't have a virtual table top, or are clunky and unintuitive. Our goal with TableTop was to make a website that gave the user the freedom to play how they wanted without the downfalls of previous options.
+               <p>As a group of developers we found that it was difficult to play Dungeons &amp; Dragons online. While there are ways to play, they either cost money, don't have a virtual table top, or are clunky and unintuitive. Our goal with TableTop was to make a website that gave the user the freedom to play how they wanted without the shortcomings of previous options.
                </p>
            </div>
        </div>

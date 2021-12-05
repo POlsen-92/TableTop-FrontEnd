@@ -12,7 +12,7 @@ const tableStyle = {
 };
 
  const Table = ({camp_id, newToken,deletedToken}) => {
-     const [side,setSide] = useState(20);
+     const [side,setSide] = useState(15);
      const [tokens, setTokens] = useState([]);
     //  const [count,setCount] = useState(0)
     //  setCount(1)
