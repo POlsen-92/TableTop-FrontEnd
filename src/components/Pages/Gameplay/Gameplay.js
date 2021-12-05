@@ -7,8 +7,19 @@ import Table from "./VirTable/Table"
 import API from "../../../utils/API"
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import direWolf from "./VirTable/direwolf.png"
-import bukavac from "./VirTable/bukavac.png"
+import Dice from "../Dice/Dice";
+import direWolf from "./VirTable/images/direwolf.png";
+import bukavac from "./VirTable/images/bukavac.png";
+import crab from "./VirTable/images/Beasts/Crab.png";
+import Dogmole from "./VirTable/images/Beasts/Dogmole.png";
+import Spider from "./VirTable/images/Beasts/Spider.png";
+import WhiteMonkey from "./VirTable/images/Beasts/Babboon ape monkey.png";
+import Umberhulk from "./VirTable/images/Monstrositys/Umberhulk.png";
+
+
+
+
+
 
 const containerStyle = {
     height: '90vh',
@@ -17,8 +28,18 @@ const containerStyle = {
     backgroundSize: '100% 100%'
 
 };
-// var direWolf = new Image();
-// direWolf.src = "./direwolf.png";
+const tokenImageNames =[
+    "Bukavac","Crab","Dire Wolf","Dogmole","Spider","Umberhulk","White Monkey"
+]
+const tokenImages =[
+   bukavac, crab,direWolf,Dogmole,Spider,Umberhulk,WhiteMonkey
+]
+// const monstrosityNames=[
+//     "Umberhulk"
+// ]
+// const monstrositys=[
+//     Umberhulk
+// ]
 
 console.log(direWolf,"-------------------------wolf");
 function Gameplay(props) {
@@ -71,7 +92,7 @@ function Gameplay(props) {
                 token_id: data.length,
                 x: 0,
                 y: 0,
-                image: bukavac,
+                image: currentImage,
             }
             API.createToken(id, createdToken).then((res) => {
                 setNewToken(1)
@@ -103,6 +124,12 @@ function Gameplay(props) {
         if (inputType === 'npcName') {
             setNpcName(inputValue);
         } 
+        if(inputType === 'imageSelect'){
+            setCurrentImage(inputValue);
+        }
+        // if(inputType === 'imageSelect1'){
+        //     setCurrentImage(inputValue);
+        // }
     };
 
     // handles modal state on close
@@ -177,25 +204,29 @@ function Gameplay(props) {
     return (
         <div className="container-fluid p-0 m-0 ">
             <div className="row p-0 m-0">
-                <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
-                <div className="col-7 gameboard" style={containerStyle}>
-                    <DndProvider backend={HTML5Backend}>
-                        <Table camp_id={id} newToken={newToken} deletedToken={deletedToken}/>
-                    </DndProvider>
-                    <div className="row align-items-center justify-content-center border">
-                        <h2 className="text-center">Token List</h2>
-                        <ul class="list-group col-2 m-3 align-items-center justify-content-center">
+                <div className="col-3 border border-primary border-4 char-menu">
+                    <h2 className="border text-center">Dice</h2>
+                    <Dice/>
+                    <div className="row align-items-center justify-content-center">
+                        <h2 className="text-center border col-11">Token List</h2>
+                        <ul className="list-group col-2 m-3 align-items-center justify-content-center">
                             {tokensList.map((token) => {
                                 return (
-                                    <div>
-                                <li class="list-group-item">{token.name}</li>
-                                <button onClick={() => deleteNpcToken(token.token_id)}>Delete Token</button>
+                                    <div >
+                                <li className="list-group-item ">{token.name}</li>
+                                <button className="" onClick={() => deleteNpcToken(token.token_id)}>Delete Token</button>
                                 </div>
                                 )
                             })}
                         </ul>
 
                     </div>
+                    </div>
+                <div className="col-7 gameboard" style={containerStyle}>
+                    <DndProvider backend={HTML5Backend}>
+                        <Table camp_id={id} newToken={newToken} deletedToken={deletedToken}/>
+                    </DndProvider>
+                    
                 </div>
                 <div className="col-2 border border-success border-4 mini-menu">
                     <div>
@@ -223,6 +254,35 @@ function Gameplay(props) {
                     placeholder="Demagorgon"
                 />
                 
+                    <select id="imageSelect" name="imageSelect" onChange={handleTokenInputChange}>
+                    {tokenImages.map((image) => {
+                        let tokenName;
+                        for (let i = 0; i < tokenImages.length; i++) {
+                            if(image === tokenImages[i]){
+                                 tokenName = tokenImageNames[i]
+                            } 
+                        }
+                                return (
+                                    <option value={image}>{tokenName}</option>
+                                )
+                            })}
+                        
+                    </select>
+                    {/* <select id="imageSelect1" name="imageSelect1" onChange={handleTokenInputChange}>
+                    {monstrositys.map((image) => {
+                        let tokenName;
+                        for (let i = 0; i < monstrositys.length; i++) {
+                            if(image === monstrositys[i]){
+                                 tokenName = monstrosityNames[i]
+                            } 
+                        }
+                                return (
+                                    <option value={image}>{tokenName}</option>
+                                )
+                            })}
+                        
+                    </select> */}
+
 
 
             </form>

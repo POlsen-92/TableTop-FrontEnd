@@ -3,5 +3,11 @@
 #diceContainer select {
   background: transparent;
   border: none; 
+  color: white;
+  
 }
 
+option { 
+  /* Whatever color  you want */
+  background-color: #82caff;
+}
