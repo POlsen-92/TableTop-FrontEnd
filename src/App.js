@@ -11,7 +11,7 @@ import News from "./components/News";
 import Signup from "./components/Pages/Signup";
 import About from "./components/Pages/About";
 import Community from "./components/Pages/Community/Community";
-import Profile from "./components/Pages/Profile";
+import Profile from "./components/Pages/Profile/Profile";
 import OtherProfile from "./components/Pages/Profile/Profile(Other)";
 import Campaign from "./components/Pages/Campaign";
 import NewBlogPost from "./components/Pages/Community/NewBlogPost";
