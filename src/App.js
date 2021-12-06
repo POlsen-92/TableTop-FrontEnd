@@ -111,7 +111,7 @@ const tokenFromStor = localStorage.getItem("token")
               />
             }
           />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<About/>} />
           <Route
             path="/signup"
             element={

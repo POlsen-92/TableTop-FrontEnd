@@ -3,8 +3,11 @@ import marco from "./../../style/marco.jpg";
 import mark from "./../../style/mark.jpg";
 import paige from "./../../style/paige.jpg";
 import carsdan from "./../../style/carsdan.png";
+import dragonbg from "../../style/dragonbg.png";
+import bridgebg from "../../style/bridgebg.png";
 
 function About() {
+    document.body.style.backgroundImage = `url(${bridgebg})`;
    const developerEntries = [
        {
            name: "Mark Lohse-Miranda",
@@ -39,14 +42,21 @@ function About() {
    const [developers,setDevelopers] = useState(developerEntries)
  
    return (
-       <div className="container">
+       <div className="container" style={{
+        color: "white",
+        fontWeight:'bold'
+    }}>
 
            <div className="row team-intro text-center m-4">
-               <h2 className="col-12">The Team</h2>
+               <h1 className="col-12">The Team</h1>
                <div className="col-3 spacer"></div>
                <p className="col-6">Meet the four of us building and supporting TableTop. We are all junior developers who met to make a project and have a passion for coding.</p>
            </div>
-           <div className="row team-content">
+           <div className="row team-content" 
+           style={{
+            fontSize:'2vh',
+
+        }}>
                {developers.map((developer,index)=>{
                    return(
                    <div key={index} className="col-sm-12 col-md-6 col-lg-3 text-center">
@@ -59,9 +69,9 @@ function About() {
                    )
                })}
            </div>
-           <div className="row reason text-center">
+           <div className="row reason text-center" >
                <h2>Why TableTop?</h2>
-               <p>As a group of developers we found that it was difficult to play Dungeons &amp; Dragons online. While there are ways to play, they either cost money, don't have a virtual table top, or are clunky and unintuitive. Our goal with TableTop was to make a website that gave the user the freedom to play how they wanted without the shortcomings of previous options.
+               <p >As a group of developers we found that it was difficult to play Dungeons &amp; Dragons online. While there are ways to play, they either cost money, don't have a virtual table top, or are clunky and unintuitive. Our goal with TableTop was to make a website that gave the user the freedom to play how they wanted without the shortcomings of previous options.
                </p>
            </div>
        </div>

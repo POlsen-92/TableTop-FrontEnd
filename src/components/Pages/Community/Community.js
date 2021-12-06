@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import API from "../../../utils/API"
 import "./community.css";
+import skulltreasurebg from "../../../style/skulltreasurebg.png";
 
 function Community({ token, userState }) {
+    document.body.style.backgroundImage = `url(${skulltreasurebg})`;
 
     const navigate = useNavigate();
 
@@ -42,11 +44,11 @@ function Community({ token, userState }) {
 
     return (
         <div className="container my-4">
-            <h1 className="m-3 text-center">Community!!!</h1>
+            <h1 className="m-3 text-center">Community</h1>
             {userState.email ? (
                 <Link to="/NewBlogPost" className="text-decoration-none textColor ">
                     <button className="my-2">
-                        New Post!
+                        New Post
                     </button>
                 </Link>) : ('')}
                 {posts.map((post) => {

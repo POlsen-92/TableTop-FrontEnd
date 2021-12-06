@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import API from "../../utils/API";
 import Gandalf from "./Gandalf/Gandalf"
 import logo from "../../style/tabletop_logo_white-min.png"
+import thronesplash from "../../style/thronesplash.png";
 
 function Home(props) {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Home(props) {
 
   return (
     <div  id="home-div">
-      <div className="row">
+      <div className="row mx-0">
         <div className="col-sm-12 col-md-4"><img src={logo}/> </div>
         <div className="col-sm-12 col-md-4 my-5 py-5 text-start" id="main-content">
           <div id="catch-phrase">
@@ -61,7 +62,7 @@ function Home(props) {
             </button>
           </Link>
         </div>
-        <div className="col-sm-12 col-md-4">
+        <div className="col-sm-12 col-md-4" >
         {!props.userState.email ?
 
           <form className=" my-5 py-5 text-center" id="login-form"
