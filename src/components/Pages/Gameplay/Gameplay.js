@@ -588,12 +588,7 @@ function Gameplay(props) {
   useEffect(() => {
     API.findCampaign(id, props.token).then((res) => {
       setCampaignName(res.data.name);
-      const myChars = res.data.Characters.filter(
-        (character) => character.user_id == props.userState.id
-      );
-      console.log("myChar", myChars);
-      setCharacters(myChars);
-      console.log("characters", characters);
+      setCharacters(res.data.Characters);
     });
   }, [props]);
 
