@@ -190,9 +190,9 @@ function Profile(props) {
             src={imageURL ? imageURL : props.userState.image_content}
             width="200"
             height="auto"
-            alt={""}
+            alt="ProfilePic"
             className="m-1"
-          />{" "}
+          />
           <br />
           <button onClick={() => setUpdatePic(!updatePic)} className="btn m-1">
             Change Profile Picture
