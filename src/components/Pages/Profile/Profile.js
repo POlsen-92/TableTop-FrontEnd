@@ -7,6 +7,7 @@ import Avatar from "../UpdateUserInfo/Avatar";
 import Username from "../UpdateUserInfo/Username";
 import Password from "../UpdateUserInfo/Password";
 import Email from "../UpdateUserInfo/Email";
+import "./Profile.css";
 
 function Profile(props) {
   const navigate = useNavigate();
@@ -160,27 +161,17 @@ function Profile(props) {
           {displayData.map((campaign, index) => {
             return (
               <div key={index+1} className="campaign-list-box">
-                <Link
-                  key={index}
-                  to={{ pathname: `/campaign/${campaign.id}` }}
-                  className="d-inline d-flex justify-content-center"
-                >
                   <li
                     key={index+2}
-                    className="list-group-item list-group-item-action m-3"
-                    id="example-campaign"
+                    className="m-3 li"
+                    onClick={()=> navigate(`/campaign/${campaign.id}`)}
                   >
                     <h4 key={index+3} className="d-inline">{campaign.name}</h4>
                   </li>
-                </Link>
               </div>
             );
           })}
-          <button
-            onClick={() => {
-              createCampaign();
-            }}
-          >
+          <button onClick={() => createCampaign()}>
             Create Campaign
           </button>
         </section>
@@ -197,7 +188,7 @@ function Profile(props) {
           <button onClick={() => setUpdatePic(!updatePic)} className="btn m-1">
             Change Profile Picture
           </button>
-          <br />
+          <br/>
           {updatePic ? (
             <Avatar
               imageURL={imageURL}
@@ -266,23 +257,18 @@ function Profile(props) {
         >
           <h3>Your Characters</h3>
           <ul className="p-0">
-            {allMyCharacters
-              ? allMyCharacters.map((character, index) => {
+            {allMyCharacters ? allMyCharacters.map((character, index) => {
                   return (
-                    <Link
-                      key={index}
-                      to={{ pathname: `/character/${character.id}` }}
-                      className="d-inline d-flex justify-content-center"
-                    >
+                    <div>
                       <li
                         key={index+1}
-                        className="p-0 list-group-item list-group-item-action m-3"
-                        id="character"
+                        className="li m-3"
+                        onClick={()=> navigate(`/character/${character.id}`)}
                       >
                         <h5 key={index + 2}>{character.charName}</h5>
                         <h6 key={index + 3}>{character.Campaign.name}</h6>
                       </li>
-                    </Link>
+                    </div>
                   );
                 })
               : null}
