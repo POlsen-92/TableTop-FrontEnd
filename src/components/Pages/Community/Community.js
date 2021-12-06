@@ -3,8 +3,10 @@ import { useNavigate, Link } from "react-router-dom"
 import API from "../../../utils/API"
 import "bootstrap/dist/css/bootstrap.css";
 import "./community.css";
+import skulltreasurebg from "../../../style/skulltreasurebg.png";
 
-function Community({  userState }) {
+function Community({ userState }) {
+    document.body.style.backgroundImage = `url(${skulltreasurebg})`;
 
     const navigate = useNavigate();
 
