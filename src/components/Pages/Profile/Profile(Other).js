@@ -4,13 +4,14 @@ import API from "../../../utils/API";
 import { Link, useParams } from "react-router-dom";
 
 
-export default function Profile(props) {
+export default function Profile() {
 
     const { id } = useParams();
 
 
     const [campaignFilter, setCampaignFilter] = useState("all");
     const [displayData, setDisplayData] = useState([]);
+    const [user, setUser] = useState([])
     const [username,setUsername] = useState('');
     const [picture,setPicture] = useState('');
     const [campaigns,setCampaigns] = useState([]);
@@ -18,6 +19,7 @@ export default function Profile(props) {
 
     useEffect(() => {
         API.findUserById(id).then((res)=>{
+            setUser(res.data)
             setUsername(res.data.username);
             setCampaigns(res.data.Campaigns);
             setCharacters(res.data.Characters);
@@ -26,16 +28,15 @@ export default function Profile(props) {
     },[id])
 
 
-
     const handleCampaignFilterChange = (filter) => {
         setCampaignFilter(filter);
         console.log(campaigns)
         const newArr = campaigns.filter((campaign) => {
           switch (filter) {
             case "gm":
-              return campaign.gm_id === id;
+              return campaign.gm_id === user.id;
             case "player":
-              return campaign.gm_id !== id;
+              return campaign.gm_id !== user.id;
             case "all":
               return true;
             default:
@@ -85,16 +86,16 @@ export default function Profile(props) {
               src={picture}
               width="200"
               height="auto"
-              alt={""}
+              alt="ProfilePic"
               className="m-1"
-            />{" "}
+            />
             <br />
           </section>
           <section className="col-4 border" id="character">
             <h3>Characters</h3>
                 {characters.map((character) => {
                     return (
-                        <Link
+                      <Link
                         to={{ pathname: `/character/${character.id}` }}
                         className="d-inline d-flex justify-content-center"
                       >
