@@ -50,9 +50,47 @@ import MarkhamSouthwell from "./VirTable/images/zz token/markham southwell.png";
 import JarlGrugnur from "./VirTable/images/zz token/Jarl Grugnur.png";
 import GorvanIronheart from "./VirTable/images/zz token/Gorvan Ironheart.png";
 import DarathraShendrel from "./VirTable/images/zz token/darathra shendrel.png";
-
-
-
+import WinterWolf from "./VirTable/images/Beasts/Winter wolf.png";
+import GiantWasp from "./VirTable/images/Beasts/Wasps.png";
+import Worg from "./VirTable/images/Monstrositys/Worg.png";
+import TarrasqueDaddy from "./VirTable/images/Monstrositys/Tarrasque Daddy.png";
+import SandSquidKraken from "./VirTable/images/Monstrositys/Sand Squid Kracken.png";
+import Remorhaz from "./VirTable/images/Monstrositys/Remorhaz.png";
+import Minotaur from "./VirTable/images/Monstrositys/Minotaur.png";
+import MinotaurRager from "./VirTable/images/Monstrositys/Minotaur Rager.png";
+import MinotaurMorningstar from "./VirTable/images/Monstrositys/Minotaur Morningstar.png";
+import Mimic from "./VirTable/images/Monstrositys/Mimic.png";
+import Hippogriff from "./VirTable/images/Monstrositys/Hippogriff.png";
+import Harpy from "./VirTable/images/Monstrositys/harpy.png";
+import FlyingGolem from "./VirTable/images/Monstrositys/flying golem.png";
+import Chuul from "./VirTable/images/Monstrositys/Chuul.png";
+import Chul from "./VirTable/images/Monstrositys/Chul.png";
+import Bulette from "./VirTable/images/Monstrositys/bulette.png";
+import BlackMinotaur from "./VirTable/images/Monstrositys/Black Minotuar.png";
+import Tiger from "./VirTable/images/Beasts/tiger.png";
+import Snake from "./VirTable/images/Beasts/Snake.png";
+import Skunk from "./VirTable/images/Beasts/skunk.png";
+import Shark from "./VirTable/images/Beasts/Shark.png";
+import Rat from "./VirTable/images/Beasts/Rat.png";
+import PlagueRat from "./VirTable/images/Beasts/Plague Rat.png";
+import OwlBear from "./VirTable/images/Beasts/owlbear.png";
+import Mammoth from "./VirTable/images/Beasts/Mammoth.png";
+import Killerwhale from "./VirTable/images/Beasts/Killerwhale.png";
+import GiantIceToad from "./VirTable/images/Beasts/GiantIceToad.png";
+import GiantSnappingTurtle from "./VirTable/images/Beasts/Giant Snapping Turtle.png";
+import GiantShark from "./VirTable/images/Beasts/Giant Shark.png";
+import GiantElk from "./VirTable/images/Beasts/Giant Elk.png";
+import GiantApe from "./VirTable/images/Beasts/Giant Ape.png";
+import Eagle from "./VirTable/images/Beasts/Eagle.png";
+import DogmoleJuggernaut from "./VirTable/images/Beasts/Dogmole juggernaut.png";
+import Dino from "./VirTable/images/Beasts/Dino.png";
+import DinoTrex from "./VirTable/images/Beasts/Dino t rex.png";
+import Chicken from "./VirTable/images/Beasts/Chicken.png";
+import BrownBear from "./VirTable/images/Beasts/brown bear.png";
+import BlackDog from "./VirTable/images/Beasts/Black dog.png";
+import DwarfLeftSide from "./VirTable/images/zz token/dwarfleftside.png";
+import StatueRightSide from "./VirTable/images/zz token/statuerightside.png";
+import BgRightSide from "./VirTable/images/zz token/bgrightside.png";
 
 
 
@@ -71,8 +109,68 @@ const Monstrositys=[
         value: ArmorAnt
     },
     {
+        name:"Black Minotaur",
+        value: BlackMinotaur
+    },
+    {
+        name:"Bulette",
+        value: Bulette
+    },
+    {
+        name:"Chul",
+        value: Chul
+    },
+    {
+        name:"Chuul",
+        value: Chuul
+    },
+    {
+        name:"Flying Golem",
+        value: FlyingGolem
+    },
+    {
+        name:"Harpy",
+        value: Harpy
+    },
+    {
+        name:"Hippogriff",
+        value: Hippogriff
+    },
+    {
+        name:"Mimic",
+        value: Mimic
+    },
+    {
+        name:"Minotaur Morningstar",
+        value: MinotaurMorningstar
+    },
+    {
+        name:"Minotaur Rager",
+        value: MinotaurRager
+    },
+    {
+        name:"Minotaur",
+        value: Minotaur
+    },
+    {
+        name:"Remorhaz",
+        value: Remorhaz
+    },
+    {
+        name:"Sand Squid Kraken",
+        value: SandSquidKraken
+    },
+    {
+        name:"TarrasqueDaddy",
+        value: TarrasqueDaddy
+    },
+    {
         name:"Umberhulk",
         value: Umberhulk
+    },
+    {
+        name:"Worg",
+        value: Worg
     },
     {
         name:"Yeti",
@@ -84,31 +182,123 @@ const Monstrositys=[
     },
 
 ]
-const Beasts =[
+const Beasts = [
+    {
+        name:"Black Dog",
+        value: BlackDog
+    },
     {
         name:"Bukavac",
         value: bukavac
+    },
+    {
+        name:"brown bear",
+        value: BrownBear
+    },
+    {
+        name:"Giant Chicken",
+        value: Chicken
     },
     {
         name:"Crab",
         value: crab
     },
     {
+        name:"Dino T-rex",
+        value: DinoTrex
+    },
+    {
+        name:"Dino",
+        value: Dino
+    },
+    {
         name:"Dire Wolf",
         value: direWolf
+    },
+    {
+        name:"Dogmole Juggernaut",
+        value: DogmoleJuggernaut
     },
     {
         name:"Dogmole",
         value: Dogmole
     },
     {
+        name:"Eagle",
+        value: Eagle
+    },
+    {
+        name:"Giant Ape",
+        value: GiantApe
+    },
+    {
+        name:"Giant Elk",
+        value: GiantElk
+    },
+    {
+        name:"Giant Wasp",
+        value: GiantWasp
+    },
+    {
+        name:"Giant Shark",
+        value: GiantShark
+    },
+    {
+        name:"Giant Snapping Turtle",
+        value: GiantSnappingTurtle
+    },
+    {
+        name:"Giant Ice Toad",
+        value: GiantIceToad
+    },
+    {
+        name:"Killer Whale",
+        value: Killerwhale
+    },
+    {
+        name:"Mammoth",
+        value: Mammoth
+    },
+    {
+        name:"Owl Bear",
+        value: OwlBear
+    },
+    {
+        name:"PlagueRat",
+        value: PlagueRat
+    },
+    {
+        name:"Rat",
+        value: Rat
+    },
+    {
+        name:"Shark",
+        value: Shark
+    },
+    {
+        name:"Skunk",
+        value: Skunk
+    },
+    {
         name:"Spider",
         value: Spider
     },
     {
+        name:"Snake",
+        value: Snake
+    },
+    {
+        name:"Tiger",
+        value: Tiger
+    },
+    {
         name:"White Monkey",
         value: WhiteMonkey
-    }
+    },
+    {
+        name:"Winter Wolf",
+        value: WinterWolf
+    },
 
 ]
 const charTokens=[
@@ -471,17 +661,18 @@ function Gameplay(props) {
     // let monsterList = []
     return (
         <div className="container-fluid p-0 m-0 ">
-            <div className="row p-0 m-0">
-                <div className="col-3 border border-primary border-4 char-menu">
+            <div className="row p-0 m-0"  >
+                <div className="col-3  char-menu " style={{ backgroundImage: `url(${DwarfLeftSide})`,
+            backgroundSize: '100% 100%'}}>
                     <h2 className="border text-center">Dice</h2>
                     <Dice/>
-                    <div className="row align-items-center justify-content-center">
+                    <div className="row align-items-center justify-content-center w-100">
                         <h2 className="text-center border col-11">Token List</h2>
-                        <ul className="list-group col-2 m-3 align-items-center justify-content-center">
+                        <ul className="list-group col-2 m-3 align-items-center justify-content-center w-100">
                             {tokensList.map((token) => {
                                 return (
                                     <div >
-                                <li className="list-group-item ">{token.name}</li>
+                                <li className="list-group-item text-center">{token.name}</li>
                                 <button className="" onClick={() => deleteNpcToken(token.token_id)}>Delete Token</button>
                                 </div>
                                 )
@@ -496,7 +687,8 @@ function Gameplay(props) {
                     </DndProvider>
                     
                 </div>
-                <div className="col-2 border border-success border-4 mini-menu">
+                <div className="col-2 mini-menu" style={{ backgroundImage: `url(${BgRightSide})`,
+            backgroundSize: '100% 100%'}}>
                     <div>
                         <button onClick={() => setTab('characters')}>Char</button>
                         <button onClick={() => setTab('compendium')}>Comp</button>
