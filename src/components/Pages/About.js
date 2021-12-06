@@ -1,29 +1,34 @@
 import React, {useState} from "react";
+import marco from "./../../style/marco.jpg";
+import mark from "./../../style/mark.jpg";
+import paige from "./../../style/paige.jpg";
+import carsdan from "./../../style/carsdan.png";
+
 function About() {
    const developerEntries = [
        {
            name: "Mark Lohse-Miranda",
            title: "Developer",
            location: "Washington",
-           picture: "./../../style/mark.jpg",
+           picture: mark,
        },
        { 
            name: "Marco Shifflette",
            title: "Developer",
            location: "Washington",
-           picture: "./../../style/marco.jpg",
+           picture: marco,
        },
        {
            name: "Paige Olsen",
            title: "Developer",
            location: "Washington",
-           picture: "./../../style/paige.jpg",
+           picture: paige,
        },
        {
            name: "Carsdan Dvorachek",
            title: "Developer",
            location: "Florida",
-           picture: "./../../style/carsdan.png",
+           picture: carsdan,
        },
    ]
  
@@ -43,7 +48,7 @@ function About() {
                {developers.map((developer)=>{
                    return(
                    <div className="col-3 text-center">
-                       <img src={developer.picture} alt="developer looking at camera"/>
+                       <img className="w-50 "src={developer.picture} alt="developer looking at camera"/>
                        <h4>{developer.name}</h4>
                        <p>{developer.title}<br/>{developer.location}</p>
                    </div>
