@@ -78,7 +78,7 @@ function NewBlogPost({ token }) {
                 />
                 <br />
 
-                <button className="btn" id="signup-btn">Submit</button>
+                <button className="h3 p-2" id="signup-btn">Submit</button>
             </form>
         </div>
     );

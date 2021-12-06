@@ -78,8 +78,12 @@ function Campaign(props) {
     }
 
     const deleteCampaign = (dltCmpgnId) => {
-      API.deleteCampaign(dltCmpgnId, props.token);
-      navigate('/profile');
+      if(window.confirm("Do You Really Want To Delete This Spell?")) {
+          API.deleteCampaign(dltCmpgnId, props.token);
+          navigate('/profile');
+      } else {
+          alert("comment was not deleted")
+      }
     };
 
     const leaveCampaign = (campaign_id) => {
