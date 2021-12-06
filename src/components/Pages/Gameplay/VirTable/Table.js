@@ -11,7 +11,7 @@ const tableStyle = {
 };
 
  const Table = ({camp_id, newToken,deletedToken}) => {
-     const [side,setSide] = useState(20);
+     const [side,setSide] = useState(15);
      const [tokens, setTokens] = useState([]);
     //  const [count,setCount] = useState(0)
     //  setCount(1)
@@ -39,7 +39,7 @@ const tableStyle = {
         // }
         
         API.updateToken(camp_id,{
-            id:item.token_id,
+            token_id:item.token_id,
             x:x,
             y:y
         })

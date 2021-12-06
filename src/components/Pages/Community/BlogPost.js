@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"
 import API from "../../../utils/API";
 import "./community.css";
+import DOMPurify from "dompurify";
 
 function BlogPost(props) {
 
@@ -26,6 +27,9 @@ function BlogPost(props) {
         })
     },[id,props.token])
 
+    useEffect(() => {
+        setPostData({...postData,description: DOMPurify.sanitize(postData.description)})
+    },[])
 
 //~~~~~~~~~~~~~~BLOG DATA~~~~~~~~~~~~~~~~//    
 
@@ -107,13 +111,25 @@ function BlogPost(props) {
         }
     }
 
+    const getDateTime = (dateTime) =>{
+        const dateReturn = new Date(dateTime)
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+        return (days[dateReturn.getDay()] + " " + months[dateReturn.getMonth()] + " " + dateReturn.getDate() + ", " + dateReturn.getFullYear() + " @ " + dateReturn.getHours() + ":" + dateReturn.getMinutes())
+      
+    } 
+
     return (
         <div>
             <div className="container py-4">
                 <div>
                     {editBlog ? (<input className="row" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1>{postData.title}</h1>)}
                     <br />
-                    {editBlog ? (<textarea className="row" defaultValue={postData.description} onChange={(e)=>setblogDescEdit(e.target.value)}/>) : (<p>{postData.description}</p>)}
+                    {editBlog ? (<textarea className="row" defaultValue={postData.description} onChange={(e)=>setblogDescEdit(e.target.value)}/>) : (<span dangerouslySetInnerHTML={{__html: postData.description}}></span>)}
+                    {postData.User ? <p><img src={postData.User.image_content} width="100px" height="100px" alt="profilepic"/>
+                    {postData.User.username} on {getDateTime(postData.createdAt)}
+                    </p> : null}
                 </div>
                 <br />
                 <br />
@@ -131,7 +147,8 @@ function BlogPost(props) {
                             <div>
                                 <div key={comment.id}>
                                     <p>{comment.body}</p>
-                                    <p>{comment.User.username}</p>
+                                    <p> <img src={comment.User.image_content} width="100px" height="100px" alt="profilepic"/>
+                                        {comment.User.username} on {getDateTime(comment.createdAt)}</p>
                                 {props.userState.username === comment.User.username ? (
                                     <button onClick={() =>deleteComment(comment.id)} >delete comment</button>
                                     ) : ('')}

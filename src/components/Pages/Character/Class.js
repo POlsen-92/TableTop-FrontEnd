@@ -18,6 +18,9 @@ export default function Class({
   const [subclasses, setSubClasses] = useState([]);
 
   const fillSubClasses = (e) => {
+    if(document.getElementById("subclass")) {
+      document.getElementById("subclass").selectedIndex = 0;
+    }
     setCharacterInfo({
       ...characterInfo,
       class: e.target.value,
@@ -40,7 +43,6 @@ export default function Class({
         } else {
           setSubClasses(response.data.subclasses);
         }
-        console.log(response.data);
       });
   };
 
@@ -74,7 +76,7 @@ export default function Class({
       );
     } else {
       if (
-        classapiResponse.proficiency_choices[0].choose > proficiencies.length
+        classapiResponse.proficiency_choices[0].choose >= proficiencies.length
       ) {
         const temp = [...proficiencies];
         temp.push(e.target.value);
@@ -104,7 +106,7 @@ export default function Class({
           })}
         </select>
         {subclasses.length > 0 ? (
-          <select onChange={pickSubClass}>
+          <select id="subclass" onChange={pickSubClass}>
             <option key="99">Choose Sub-Class</option>
             {subclasses.map((classes, index) => {
               return (
@@ -120,11 +122,11 @@ export default function Class({
       {classapiResponse.length !== 0 ? (
         <div className="container">
           <div className="classInfo">
-            <h1>
+            <h2>
               {characterInfo.subClass !== "None"
                 ? characterInfo.class + " - " + characterInfo.subClass
                 : characterInfo.class}
-            </h1>
+            </h2>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Hit Die</h2>

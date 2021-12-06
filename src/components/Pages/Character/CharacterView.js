@@ -4,8 +4,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from "react-tooltip";
 import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
-import "./CharacterView.css";
 import API from "../../../utils/API";
+import { Editor } from "@tinymce/tinymce-react";
 import DOMPurify from "dompurify";
 
 export default function CharacterView(props) {
@@ -353,12 +353,87 @@ export default function CharacterView(props) {
                                         <h5>Level: {editChar ? (<input className="row" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
                                         (character.level)}</h5>
                                         <h5>Alignment: </h5>
-                                        {editChar ? (<input className="row" defaultValue={character.alignment} onChange={(e)=>setalignEdit(e.target.value)}/>) : 
+                                        {editChar ? (
+                                            <div>
+                                                <Editor
+                                                    initialValue={character.alignment}
+                                                    apiKey={process.env.REACT_APP_TINYAPI}
+                                                    init={{
+                                                    height: 200,
+                                                    width: "60%",
+                                                    menubar: true,
+                                                    skin: "oxide-dark",
+                                                    content_css: "dark",
+                                                    plugins: [
+                                                        "advlist autolink lists link image",
+                                                        "charmap print preview anchor help",
+                                                        "searchreplace visualblocks code",
+                                                        "insertdatetime media paste wordcount",
+                                                    ],
+                                                    toolbar:
+                                                        "undo redo | formatselect | bold italic | \
+                                                        alignleft aligncenter alignright | \
+                                                        bullist numlist outdent indent image | help",
+                                                    }}
+                                                    onChange={(e) => setalignEdit(e.target.getContent())}
+                                                />
+                                            </div>
+                                        ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.alignment}}></span>)}
-                                        <h5>Background: {editChar ? (<textarea className="row" defaultValue={character.background} onChange={(e)=>setbgEdit(e.target.value)}/>) : 
+                                        <h5>Background: {editChar ? (
+                                            <div>
+                                                <Editor
+                                                    initialValue={character.background}
+                                                    apiKey={process.env.REACT_APP_TINYAPI}
+                                                    init={{
+                                                    height: 200,
+                                                    width: "60%",
+                                                    menubar: true,
+                                                    skin: "oxide-dark",
+                                                    content_css: "dark",
+                                                    plugins: [
+                                                        "advlist autolink lists link image",
+                                                        "charmap print preview anchor help",
+                                                        "searchreplace visualblocks code",
+                                                        "insertdatetime media paste wordcount",
+                                                    ],
+                                                    toolbar:
+                                                        "undo redo | formatselect | bold italic | \
+                                                        alignleft aligncenter alignright | \
+                                                        bullist numlist outdent indent image | help",
+                                                    }}
+                                                    onChange={(e) => setbgEdit(e.target.getContent())}
+                                                />
+                                            </div>
+                                        ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.background}}></span>)}</h5>
                                         <h5>Personality: </h5>
-                                        <p>{editChar ? (<textarea className="row" defaultValue={character.personality} onChange={(e)=>setpersEdit(e.target.value)}/>) : 
+                                        <p>{editChar ? (
+                                            <div>
+                                                <Editor
+                                                    initialValue={character.personality}
+                                                    apiKey={process.env.REACT_APP_TINYAPI}
+                                                    init={{
+                                                    height: 200,
+                                                    width: "60%",
+                                                    menubar: true,
+                                                    skin: "oxide-dark",
+                                                    content_css: "dark",
+                                                    plugins: [
+                                                        "advlist autolink lists link image",
+                                                        "charmap print preview anchor help",
+                                                        "searchreplace visualblocks code",
+                                                        "insertdatetime media paste wordcount",
+                                                    ],
+                                                    toolbar:
+                                                        "undo redo | formatselect | bold italic | \
+                                                        alignleft aligncenter alignright | \
+                                                        bullist numlist outdent indent image | help",
+                                                    }}
+                                                    onChange={(e) => setpersEdit(e.target.getContent())}
+                                                />
+                                            </div>
+                                        ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.personality}}></span>)}</p>
                                     </div>
                                     <div className="col-4">

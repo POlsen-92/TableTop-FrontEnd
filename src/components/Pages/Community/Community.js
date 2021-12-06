@@ -7,6 +7,7 @@ function Community({ token, userState }) {
 
     const navigate = useNavigate();
 
+    
     //GET POSTS FOR COMMUNITY PAGE
     const [posts, setPosts] = useState([])
 
@@ -20,8 +21,8 @@ function Community({ token, userState }) {
             })
     }, [])
 
-    // DECIDES WHICH PROFILE YOU GO TO
 
+    // DECIDES WHICH PROFILE YOU GO TO
     const UserButton = (postUserId) => {
         if (userState.id === postUserId) {
             navigate(`/Profile`)
@@ -30,6 +31,14 @@ function Community({ token, userState }) {
         }
     }
 
+    const getDateTime = (dateTime) =>{
+        const dateReturn = new Date(dateTime)
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+        return (days[dateReturn.getDay()] + " " + months[dateReturn.getMonth()] + " " + dateReturn.getDate() + ", " + dateReturn.getFullYear() + " @ " + dateReturn.getHours() + ":" + dateReturn.getMinutes())
+      
+    } 
 
     return (
         <div className="container my-4">
@@ -50,9 +59,11 @@ function Community({ token, userState }) {
                                         </Link>
                                     </div>
                                     <div className="card-body">
-                                        <p className="card-text">{post.description}</p>
+                                        <p className="card-text"><span dangerouslySetInnerHTML={{__html: post.description}}></span></p>
                                         
-                                        <p onClick={()=>UserButton(post.User.id)}>{post.User.username}</p>
+                                        <p onClick={()=>UserButton(post.User.id)}>
+                                            <img src={post.User.image_content} width="100px" height="100px" alt="profile"/>
+                                            {post.User.username} on {getDateTime(post.createdAt)} </p>
                                     </div>
                                 </div> 
                             <br />

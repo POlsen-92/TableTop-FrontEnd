@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import createDOMPurify from "dompurify";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Character.css";
 import Class from "./Class";
@@ -7,8 +6,17 @@ import Race from "./Race";
 import Homebrew from "./Homebrew";
 import pointer from "./pointer-min.png";
 import journey from "./journey-min.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function Character({ token }) {
+  const navigate = useNavigate();
+  //IF NOT SIGNED IN REDIRECT TO HOMEPAGE
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
+
   const [characterInfo, setCharacterInfo] = useState({
     charName: "",
     personality: "",
