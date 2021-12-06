@@ -58,10 +58,10 @@ function Community({ token, userState }) {
                                         </Link>
                                     </div>
                                     <div className="card-body">
-                                        <p className="card-text">{post.description}</p>
+                                        <p className="card-text"><span dangerouslySetInnerHTML={{__html: post.description}}></span></p>
                                         
                                         <p onClick={()=>UserButton(post.User.id)}>
-                                            <img src={post.User.image_content} width="100px" height="100px"/>
+                                            <img src={post.User.image_content} width="100px" height="100px" alt="profile"/>
                                             {post.User.username} on {getDateTime(post.createdAt)} </p>
                                     </div>
                                 </div> 
