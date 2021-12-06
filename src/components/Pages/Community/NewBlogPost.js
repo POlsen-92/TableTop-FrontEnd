@@ -36,7 +36,7 @@ function NewBlogPost({ token }) {
         }).catch((err)=>{
             console.log(err)
         });
-        // navigate("/community")
+        navigate("/community")
     }
 
     return (
@@ -79,23 +79,8 @@ function NewBlogPost({ token }) {
                 <br />
 
                 <button className="btn" id="signup-btn">Submit</button>
-
-
             </form>
         </>
-        // <Form onSubmit={handleBlogSubmit}>
-        // <Form.Group className="mb-3" controlId="username-signup"  value={title} name="title" onChange={handleBlogInputChange}>
-        //   <Form.Label>Post Title</Form.Label>
-        //   <Form.Control type="text" placeholder="EX: Looking for a group!"/>
-        // </Form.Group>
-        // <Form.Group className="mb-3" controlId="email-signup" value={description} name="description" onChange={handleBlogInputChange}>
-        //   <Form.Label>Post content</Form.Label>
-        //   <Form.Control as="textarea" rows={3} />
-        // </Form.Group>
-        // <Button variant="primary" type="submit">
-        // Submit
-        // </Button>
-        // </Form>
     );
 }
 
