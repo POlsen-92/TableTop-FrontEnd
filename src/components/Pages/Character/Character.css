@@ -2,7 +2,8 @@
 
 .mainPage {
     background: url('./another-rough-old-and-worn-parchment-paper-min.jpg');
-    background-repeat: repeat;
+    background-repeat:no-repeat;
+    background-size:cover;
     color:black;
     text-align: center;
     width: 90%;
@@ -53,12 +54,13 @@
     display: block;
 }
 
-input[type=number] {
-    width: 100px;
-}
+
 
 .card-body input {
     text-align: center;
+    font-size: 1em;
+    border: 1px black solid;
+    border-radius: 25px;
 }
 
 .card {
