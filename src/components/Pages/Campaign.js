@@ -43,6 +43,16 @@ function Campaign(props) {
         navigate(`/createcharacter/${id}`)
     }
 
+    const textToHtml = (text) => {
+      const elem = document.createElement('div');
+      return text.split(/\n\n+/).map((paragraph) => {
+        return '<p>' + paragraph.split(/\n+/).map((line) => {
+          elem.textContent = line;
+          return elem.innerHTML;
+        }).join('<br/>') + '</p>';
+      }).join('');
+    };
+
     const save = () => {
         const update = {
             name: nameEdit,
@@ -108,10 +118,10 @@ function Campaign(props) {
         <div className="row">
             {edit ? (
             <div className="col-sm-12 col-md-4 ">
-              {/* <input id="cmpgnDesc-edit"  value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/> */}
               <Editor
-                initialValue={campaignDesc}
+                initialValue={textToHtml(campaignDesc)}
                 apiKey={process.env.REACT_APP_TINYAPI}
+                outputFormat='text'
                 init={{
                   height: "100%",
                   width: "100%",
