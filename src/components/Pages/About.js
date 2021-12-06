@@ -69,6 +69,8 @@ function About() {
                    )
                })}
            </div>
+               <br />
+               <br />
            <div className="row reason text-center" >
                <h2>Why TableTop?</h2>
                <p >As a group of developers we found that it was difficult to play Dungeons &amp; Dragons online. While there are ways to play, they either cost money, don't have a virtual table top, or are clunky and unintuitive. Our goal with TableTop was to make a website that gave the user the freedom to play how they wanted without the shortcomings of previous options.
