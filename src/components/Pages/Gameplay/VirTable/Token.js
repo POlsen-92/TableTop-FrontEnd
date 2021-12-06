@@ -31,7 +31,6 @@ const Token = ({name,token_id,x,y,image}) => {
             opacity: isDragging ? 0.5 : 1,
         }}>
             <img className="" style={{ height:"4em"}}src={image}/>
-            <div className="text-center" style={{}}>{name}</div>
         </div>
     </>);
 };

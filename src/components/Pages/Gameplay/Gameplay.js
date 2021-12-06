@@ -29,7 +29,6 @@ import BriskaneWalrog from "./VirTable/images/zz token/Wereboar.png";
 import vaasha from "./VirTable/images/zz token/vaasha.png";
 import vaal from "./VirTable/images/zz token/vaal.png";
 import UrgalaMeltimer from "./VirTable/images/zz token/urgala meltimer.png";
-import ThriKreen from "./VirTable/images/zz token/Thri-kreen.png";
 import TholtzDaggerdark from "./VirTable/images/zz token/tholtz daggerdark.png";
 import TarulVar from "./VirTable/images/zz token/Tarul Var.png";
 import Solar from "./VirTable/images/zz token/Solar.png";
@@ -682,7 +681,10 @@ function Gameplay(props) {
   return (
     <div className="container-fluid p-0 m-0 ">
       <div className="row p-0 m-0">
-        <div className="col-3 border border-primary border-4 char-menu scrollMe-Big">
+        <div className="col-3 char-menu scrollMe-Big" style={{
+            backgroundImage: `url(${DwarfLeftSide})`,
+            backgroundSize: "100% 100%",
+          }}>
           <h2 className="border text-center">Dice</h2>
           <Dice />
           <div className="row align-items-center justify-content-center w-100">
@@ -690,9 +692,10 @@ function Gameplay(props) {
             <ul className="list-group col-2 m-3 align-items-center justify-content-center w-100">
               {tokensList.map((token) => {
                 return (
-                  <div>
+                  <div >
                     <li className="list-group-item text-center">
-                      {token.name}
+                    {token.name}
+                    <img className="" style={{ height:"4em"}}src={token.image}/>                      
                     </li>
                     <button
                       className=""
