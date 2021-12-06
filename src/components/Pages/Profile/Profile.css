@@ -18,7 +18,7 @@
     color: white
 }
 
-::placeholder {
+.inputColor::placeholder {
     color: white;
     opacity: 1;
 }

@@ -180,7 +180,7 @@ function Campaign(props) {
                 })}</ul>
                 <br />
                 <br />
-                {(gmID === props.userState.id) ? (<div className="row"><div className="col"><input value={invite} className="inputColor" placeHolder="User Email" onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
+                {(gmID === props.userState.id) ? (<div className="row"><div className="col"><input value={invite} className="inputColor" placeholder="User Email" onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
             </div>
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>Character(s)</h2>
