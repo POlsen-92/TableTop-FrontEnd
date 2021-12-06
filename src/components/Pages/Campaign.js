@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom"
 import API from "../../utils/API";
 import { Editor } from "@tinymce/tinymce-react";
-import { Modal, Button, Card, Row, Col, FormControl } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
+import DOMPurify from "dompurify";
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
@@ -38,6 +39,10 @@ function Campaign(props) {
 
         })
     },[id,props])
+
+    useEffect(() => {
+      setCampaignDesc({campaignDesc: DOMPurify.sanitize(campaignDesc)})
+  },[])
 
     const createCharacter = () => {
         navigate(`/createcharacter/${id}`)
@@ -108,7 +113,6 @@ function Campaign(props) {
         <div className="row">
             {edit ? (
             <div className="col-sm-12 col-md-4 ">
-              {/* <input id="cmpgnDesc-edit"  value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/> */}
               <Editor
                 initialValue={campaignDesc}
                 apiKey={process.env.REACT_APP_TINYAPI}
@@ -129,10 +133,10 @@ function Campaign(props) {
                   alignleft aligncenter alignright | \
                   bullist numlist outdent indent image | help",
                 }}
-                onEditorChange={(newDesc)=>setDescEdit(newDesc)}
+                onChange={(e) => setDescEdit(e.target.getContent())}
               />
             </div>
-            ) : (<div className="border col-sm-12 col-md-4 ">{campaignDesc}</div>)}
+            ) : (<div className="border col-sm-12 col-md-4 "><span dangerouslySetInnerHTML={{__html: campaignDesc}}></span></div>)}
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>GM</h2>
                 <h4>{gm.username}</h4>

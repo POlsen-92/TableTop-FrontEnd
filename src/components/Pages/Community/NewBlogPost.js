@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
+import { Editor } from "@tinymce/tinymce-react";
 import "./community.css";
 
 function NewBlogPost({ token }) {
@@ -12,16 +13,26 @@ function NewBlogPost({ token }) {
         description: ""
     })
 
-    const handleBlogInputChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        setBlogInputs({...blogInputs, [name]: value})
+    const handleBlogTitleChange = (e) => {
+        setBlogInputs({
+            ...blogInputs, 
+            title: e.target.value,
+        })
+    }
+
+    const handleBlogDescChange = (e) => {
+        setBlogInputs({
+            ...blogInputs, 
+            description: e.target.getContent()
+        })
     };
+
 
     const createBlogPost = (e) => {
         e.preventDefault();
+        console.log(blogInputs)
         API.createBlogPost(blogInputs, token).then((res) => {
-            res.status(200)
+            console.log(res)
         }).catch((err)=>{
             console.log(err)
         });
@@ -30,42 +41,46 @@ function NewBlogPost({ token }) {
 
     return (
         <>
-            <form className="my-5 py-5 text-center" id="blog-post"
+            <form className="m-5 w-100" id="blog-post"
                 onSubmit={createBlogPost}
             >
-                <h4>New post!</h4>
-                <input className="m-6" id="blog-id"
+                <h4>New Blog Post!</h4>
+                <input className="my-3 py-3 w-25 " id="blog-id"
                     name="title"
-                    onChange={handleBlogInputChange}
+                    onChange={handleBlogTitleChange}
                     type="text"
                     placeholder="What Do You Want Your Blog To Be Called"
                 />
                 <br />
-                <textarea className="m-1" id="blog-content"
+                <Editor
+                    initialValue="What Do You Want Your Blog To Say?"
+                    apiKey={process.env.REACT_APP_TINYAPI}
+                    className= "mb-auto"
                     name="description"
-                    onChange={handleBlogInputChange}
-                    placeholder="What Do You Want To Say?"
+                    init={{
+                    height: 500,
+                    width: "60%",
+                    menubar: true,
+                    skin: "oxide-dark",
+                    content_css: "dark",
+                    plugins: [
+                        "advlist autolink lists link image",
+                        "charmap print preview anchor help",
+                        "searchreplace visualblocks code",
+                        "insertdatetime media paste wordcount",
+                    ],
+                    toolbar:
+                        "undo redo | formatselect | bold italic | \
+                    alignleft aligncenter alignright | \
+                    bullist numlist outdent indent image | help",
+                    }}
+                    onChange={handleBlogDescChange}
                 />
                 <br />
 
                 <button className="btn" id="signup-btn">Submit</button>
-
-
             </form>
         </>
-        // <Form onSubmit={handleBlogSubmit}>
-        // <Form.Group className="mb-3" controlId="username-signup"  value={title} name="title" onChange={handleBlogInputChange}>
-        //   <Form.Label>Post Title</Form.Label>
-        //   <Form.Control type="text" placeholder="EX: Looking for a group!"/>
-        // </Form.Group>
-        // <Form.Group className="mb-3" controlId="email-signup" value={description} name="description" onChange={handleBlogInputChange}>
-        //   <Form.Label>Post content</Form.Label>
-        //   <Form.Control as="textarea" rows={3} />
-        // </Form.Group>
-        // <Button variant="primary" type="submit">
-        // Submit
-        // </Button>
-        // </Form>
     );
 }
 
