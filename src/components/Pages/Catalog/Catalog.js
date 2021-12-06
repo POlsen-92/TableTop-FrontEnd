@@ -3,8 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from "react-tooltip";
 import 'react-tabs/style/react-tabs.css';
-import "bootstrap/dist/css/bootstrap.css";
 import API from "../../../utils/API";
+import "bootstrap/dist/css/bootstrap.css";
+import "./Catalog.css"
 
 
 export default function Catalog(props) {
@@ -156,7 +157,7 @@ export default function Catalog(props) {
                             <form onSubmit={addEquip}>
                                 <label className="mx-2">Name
                                 <br /><input
-                                    className=""
+                                    className="inputColor"
                                     type="text" 
                                     name="name"
                                     defaultValue=""
@@ -165,6 +166,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Type
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="type"
                                     defaultValue=""
@@ -173,6 +175,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Properties
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="properties"
                                     defaultValue=""
@@ -181,6 +184,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Cost
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="cost"
                                     defaultValue=""
@@ -189,6 +193,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Weight
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="weight"
                                     defaultValue=""
@@ -197,6 +202,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Armor Class
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="armorClass"
                                     defaultValue=""
@@ -205,6 +211,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Strength
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="str"
                                     defaultValue=""
@@ -213,6 +220,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Stealth
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="stealth"
                                     defaultValue=""
@@ -221,6 +229,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Damage
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="damage"
                                     defaultValue=""
@@ -229,6 +238,7 @@ export default function Catalog(props) {
                                 </label><br />
                                 <label className="mx-2">Description
                                 <br /><textarea
+                                    className="inputColor"
                                     name="description"
                                     type="text"
                                     defaultValue=""
@@ -244,6 +254,7 @@ export default function Catalog(props) {
                             <form onSubmit={addSpell}>
                                 <label className="mx-2">Name
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="name"
                                     defaultValue={spellInputs.name || ""}
@@ -252,6 +263,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Type
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="type"
                                     defaultValue={spellInputs.type || ""}
@@ -260,6 +272,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Level
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="level"
                                     defaultValue={spellInputs.level || ""}
@@ -268,6 +281,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Duration
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="duration"
                                     defaultValue={spellInputs.duration || ""}
@@ -276,6 +290,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Range
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="range"
                                     defaultValue={spellInputs.range || ""}
@@ -284,6 +299,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Attack
                                 <br /><input
+                                    className="inputColor"
                                     type="number" 
                                     name="attack"
                                     defaultValue={spellInputs.attack || ""}
@@ -292,6 +308,7 @@ export default function Catalog(props) {
                                 </label><br />
                                 <label className="mx-2">Description
                                 <br /><textarea
+                                    className="inputColor"
                                     type="text" 
                                     name="description"
                                     defaultValue={spellInputs.description || ""}
@@ -307,6 +324,7 @@ export default function Catalog(props) {
                             <form onSubmit={addFeat}>
                                 <label className="mx-2">Name
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="name"
                                     defaultValue={featInputs.name || ""}
@@ -315,6 +333,7 @@ export default function Catalog(props) {
                                 </label> <br />
                                 <label className="mx-2">Type
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="type"
                                     defaultValue={featInputs.type || ""}
@@ -323,6 +342,7 @@ export default function Catalog(props) {
                                 </label> <br />
                                 <label className="mx-2">Description
                                 <br /><textarea
+                                    className="inputColor"
                                     type="text" 
                                     name="description"
                                     defaultValue={featInputs.description || ""}
@@ -338,6 +358,7 @@ export default function Catalog(props) {
                             <form onSubmit={addProf}>
                                 <label className="mx-2">Name
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="name"
                                     defaultValue={profInputs.name || ""}
@@ -346,6 +367,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Type
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="type"
                                     defaultValue={profInputs.type || ""}
@@ -354,6 +376,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">SubType
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="subtype"
                                     defaultValue={profInputs.subtype || ""}
@@ -362,6 +385,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Ability
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="ability"
                                     defaultValue={profInputs.ability || ""}
@@ -370,6 +394,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Script
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="script"
                                     defaultValue={profInputs.script || ""}
@@ -378,6 +403,7 @@ export default function Catalog(props) {
                                 </label>
                                 <label className="mx-2">Typical Speakers
                                 <br /><input
+                                    className="inputColor"
                                     type="text" 
                                     name="typicalspeakers"
                                     defaultValue={profInputs.typicalSpeakers || ""}
@@ -386,6 +412,7 @@ export default function Catalog(props) {
                                 </label><br />
                                 <label className="mx-2">Description
                                 <br /><textarea
+                                    className="inputColor"
                                     type="text" 
                                     name="description"
                                     defaultValue={profInputs.description || ""}

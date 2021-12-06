@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CampaignFilters from "./CampaignFilters";
 import API from "../../../utils/API";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Avatar from "./UpdateUserInfo/Avatar";
+import Username from "./UpdateUserInfo/Username";
+import Password from "./UpdateUserInfo/Password";
+import Email from "./UpdateUserInfo/Email";
 import "bootstrap/dist/css/bootstrap.css";
-import Avatar from "../UpdateUserInfo/Avatar";
-import Username from "../UpdateUserInfo/Username";
-import Password from "../UpdateUserInfo/Password";
-import Email from "../UpdateUserInfo/Email";
+import "./Profile.css";
 
 function Profile(props) {
   const navigate = useNavigate();
@@ -160,44 +161,36 @@ function Profile(props) {
           {displayData.map((campaign, index) => {
             return (
               <div key={index+1} className="campaign-list-box">
-                <Link
-                  key={index}
-                  to={{ pathname: `/campaign/${campaign.id}` }}
-                  className="d-inline d-flex justify-content-center"
-                >
                   <li
                     key={index+2}
-                    className="list-group-item list-group-item-action m-3"
-                    id="example-campaign"
+                    className="m-3 li inputColor"
+                    onClick={()=> navigate(`/campaign/${campaign.id}`)}
                   >
                     <h4 key={index+3} className="d-inline">{campaign.name}</h4>
                   </li>
-                </Link>
               </div>
             );
           })}
-          <button
-            onClick={() => {
-              createCampaign();
-            }}
-          >
+          <button onClick={() => createCampaign()}>
             Create Campaign
           </button>
         </section>
         {/* USER INFORMATION - EDIT IMAGE, USERNAME, PASSWORD, EMAIL  */}
         <section className="col-sm-12 col-md-4" id="profile-info">
-          <img
-            src={imageURL ? imageURL : props.userState.image_content}
-            width="200"
-            height="auto"
-            alt="ProfilePic"
-            className="m-1"
-          />
+          <div id="profile-picture-div">
+            <img
+              src={imageURL ? imageURL : props.userState.image_content}
+              width="200"
+              height="auto"
+              alt="ProfilePic"
+              className="m-1"
+            />
+          </div>
           <br />
           <button onClick={() => setUpdatePic(!updatePic)} className="btn m-1">
             Change Profile Picture
           </button>
-          <br />
+          <br/>
           {updatePic ? (
             <Avatar
               imageURL={imageURL}
@@ -257,7 +250,6 @@ function Profile(props) {
               setEmail={setEmail}
             />
           ) : null}
-          <button className="btn m-1">Notifications</button>
         </section>
         {/* ALL CHARACTERS FOR USER */}
         <section
@@ -266,23 +258,18 @@ function Profile(props) {
         >
           <h3>Your Characters</h3>
           <ul className="p-0">
-            {allMyCharacters
-              ? allMyCharacters.map((character, index) => {
+            {allMyCharacters ? allMyCharacters.map((character, index) => {
                   return (
-                    <Link
-                      key={index}
-                      to={{ pathname: `/character/${character.id}` }}
-                      className="d-inline d-flex justify-content-center"
-                    >
+                    <div>
                       <li
                         key={index+1}
-                        className="p-0 list-group-item list-group-item-action m-3"
-                        id="character"
+                        className="li m-3 inputColor"
+                        onClick={()=> navigate(`/character/${character.id}`)}
                       >
                         <h5 key={index + 2}>{character.charName}</h5>
-                        <h6 key={index + 3}>{character.Campaign.name}</h6>
+                        <h6 key={index + 3}>{character.Campaign ? character.Campaign.name : null}</h6>
                       </li>
-                    </Link>
+                    </div>
                   );
                 })
               : null}

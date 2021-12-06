@@ -7,33 +7,18 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/Pages/Home";
-import News from "./components/News";
 import Signup from "./components/Pages/Signup";
 import About from "./components/Pages/About";
 import Community from "./components/Pages/Community/Community";
 import Profile from "./components/Pages/Profile/Profile";
 import OtherProfile from "./components/Pages/Profile/Profile(Other)";
-import Campaign from "./components/Pages/Campaign";
+import Campaign from "./components/Pages/Campaign/Campaign";
 import NewBlogPost from "./components/Pages/Community/NewBlogPost";
 import Character from "./components/Pages/Character/Character"
 import CharacterView from "./components/Pages/Character/CharacterView";
 import Catalog from "./components/Pages/Catalog/Catalog";
 import BlogPost from "./components/Pages/Community/BlogPost";
 import Gameplay from "./components/Pages/Gameplay/Gameplay";
-
-
-// Socket configuration
-import { io } from "socket.io-client";
-const socket = io("http://localhost:3001", {
-  transports: ["websocket"],
-  extraHeaders: {
-    "my-custom-header": "1234",
-  },
-});
-
-socket.on("greeting", (greeting) => {
-  console.log(greeting);
-});
 
 function App() {
   const [campaign, setCampaign] = useState(-1);
@@ -142,7 +127,7 @@ const tokenFromStor = localStorage.getItem("token")
           />
           <Route
             path="/play/:id"
-            element={<Gameplay userState={userState} token={token} socket={socket}/>}
+            element={<Gameplay userState={userState} token={token}/>}
           />
           <Route
             path="/createcharacter/:id"
@@ -153,7 +138,6 @@ const tokenFromStor = localStorage.getItem("token")
             element={<Catalog userState={userState} token={token} />}
           />
         </Routes>
-        {/* <News /> */}
       </div>
     </Router>
   );

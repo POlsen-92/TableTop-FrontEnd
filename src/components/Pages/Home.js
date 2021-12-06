@@ -48,8 +48,8 @@ function Home(props) {
         <div className="col-sm-12 col-md-4"><img src={logo}/> </div>
         <div className="col-sm-12 col-md-4 my-5 py-5 text-start" id="main-content">
           <div id="catch-phrase">
-            <h4 className="text-start">Quick catchy thing about our site</h4>
-            <p className="text-start"> Less quick explanation about our site and it will be saying something totally cool</p>
+            <h2 className="text-start">D&amp;D Made Simple</h2>
+            <p className="text-start">Welcome to TableTop, a browser based application that allow's adventurers across the globe to play Dungeons &amp; Dragons over the internet.</p>
           </div>
           {!props.userState.email ? <Link to="/Signup"><button className="btn" id="start-now-btn">
             Start Now
