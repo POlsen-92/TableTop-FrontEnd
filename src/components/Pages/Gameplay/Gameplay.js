@@ -88,6 +88,9 @@ import DinoTrex from "./VirTable/images/Beasts/Dino t rex.png";
 import Chicken from "./VirTable/images/Beasts/Chicken.png";
 import BrownBear from "./VirTable/images/Beasts/brown bear.png";
 import BlackDog from "./VirTable/images/Beasts/Black dog.png";
+import DwarfLeftSide from "./VirTable/images/zz token/dwarfleftside.png";
+import StatueRightSide from "./VirTable/images/zz token/statuerightside.png";
+import BgRightSide from "./VirTable/images/zz token/bgrightside.png";
 
 
 
@@ -658,8 +661,9 @@ function Gameplay(props) {
     // let monsterList = []
     return (
         <div className="container-fluid p-0 m-0 ">
-            <div className="row p-0 m-0">
-                <div className="col-3 border border-primary border-4 char-menu">
+            <div className="row p-0 m-0"  >
+                <div className="col-3  char-menu " style={{ backgroundImage: `url(${DwarfLeftSide})`,
+            backgroundSize: '100% 100%'}}>
                     <h2 className="border text-center">Dice</h2>
                     <Dice/>
                     <div className="row align-items-center justify-content-center w-100">
@@ -683,7 +687,8 @@ function Gameplay(props) {
                     </DndProvider>
                     
                 </div>
-                <div className="col-2 border border-success border-4 mini-menu">
+                <div className="col-2 mini-menu" style={{ backgroundImage: `url(${BgRightSide})`,
+            backgroundSize: '100% 100%'}}>
                     <div>
                         <button onClick={() => setTab('characters')}>Char</button>
                         <button onClick={() => setTab('compendium')}>Comp</button>
