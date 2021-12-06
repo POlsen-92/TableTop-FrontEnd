@@ -5,25 +5,25 @@ function About() {
            name: "Mark Lohse-Miranda",
            title: "Developer",
            location: "Washington",
-           picture: "someurl",
+           picture: "./../../style/mark.jpg",
        },
-       {
+       { 
            name: "Marco Shifflette",
            title: "Developer",
            location: "Washington",
-           picture: "someurl",
+           picture: "./../../style/marco.jpg",
        },
        {
            name: "Paige Olsen",
            title: "Developer",
            location: "Washington",
-           picture: "someurl",
+           picture: "./../../style/paige.jpg",
        },
        {
            name: "Carsdan Dvorachek",
            title: "Developer",
            location: "Florida",
-           picture: "someurl",
+           picture: "./../../style/carsdan.png",
        },
    ]
  
@@ -43,7 +43,7 @@ function About() {
                {developers.map((developer)=>{
                    return(
                    <div className="col-3 text-center">
-                       <img src={developer.picture}/>
+                       <img src={developer.picture} alt="developer looking at camera"/>
                        <h4>{developer.name}</h4>
                        <p>{developer.title}<br/>{developer.location}</p>
                    </div>
