@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import API from "../../../utils/API"
 import "./community.css";
+import DOMPurify from "dompurify";
 
 function Community({ token, userState }) {
 
@@ -58,7 +59,7 @@ function Community({ token, userState }) {
                                         </Link>
                                     </div>
                                     <div className="card-body">
-                                        <p className="card-text">{post.description}</p>
+                                        <p className="card-text"><span dangerouslySetInnerHTML={{__html: post.description}}></span></p>
                                         
                                         <p onClick={()=>UserButton(post.User.id)}>
                                             <img src={post.User.image_content} width="100px" height="100px"/>
