@@ -29,7 +29,7 @@ const Token = ({name,token_id,x,y,image}) => {
             ...tokenStyle,
             opacity: isDragging ? 0.5 : 1,
         }}>
-            <img className="" style={{height:'8vh' }}src={image}/>
+            <img className="" alt={name} style={{height:'8vh' }}src={image}/>
         </div>
     </>);
 };
