@@ -135,6 +135,7 @@ export default function Class({
                 {classapiResponse.hit_die}
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Saving Throws</h2>
@@ -145,6 +146,7 @@ export default function Class({
                 })}
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Proficiency Choices</h2> (choose{" "}
@@ -369,6 +371,7 @@ export default function Class({
                 </div>
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 {subclassResponse.desc ? <h2>Sub-Class Description</h2> : null}
