@@ -22,3 +22,13 @@
     color: white;
     opacity: 1;
 }
+
+#profile-picture-div{
+    border: solid black;
+    border-width: 5px;
+    border-radius: 12px;
+    background-color: #222F3E;
+    padding-bottom: 18px;
+    margin-left: 15%;
+    margin-right: 15%;
+}
