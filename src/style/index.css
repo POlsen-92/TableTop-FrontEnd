@@ -99,6 +99,16 @@ code {
   height: auto;
 }
 
+ /*  CHANGING INPUT BOX COLOR */
+ .inputColor {
+  background-color: #222F3E;
+  color: white
+}
+
+.inputColor::placeholder {
+  color: white;
+  opacity: 1;
+}
 #blog-post {
   margin: "0px"
 }
