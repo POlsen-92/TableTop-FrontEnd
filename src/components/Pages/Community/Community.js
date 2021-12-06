@@ -52,7 +52,9 @@ function Community({ token, userState }) {
                                     <div className="card-body">
                                         <p className="card-text">{post.description}</p>
                                         
-                                        <p onClick={()=>UserButton(post.User.id)}>{post.User.username}</p>
+                                        <p onClick={()=>UserButton(post.User.id)}>
+                                            <img src={post.User.image_content} width="100px" height="100px"/>
+                                            {post.User.username} on {post.createdAt.slice(0,10)}</p>
                                     </div>
                                 </div> 
                             <br />

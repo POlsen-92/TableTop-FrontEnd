@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CampaignFilters from "./../CampaignFilters";
-import API from "../../utils/API";
+import CampaignFilters from "./CampaignFilters";
+import API from "../../../utils/API";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
-import Avatar from "./UpdateUserInfo/Avatar";
-import Username from "./UpdateUserInfo/Username"
-import Password from "./UpdateUserInfo/Password"
-import Email from "./UpdateUserInfo/Email"
+import Avatar from "../UpdateUserInfo/Avatar";
+import Username from "../UpdateUserInfo/Username"
+import Password from "../UpdateUserInfo/Password"
+import Email from "../UpdateUserInfo/Email"
 
 function Profile(props) {
 

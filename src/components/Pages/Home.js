@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import API from "../../utils/API";
 import Gandalf from "./Gandalf/Gandalf"
+import logo from "../../style/tabletop_logo_white-min.png"
 
 function Home(props) {
   const navigate = useNavigate();
@@ -11,22 +12,6 @@ function Home(props) {
     password: "",
   });
 
-  // old way
-  // const handleLoginChange = (event) => {
-  //     if (event.target.name === "email") {
-  //       setLoginFormState({
-  //         ...loginFormState,
-  //         email: event.target.value,
-  //       });
-  //     } else {
-  //       setLoginFormState({
-  //         ...loginFormState,
-  //         password: event.target.value,
-  //       });
-  //     }
-  //   };
-
-  // new way
   const handleLoginChange = e => {
     const { name, value } = e.target;
     setLoginFormState({
@@ -57,9 +42,10 @@ function Home(props) {
   };
 
   return (
-    <div className="container" id="home-div">
+    <div  id="home-div">
       <div className="row">
-        <section className="col-8 my-5 py-5 text-start" id="main-content">
+        <div className="col-sm-12 col-md-4"><img src={logo}/> </div>
+        <div className="col-sm-12 col-md-4 my-5 py-5 text-start" id="main-content">
           <div id="catch-phrase">
             <h4 className="text-start">Quick catchy thing about our site</h4>
             <p className="text-start"> Less quick explanation about our site and it will be saying something totally cool</p>
@@ -74,9 +60,11 @@ function Home(props) {
               Learn More
             </button>
           </Link>
-        </section>
+        </div>
+        <div className="col-sm-12 col-md-4">
         {!props.userState.email ?
-          <form className="col-4 my-5 py-5 text-center" id="login-form"
+
+          <form className=" my-5 py-5 text-center" id="login-form"
             onSubmit={handleLoginSubmit}
           >
             {props.errorMsg ? <Gandalf /> : null}
@@ -100,6 +88,7 @@ function Home(props) {
             <p>{props.errorMsg}</p>
             <button className="btn m-1" id="submit-login">Submit</button>
           </form> : null}
+        </div>
       </div>
     </div>
   );
