@@ -117,6 +117,7 @@ export default function Race({
               </div>
               <div className="col-sm-12 col-md-8">{apiResponse.age}</div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Language</h2>
@@ -125,6 +126,7 @@ export default function Race({
                 {apiResponse.language_desc}
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Size</h2>
@@ -133,6 +135,7 @@ export default function Race({
                 {apiResponse.size_description}
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Alignment</h2>
@@ -141,6 +144,7 @@ export default function Race({
                 {apiResponse.alignment}
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Race Bonuses</h2>
@@ -158,6 +162,7 @@ export default function Race({
                   : null}
               </div>
             </div>
+            <hr/>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 {subraceResponse.ability_bonuses ? (
