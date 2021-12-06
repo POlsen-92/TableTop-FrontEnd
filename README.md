@@ -16,19 +16,52 @@
   
   ## Usage
 
-  Our app is deployed through Heroku which you can access through this [link](https://manatee-clicker.herokuapp.com/leaderboard), upon entering the website you will see the 
+  Our app is deployed through Heroku which you can access through this [link](https://table-top-fe.herokuapp.com/) and we recommend using a Chrome Browser. Upon entering the website you will see our a navbar at the top, our logo, a brief description of the website and a sign in form. 
+  If you haven't signed up there is a link in the navbar for that purpose
 
-  <img src="images/ss_leaderboard.png" width="300px" alt="ScreenShot of our Leaderboard"> <img src="images/ss_modal.png" width="300px" alt="ScreenShot of our About Modal"> <br>
+  <img src="src/style/screenshots/home_ss.png" width="600px" alt="ScreenShot of our HomePage"> <img src="src/style/screenshots/signup_ss.png" width="600px" alt="ScreenShot of our SignUp Page"> <br>
 
+  After signing in you can travel to your profile page and see a list of Campaigns, characters and options to create a campaign and change your user settings.
+
+  Going into one of your campaigns you can edit the name and description if you are the GM as well as launch, delete and invite or kick players. There will be a list of all players and characters and an invite input box.
   
-  
-  <img src="images/ss_login.png" width="300px" alt="ScreenShot of our Login"> <img src="images/ss_dashboard.png" width="300px" alt="ScreenShot of our Dashboard"> <br>
+  <img src="src/style/screenshots/profile_ss.png" width="600px" alt="ScreenShot of our Profile"> <img src="src/style/screenshots/campaign_ss.png" width="600px" alt="ScreenShot of our Campaign Page"> <br>
 
-  
+  If you click "Add Character" you will be taken to a character creation page where you can either choose race, class and proficiencies using an API we have accessed or Homebrew your own character. 
 
-  <img src="images/ss_nav.png" width="300px" alt="ScreenShot of our NavBar"> <img src="images/ss_settings.png" width="300px" alt="ScreenShot of our Settings"> <br>
+  <img src="src/style/screenshots/charcreate1_ss.png" width="600px" alt="ScreenShot of our Character Create"> <img src="src/style/screenshots/charcreate2_ss.png" width="600px" alt="ScreenShot of our Character Create"> <br>
 
+  Through this page you can roll for attributes and HP as well as type in Personality, Background and Alignment info using the TinyMCE Editor towards the bottom
+
+  <img src="src/style/screenshots/charcreate3_ss.png" width="600px" alt="ScreenShot of our Character Create"> <img src="src/style/screenshots/charcreate4_ss.png" width="600px" alt="ScreenShot of our Character Create"> <br>
+
+  <img src="src/style/screenshots/charcreate5_ss.png" width="600px" alt="ScreenShot of our Character Create"> <br>
+
+  Once you've finished your character creation if you were to click on the character name in your profile page or the campaign page it will take you to a character view sheet. Here you can view, edit, add and delete your character information, proficiencies, features and items. 
   
+  Other players can view your character view sheet but will not have the option to change anything in your character view sheet
+  
+  <img src="src/style/screenshots/charview1_ss.png" width="600px" alt="ScreenShot of our Character View"> <img src="src/style/screenshots/charview2_ss.png" width="600px" alt="ScreenShot of our Character View"> <br>
+
+  Once your campaign is ready to begin you can click the Launch Campaign Page and begin playing with your friends via Zoom. We recommend that the GM controls the launch page and shares their screen with the other players. 
+  
+  When setting up the launch page it is important to add only one character token at a time. Add a token, it will appear at the top left portion of the map, and then move that token to another spot before adding another. You do need to choose a picture and type in the name of the character before the token is created. Once all the character tokens are made an NPC can add NPC tokens at will for the players to interact with. 
+
+  As of right now we have a single map available but plan to increase functionality by allowing GMs to upload and present their own maps. As the game progresses the GM can use the dice in the launch screen for rolls, this is very useful in case not everyone in the party has access to dice.
+
+  <img src="src/style/screenshots/launch_ss.png" width="600px" alt="ScreenShot of our Launch Page"> <br>
+
+  As a new User you can also utilize the Community Forum to find players for your campaign or find a campaign to join for yourself. You would have to interact within the comments with the GM in order for them to send you an invite to their campaign.
+
+  <img src="src/style/screenshots/community_ss.png" width="600px" alt="ScreenShot of our Community Page"> <img src="src/style/screenshots/blogedit_ss.png" width="600px" alt="ScreenShot of our Blog Post"> <br>
+
+Finally, if you view the about page you can see information about our team with links to our GitHub repos and information about our app!
+
+<img src="src/style/screenshots/about_ss.png" width="600px" alt="ScreenShot of our About Page"> <br>
+
+Thank You for Your Interest and we Appreciate any feedback!
+
+
   ## Contributing
 <details>
   <summary> 
@@ -136,38 +169,36 @@
   ## Credits
   Built with [React](https://www.javascript.com/) and [MySQL](https://www.mysql.com/)
 
-  Deployed with [Heroku](https://heroku.com)
-
-  Run using [Node.js](https://nodejs.org/en/), [Express.js](https://expressjs.com/), [MySQL2](https://www.npmjs.com/package/mysql2) and [Sequelize](https://www.npmjs.com/package/sequelize)
+  Deployed with [Heroku](https://heroku.com) and run with [Node.js](https://nodejs.org/en/)
 
   New Tech
    - [TinyMCE Editor](https://www.tiny.cloud/?gclid=CjwKCAiAhreNBhAYEiwAFGGKPAi6B199TCmwOyrfPF5k2rAq3YA6dTx_StVPoej9aQD6wxVrKS2xohoCNGUQAvD_BwE)
 
-  Other NPMs Used
+  Other Techs Used
   - [axios](https://axios-http.com/docs/intro)
   - [bootstrap](https://getbootstrap.com/)
-  - [dompurify](https://www.npmjs.com/package/path)
-  - [react-dnd](https://www.npmjs.com/package/connect-session-sequelize)
-  - [use-sound](https://www.npmjs.com/package/express-handlebars)
-  - [rpg-dice-roller](https://www.npmjs.com/package/express-session)
+  - [dompurify](https://www.npmjs.com/package/dompurify)
+  - [react-dnd](https://react-dnd.github.io/react-dnd/about)
+  - [use-sound](https://www.npmjs.com/package/use-sound)
+  - [rpg-dice-roller](https://www.npmjs.com/package/rpg-dice-roller)
 
   ## Creators
   
-  ### Jon Newman - Project Manager, Full-Stack Developer
-  <img src="images/jon_cp.jpg" width="100px" alt="coverphoto of Jon"> <br>
-  Contact at [Github](https://github.com/specsnstats) or [Email](specsnstats@gmail.com)
+  ### Carsdan Dvorachek - Project Manager, Full-Stack Developer
+  <img src="src/style/carsdan.png" width="100px" alt="Carsdan"> <br>
+  Contact at [Github](https://github.com/ChuckDvchek) or [Email](cdvchek@gmail.com)
 
 
   ### Paige Olsen - GitHub Coordinator, Back-End Developer
-  <img src="images/paige_cp.jpg" width="100px" alt="coverphoto of Paige"> <br>
+  <img src="src/style/paige.png" width="100px" alt="Paige"> <br>
   Contact at [Github](https://github.com/POlsen-92) or [Email](Paige.El.Olsen@gmail.com)
 
 
-  ### Chloe Harris - Front End Developer(CSS/HandleBars)
-<img src="images/chloe_cp.jpg" width="100px" alt="coverphoto of Chloe"> <br>
-  Contact at [Github](https://github.com/chloeharris1) or [Email](chloe.a.harris17@gmail.com)
+  ### Marco Shifflette - Front End Developer(CSS/Javascript)
+<img src="src/style/marco.jpg" width="100px" alt="Marco"> <br>
+  Contact at [Github](https://github.com/mshifflette) or [Email](marco.shifflette@gmail.com)
 
 
-  ### Jorge Barragan - Front End Developer(Javascript)
-<img src="images/jorge_cp.jpg" width="100px" alt="coverphoto of Jorge"> <br>
-  Contact at [Github](https://github.com/jmarq019) or [Email](jmarq19@outlook.com)
+  ### Mark Lohse-Miranda - Front End Developer(CSS/Javascript)
+<img src="src/style/mark.jpg" width="100px" alt="Mark"> <br>
+  Contact at [Github](https://github.com/Mark-LohseMiranda) or [Email](mark.lohsemiranda@gmail.com)
