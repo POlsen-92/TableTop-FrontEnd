@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams } from "react-router-dom";
 import Character from "../Character/Character";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Table from "./VirTable/Table";
 import API from "../../../utils/API";
+import {socket} from "../../../utils/socket"
 import { Button, Modal, FormControl, InputGroup } from "react-bootstrap";
 import Dice from "../Dice/Dice.js";
 import direWolf from "./VirTable/images/direwolf.png";
@@ -473,6 +475,7 @@ console.log(direWolf, "-------------------------wolf");
 function Gameplay(props) {
   console.log("my user_id", props.userState.id);
   const { id } = useParams();
+  const chatRef = useRef(null);
 
   const [characters, setCharacters] = useState([]);
   const [CampaignName, setCampaignName] = useState("");
@@ -487,6 +490,8 @@ function Gameplay(props) {
   const [currentCategory, setCurrentCategory] = useState("Beasts");
   const [charTokenSelect, setCharTokenSelect] = useState("");
   const [charTokenName, setCharTokenName] = useState("");
+  const [chat,setChat] = useState([]);
+  const [chatInput,setChatInput] = useState("");
 
   // function that creates the token being passed into each li of character name as an onclick
   function createToken() {
@@ -577,6 +582,28 @@ function Gameplay(props) {
     setShow1(false);
   };
 
+  const sendMessage = (e) => {
+    console.log(e);
+    e.preventDefault();
+    const socketObj = {user:props.userState.username, content:chatInput, id,}
+    const clientObj = {user:props.userState.username, content:chatInput}
+    socket.emit('msg sending', socketObj);
+    setChat([...chat,clientObj]);
+    setChatInput("");
+  }
+
+  useEffect(()=> {
+    socket.emit('join campaign room', id);
+  },[])
+
+  useEffect(()=> {
+    const chatDelivered = (socketObj) => {
+      setChat([...chat,socketObj]);
+    }
+    socket.on("msg delivering", chatDelivered);
+    return () => socket.removeListener("msg delivering", chatDelivered)
+  },[socket,chat]);
+
   // populates the characters state
   useEffect(() => {
     API.findCampaign(id, props.token).then((res) => {
@@ -636,13 +663,22 @@ function Gameplay(props) {
             />
           </DndProvider>
         </div>
-        <div
-          className="col-2 mini-menu"
+        <Tabs 
+          className="mini-menu col-2"
           style={{
             backgroundImage: `url(${BgRightSide})`,
             backgroundSize: "100% 100%",
-          }}
-        >
+          }} 
+          defaultIndex={0}
+          >
+          <TabList>
+            <Tab>Tokens</Tab>
+            <Tab>Chat</Tab>
+          </TabList>
+          <TabPanel>
+            <div
+              className="mini-menu"
+            >
           <div className="text-center scrollMe-Big">
             <h1 className="border text-center shadow-lg m-1">Tokens</h1>
             <ul class="list-group ">
@@ -677,19 +713,40 @@ function Gameplay(props) {
                     <button
                       onClick={() => setShow1(true)}
                       className="align-item-center mx-5"
-                    >
-                      Place Token
-                    </button>
-                  </>
-                );
+                      >
+                        Place Token
+                      </button>
+                      </>
+                      );
+                    })}
+                  </ul>
+                  <button onClick={() => setShow(true)} className="m-3 ">
+                    Create Custom Token
+                  </button>
+                  <img />
+                </div>
+              </div>
+          </TabPanel>
+          <TabPanel>
+            <div ref={chatRef} className="scrollMe">
+              {chat.map((msg)=>{
+                return(
+                  <div>
+                    <h6>{msg.user}</h6>
+                    <p>{msg.content}</p>
+                  </div>
+                )
               })}
-            </ul>
-            <button onClick={() => setShow(true)} className="m-3 ">
-              Create Custom Token
-            </button>
-            <img />
-          </div>
-        </div>
+            </div>
+            <form onSubmit={(e)=> sendMessage(e)}>
+              <input
+                onChange={(e)=> setChatInput(e.target.value)}
+                value={chatInput}
+              />
+              <button onClick={(e)=>sendMessage(e)}>Send</button>
+            </form>
+          </TabPanel>
+        </Tabs>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
