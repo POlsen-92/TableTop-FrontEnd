@@ -7,6 +7,19 @@ import Table from "./VirTable/Table"
 import API from "../../../utils/API"
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Dice from "../Dice/Dice";
+import direWolf from "./VirTable/images/direwolf.png";
+import bukavac from "./VirTable/images/bukavac.png";
+import crab from "./VirTable/images/Beasts/Crab.png";
+import Dogmole from "./VirTable/images/Beasts/Dogmole.png";
+import Spider from "./VirTable/images/Beasts/Spider.png";
+import WhiteMonkey from "./VirTable/images/Beasts/Babboon ape monkey.png";
+import Umberhulk from "./VirTable/images/Monstrositys/Umberhulk.png";
+
+
+
+
+
 
 const containerStyle = {
     height: '90vh',
@@ -15,6 +28,20 @@ const containerStyle = {
     backgroundSize: '100% 100%'
 
 };
+const tokenImageNames =[
+    "Bukavac","Crab","Dire Wolf","Dogmole","Spider","Umberhulk","White Monkey"
+]
+const tokenImages =[
+   bukavac, crab,direWolf,Dogmole,Spider,Umberhulk,WhiteMonkey
+]
+// const monstrosityNames=[
+//     "Umberhulk"
+// ]
+// const monstrositys=[
+//     Umberhulk
+// ]
+
+console.log(direWolf,"-------------------------wolf");
 function Gameplay(props) {
     console.log("my user_id", props.userState.id);
     const { socket } = props;
@@ -29,6 +56,9 @@ function Gameplay(props) {
     const [npcName,setNpcName] = useState('');
     const [tokensList, setTokensList] = useState([]);
     const [deletedToken, setDeletedToken] = useState(0);
+    const [userSquares,setUserSquares] = useState(20)
+    const [currentImage,setCurrentImage] = useState('')
+    
 
     // function that creates the token being passed into each li of character name as an onclick 
     function createToken(character) {
@@ -53,6 +83,7 @@ function Gameplay(props) {
     // function that creates npc tokens
     
     function createNpcToken() {
+        // setCurrentImage(direWolf)
         API.findTokens(id).then((res) => {
             let data = res.data
             console.log(data.length)
@@ -60,7 +91,8 @@ function Gameplay(props) {
                 name: npcName,
                 token_id: data.length,
                 x: 0,
-                y: 0
+                y: 0,
+                image: currentImage,
             }
             API.createToken(id, createdToken).then((res) => {
                 setNewToken(1)
@@ -92,10 +124,19 @@ function Gameplay(props) {
         if (inputType === 'npcName') {
             setNpcName(inputValue);
         } 
+        if(inputType === 'imageSelect'){
+            setCurrentImage(inputValue);
+        }
+        // if(inputType === 'imageSelect1'){
+        //     setCurrentImage(inputValue);
+        // }
     };
 
     // handles modal state on close
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setNpcName('');
+    }
 
     useEffect(() => {
         socket.emit("join campaign room", id);
@@ -125,7 +166,7 @@ function Gameplay(props) {
             case "compendium":
                 setTabContents(
                     <div>
-                        <h1>compendium!</h1>
+                        <h1 className="border text-center">Compendium</h1>
                     </div>
                 )
                 break;
@@ -133,20 +174,27 @@ function Gameplay(props) {
             case "settings":
                 setTabContents(
                     <div>
-                        <h1>settings!</h1>
+                        <h1 className="border text-center">Settings</h1>
                     </div>
                 )
                 break;
 
             default:
                 setTabContents(
-                    <div>
-                        <h1>characters!</h1>
-                        <ul>
+                    <div className="text-center ">
+                        <h1 className="border text-center shadow-lg">Characters</h1>
+                        <ul class="list-group " >
                             {characters.map((character) => {
-                                return (<li onClick={() => createToken(character)}>{character.charName}</li>)
+                                return (
+                                    < >
+                                <li className="text-center border list-group-item" >{character.charName}</li>
+                                <button onClick={() => createToken(character)} className="align-item-center mx-5">Place Token</button>
+                                    </>
+                                )
                             })}
                         </ul>
+                        <button onClick={() => setShow(true)}className="m-3 ">Create Custom Token</button>
+                        <img/>
                     </div>
                 )
                 break;
@@ -154,21 +202,31 @@ function Gameplay(props) {
     }, [tab, characters]);
     // let monsterList = []
     return (
-        <div className="container-fluid p-0 m-0 border border-3 border-danger">
+        <div className="container-fluid p-0 m-0 ">
             <div className="row p-0 m-0">
-                <div className="col-3 border border-primary border-4 char-menu"><h1></h1></div>
-                <div className="col-7 border border-info border-4 gameboard" style={containerStyle}>
+                <div className="col-3 border border-primary border-4 char-menu">
+                    <h2 className="border text-center">Dice</h2>
+                    <Dice/>
+                    <div className="row align-items-center justify-content-center">
+                        <h2 className="text-center border col-11">Token List</h2>
+                        <ul className="list-group col-2 m-3 align-items-center justify-content-center">
+                            {tokensList.map((token) => {
+                                return (
+                                    <div >
+                                <li className="list-group-item ">{token.name}</li>
+                                <button className="" onClick={() => deleteNpcToken(token.token_id)}>Delete Token</button>
+                                </div>
+                                )
+                            })}
+                        </ul>
+
+                    </div>
+                    </div>
+                <div className="col-7 gameboard" style={containerStyle}>
                     <DndProvider backend={HTML5Backend}>
                         <Table camp_id={id} newToken={newToken} deletedToken={deletedToken}/>
                     </DndProvider>
-                    <div className="row align-items-center justify-content-center">
-                        <ul class="list-group col-4 m-3">
-                            {tokensList.map((token) => {
-                                return (<li class="list-group-item" onClick={() => deleteNpcToken(token.token_id)}>Click to delete---{token.name}</li>)
-                            })}
-                        </ul>
-                            <button onClick={() => setShow(true)}className="m-3 col-5 h-25 w-25">CREATE NEW NPC TOKEN</button>
-                    </div>
+                    
                 </div>
                 <div className="col-2 border border-success border-4 mini-menu">
                     <div>
@@ -196,6 +254,35 @@ function Gameplay(props) {
                     placeholder="Demagorgon"
                 />
                 
+                    <select id="imageSelect" name="imageSelect" onChange={handleTokenInputChange}>
+                    {tokenImages.map((image) => {
+                        let tokenName;
+                        for (let i = 0; i < tokenImages.length; i++) {
+                            if(image === tokenImages[i]){
+                                 tokenName = tokenImageNames[i]
+                            } 
+                        }
+                                return (
+                                    <option value={image}>{tokenName}</option>
+                                )
+                            })}
+                        
+                    </select>
+                    {/* <select id="imageSelect1" name="imageSelect1" onChange={handleTokenInputChange}>
+                    {monstrositys.map((image) => {
+                        let tokenName;
+                        for (let i = 0; i < monstrositys.length; i++) {
+                            if(image === monstrositys[i]){
+                                 tokenName = monstrosityNames[i]
+                            } 
+                        }
+                                return (
+                                    <option value={image}>{tokenName}</option>
+                                )
+                            })}
+                        
+                    </select> */}
+
 
 
             </form>

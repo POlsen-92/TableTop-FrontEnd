@@ -3,11 +3,11 @@ import { ItemTypes } from '../Gameboard/ItemTypes';
 import { knightImage } from '../Gameboard/knightImage';
 
 const tokenStyle = {
-    fontSize: '1vw',
+    fontSize: '1.8vh',
     fontWeight: 'bold',
     cursor: 'move',
 };
-const Token = ({name,token_id,x,y}) => {
+const Token = ({name,token_id,x,y,image}) => {
     console.log(name,"DRAGGINGGGG")
     // console.log(token_id);
     const [{ isDragging }, drag, preview] = useDrag(() => ({
@@ -26,9 +26,10 @@ const Token = ({name,token_id,x,y}) => {
         <DragPreviewImage connect={preview} src={knightImage} />
         <div ref={drag} style={{
             ...tokenStyle,
-            opacity: isDragging ? 0.5 : 1,
+            opacity: isDragging ? 0.5 : 1
         }}>
-            {name}
+            <img className="center" style={{height:"8vh"}}src={image}/>
+            <div className="text-center" >{name}</div>
         </div>
     </>);
 };

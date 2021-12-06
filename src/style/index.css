@@ -16,6 +16,24 @@ button {
   background: black !important;
   border-radius: 25px !important;
   opacity: 0.6 !important;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border-color: #3498db;
+  border-radius: 0.6em;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  -webkit-transition: all 150ms ease-in-out;
+  transition: all 150ms ease-in-out;
+}
+button:hover {
+  outline: 0;
+  box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
 }
 
 code {
@@ -32,6 +50,7 @@ code {
 /* width */
 ::-webkit-scrollbar {
   width: 30px;
+  
 }
 
 /* Track */
@@ -61,4 +80,15 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   outline: 0;
   box-shadow: 0 0 10px 0 #3498db inset, 0 0 10px 4px #3498db;
+}
+
+#home-div {
+  
+  margin-left: 0px !important;
+  height: 500px;
+}
+
+#home-div img {
+  width: 90%;
+  height: auto;
 }

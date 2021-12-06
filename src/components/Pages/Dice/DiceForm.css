@@ -1,24 +1,13 @@
 
-/* li {
-  display: flex;
-  list-style: none;
-} */
 
 #diceContainer select {
   background: transparent;
   border: none; 
+  color: white;
+  
 }
 
-
-
-/* #quantity {
-  border-bottom: 1px black solid;
+option { 
+  /* Whatever color  you want */
+  background-color: #82caff;
 }
-
-#diceContainer {
-  display: inline-flex;
-  flex-wrap: wrap;
-  justify-content: center;
- 
-
-}  */

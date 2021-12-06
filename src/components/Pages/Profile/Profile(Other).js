@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CampaignFilters from "../../CampaignFilters";
 import API from "../../../utils/API";
 import { Link, useParams } from "react-router-dom";
-import "./Profile.css";
+
 
 export default function Profile(props) {
 
