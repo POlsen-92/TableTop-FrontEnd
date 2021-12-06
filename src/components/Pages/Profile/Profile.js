@@ -4,22 +4,21 @@ import API from "../../../utils/API";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Avatar from "../UpdateUserInfo/Avatar";
-import Username from "../UpdateUserInfo/Username"
-import Password from "../UpdateUserInfo/Password"
-import Email from "../UpdateUserInfo/Email"
+import Username from "../UpdateUserInfo/Username";
+import Password from "../UpdateUserInfo/Password";
+import Email from "../UpdateUserInfo/Email";
 
 function Profile(props) {
-
   const navigate = useNavigate();
 
-    //IF NOT SIGNED IN REDIRECT TO HOMEPAGE
+  //IF NOT SIGNED IN REDIRECT TO HOMEPAGE
   useEffect(() => {
     if (!props.token) {
-      navigate("/")
+      navigate("/");
     }
-  },[props.token, navigate])
+  }, [props.token, navigate]);
 
-// ~~~~~~~~~~~~~~~USER INFORMATION~~~~~~~~~~~~~~~~~~~~~//
+  // ~~~~~~~~~~~~~~~USER INFORMATION~~~~~~~~~~~~~~~~~~~~~//
 
   const [imageURL, setImageURL] = useState("");
   const [updatePic, setUpdatePic] = useState(false);
@@ -28,8 +27,7 @@ function Profile(props) {
   const [updatePassword, setUpdatePassword] = useState(false);
   const [email, setEmail] = useState("");
   const [updateEmail, setUpdateEmail] = useState(false);
-  const [allMyCharacters,setAllMyCharacters] = useState([]);
-  
+  const [allMyCharacters, setAllMyCharacters] = useState([]);
 
   // ~~~~~~~~~~~~~~~~CAMPAIGN INFORMATION ~~~~~~~~~~~~~~~~~~~~~~//
 
@@ -37,7 +35,7 @@ function Profile(props) {
   const [data, setData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
 
-    //ALLOWS FOR USER TO LOOK BETWEEN CAMPAIGN TYPES (PLAYER/GM)
+  //ALLOWS FOR USER TO LOOK BETWEEN CAMPAIGN TYPES (PLAYER/GM)
   const handleCampaignFilterChange = (filter) => {
     setCampaignFilter(filter);
     const newArr = data.filter((campaign) => {
@@ -55,19 +53,19 @@ function Profile(props) {
     setDisplayData(newArr);
   };
 
-    //FINDS ALL CAMPAIGNS AND ALL USERS
+  //FINDS ALL CAMPAIGNS AND ALL USERS
   useEffect(() => {
     if (!props.token) {
-      console.log('profile line 74 no token')
     } else {
-    API.findSelf(props.token)
-      .then((res) => {
-        setData(res.data.Campaigns);
-      })
-      .catch((err) => {
-        console.log(err);
-      });}
-    API.findCharacterbyUser(props.userState.id).then((response)=>{
+      API.findSelf(props.token)
+        .then((res) => {
+          setData(res.data.Campaigns);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    API.findCharacterbyUser(props.userState.id).then((response) => {
       setAllMyCharacters(response.data);
     });
   }, [props]);
@@ -77,8 +75,7 @@ function Profile(props) {
     handleCampaignFilterChange(campaignFilter);
   }, [data]);
 
-
-    //CREATES CAMPAIGN
+  //CREATES CAMPAIGN
   const createCampaign = () => {
     setCampaignFilter("all");
     const createdCampaign = {
@@ -91,15 +88,14 @@ function Profile(props) {
     });
   };
 
-
-// ~~~~~~~~~~~~~~~~INVITE INFORMATION ~~~~~~~~~~~~~~~~~~~~~~//
+  // ~~~~~~~~~~~~~~~~INVITE INFORMATION ~~~~~~~~~~~~~~~~~~~~~~//
 
   const [invites, setInvites] = useState([]);
 
   //FINDS ALL INVITES FOR USER
   useEffect(() => {
     if (!props.token) {
-      console.log('No Token')
+      console.log("No Token");
     } else {
       API.findSelf(props.token).then((res) => {
         let tempInvites = res.data.Invites;
@@ -115,42 +111,44 @@ function Profile(props) {
     }
   }, [props.token]);
 
-    //ACCEPTS INVITE
+  //ACCEPTS INVITE
   const acceptInvite = (campid, id) => {
     API.createUserCampaign(campid, props.token).then(() => {
       API.deleteInvite(id, props.token).then(() => {
         API.findCampaign(campid, props.token).then((res) => {
           setData([...data, res.data]);
           removeInvite(id);
-        })
+        });
       });
     });
   };
 
-    //DECLINES INVITE
+  //DECLINES INVITE
   const declineInvite = (id) => {
     API.deleteInvite(id, props.token).then(() => {
       removeInvite(id);
     });
   };
 
-    //REMOVES INVITE EITHER ON ACCEPT OR DELETE
+  //REMOVES INVITE EITHER ON ACCEPT OR DELETE
   const removeInvite = (id) => {
     const newInvites = invites.filter((invite) => {
-      return invite.id!==id;
+      return invite.id !== id;
     });
     setInvites(newInvites);
-  }
+  };
 
-
-
-    //PAGE EXPRESSION
+  //PAGE EXPRESSION
   return (
     <div className="container">
       {/* USER USERNAME AND EMAIL */}
-      <div className="row" >
-        <h1 className="text-center m-2">{username ? username : props.userState.username}</h1>
-        <h2 className="text-center m-2">{email ? email : props.userState.email}</h2>
+      <div className="row">
+        <h1 className="text-center m-2">
+          {username ? username : props.userState.username}
+        </h1>
+        <h2 className="text-center m-2">
+          {email ? email : props.userState.email}
+        </h2>
       </div>
       {/* CAMPAIGN INFORMATION FOR USER */}
       <div className="row text-center">
@@ -159,19 +157,20 @@ function Profile(props) {
           <CampaignFilters
             handleCampaignFilterChange={handleCampaignFilterChange}
           />
-          {displayData.map((campaign) => {
+          {displayData.map((campaign, index) => {
             return (
-              <div className="campaign-list-box">
+              <div key={index+1} className="campaign-list-box">
                 <Link
+                  key={index}
                   to={{ pathname: `/campaign/${campaign.id}` }}
                   className="d-inline d-flex justify-content-center"
                 >
                   <li
-                    key={campaign.id}
+                    key={index+2}
                     className="list-group-item list-group-item-action m-3"
                     id="example-campaign"
                   >
-                    <h4 className="d-inline">{campaign.name}</h4>
+                    <h4 key={index+3} className="d-inline">{campaign.name}</h4>
                   </li>
                 </Link>
               </div>
@@ -209,7 +208,12 @@ function Profile(props) {
               setUpdatePic={setUpdatePic}
             />
           ) : null}
-          <button onClick={() => setUpdateUsername(!updateUsername)} className="btn m-1">Change Username</button>
+          <button
+            onClick={() => setUpdateUsername(!updateUsername)}
+            className="btn m-1"
+          >
+            Change Username
+          </button>
           <br />
           {updateUsername ? (
             <Username
@@ -220,7 +224,13 @@ function Profile(props) {
               username={username}
               setUsername={setUsername}
             />
-          ) : null}<button onClick={() => setUpdatePassword(!updatePassword)} className="btn m-1">Change Password</button>
+          ) : null}
+          <button
+            onClick={() => setUpdatePassword(!updatePassword)}
+            className="btn m-1"
+          >
+            Change Password
+          </button>
           <br />
           {updatePassword ? (
             <Password
@@ -232,7 +242,12 @@ function Profile(props) {
               setEmail={setEmail}
             />
           ) : null}
-          <button onClick={() => setUpdateEmail(!updateEmail)} className="btn m-1">Change Email</button>
+          <button
+            onClick={() => setUpdateEmail(!updateEmail)}
+            className="btn m-1"
+          >
+            Change Email
+          </button>
           <br />
           {updateEmail ? (
             <Email
@@ -245,48 +260,56 @@ function Profile(props) {
           <button className="btn m-1">Notifications</button>
         </section>
         {/* ALL CHARACTERS FOR USER */}
-        <section className="col-sm-12 col-md-4 border scrollMe" id="all-characters-list">
+        <section
+          className="col-sm-12 col-md-4 border scrollMe"
+          id="all-characters-list"
+        >
           <h3>Your Characters</h3>
           <ul className="p-0">
-            {allMyCharacters ? allMyCharacters.map((character)=>{
-              return (
-                <Link
-                  to={{ pathname: `/character/${character.id}` }}
-                  className="d-inline d-flex justify-content-center"
-                  >
-                  <li key={character.id}
-                    className="p-0 list-group-item list-group-item-action m-3"
-                    id="character">
-                    <h5>{character.charName}</h5>
-                    <h6>{character.Campaign.name}</h6>
-                  </li>
-                </Link>
-              )
-            }):null}
+            {allMyCharacters
+              ? allMyCharacters.map((character, index) => {
+                  return (
+                    <Link
+                      key={index}
+                      to={{ pathname: `/character/${character.id}` }}
+                      className="d-inline d-flex justify-content-center"
+                    >
+                      <li
+                        key={index+1}
+                        className="p-0 list-group-item list-group-item-action m-3"
+                        id="character"
+                      >
+                        <h5 key={index + 2}>{character.charName}</h5>
+                        <h6 key={index + 3}>{character.Campaign.name}</h6>
+                      </li>
+                    </Link>
+                  );
+                })
+              : null}
           </ul>
         </section>
       </div>
       {/* ALL INVITES FOR USER */}
       <div className="row">
         <ul className="invites-list list-group-flush list-group">
-          {invites.map((invite) => {
+          {invites.map((invite,index) => {
             return (
-              <div className="campaign-list-box">
-                <li key={invite.id} className="list-group-item list-group-item-action m-3">
+              <div key={index+1}className="campaign-list-box">
+                <li
+                  key={index+2}
+                  className="list-group-item list-group-item-action m-3"
+                >
                   You are invited to: {invite.campaign_name}
                 </li>
                 <button
+                  key={index+3}
                   className="btn"
-                  onClick={() =>
-                    acceptInvite(
-                      invite.campaign_id,
-                      invite.id
-                    )
-                  }
+                  onClick={() => acceptInvite(invite.campaign_id, invite.id)}
                 >
                   Accept
                 </button>
                 <button
+                key={index+4}
                   className="btn"
                   onClick={() => declineInvite(invite.id)}
                 >
