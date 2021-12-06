@@ -79,38 +79,38 @@ export default function Signup(props) {
         onSubmit={handleSignupSubmit}
       >
         <h4>Signup</h4>
-        <input className="m-1" id="username-signup"
+        <input className="h5 m-1 p-1 inputColor" id="username-signup"
           value={signupFormState.username}
           name="username"
           onChange={handleSignupChange}
-          placeholder="username"
+          placeholder="Username"
         />
         <br />
-        <input className="m-1" id="email-signup"
+        <input className="h5 m-1 p-1 inputColor" id="email-signup"
           value={signupFormState.email}
           name="email"
           onChange={handleSignupChange}
           type="email"
-          placeholder="email"
+          placeholder="Email"
         />
         <br />
-        <input className="m-1" id="password-signup"
+        <input className="h5 m-1 p-1 inputColor" id="password-signup"
           value={signupFormState.password}
           name="password"
           onChange={handleSignupChange}
           type="password"
-          placeholder="password"
+          placeholder="Password"
         /><br />
-        <input className="m-1" id="confirmPassword-signup"
+        <input className="h5 m-1 p-1 inputColor" id="confirmPassword-signup"
           value={signupFormState.confirmPassword}
           name="confirmPassword"
           onChange={handleSignupChange}
           type="password"
-          placeholder="confirm password"
+          placeholder="Confirm Password"
         /><br />
 
         <p>{props.errorMsg}</p>
-        <button className="btn" id="signup-btn">Submit</button>
+        <button className="h5 m-1 p-2" id="signup-btn">Submit</button>
 
       </form>
       <div className="col-4">

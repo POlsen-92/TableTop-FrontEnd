@@ -112,7 +112,7 @@ function BlogPost(props) {
         <div>
             <div className="container py-4">
                 <div className = "border p-2">
-                    {editBlog ? (<input className="row inputColor" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1 className="border-bottom">{postData.title}</h1>)}
+                    {editBlog ? (<input className="row m-1 h3 inputColor" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1 className="border-bottom">{postData.title}</h1>)}
                     <br />
                     {editBlog ? (
                         <div>
