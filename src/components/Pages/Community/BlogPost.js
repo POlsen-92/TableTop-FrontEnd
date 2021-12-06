@@ -107,6 +107,15 @@ function BlogPost(props) {
         }
     }
 
+    const getDateTime = (dateTime) =>{
+        const dateReturn = new Date(dateTime)
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+        return (days[dateReturn.getDay()] + " " + months[dateReturn.getMonth()] + " " + dateReturn.getDate() + ", " + dateReturn.getFullYear() + " @ " + dateReturn.getHours() + ":" + dateReturn.getMinutes())
+      
+    } 
+
     return (
         <div>
             <div className="container py-4">
@@ -115,7 +124,7 @@ function BlogPost(props) {
                     <br />
                     {editBlog ? (<textarea className="row" defaultValue={postData.description} onChange={(e)=>setblogDescEdit(e.target.value)}/>) : (<p>{postData.description}</p>)}
                     {postData.User ? <p><img src={postData.User.image_content} width="100px" height="100px"/>
-                    {postData.User.username} on {postData.createdAt.slice(0,10)}
+                    {postData.User.username} on {getDateTime(postData.createdAt)}
                     </p> : null}
                 </div>
                 <br />
@@ -135,7 +144,7 @@ function BlogPost(props) {
                                 <div key={comment.id}>
                                     <p>{comment.body}</p>
                                     <p> <img src={comment.User.image_content} width="100px" height="100px"/>
-                                        {comment.User.username} on {comment.createdAt.slice(0,10)}</p>
+                                        {comment.User.username} on {getDateTime(comment.createdAt)}</p>
                                 {props.userState.username === comment.User.username ? (
                                     <button onClick={() =>deleteComment(comment.id)} >delete comment</button>
                                     ) : ('')}
