@@ -30,6 +30,14 @@ function Community({ token, userState }) {
         }
     }
 
+    const getDateTime = (dateTime) =>{
+        const dateReturn = new Date(dateTime)
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+        return (days[dateReturn.getDay()] + " " + months[dateReturn.getMonth()] + " " + dateReturn.getDate() + ", " + dateReturn.getFullYear() + " @ " + dateReturn.getHours() + ":" + dateReturn.getMinutes())
+      
+    } 
 
     return (
         <div className="container my-4">
@@ -54,7 +62,7 @@ function Community({ token, userState }) {
                                         
                                         <p onClick={()=>UserButton(post.User.id)}>
                                             <img src={post.User.image_content} width="100px" height="100px"/>
-                                            {post.User.username} on {post.createdAt.slice(0,10)}</p>
+                                            {post.User.username} on {getDateTime(post.createdAt)} </p>
                                     </div>
                                 </div> 
                             <br />
