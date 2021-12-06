@@ -363,7 +363,7 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
+                
                   type="text"
                   onChange={handleCharacterChange}
                   name="race"
