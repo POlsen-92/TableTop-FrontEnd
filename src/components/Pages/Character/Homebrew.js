@@ -7,7 +7,7 @@ import useSound from "use-sound";
 import rollSound from "../Dice/diceSound.mp3";
 import { randomNameGenerator } from "./Namegen";
 import { Editor } from "@tinymce/tinymce-react";
-import { Modal, Button, Card, Row, Col } from "react-bootstrap";
+import { Modal, Button, Card, Row, Col, FormControl } from "react-bootstrap";
 
 let customDie = "choose";
 
@@ -157,7 +157,7 @@ export default function Homebrew({
     }, 10);
     setTimeout(() => {
       clearInterval(moving);
-      setHideBonusRoll(false)
+      if (apiResponse.ability_bonuses) setHideBonusRoll(false)
       setCharacterInfo({
         ...characterInfo,
         strength: total[0],
@@ -330,7 +330,8 @@ const addRacialBonusAttributes = () => {
             <Card.Header>Character Name / Age</Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="charName"
@@ -339,7 +340,8 @@ const addRacialBonusAttributes = () => {
                 />
               </p>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="age"
@@ -360,7 +362,8 @@ const addRacialBonusAttributes = () => {
             <Card.Header>Race / Subrace</Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="race"
@@ -369,7 +372,8 @@ const addRacialBonusAttributes = () => {
                 />
               </p>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="subRace"
@@ -406,7 +410,8 @@ const addRacialBonusAttributes = () => {
             <Card.Header>Class / Subclass / Level</Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="class"
@@ -415,7 +420,8 @@ const addRacialBonusAttributes = () => {
                 />
               </p>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="subClass"
@@ -424,7 +430,8 @@ const addRacialBonusAttributes = () => {
                 />
               </p>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="level"
@@ -458,7 +465,8 @@ const addRacialBonusAttributes = () => {
             <Card.Header>Speed</Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="speed"
@@ -479,7 +487,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="hitpoints"
@@ -567,7 +576,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="strength"
@@ -613,7 +623,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="dexterity"
@@ -657,7 +668,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="constitution"
@@ -702,7 +714,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="intelligence"
@@ -747,7 +760,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="wisdom"
@@ -791,7 +805,8 @@ const addRacialBonusAttributes = () => {
             </Card.Header>
             <Card.Body>
               <p>
-                <input
+                <FormControl
+                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="charisma"
