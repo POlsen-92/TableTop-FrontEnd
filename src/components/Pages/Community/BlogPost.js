@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"
+import { Editor } from "@tinymce/tinymce-react";
 import API from "../../../utils/API";
 import "./community.css";
 import DOMPurify from "dompurify";
@@ -83,22 +84,6 @@ function BlogPost(props) {
         });
     }
 
-    const [editComment,seteditComment] = useState();
-    const [commContent,setcommContent] = useState();
-    const [commDescEdit, setcommDescEdit] = useState();
-
-    const commSave = (commId) => {
-        const commUpdate = {
-            description: commDescEdit,
-        }
-        API.updateComment().then(() => {
-            seteditComment();
-            window.location.reload(false)
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
-
     const deleteComment = (deletedComment) => {
         if(window.confirm("Do You Really Want To Delete This Spell?")) {
             API.deleteComment(deletedComment, props.token).then(() => {
@@ -110,6 +95,8 @@ function BlogPost(props) {
             alert("comment was not deleted")
         }
     }
+
+// ADDING TIME TO COMMENTS
 
     const getDateTime = (dateTime) =>{
         const dateReturn = new Date(dateTime)
@@ -126,7 +113,34 @@ function BlogPost(props) {
                 <div>
                     {editBlog ? (<input className="row" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1>{postData.title}</h1>)}
                     <br />
-                    {editBlog ? (<textarea className="row" defaultValue={postData.description} onChange={(e)=>setblogDescEdit(e.target.value)}/>) : (<span dangerouslySetInnerHTML={{__html: postData.description}}></span>)}
+                    {editBlog ? (
+                        <div>
+                            <Editor
+                                initialValue={postData.description}
+                                apiKey={process.env.REACT_APP_TINYAPI}
+                                className= "mb-auto"
+                                name="description"
+                                init={{
+                                height: 500,
+                                width: "60%",
+                                menubar: true,
+                                skin: "oxide-dark",
+                                content_css: "dark",
+                                plugins: [
+                                    "advlist autolink lists link image",
+                                    "charmap print preview anchor help",
+                                    "searchreplace visualblocks code",
+                                    "insertdatetime media paste wordcount",
+                                ],
+                                toolbar:
+                                    "undo redo | formatselect | bold italic | \
+                                alignleft aligncenter alignright | \
+                                bullist numlist outdent indent image | help",
+                                }}
+                                onChange={(e)=>setblogDescEdit(e.target.getContent())}
+                            />
+                        </div>
+                    ) : (<span dangerouslySetInnerHTML={{__html: postData.description}}></span>)}
                     {postData.User ? <p><img src={postData.User.image_content} width="100px" height="100px" alt="profilepic"/>
                     {postData.User.username} on {getDateTime(postData.createdAt)}
                     </p> : null}

@@ -40,7 +40,7 @@ function NewBlogPost({ token }) {
     }
 
     return (
-        <>
+        <div>
             <form className="m-5 w-100" id="blog-post"
                 onSubmit={createBlogPost}
             >
@@ -80,7 +80,7 @@ function NewBlogPost({ token }) {
 
                 <button className="btn" id="signup-btn">Submit</button>
             </form>
-        </>
+        </div>
     );
 }
 
