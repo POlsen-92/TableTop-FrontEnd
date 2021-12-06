@@ -112,36 +112,38 @@ function Campaign(props) {
                 <h4>{gm.username}</h4>
                 <h2>Players</h2>
                 <ul className="p-0">
-                {users.map((user)=>{
+                {users.map((user, index)=>{
                     if (props.userState.id === user.id) {
                         return (
                           <Link
+                            key={index}
                             to={{ pathname: `/Profile`}}
                             className="d-inline"
                           >
                             <li
-                              key={user.id}
+                              key={index+1}
                               className="list-group-item list-group-item-action mb-3"
                               id="user"
                               data-id={user.id}
                             >
-                              <h4>{user.username}</h4>
+                              <h4 key={index+2}>{user.username}</h4>
                             </li>
                           </Link>
                         )
                     } else {
                         return (
                             <Link
+                              key={index+3}
                               to={{ pathname: `/profile/${user.id}`}}
                               className="d-inline"
                             >
                               <li
-                                key={user.id}
+                                key={index+4}
                                 className="list-group-item list-group-item-action mb-3"
                                 id="user"
                                 data-id={user.id}
                               >
-                                <h4>{user.username}</h4>
+                                <h4 key={index+5}>{user.username}</h4>
                               </li>
                             </Link>
                           )
@@ -151,19 +153,20 @@ function Campaign(props) {
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>Character(s)</h2>
                 <ul className="p-0 m-0">
-                {characters.map((character) => {
+                {characters.map((character,index) => {
                     return (
                         <Link
+                        key={index}
                         to={{ pathname: `/character/${character.id}` }}
                         className="d-inline"
                       >
                         <li
-                          key={character.id}
+                          key={index+1}
                           className="list-group-item list-group-item-action mb-3"
                           id="character"
                           data-id={character.id}
                         >
-                          <h4>{character.charName}</h4>
+                          <h4 key={index+2}>{character.charName}</h4>
                         </li>
                       </Link>
                     );
@@ -175,7 +178,7 @@ function Campaign(props) {
               <Modal.Header>
                 <Modal.Title>Users</Modal.Title>
               </Modal.Header>
-              <Modal.Body>{users.map((user)=>((user.id !== props.userState.id) ? <div><h4>{user.username}</h4><button onClick={()=>kickPlayer(id,user.id)}>Kick</button></div> : null))}</Modal.Body>
+              <Modal.Body>{users.map((user,index)=>((user.id !== props.userState.id) ? <div key={index}><h4 key={index+1}>{user.username}</h4><button key={index+2} onClick={()=>kickPlayer(id,user.id)}>Kick</button></div> : null))}</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
