@@ -2,7 +2,8 @@
 
 .mainPage {
     background: url('./another-rough-old-and-worn-parchment-paper-min.jpg');
-    background-repeat: repeat;
+    background-repeat:no-repeat;
+    background-size:cover;
     color:black;
     text-align: center;
     width: 90%;
