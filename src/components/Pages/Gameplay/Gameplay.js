@@ -472,11 +472,8 @@ const charTokens = [
 console.log(direWolf, "-------------------------wolf");
 function Gameplay(props) {
   console.log("my user_id", props.userState.id);
-  const { socket } = props;
   const { id } = useParams();
 
-  const [tab, setTab] = useState("characters");
-  const [tabContents, setTabContents] = useState("");
   const [characters, setCharacters] = useState([]);
   const [CampaignName, setCampaignName] = useState("");
   const [newToken, setNewToken] = useState(0);
@@ -580,10 +577,6 @@ function Gameplay(props) {
     setShow1(false);
   };
 
-  useEffect(() => {
-    socket.emit("join campaign room", id);
-  }, []);
-
   // populates the characters state
   useEffect(() => {
     API.findCampaign(id, props.token).then((res) => {
@@ -602,76 +595,6 @@ function Gameplay(props) {
     });
   }, [newToken, deletedToken]);
 
-  useEffect(() => {
-    switch (tab) {
-      case "compendium":
-        setTabContents(
-          <div>
-            <h1 className="border text-center">Compendium</h1>
-          </div>
-        );
-        break;
-
-      case "settings":
-        setTabContents(
-          <div>
-            <h1 className="border text-center">Settings</h1>
-          </div>
-        );
-        break;
-
-      default:
-        setTabContents(
-          <div className="text-center scrollMe-Big">
-            <h1 className="border text-center shadow-lg">Characters</h1>
-            <ul class="list-group ">
-              {characters.map((character) => {
-                return (
-                  <>
-                    <li className="text-center border list-group-item">
-                      {character.charName} - {character.subRace ? character.subRace : character.race} - {character.class} {character.subClass}
-                      <br />
-                      Str: {character.strength}, Dex: {character.dexterity}, Con: 
-                      {character.constitution}, Int: {character.intelligence}, Wis: 
-                      {character.wisdom}, Cha: {character.charisma}, HP: {character.hitpoints}
-                    </li>
-                    <li className="text-center border list-group-item">
-                      <InputGroup >
-                        <InputGroup.Text>Current HP:</InputGroup.Text>
-                        <FormControl
-                          className="w-25"
-                          type="number"
-                          value={character.currhitpoints}
-                        ></FormControl>
-                        </InputGroup>
-                        <InputGroup>
-                        <InputGroup.Text>Temp HP:</InputGroup.Text>
-                        <FormControl
-                          className="w-25"
-                          type="number"
-                          value={character.temphitpoints}
-                        ></FormControl>
-                      </InputGroup>
-                    </li>
-                    <button
-                      onClick={() => setShow1(true)}
-                      className="align-item-center mx-5"
-                    >
-                      Place Token
-                    </button>
-                  </>
-                );
-              })}
-            </ul>
-            <button onClick={() => setShow(true)} className="m-3 ">
-              Create Custom Token
-            </button>
-            <img />
-          </div>
-        );
-        break;
-    }
-  }, [tab, characters]);
   // let monsterList = []
   return (
     <div className="container-fluid p-0 m-0 ">
@@ -720,12 +643,52 @@ function Gameplay(props) {
             backgroundSize: "100% 100%",
           }}
         >
-          <div>
-            <button onClick={() => setTab("characters")}>Char</button>
-            <button onClick={() => setTab("compendium")}>Comp</button>
-            <button onClick={() => setTab("settings")}>Sett</button>
+          <div className="text-center scrollMe-Big">
+            <h1 className="border text-center shadow-lg m-1">Tokens</h1>
+            <ul class="list-group ">
+              {characters.map((character) => {
+                return (
+                  <>
+                    <li className="text-center border list-group-item">
+                      {character.charName} - {character.subRace ? character.subRace : character.race} - {character.class} {character.subClass}
+                      <br />
+                      Str: {character.strength}, Dex: {character.dexterity}, Con: 
+                      {character.constitution}, Int: {character.intelligence}, Wis: 
+                      {character.wisdom}, Cha: {character.charisma}, HP: {character.hitpoints}
+                    </li>
+                    <li className="text-center border list-group-item">
+                      <InputGroup >
+                        <InputGroup.Text>Current HP:</InputGroup.Text>
+                        <FormControl
+                          className="w-25"
+                          type="number"
+                          value={character.currhitpoints}
+                        ></FormControl>
+                        </InputGroup>
+                        <InputGroup>
+                        <InputGroup.Text>Temp HP:</InputGroup.Text>
+                        <FormControl
+                          className="w-25"
+                          type="number"
+                          value={character.temphitpoints}
+                        ></FormControl>
+                      </InputGroup>
+                    </li>
+                    <button
+                      onClick={() => setShow1(true)}
+                      className="align-item-center mx-5"
+                    >
+                      Place Token
+                    </button>
+                  </>
+                );
+              })}
+            </ul>
+            <button onClick={() => setShow(true)} className="m-3 ">
+              Create Custom Token
+            </button>
+            <img />
           </div>
-          <div className="tab-contents">{tabContents}</div>
         </div>
       </div>
       <Modal show={show} onHide={handleClose}>

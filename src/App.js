@@ -21,20 +21,6 @@ import Catalog from "./components/Pages/Catalog/Catalog";
 import BlogPost from "./components/Pages/Community/BlogPost";
 import Gameplay from "./components/Pages/Gameplay/Gameplay";
 
-
-// Socket configuration
-import { io } from "socket.io-client";
-const socket = io("http://localhost:3001", {
-  transports: ["websocket"],
-  extraHeaders: {
-    "my-custom-header": "1234",
-  },
-});
-
-socket.on("greeting", (greeting) => {
-  console.log(greeting);
-});
-
 function App() {
   const [campaign, setCampaign] = useState(-1);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
@@ -142,7 +128,7 @@ const tokenFromStor = localStorage.getItem("token")
           />
           <Route
             path="/play/:id"
-            element={<Gameplay userState={userState} token={token} socket={socket}/>}
+            element={<Gameplay userState={userState} token={token}/>}
           />
           <Route
             path="/createcharacter/:id"
