@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom"
-import API from "../../utils/API";
+import API from "../../../utils/API";
 import { Editor } from "@tinymce/tinymce-react";
 import { Modal, Button } from "react-bootstrap";
 import DOMPurify from "dompurify";
+import "./Campaign.css"
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
@@ -145,37 +146,29 @@ function Campaign(props) {
                 {users.map((user, index)=>{
                     if (props.userState.id === user.id) {
                         return (
-                          <Link
-                            key={index}
-                            to={{ pathname: `/Profile`}}
-                            className="d-inline"
-                          >
+                          <div>
                             <li
                               key={index+1}
-                              className="list-group-item list-group-item-action mb-3"
-                              id="user"
+                              className="li mb-3"
                               data-id={user.id}
+                              onClick={()=> navigate('/Profile')}
                             >
                               <h4 key={index+2}>{user.username}</h4>
                             </li>
-                          </Link>
+                          </div>
                         )
                     } else {
                         return (
-                            <Link
-                              key={index+3}
-                              to={{ pathname: `/profile/${user.id}`}}
-                              className="d-inline"
-                            >
+                            <div>
                               <li
                                 key={index+4}
-                                className="list-group-item list-group-item-action mb-3"
-                                id="user"
+                                className="li mb-3"
                                 data-id={user.id}
+                                onClick={()=> navigate(`/profile/${user.id}`)}
                               >
                                 <h4 key={index+5}>{user.username}</h4>
                               </li>
-                            </Link>
+                            </div>
                           )
                     }
                 })}</ul>
@@ -188,20 +181,17 @@ function Campaign(props) {
                 <ul className="p-0 m-0">
                 {characters.map((character,index) => {
                     return (
-                        <Link
-                        key={index}
-                        to={{ pathname: `/character/${character.id}` }}
-                        className="d-inline"
-                      >
+                      <div>
                         <li
                           key={index+1}
-                          className="list-group-item list-group-item-action mb-3"
+                          className="li mb-3"
                           id="character"
                           data-id={character.id}
+                          onClick={()=>navigate(`/character/${character.id}`)}
                         >
                           <h4 key={index+2}>{character.charName}</h4>
                         </li>
-                      </Link>
+                      </div>
                     );
                 })}</ul>
             </div>

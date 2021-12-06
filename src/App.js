@@ -13,7 +13,7 @@ import About from "./components/Pages/About";
 import Community from "./components/Pages/Community/Community";
 import Profile from "./components/Pages/Profile/Profile";
 import OtherProfile from "./components/Pages/Profile/Profile(Other)";
-import Campaign from "./components/Pages/Campaign";
+import Campaign from "./components/Pages/Campaign/Campaign";
 import NewBlogPost from "./components/Pages/Community/NewBlogPost";
 import Character from "./components/Pages/Character/Character"
 import CharacterView from "./components/Pages/Character/CharacterView";
