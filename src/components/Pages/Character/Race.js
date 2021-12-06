@@ -17,6 +17,9 @@ export default function Race({
 
   const fillSubRaces = (e) => {
     setSubraceResponse([]);
+    if(document.getElementById("subrace")) {
+      document.getElementById("subrace").selectedIndex = 0;
+    }
     let target = e.target.value.toLowerCase();
     if (target === "choose race") {
       setApiResponse([]);
@@ -67,68 +70,6 @@ export default function Race({
         });
     }
   };
-  // const addBonusToCharacter = (e) => {
-  //   e.target.disabled = true;
-  //   switch (e.target.getAttribute("data-ability")) {
-  //     case "STR":
-  //       setCharacterInfo({
-  //         ...characterInfo,
-  //         strength:
-  //           characterInfo.strength +
-  //           parseInt(e.target.getAttribute("data-amt")),
-  //       });
-  //       break;
-  //     case "DEX":
-  //       setCharacterInfo({
-  //         ...characterInfo,
-  //         dexterity:
-  //           characterInfo.dexterity +
-  //           parseInt(e.target.getAttribute("data-amt")),
-  //       });
-  //       break;
-  //     case "CON":
-  //       setCharacterInfo({
-  //         ...characterInfo,
-  //         constitution:
-  //           characterInfo.constitution +
-  //           parseInt(e.target.getAttribute("data-amt")),
-  //       });
-  //       break;
-  //     case "INT":
-  //       setCharacterInfo({
-  //         ...characterInfo,
-  //         intelligence:
-  //           characterInfo.intelligence +
-  //           parseInt(e.target.getAttribute("data-amt")),
-  //       });
-  //       break;
-  //     case "WIS":
-  //       setCharacterInfo({
-  //         ...characterInfo,
-  //         wisdom:
-  //           characterInfo.wisdom + parseInt(e.target.getAttribute("data-amt")),
-  //       });
-  //       break;
-  //     case "CHA":
-  //       setCharacterInfo({
-  //         ...characterInfo,
-  //         charisma:
-  //           characterInfo.charisma +
-  //           parseInt(e.target.getAttribute("data-amt")),
-  //       });
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
-
-  // const addInfo = (e) => {
-  //   const { name } = e.target;
-  //   setCharacterInfo({
-  //     ...characterInfo,
-  //     [name]: e.target.getAttribute("data-info"),
-  //   });
-  // };
 
   useEffect(() => {
     axios.get("https://www.dnd5eapi.co/api/races").then((response) => {
@@ -150,7 +91,7 @@ export default function Race({
           })}
         </select>
         {subraces.length > 0 ? (
-          <select onChange={pickSubRace}>
+          <select id="subrace" onChange={pickSubRace}>
             <option key="99">Choose Sub-Race</option>
             {subraces.map((race, index) => {
               return (
@@ -165,11 +106,11 @@ export default function Race({
       {apiResponse.length !== 0 ? (
         <div className="container">
           <div className="raceInfo">
-            <h1>
+            <h2>
               {characterInfo.subRace !== "None"
                 ? characterInfo.subRace
                 : characterInfo.race}
-            </h1>
+            </h2>
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Age</h2>
