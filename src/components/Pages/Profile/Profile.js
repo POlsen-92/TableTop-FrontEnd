@@ -267,7 +267,7 @@ function Profile(props) {
                         onClick={()=> navigate(`/character/${character.id}`)}
                       >
                         <h5 key={index + 2}>{character.charName}</h5>
-                        <h6 key={index + 3}>{character.Campaign.name}</h6>
+                        <h6 key={index + 3}>{character.Campaign ? character.Campaign.name : null}</h6>
                       </li>
                     </div>
                   );
