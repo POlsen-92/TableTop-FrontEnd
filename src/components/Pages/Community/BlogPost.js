@@ -115,7 +115,7 @@ function BlogPost(props) {
                     <br />
                     {editBlog ? (<textarea className="row" defaultValue={postData.description} onChange={(e)=>setblogDescEdit(e.target.value)}/>) : (<p>{postData.description}</p>)}
                     {postData.User ? <p><img src={postData.User.image_content} width="100px" height="100px"/>
-                    {postData.User.username}
+                    {postData.User.username} on {postData.createdAt.slice(0,10)}
                     </p> : null}
                 </div>
                 <br />
@@ -135,7 +135,7 @@ function BlogPost(props) {
                                 <div key={comment.id}>
                                     <p>{comment.body}</p>
                                     <p> <img src={comment.User.image_content} width="100px" height="100px"/>
-                                        {comment.User.username}</p>
+                                        {comment.User.username} on {comment.createdAt.slice(0,10)}</p>
                                 {props.userState.username === comment.User.username ? (
                                     <button onClick={() =>deleteComment(comment.id)} >delete comment</button>
                                     ) : ('')}

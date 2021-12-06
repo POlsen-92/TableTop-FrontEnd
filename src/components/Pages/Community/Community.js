@@ -54,7 +54,7 @@ function Community({ token, userState }) {
                                         
                                         <p onClick={()=>UserButton(post.User.id)}>
                                             <img src={post.User.image_content} width="100px" height="100px"/>
-                                            {post.User.username}</p>
+                                            {post.User.username} on {post.createdAt.slice(0,10)}</p>
                                     </div>
                                 </div> 
                             <br />
