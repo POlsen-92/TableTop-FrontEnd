@@ -47,6 +47,12 @@ code {
   overflow-x: hidden;
 }
 
+.scrollMe-Big {
+  overflow:scroll;
+  overflow-x:hidden;
+  max-height: 1100px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 30px;
