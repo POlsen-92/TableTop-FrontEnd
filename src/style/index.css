@@ -102,3 +102,7 @@ code {
 #blog-post {
   margin: "0px"
 }
+
+.navbar-brand {
+  margin-left: 15px !important;
+}
