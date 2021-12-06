@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "./Character.css";
+import { useNavigate } from "react-router-dom";
 import Class from "./Class";
 import Race from "./Race";
 import Homebrew from "./Homebrew";
 import pointer from "./pointer-min.png";
 import journey from "./journey-min.jpg";
-import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import "./Character.css";
 
 export default function Character({ token }) {
   const navigate = useNavigate();

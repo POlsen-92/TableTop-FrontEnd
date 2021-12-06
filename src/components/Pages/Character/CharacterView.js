@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import { Editor } from "@tinymce/tinymce-react";
 import ReactTooltip from "react-tooltip";
+import API from "../../../utils/API";
+import DOMPurify from "dompurify";
 import 'react-tabs/style/react-tabs.css';
 import "bootstrap/dist/css/bootstrap.css";
-import API from "../../../utils/API";
-import { Editor } from "@tinymce/tinymce-react";
-import DOMPurify from "dompurify";
 
 export default function CharacterView(props) {
 
@@ -316,17 +316,14 @@ export default function CharacterView(props) {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        {editChar ? (<input className="row" defaultValue={character.charName} onChange={(e)=>setnameEdit(e.target.value)}/>) : 
+                        {editChar ? (<input className="row my-2 py-1 h1 inputColor" defaultValue={character.charName} onChange={(e)=>setnameEdit(e.target.value)}/>) : 
                         (<h1 className="row">{character.charName}</h1>)}
-                        <button data-tip data-for="catalog" className="col-2 btn my-1 me-1" onClick={addCatalog}>Add to Character</button>
+                        {(character.user_id === props.userState.id) ? (<button data-tip data-for="catalog" className="col-2 btn my-1 me-1" onClick={addCatalog}>Add to Character</button>) : ""}
                         <ReactTooltip id="catalog"><p>Add Equipment, Spells, Proficiencies or Features</p></ReactTooltip>
                         {userButton}
                         <button data-tip data-for="campaign" className="col-2 btn my-1 me-1" onClick={campaignPage}>Campaign Page</button>
                         <ReactTooltip id="campaign"><p>Go to Campaign with this Character</p></ReactTooltip>
                     </div>
-                    {/* <div className="col">
-                        {character.image_content}
-                    </div> */}
                     <div className="row">
                         <div className="col">
                         <Tabs defaultIndex={0}>
@@ -340,19 +337,19 @@ export default function CharacterView(props) {
                             <TabPanel>
                                 <div className="row border">
                                     <div className="col-8">
-                                        <h5>Race: {character.race}</h5>
+                                        <h5 className="py-2">Race: {character.race}</h5>
                                         {(character.subrace) ? (
-                                            <h5>SubRace: {character.subrace}</h5>
+                                            <h5 className="py-2">SubRace: {character.subrace}</h5>
                                         ) : ''}
-                                        <h5>Class: {character.class}</h5>
+                                        <h5 className="py-2">Class: {character.class}</h5>
                                         {(character.subclass) ? (
-                                            <h5>SubClass: {character.subclass}</h5>
+                                            <h5 className="py-2">SubClass: {character.subclass}</h5>
                                         ) : ""}
-                                        <h5>Age: {editChar ? (<input className="row" defaultValue={character.age} onChange={(e)=>setageEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Age: {editChar ? (<input className="row inputColor" defaultValue={character.age} onChange={(e)=>setageEdit(e.target.value)}/>) : 
                                         (character.age)}</h5>
-                                        <h5>Level: {editChar ? (<input className="row" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Level: {editChar ? (<input className="row inputColor" defaultValue={character.level} onChange={(e)=>setlevelEdit(e.target.value)}/>) : 
                                         (character.level)}</h5>
-                                        <h5>Alignment: </h5>
+                                        <h5 className="py-2">Alignment: </h5>
                                         {editChar ? (
                                             <div>
                                                 <Editor
@@ -380,7 +377,7 @@ export default function CharacterView(props) {
                                             </div>
                                         ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.alignment}}></span>)}
-                                        <h5>Background: </h5>
+                                        <h5 className="py-2">Background: </h5>
                                             <p>
                                                 {editChar ? (
                                                     <div>
@@ -410,7 +407,7 @@ export default function CharacterView(props) {
                                         ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.background}}></span>)}
                                             </p>
-                                        <h5>Personality: </h5>
+                                        <h5 className="py-2">Personality: </h5>
                                         <p>{editChar ? (
                                             <div>
                                                 <Editor
@@ -440,25 +437,25 @@ export default function CharacterView(props) {
                                         (<span dangerouslySetInnerHTML={{__html: character.personality}}></span>)}</p>
                                     </div>
                                     <div className="col-4">
-                                        <h5>HitPoints: {editChar ? (<input className="row" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">HitPoints: {editChar ? (<input className="row inputColor" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
                                         (character.hitpoints)}</h5>
-                                        <h5>Current HP: {editChar ? (<input className="row" defaultValue={character.currhitpoints} onChange={(e)=>setchpEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Current HP: {editChar ? (<input className="row inputColor" defaultValue={character.currhitpoints} onChange={(e)=>setchpEdit(e.target.value)}/>) : 
                                         (character.currhitpoints)}</h5>
-                                        <h5>Temp HP: {editChar ? (<input className="row" defaultValue={character.temphitpoints} onChange={(e)=>setthpEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Temp HP: {editChar ? (<input className="row inputColor" defaultValue={character.temphitpoints} onChange={(e)=>setthpEdit(e.target.value)}/>) : 
                                         (character.temphitpoints)}</h5>
-                                        <h5>Strength: {editChar ? (<input className="row" defaultValue={character.strength} onChange={(e)=>setstrEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Strength: {editChar ? (<input className="row inputColor" defaultValue={character.strength} onChange={(e)=>setstrEdit(e.target.value)}/>) : 
                                         (character.strength)}</h5>
-                                        <h5>Dexterity: {editChar ? (<input className="row" defaultValue={character.dexterity} onChange={(e)=>setdexEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Dexterity: {editChar ? (<input className="row inputColor" defaultValue={character.dexterity} onChange={(e)=>setdexEdit(e.target.value)}/>) : 
                                         (character.dexterity)}</h5>
-                                        <h5>Constitution: {editChar ? (<input className="row" defaultValue={character.constitution} onChange={(e)=>setconEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Constitution: {editChar ? (<input className="row inputColor" defaultValue={character.constitution} onChange={(e)=>setconEdit(e.target.value)}/>) : 
                                         (character.constitution)}</h5>
-                                        <h5>Intelligence: {editChar ? (<input className="row" defaultValue={character.intelligence} onChange={(e)=>setintEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Intelligence: {editChar ? (<input className="row inputColor" defaultValue={character.intelligence} onChange={(e)=>setintEdit(e.target.value)}/>) : 
                                         (character.intelligence)}</h5>
-                                        <h5>Wisdom: {editChar ? (<input className="row" defaultValue={character.wisdom} onChange={(e)=>setwisEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Wisdom: {editChar ? (<input className="row inputColor" defaultValue={character.wisdom} onChange={(e)=>setwisEdit(e.target.value)}/>) : 
                                         (character.wisdom)}</h5>
-                                        <h5>Charisma: {editChar ? (<input className="row" defaultValue={character.charisma} onChange={(e)=>setchaEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Charisma: {editChar ? (<input className="row inputColor" defaultValue={character.charisma} onChange={(e)=>setchaEdit(e.target.value)}/>) : 
                                         (character.charisma)}</h5>
-                                        <h5>Speed: {editChar ? (<input className="row" defaultValue={character.speed} onChange={(e)=>setspdEdit(e.target.value)}/>) : 
+                                        <h5 className="py-2">Speed: {editChar ? (<input className="row inputColor" defaultValue={character.speed} onChange={(e)=>setspdEdit(e.target.value)}/>) : 
                                         (character.speed)}</h5>
                                     </div>
                                     {/* SAVE AND DELETE BUTTONS FOR CHARACTER */}
@@ -481,21 +478,21 @@ export default function CharacterView(props) {
                                                 <div className="col-4" key={(prof.id)}>
                                                     <h5>
                                                         {(editProf===prof.id) ? 
-                                                        (<input className="row" defaultValue={prof.name} onChange={(e)=>setprofNameEdit(e.target.value)}/>) : 
+                                                        (<input className="row w-100 inputColor" defaultValue={prof.name} onChange={(e)=>setprofNameEdit(e.target.value)}/>) : 
                                                         (prof.name)}</h5> 
                                                     <h6>Description: </h6>
                                                     <p> {(editProf===prof.id) ? 
-                                                        (<textarea className="row" defaultValue={prof.description} onChange={(e)=>setprofDescEdit(e.target.value)}/>) : 
+                                                        (<textarea className="row w-100 inputColor" defaultValue={prof.description} onChange={(e)=>setprofDescEdit(e.target.value)}/>) : 
                                                         (prof.description)}</p>
-                                                    <h6>Type: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.type} onChange={(e)=>setprofTypeEdit(e.target.value)}/>) : 
+                                                    <h6>Type: {(editProf===prof.id) ? (<input className="row w-100 inputColor" defaultValue={prof.type} onChange={(e)=>setprofTypeEdit(e.target.value)}/>) : 
                                                         (prof.type)}</h6>
-                                                    {(editProf===prof.id) ? (<h6>SubType: <input className="row" defaultValue={prof.subtype} onChange={(e)=>setprofSubTEdit(e.target.value)}/></h6>)    
+                                                    {(editProf===prof.id) ? (<h6>SubType: <input className="row w-100 inputColor" defaultValue={prof.subtype} onChange={(e)=>setprofSubTEdit(e.target.value)}/></h6>)    
                                                         : (prof.subtype ? (<h6>SubType: {prof.subtype}</h6>) : '')}
-                                                    <h6>Ability: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.ability} onChange={(e)=>setprofAbilityEdit(e.target.value)}/>) : 
+                                                    <h6>Ability: {(editProf===prof.id) ? (<input className="row w-100 inputColor" defaultValue={prof.ability} onChange={(e)=>setprofAbilityEdit(e.target.value)}/>) : 
                                                         (prof.ability)}</h6>
-                                                    <h6>Script: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.script} onChange={(e)=>setprofScriptEdit(e.target.value)}/>) : 
+                                                    <h6>Script: {(editProf===prof.id) ? (<input className="row w-100 inputColor" defaultValue={prof.script} onChange={(e)=>setprofScriptEdit(e.target.value)}/>) : 
                                                         (prof.script)}</h6>
-                                                    <h6>Typical Speakers: {(editProf===prof.id) ? (<input className="row" defaultValue={prof.typicalSpeakers} onChange={(e)=>setprofTSEdit(e.target.value)}/>) : (prof.typicalSpeakers)}</h6>
+                                                    <h6>Typical Speakers: {(editProf===prof.id) ? (<input className="row w-100 inputColor" defaultValue={prof.typicalSpeakers} onChange={(e)=>setprofTSEdit(e.target.value)}/>) : (prof.typicalSpeakers)}</h6>
                                                 {/* EDIT AND DELETE BUTTONS FOR PROFICIENCIES */}
                                                     {(prof.user_id === props.userState.id) ? ((editProf===prof.id) ? 
                                                         (<button className="prof-edt-btn m-1" onClick={(e)=>profSave(prof.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditProf(prof.id)}>Edit</button>)) : ''}
@@ -513,11 +510,11 @@ export default function CharacterView(props) {
                                         {feature.map((feat)=>{
                                             return(
                                                 <div className="col-4" key={feat.id}>
-                                                    <h5>{(editFeat===feat.id) ? (<input className="row" defaultValue={feat.name} onChange={(e)=>setfeatNameEdit(e.target.value)}/>) : (feat.name)}</h5>
+                                                    <h5>{(editFeat===feat.id) ? (<input className="row w-100 inputColor" defaultValue={feat.name} onChange={(e)=>setfeatNameEdit(e.target.value)}/>) : (feat.name)}</h5>
                                                     
                                                     <h6>Description: </h6>
-                                                    <p>{(editFeat===feat.id) ? (<textarea className="row" defaultValue={feat.description} onChange={(e)=>setfeatDescEdit(e.target.value)}/>) : (feat.description)}</p>
-                                                    <h6>Type: {(editFeat===feat.id) ? (<textarea className="row" defaultValue={feat.type} onChange={(e)=>setfeatTypeEdit(e.target.value)}/>) : (feat.type)}</h6>
+                                                    <p>{(editFeat===feat.id) ? (<textarea className="row w-100 inputColor" defaultValue={feat.description} onChange={(e)=>setfeatDescEdit(e.target.value)}/>) : (feat.description)}</p>
+                                                    <h6>Type: {(editFeat===feat.id) ? (<textarea className="row w-100 inputColor" defaultValue={feat.type} onChange={(e)=>setfeatTypeEdit(e.target.value)}/>) : (feat.type)}</h6>
                                                 {/* EDIT AND DELETE BUTTONS FOR FEATURES */}
                                                     {(feat.user_id === props.userState.id) ? ((editFeat===feat.id) ? 
                                                         (<button className="feat-edt-btn m-1" onClick={(e)=>featSave(feat.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditFeat(feat.id)}>Edit</button>)) : ''}
@@ -538,14 +535,14 @@ export default function CharacterView(props) {
                                 {spell.map((spell)=>{
                                     return(
                                         <div className="col-2" key={spell.id}>
-                                            <h5>{(editSpell===spell.id) ? (<input className="row" defaultValue={spell.name} onChange={(e)=>setspellNameEdit(e.target.value)}/>) : (spell.name)}</h5>
+                                            <h5>{(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.name} onChange={(e)=>setspellNameEdit(e.target.value)}/>) : (spell.name)}</h5>
                                             <h6>Desc:</h6>
-                                            <p>{(editSpell===spell.id) ? (<input className="row" defaultValue={spell.description} onChange={(e)=>setspellDescEdit(e.target.value)}/>) : (spell.description)}</p>
-                                            <h6>Type: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.type} onChange={(e)=>setspellTypeEdit(e.target.value)}/>) : (spell.type)}</h6>
-                                            <h6>Level: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.level} onChange={(e)=>setspellLvlEdit(e.target.value)}/>) : (spell.level)}</h6>
-                                            <h6>Attack: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.attack} onChange={(e)=>setspellAtkEdit(e.target.value)}/>) : (spell.attack)}</h6>
-                                            <h6>Duration: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.duration} onChange={(e)=>setspellDurEdit(e.target.value)}/>) : (spell.duration)}</h6>
-                                            <h6>Range: {(editSpell===spell.id) ? (<input className="row" defaultValue={spell.range} onChange={(e)=>setspellRngeEdit(e.target.value)}/>) : (spell.range)}</h6>
+                                            <p>{(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.description} onChange={(e)=>setspellDescEdit(e.target.value)}/>) : (spell.description)}</p>
+                                            <h6>Type: {(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.type} onChange={(e)=>setspellTypeEdit(e.target.value)}/>) : (spell.type)}</h6>
+                                            <h6>Level: {(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.level} onChange={(e)=>setspellLvlEdit(e.target.value)}/>) : (spell.level)}</h6>
+                                            <h6>Attack: {(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.attack} onChange={(e)=>setspellAtkEdit(e.target.value)}/>) : (spell.attack)}</h6>
+                                            <h6>Duration: {(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.duration} onChange={(e)=>setspellDurEdit(e.target.value)}/>) : (spell.duration)}</h6>
+                                            <h6>Range: {(editSpell===spell.id) ? (<input className="row w-100 inputColor" defaultValue={spell.range} onChange={(e)=>setspellRngeEdit(e.target.value)}/>) : (spell.range)}</h6>
                                         {/* EDIT AND DELETE BUTTONS FOR SPELLS */}
                                             {(spell.user_id === props.userState.id) ? ((editSpell===spell.id) ? 
                                                 (<button className="spell-edt-btn m-1" onClick={()=>spellSave(spell.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditSpell(spell.id)}>Edit</button>)) : ''}
@@ -566,17 +563,17 @@ export default function CharacterView(props) {
                                 {inventory.map((equip)=>{
                                     return(
                                         <div className="col-2" key={equip.id}>
-                                            <h5>{(editEquip===equip.id) ? (<input className="row" defaultValue={equip.name} onChange={(e)=>setequipNameEdit(e.target.value)}/>) : (equip.name)}</h5>
+                                            <h5>{(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.name} onChange={(e)=>setequipNameEdit(e.target.value)}/>) : (equip.name)}</h5>
                                             <h6>Desc: </h6>
-                                            <p>{(editEquip===equip.id) ? (<input className="row" defaultValue={equip.description} onChange={(e)=>setequipDescEdit(e.target.value)}/>) : (equip.description)}</p>
-                                            <h6>Type: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.type} onChange={(e)=>setequipTypeEdit(e.target.value)}/>) : (equip.type)}</h6>
-                                            <h6>Properties: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.properties} onChange={(e)=>setequipPropEdit(e.target.value)}/>) : (equip.properties)}</h6>
-                                            <h6>Cost: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.cost} onChange={(e)=>setequipCostEdit(e.target.value)}/>) : (equip.cost)}</h6>
-                                            <h6>Weight: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.weight} onChange={(e)=>setequipWtEdit(e.target.value)}/>) : (equip.weight)}</h6>
-                                            <h6>Damage: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.damage} onChange={(e)=>setequipDmgEdit(e.target.value)}/>) : (equip.damage)}</h6>
-                                            <h6>Armor Class: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.armorClass} onChange={(e)=>setequipArmEdit(e.target.value)}/>) : (equip.armorClass)}</h6>
-                                            <h6>Strength: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.strength} onChange={(e)=>setequipStrEdit(e.target.value)}/>) : (equip.strength)}</h6>
-                                            <h6>Stealth: {(editEquip===equip.id) ? (<input className="row" defaultValue={equip.stealth} onChange={(e)=>setequipStlEdit(e.target.value)}/>) : (equip.stealth)}</h6>
+                                            <p>{(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.description} onChange={(e)=>setequipDescEdit(e.target.value)}/>) : (equip.description)}</p>
+                                            <h6>Type: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.type} onChange={(e)=>setequipTypeEdit(e.target.value)}/>) : (equip.type)}</h6>
+                                            <h6>Properties: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.properties} onChange={(e)=>setequipPropEdit(e.target.value)}/>) : (equip.properties)}</h6>
+                                            <h6>Cost: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.cost} onChange={(e)=>setequipCostEdit(e.target.value)}/>) : (equip.cost)}</h6>
+                                            <h6>Weight: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.weight} onChange={(e)=>setequipWtEdit(e.target.value)}/>) : (equip.weight)}</h6>
+                                            <h6>Damage: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.damage} onChange={(e)=>setequipDmgEdit(e.target.value)}/>) : (equip.damage)}</h6>
+                                            <h6>Armor Class: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.armorClass} onChange={(e)=>setequipArmEdit(e.target.value)}/>) : (equip.armorClass)}</h6>
+                                            <h6>Strength: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.strength} onChange={(e)=>setequipStrEdit(e.target.value)}/>) : (equip.strength)}</h6>
+                                            <h6>Stealth: {(editEquip===equip.id) ? (<input className="row w-100 inputColor" defaultValue={equip.stealth} onChange={(e)=>setequipStlEdit(e.target.value)}/>) : (equip.stealth)}</h6>
                                         {/* EDIT AND DELETE BUTTONS FOR EQUIPMENT */}
                                             {(equip.user_id === props.userState.id) ? ((editEquip===equip.id) ? 
                                             (<button className="equip-edt-btn m-1" onClick={()=>equipSave(equip.id)}>Save</button>) : (<button className="m-1" onClick={()=>setEditEquip(equip.id)}>Edit</button>)) : ''}

@@ -1,7 +1,5 @@
 .li{
     list-style:none;
-    background-color: white;
-    color:black;
     padding: 2%;
     border-style:solid;
     border-radius: 12px;
@@ -12,4 +10,15 @@
 
 .li:hover{
     transform: scale(1.08);
+}
+
+ /*  CHANGING INPUT BOX COLOR */
+ .inputColor {
+    background-color: #222F3E;
+    color: white
+}
+
+::placeholder {
+    color: white;
+    opacity: 1;
 }

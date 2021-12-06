@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import CampaignFilters from "./CampaignFilters";
 import API from "../../../utils/API";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Avatar from "./UpdateUserInfo/Avatar";
+import Username from "./UpdateUserInfo/Username";
+import Password from "./UpdateUserInfo/Password";
+import Email from "./UpdateUserInfo/Email";
 import "bootstrap/dist/css/bootstrap.css";
-import Avatar from "../UpdateUserInfo/Avatar";
-import Username from "../UpdateUserInfo/Username";
-import Password from "../UpdateUserInfo/Password";
-import Email from "../UpdateUserInfo/Email";
 import "./Profile.css";
 
 function Profile(props) {
@@ -163,7 +163,7 @@ function Profile(props) {
               <div key={index+1} className="campaign-list-box">
                   <li
                     key={index+2}
-                    className="m-3 li"
+                    className="m-3 li inputColor"
                     onClick={()=> navigate(`/campaign/${campaign.id}`)}
                   >
                     <h4 key={index+3} className="d-inline">{campaign.name}</h4>
@@ -248,7 +248,6 @@ function Profile(props) {
               setEmail={setEmail}
             />
           ) : null}
-          <button className="btn m-1">Notifications</button>
         </section>
         {/* ALL CHARACTERS FOR USER */}
         <section
@@ -262,7 +261,7 @@ function Profile(props) {
                     <div>
                       <li
                         key={index+1}
-                        className="li m-3"
+                        className="li m-3 inputColor"
                         onClick={()=> navigate(`/character/${character.id}`)}
                       >
                         <h5 key={index + 2}>{character.charName}</h5>

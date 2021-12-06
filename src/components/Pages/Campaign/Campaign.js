@@ -4,6 +4,7 @@ import API from "../../../utils/API";
 import { Editor } from "@tinymce/tinymce-react";
 import { Modal, Button } from "react-bootstrap";
 import DOMPurify from "dompurify";
+import "bootstrap/dist/css/bootstrap.css";
 import "./Campaign.css"
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
@@ -97,7 +98,8 @@ function Campaign(props) {
 
     return (
     <div className="container">
-        {edit ? (<input id="cmpgnName-edit" className="row" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
+      <br />
+        {edit ? (<input id="cmpgnName-edit" className="row inputColor h1 py-1" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
         <div className="row">
             <button 
                 className="col-2 btn m-1"
@@ -149,7 +151,7 @@ function Campaign(props) {
                           <div>
                             <li
                               key={index+1}
-                              className="li mb-3"
+                              className="li mb-3 inputColor"
                               data-id={user.id}
                               onClick={()=> navigate('/Profile')}
                             >
@@ -162,7 +164,7 @@ function Campaign(props) {
                             <div>
                               <li
                                 key={index+4}
-                                className="li mb-3"
+                                className="li mb-3 inputColor"
                                 data-id={user.id}
                                 onClick={()=> navigate(`/profile/${user.id}`)}
                               >
@@ -174,7 +176,7 @@ function Campaign(props) {
                 })}</ul>
                 <br />
                 <br />
-                {(gmID === props.userState.id) ? (<div className="row"><div className="col"><input value={invite} placeHolder="User Email" onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
+                {(gmID === props.userState.id) ? (<div className="row"><div className="col"><input value={invite} className="inputColor" placeHolder="User Email" onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
             </div>
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>Character(s)</h2>
@@ -184,7 +186,7 @@ function Campaign(props) {
                       <div>
                         <li
                           key={index+1}
-                          className="li mb-3"
+                          className="li mb-3 inputColor"
                           id="character"
                           data-id={character.id}
                           onClick={()=>navigate(`/character/${character.id}`)}
