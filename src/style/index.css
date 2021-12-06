@@ -50,7 +50,7 @@ code {
 .scrollMe-Big {
   overflow:scroll;
   overflow-x:hidden;
-  max-height: 100%;
+  max-height: 1100px;
 }
 
 /* width */
