@@ -380,33 +380,36 @@ export default function CharacterView(props) {
                                             </div>
                                         ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.alignment}}></span>)}
-                                        <h5>Background: {editChar ? (
-                                            <div>
+                                        <h5>Background: </h5>
+                                            <p>
+                                                {editChar ? (
+                                                    <div>
                                                 <Editor
                                                     initialValue={character.background}
                                                     apiKey={process.env.REACT_APP_TINYAPI}
                                                     init={{
-                                                    height: 200,
-                                                    width: "60%",
-                                                    menubar: true,
-                                                    skin: "oxide-dark",
-                                                    content_css: "dark",
-                                                    plugins: [
+                                                        height: 200,
+                                                        width: "60%",
+                                                        menubar: true,
+                                                        skin: "oxide-dark",
+                                                        content_css: "dark",
+                                                        plugins: [
                                                         "advlist autolink lists link image",
                                                         "charmap print preview anchor help",
                                                         "searchreplace visualblocks code",
                                                         "insertdatetime media paste wordcount",
                                                     ],
                                                     toolbar:
-                                                        "undo redo | formatselect | bold italic | \
-                                                        alignleft aligncenter alignright | \
-                                                        bullist numlist outdent indent image | help",
-                                                    }}
-                                                    onChange={(e) => setbgEdit(e.target.getContent())}
+                                                    "undo redo | formatselect | bold italic | \
+                                                    alignleft aligncenter alignright | \
+                                                    bullist numlist outdent indent image | help",
+                                                }}
+                                                onChange={(e) => setbgEdit(e.target.getContent())}
                                                 />
                                             </div>
                                         ) : 
-                                        (<span dangerouslySetInnerHTML={{__html: character.background}}></span>)}</h5>
+                                        (<span dangerouslySetInnerHTML={{__html: character.background}}></span>)}
+                                            </p>
                                         <h5>Personality: </h5>
                                         <p>{editChar ? (
                                             <div>
@@ -522,8 +525,7 @@ export default function CharacterView(props) {
                                                     onClick={(e) => deleteFeat(feat.id)}>Delete
                                                     </button>) : ""}
                                                 </div>
-                                            )
-                                        })}
+                                            )})}
                                         </div>
                                     </div>
                                 </div>
@@ -585,11 +587,13 @@ export default function CharacterView(props) {
                                         )
                                     })}
                                 </div>
-                                <br />
-                                <br />
                             </div>
                             </TabPanel>
                             </Tabs>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
                         </div>
                     </div>
                 </div>
