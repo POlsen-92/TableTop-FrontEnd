@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom"
 import API from "../../utils/API";
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Editor } from "@tinymce/tinymce-react";
+import { Modal, Button, Card, Row, Col, FormControl } from "react-bootstrap";
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
@@ -106,76 +106,107 @@ function Campaign(props) {
             {(gmID !== props.userState.id) ? (<button className="col-2 btn my-1 me-1" onClick={()=> leaveCampaign(id)}>Leave Campaign</button>) : null}
         </div>
         <div className="row">
-            {edit ? (<input id="cmpgnDesc-edit" className="col-sm-12 col-md-4 " value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<div className="border col-sm-12 col-md-4 ">{campaignDesc}</div>)}
+            {edit ? (
+            <div className="col-sm-12 col-md-4 ">
+              {/* <input id="cmpgnDesc-edit"  value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/> */}
+              <Editor
+                initialValue={campaignDesc}
+                apiKey={process.env.REACT_APP_TINYAPI}
+                init={{
+                  height: "100%",
+                  width: "100%",
+                  menubar: true,
+                  skin: "oxide-dark",
+                  content_css: "dark",
+                  plugins: [
+                    "advlist autolink lists link image",
+                    "charmap print preview anchor help",
+                    "searchreplace visualblocks code",
+                    "insertdatetime media paste wordcount",
+                  ],
+                  toolbar:
+                    "undo redo | formatselect | bold italic | \
+                  alignleft aligncenter alignright | \
+                  bullist numlist outdent indent image | help",
+                }}
+                onEditorChange={(newDesc)=>setDescEdit(newDesc)}
+              />
+            </div>
+            ) : (<div className="border col-sm-12 col-md-4 ">{campaignDesc}</div>)}
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>GM</h2>
                 <h4>{gm.username}</h4>
                 <h2>Players</h2>
                 <ul className="p-0">
-                {users.map((user)=>{
+                {users.map((user, index)=>{
                     if (props.userState.id === user.id) {
                         return (
                           <Link
+                            key={index}
                             to={{ pathname: `/Profile`}}
                             className="d-inline"
                           >
                             <li
-                              key={user.id}
+                              key={index+1}
                               className="list-group-item list-group-item-action mb-3"
                               id="user"
                               data-id={user.id}
                             >
-                              <h4>{user.username}</h4>
+                              <h4 key={index+2}>{user.username}</h4>
                             </li>
                           </Link>
                         )
                     } else {
                         return (
                             <Link
+                              key={index+3}
                               to={{ pathname: `/profile/${user.id}`}}
                               className="d-inline"
                             >
                               <li
-                                key={user.id}
+                                key={index+4}
                                 className="list-group-item list-group-item-action mb-3"
                                 id="user"
                                 data-id={user.id}
                               >
-                                <h4>{user.username}</h4>
+                                <h4 key={index+5}>{user.username}</h4>
                               </li>
                             </Link>
                           )
                     }
                 })}</ul>
+                <br />
+                <br />
+                {(gmID === props.userState.id) ? (<div className="row"><div className="col"><input value={invite} placeHolder="User Email" onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
             </div>
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>Character(s)</h2>
                 <ul className="p-0 m-0">
-                {characters.map((character) => {
+                {characters.map((character,index) => {
                     return (
                         <Link
+                        key={index}
                         to={{ pathname: `/character/${character.id}` }}
                         className="d-inline"
                       >
                         <li
-                          key={character.id}
+                          key={index+1}
                           className="list-group-item list-group-item-action mb-3"
                           id="character"
                           data-id={character.id}
                         >
-                          <h4>{character.charName}</h4>
+                          <h4 key={index+2}>{character.charName}</h4>
                         </li>
                       </Link>
                     );
                 })}</ul>
             </div>
             </div>
-            {(gmID === props.userState.id) ? (<div className="row gm-invite"><div className="col-4"><input value={invite} onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
             <Modal show={show} onHide={handleClose}>
               <Modal.Header>
                 <Modal.Title>Users</Modal.Title>
               </Modal.Header>
-              <Modal.Body>{users.map((user)=>((user.id !== props.userState.id) ? <div><h4>{user.username}</h4><button onClick={()=>kickPlayer(id,user.id)}>Kick</button></div> : null))}</Modal.Body>
+              <Modal.Body>{users.map((user,index)=>((user.id !== props.userState.id) ? <div key={index}><h4 key={index+1}>{user.username}</h4><button key={index+2} onClick={()=>kickPlayer(id,user.id)}>Kick</button></div> : null))}</Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
