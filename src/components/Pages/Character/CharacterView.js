@@ -585,6 +585,8 @@ export default function CharacterView(props) {
                                         )
                                     })}
                                 </div>
+                                <br />
+                                <br />
                             </div>
                             </TabPanel>
                             </Tabs>
