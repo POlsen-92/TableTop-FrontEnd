@@ -28,7 +28,7 @@ export default function Homebrew({
   const [rollingHitpoints, setRollingHitpoints] = useState("");
   const [rollingThunda, setRollingThunda] = useState("");
   const [hideRoll, setHideRoll] = useState(true);
-  const [hideBonusRoll, setHideBonusRoll] = useState(true)
+  const [hideBonusRoll, setHideBonusRoll] = useState(true);
   const [showBonus, setShowBonus] = useState({
     strength: 0,
     dexterity: 0,
@@ -45,8 +45,6 @@ export default function Homebrew({
     wisdom: 0,
     charisma: 0,
   };
-
-
 
   const handleBackgroundChange = (e) => {
     console.log("Content was updated:", e.target.getContent());
@@ -157,7 +155,7 @@ export default function Homebrew({
     }, 10);
     setTimeout(() => {
       clearInterval(moving);
-      if (apiResponse.ability_bonuses) setHideBonusRoll(false)
+      if (apiResponse.ability_bonuses) setHideBonusRoll(false);
       setCharacterInfo({
         ...characterInfo,
         strength: total[0],
@@ -170,8 +168,8 @@ export default function Homebrew({
     }, 2300);
   };
 
-const addRacialBonusAttributes = () => {
-    setHideBonusRoll(true)
+  const addRacialBonusAttributes = () => {
+    setHideBonusRoll(true);
     apiResponse.ability_bonuses.map((bonus) => {
       switch (bonus.ability_score.name) {
         case "STR":
@@ -259,7 +257,7 @@ const addRacialBonusAttributes = () => {
       intelligence: attributes.intelligence,
       wisdom: attributes.wisdom,
       charisma: attributes.charisma,
-    })
+    });
   };
 
   const handleClose = (e) => {
@@ -331,7 +329,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="charName"
@@ -341,7 +338,6 @@ const addRacialBonusAttributes = () => {
               </p>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="age"
@@ -363,7 +359,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                
                   type="text"
                   onChange={handleCharacterChange}
                   name="race"
@@ -373,7 +368,6 @@ const addRacialBonusAttributes = () => {
               </p>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="subRace"
@@ -411,7 +405,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="class"
@@ -421,7 +414,6 @@ const addRacialBonusAttributes = () => {
               </p>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="subClass"
@@ -431,7 +423,6 @@ const addRacialBonusAttributes = () => {
               </p>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="text"
                   onChange={handleCharacterChange}
                   name="level"
@@ -466,7 +457,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="speed"
@@ -488,7 +478,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="hitpoints"
@@ -550,22 +539,24 @@ const addRacialBonusAttributes = () => {
 
         <div>
           {/* {!rollingHitpoints ? ( */}
-            <button
-              data-tip
-              data-for="hitpointsButton"
-              className="mb-5"
-              onClick={calculateHitpoints}
-              style={{visibility: rollingHitpoints ? "hidden":null}}
-            >
-              Roll for hitpoints
-            </button>
+          <button
+            data-tip
+            data-for="hitpointsButton"
+            className="mb-5"
+            onClick={calculateHitpoints}
+            style={{ visibility: rollingHitpoints ? "hidden" : null }}
+          >
+            Roll for hitpoints
+          </button>
           {/* ) : null} */}
           {!hideRoll ? (
             <button onClick={calculateAttributes} className="mb-5">
               Roll for attributes
             </button>
           ) : null}
-          {!hideBonusRoll ? <button onClick={addRacialBonusAttributes}>Add Racial Bonus</button> : null}
+          {!hideBonusRoll ? (
+            <button onClick={addRacialBonusAttributes}>Add Racial Bonus</button>
+          ) : null}
         </div>
         <Col className="mb-5">
           <Card className="mx-auto bg-transparent" style={cardStyle}>
@@ -577,7 +568,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="strength"
@@ -624,7 +614,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="dexterity"
@@ -669,7 +658,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="constitution"
@@ -715,7 +703,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="intelligence"
@@ -761,7 +748,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="wisdom"
@@ -806,7 +792,6 @@ const addRacialBonusAttributes = () => {
             <Card.Body>
               <p>
                 <FormControl
-                aria-label="Large"
                   type="number"
                   onChange={handleCharacterChange}
                   name="charisma"
