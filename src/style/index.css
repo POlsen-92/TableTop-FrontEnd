@@ -90,8 +90,8 @@ code {
 
 #home-div {
   
-  margin-left: 0px !important;
-  height: 500px;
+  margin: 0px !important;
+  height: 100%;
 }
 
 #home-div img {
@@ -99,3 +99,6 @@ code {
   height: auto;
 }
 
+#blog-post {
+  margin: "0px"
+}

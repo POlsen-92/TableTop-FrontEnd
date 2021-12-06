@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./community.css";
+import skulltreasurebg from "../../../style/skulltreasurebg.png";
 
 function NewBlogPost({ token }) {
-
+    document.body.style.backgroundImage = `url(${skulltreasurebg})`;
     const navigate = useNavigate();
 
     const [blogInputs, setBlogInputs] = useState({
@@ -41,11 +42,12 @@ function NewBlogPost({ token }) {
     }
 
     return (
-        <div>
-            <form className="m-5 w-100" id="blog-post"
+        <div className="container">
+            <form className="w-100" id="blog-post"
                 onSubmit={createBlogPost}
             >
-                <input className="h3 py-3 w-50 inputColor" id="blog-id"
+                <h1 className="text-center">New Blog Post!</h1>
+                <input className="my-3 py-3 w-100 inputColor" id="blog-id"
                     name="title"
                     onChange={handleBlogTitleChange}
                     type="text"
@@ -59,7 +61,7 @@ function NewBlogPost({ token }) {
                     name="description"
                     init={{
                     height: 500,
-                    width: "60%",
+                    width: "100%",
                     menubar: true,
                     skin: "oxide-dark",
                     content_css: "dark",

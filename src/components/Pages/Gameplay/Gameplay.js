@@ -68,7 +68,6 @@ import BlackMinotaur from "./VirTable/images/Monstrositys/Black Minotuar-min.png
 import Tiger from "./VirTable/images/Beasts/tiger-min.png";
 import Skunk from "./VirTable/images/Beasts/skunk-min.png";
 import Shark from "./VirTable/images/Beasts/Shark-min.png";
-import Rat from "./VirTable/images/Beasts/Rat-min.png";
 import PlagueRat from "./VirTable/images/Beasts/Plague Rat-min.png";
 import OwlBear from "./VirTable/images/Beasts/owlbear-min.png";
 import Mammoth from "./VirTable/images/Beasts/Mammoth-min.png";
@@ -257,10 +256,6 @@ const Beasts = [
   {
     name: "PlagueRat",
     value: PlagueRat,
-  },
-  {
-    name: "Rat",
-    value: Rat,
   },
   {
     name: "Shark",
@@ -597,7 +592,9 @@ function Gameplay(props) {
 
   // let monsterList = []
   return (
-    <div className="container-fluid p-0 m-0 ">
+    <div className="container-fluid p-0 m-0 " style={{
+      background: 'black'
+      }}>
       <div className="row p-0 m-0">
         <div className="col-3 char-menu scrollMe-Big" style={{
             backgroundImage: `url(${DwarfLeftSide})`,
@@ -605,13 +602,13 @@ function Gameplay(props) {
           }}>
           <h2 className="border text-center">Dice</h2>
           <Dice />
-          <div className="row align-items-center justify-content-center w-100">
+          <div className="row align-items-center justify-content-center  w-100">
             <h2 className="text-center border col-11">Token List</h2>
-            <ul className="list-group col-2 m-3 align-items-center justify-content-center w-100">
+            <ul className="list-group m-3 align-items-center display-inline">
               {tokensList.map((token) => {
                 return (
-                  <div >
-                    <li className="list-group-item text-center">
+                  <div className="d-inline">
+                    <li className="list-group-item text-center ">
                     {token.name}
                     <img className="" style={{ height:"4em"}}src={token.image}/>                      
                     </li>
@@ -627,7 +624,7 @@ function Gameplay(props) {
             </ul>
           </div>
         </div>
-        <div className="col-7 gameboard" style={containerStyle}>
+        <div className="col-6 gameboard" style={containerStyle}>
           <DndProvider backend={HTML5Backend}>
             <Table
               camp_id={id}
@@ -637,7 +634,7 @@ function Gameplay(props) {
           </DndProvider>
         </div>
         <div
-          className="col-2 mini-menu"
+          className="col-3 mini-menu"
           style={{
             backgroundImage: `url(${BgRightSide})`,
             backgroundSize: "100% 100%",
