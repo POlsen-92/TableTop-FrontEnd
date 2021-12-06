@@ -4,7 +4,9 @@
   
   ## Description
   
-  
+  This app was created with Virtual D&D players in mind, with this project you can meet up with friends to create a campaign or find new players within our community forum to group up with. Run or join as many campaigns as you like with our interactive campaign and character creation and track progress by adding to your inventory, proficiency and features list and update attributes. 
+
+  Our Campaign Gameplay includes a virtual tabletop where a GM will be able to move character and NPC tokens around a map to indicate gameplay. We recommend playing through a third party video call such as Zoom or Discord where the GM is sharing their screen with the rest of the party.
   ## Table Of Contents
   
   - [Installation](#installation)
