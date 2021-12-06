@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
+    // console.log('props',props);
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -24,23 +25,19 @@ function Campaign(props) {
 
     useEffect(() => {
         API.findCampaign(id, props.token).then((res) => {
-            console.log(res);
+            // console.log(res);
             setCampaignName(res.data.name);
             setCampaignDesc(res.data.description);
             setNameEdit(res.data.name);
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
             setUsers(res.data.Users);
-            const campaignGM = res.data.Users.filter((user) => user.user_id === gmID)
-            setGM(campaignGM)
+            const campaignGM = res.data.Users.filter((user) => user.id === res.data.gm_id)
+            setGM(campaignGM[0])
             setCharacters(res.data.Characters);
-          })
-        },[id,props])
-        
-    useEffect(() => {
-        const campaignGM = users.filter((user) => user.id === gmID)
-        setGM(campaignGM[0])
-    }, [users, gmID])
+
+        })
+    },[id,props])
 
     const createCharacter = () => {
         navigate(`/createcharacter/${id}`)
