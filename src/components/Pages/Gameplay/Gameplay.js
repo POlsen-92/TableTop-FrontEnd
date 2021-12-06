@@ -600,10 +600,10 @@ function Gameplay(props) {
             backgroundImage: `url(${DwarfLeftSide})`,
             backgroundSize: "100% 100%",
           }}>
-          <h2 className="border text-center">Dice</h2>
+          <h2 className="border text-center col-11 bg-dark my-1 mx-1">Dice</h2>
           <Dice />
           <div className="row align-items-center justify-content-center  w-100">
-            <h2 className="text-center border col-11">Token List</h2>
+            <h2 className="text-center border col-11 bg-dark">Token List</h2>
             <ul className="list-group m-3 align-items-center display-inline">
               {tokensList.map((token) => {
                 return (
@@ -641,7 +641,7 @@ function Gameplay(props) {
           }}
         >
           <div className="text-center scrollMe-Big">
-            <h1 className="border text-center shadow-lg m-1">Tokens</h1>
+            <h1 className="border text-center shadow-lg bg-dark m-1">Tokens</h1>
             <ul class="list-group ">
               {characters.map((character) => {
                 return (

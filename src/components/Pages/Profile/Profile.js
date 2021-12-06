@@ -8,9 +8,11 @@ import Password from "./UpdateUserInfo/Password";
 import Email from "./UpdateUserInfo/Email";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Profile.css";
+import dragonbg from "../../../style/dragonbg.png";
 
 function Profile(props) {
   const navigate = useNavigate();
+  document.body.style.backgroundImage = `url(${dragonbg})`;
 
   //IF NOT SIGNED IN REDIRECT TO HOMEPAGE
   useEffect(() => {
