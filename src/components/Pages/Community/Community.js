@@ -7,6 +7,7 @@ function Community({ token, userState }) {
 
     const navigate = useNavigate();
 
+    
     //GET POSTS FOR COMMUNITY PAGE
     const [posts, setPosts] = useState([])
 
@@ -20,8 +21,8 @@ function Community({ token, userState }) {
             })
     }, [])
 
-    // DECIDES WHICH PROFILE YOU GO TO
 
+    // DECIDES WHICH PROFILE YOU GO TO
     const UserButton = (postUserId) => {
         if (userState.id === postUserId) {
             navigate(`/Profile`)
