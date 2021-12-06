@@ -177,13 +177,15 @@ function Profile(props) {
         </section>
         {/* USER INFORMATION - EDIT IMAGE, USERNAME, PASSWORD, EMAIL  */}
         <section className="col-sm-12 col-md-4" id="profile-info">
-          <img
-            src={imageURL ? imageURL : props.userState.image_content}
-            width="200"
-            height="auto"
-            alt="ProfilePic"
-            className="m-1"
-          />
+          <div id="profile-picture-div">
+            <img
+              src={imageURL ? imageURL : props.userState.image_content}
+              width="200"
+              height="auto"
+              alt="ProfilePic"
+              className="m-1"
+            />
+          </div>
           <br />
           <button onClick={() => setUpdatePic(!updatePic)} className="btn m-1">
             Change Profile Picture
