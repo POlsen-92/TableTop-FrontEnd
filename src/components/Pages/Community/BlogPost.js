@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"
 import { Editor } from "@tinymce/tinymce-react";
 import API from "../../../utils/API";
-import "./community.css";
 import DOMPurify from "dompurify";
+import "bootstrap/dist/css/bootstrap.css";
+import "./community.css";
 
 function BlogPost(props) {
 
@@ -110,8 +111,8 @@ function BlogPost(props) {
     return (
         <div>
             <div className="container py-4">
-                <div>
-                    {editBlog ? (<input className="row" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1>{postData.title}</h1>)}
+                <div className = "border p-2">
+                    {editBlog ? (<input className="row inputColor" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1 className="border-bottom">{postData.title}</h1>)}
                     <br />
                     {editBlog ? (
                         <div>
@@ -146,7 +147,6 @@ function BlogPost(props) {
                     </p> : null}
                 </div>
                 <br />
-                <br />
                 {props.userState.id === postData.user_id ? (
                     <div>
                         <button className="m-2" onClick={()=>deleteBlogPost(id)} >Delete Post</button>
@@ -156,9 +156,10 @@ function BlogPost(props) {
                     ) : (<button className="m-2" onClick={communityPage} >Back</button>)}
                 <div>
                 <br />
+                <br />
                     {commentData.map((comment) => {
                         return (
-                            <div>
+                            <div className = "border-top p-3">
                                 <div key={comment.id}>
                                     <p>{comment.body}</p>
                                     <p> <img src={comment.User.image_content} width="100px" height="100px" alt="profilepic"/>
@@ -170,18 +171,19 @@ function BlogPost(props) {
                             </div>
                         )
                     })}
-                    <form className=" " id="comment-form"
+                    <br />
+                    <form className="border-top p-3" id="comment-form"
                         onSubmit={createComment}>
                         <div className="">
                             <h4>Reply to this thread!</h4>
                         </div><br />
                         <div className="">
-                        <textarea className="m-1" id="new-comment"
+                        <textarea className="m-1 inputColor w-50" id="new-comment"
                             value={commentData.description}
                             name="description"
                             onChange={handleCommentInputChange}
                             type="text"
-                            placeholder="description"/> <br />
+                            placeholder="New Comment!"/> <br />
                         <button className="btn" id="signup-btn">Submit</button>
                         </div>
                     </form>

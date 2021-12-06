@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
+import "bootstrap/dist/css/bootstrap.css";
 import "./community.css";
 
 function NewBlogPost({ token }) {
@@ -44,16 +45,15 @@ function NewBlogPost({ token }) {
             <form className="m-5 w-100" id="blog-post"
                 onSubmit={createBlogPost}
             >
-                <h4>New Blog Post!</h4>
-                <input className="my-3 py-3 w-25 " id="blog-id"
+                <input className="h3 py-3 w-50 inputColor" id="blog-id"
                     name="title"
                     onChange={handleBlogTitleChange}
                     type="text"
-                    placeholder="What Do You Want Your Blog To Be Called"
+                    placeholder="What Do You Want Your Blog To Be Called?"
                 />
                 <br />
                 <Editor
-                    initialValue="What Do You Want Your Blog To Say?"
+                    placeholder="What Do You Want Your Blog To Say?"
                     apiKey={process.env.REACT_APP_TINYAPI}
                     className= "mb-auto"
                     name="description"
