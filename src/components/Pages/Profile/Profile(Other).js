@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import CampaignFilters from "./CampaignFilters";
 import API from "../../../utils/API";
 import { Link, useParams } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
+import "./Profile.css";
 
 
 export default function Profile() {
@@ -66,11 +68,11 @@ export default function Profile() {
                 <div className="campaign-list-box">
                   <Link
                     to={{ pathname: `/campaign/${campaign.id}` }}
-                    className="d-inline d-flex justify-content-center"
+                    className="d-inline d-flex justify-content-center text-decoration-none"
                   >
                     <li
                       key={campaign.id}
-                      className="list-group-item list-group-item-action m-3"
+                      className="li w-75 m-3 inputColor"
                       id="example-campaign"
                       data-id={campaign.id}
                     >
@@ -97,11 +99,11 @@ export default function Profile() {
                     return (
                       <Link
                         to={{ pathname: `/character/${character.id}` }}
-                        className="d-inline d-flex justify-content-center"
+                        className="d-inline d-flex justify-content-center text-decoration-none"
                       >
                         <li
                           key={character.id}
-                          className="list-group-item list-group-item-action m-3"
+                          className="li w-75 m-3 inputColor"
                           id="character"
                           data-id={character.id}
                         >

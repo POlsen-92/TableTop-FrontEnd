@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/Pages/Home";
-import News from "./components/News";
 import Signup from "./components/Pages/Signup";
 import About from "./components/Pages/About";
 import Community from "./components/Pages/Community/Community";
@@ -139,7 +138,6 @@ const tokenFromStor = localStorage.getItem("token")
             element={<Catalog userState={userState} token={token} />}
           />
         </Routes>
-        {/* <News /> */}
       </div>
     </Router>
   );
