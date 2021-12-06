@@ -661,9 +661,8 @@ function Gameplay(props) {
     // let monsterList = []
     return (
         <div className="container-fluid p-0 m-0 ">
-            <div className="row p-0 m-0"  >
-                <div className="col-3  char-menu " style={{ backgroundImage: `url(${DwarfLeftSide})`,
-            backgroundSize: '100% 100%'}}>
+            <div className="row p-0 m-0">
+                <div className="col-3 border border-primary border-4 char-menu scrollMe-Big">
                     <h2 className="border text-center">Dice</h2>
                     <Dice/>
                     <div className="row align-items-center justify-content-center w-100">

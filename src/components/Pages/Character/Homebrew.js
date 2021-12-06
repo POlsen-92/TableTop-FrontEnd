@@ -202,6 +202,8 @@ export default function Homebrew({
             ...attributes,
             charisma: attributes.charisma + bonus.bonus,
           });
+        default:
+          return;
       }
     });
     if (subraceResponse.ability_bonuses) {
@@ -237,6 +239,8 @@ export default function Homebrew({
               ...attributes,
               charisma: attributes.charisma + bonus.bonus,
             });
+          default:
+            return;
         }
       });
     }
@@ -860,9 +864,7 @@ export default function Homebrew({
               "insertdatetime media table paste wordcount",
             ],
             toolbar:
-              "undo redo | formatselect | bold italic | \
-            alignleft aligncenter alignright | \
-            bullist numlist outdent indent image | help",
+              "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent image | help",
           }}
           onChange={handleBackgroundChange}
         />
@@ -894,9 +896,7 @@ export default function Homebrew({
               "insertdatetime media table paste wordcount",
             ],
             toolbar:
-              "undo redo | formatselect | bold italic | \
-            alignleft aligncenter alignright | \
-            bullist numlist outdent indent image | help",
+              "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent image | help",
           }}
           onChange={handlePersonalityChange}
         />
@@ -931,9 +931,7 @@ export default function Homebrew({
               "insertdatetime media table paste wordcount",
             ],
             toolbar:
-              "undo redo | formatselect | bold italic | \
-            alignleft aligncenter alignright | \
-            bullist numlist outdent indent image | help",
+              "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent image | help",
           }}
           onChange={handleAlignmentChange}
         />

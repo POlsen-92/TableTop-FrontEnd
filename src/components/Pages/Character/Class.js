@@ -76,7 +76,7 @@ export default function Class({
       );
     } else {
       if (
-        classapiResponse.proficiency_choices[0].choose > proficiencies.length
+        classapiResponse.proficiency_choices[0].choose >= proficiencies.length
       ) {
         const temp = [...proficiencies];
         temp.push(e.target.value);
