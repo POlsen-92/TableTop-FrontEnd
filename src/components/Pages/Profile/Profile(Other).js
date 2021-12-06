@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CampaignFilters from "../../CampaignFilters";
+import CampaignFilters from "./CampaignFilters";
 import API from "../../../utils/API";
 import { Link, useParams } from "react-router-dom";
 
@@ -25,8 +25,11 @@ export default function Profile(props) {
         })
     },[id])
 
+
+
     const handleCampaignFilterChange = (filter) => {
         setCampaignFilter(filter);
+        console.log(campaigns)
         const newArr = campaigns.filter((campaign) => {
           switch (filter) {
             case "gm":
@@ -44,7 +47,7 @@ export default function Profile(props) {
 
     useEffect(() => {
       handleCampaignFilterChange(campaignFilter);
-    }, [campaignFilter]);
+    }, [campaigns]);
 
     return (
         <div className="container">

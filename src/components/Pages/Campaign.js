@@ -6,13 +6,14 @@ import Modal from 'react-bootstrap/Modal';
 
 // DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
 function Campaign(props) {
-    console.log('props',props);
+    // console.log('props',props);
     const navigate = useNavigate();
     const { id } = useParams();
 
     const [campaignName, setCampaignName] = useState('');
     const [campaignDesc, setCampaignDesc] = useState('');
     const [gmID, setGMID] = useState('');
+    const [gm, setGM] = useState('')
     const [edit, setEdit] = useState(false);
     const [nameEdit, setNameEdit] = useState('');
     const [descEdit, setDescEdit] = useState('');
@@ -24,16 +25,17 @@ function Campaign(props) {
 
     useEffect(() => {
         API.findCampaign(id, props.token).then((res) => {
-            console.log(res);
+            // console.log(res);
             setCampaignName(res.data.name);
             setCampaignDesc(res.data.description);
             setNameEdit(res.data.name);
             setDescEdit(res.data.description);
             setGMID(res.data.gm_id);
             setUsers(res.data.Users);
-            const myChars = res.data.Characters.filter((character)=>character.user_id === props.userState.id)
-            setCharacters(myChars);
-            console.log(res.data.Characters)
+            const campaignGM = res.data.Users.filter((user) => user.id === res.data.gm_id)
+            setGM(campaignGM[0])
+            setCharacters(res.data.Characters);
+
         })
     },[id,props])
 
@@ -107,7 +109,7 @@ function Campaign(props) {
             {edit ? (<input id="cmpgnDesc-edit" className="col-sm-12 col-md-4 " value={descEdit} onChange={(e)=>setDescEdit(e.target.value)}/>) : (<div className="border col-sm-12 col-md-4 ">{campaignDesc}</div>)}
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>GM</h2>
-                <h4>gm_username</h4>
+                <h4>{gm.username}</h4>
                 <h2>Players</h2>
                 <ul className="p-0">
                 {users.map((user)=>{
