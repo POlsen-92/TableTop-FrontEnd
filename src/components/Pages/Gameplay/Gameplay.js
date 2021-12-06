@@ -9,16 +9,16 @@ import { Button, Modal, FormControl, InputGroup } from "react-bootstrap";
 import Dice from "../Dice/Dice.js";
 import direWolf from "./VirTable/images/direwolf.png";
 import bukavac from "./VirTable/images/bukavac.png";
-import crab from "./VirTable/images/Beasts/Crab.png";
-import Dogmole from "./VirTable/images/Beasts/Dogmole.png";
-import Spider from "./VirTable/images/Beasts/Spider.png";
-import WhiteMonkey from "./VirTable/images/Beasts/Babboon ape monkey.png";
-import Umberhulk from "./VirTable/images/Monstrositys/Umberhulk.png";
-import ArmorAnt from "./VirTable/images/Monstrositys/Armor Ant.png";
-import Yeti from "./VirTable/images/Monstrositys/Yeti.png";
-import YetiKing from "./VirTable/images/Monstrositys/Yeti King.png";
-import DarzHelgar from "./VirTable/images/zz token/darz helgar.png";
-import DukeZalto from "./VirTable/images/zz token/duke zalto.png";
+import crab from "./VirTable/images/Beasts/Crab-min.png";
+import Dogmole from "./VirTable/images/Beasts/Dogmole-min.png";
+import Spider from "./VirTable/images/Beasts/Spider-min.png";
+import WhiteMonkey from "./VirTable/images/Beasts/Babboon ape monkey-min.png";
+import Umberhulk from "./VirTable/images/Monstrositys/Umberhulk-min.png";
+import ArmorAnt from "./VirTable/images/Monstrositys/Armor Ant-min.png";
+import Yeti from "./VirTable/images/Monstrositys/Yeti-min.png";
+import YetiKing from "./VirTable/images/Monstrositys/Yeti King-min.png";
+import DarzHelgar from "./VirTable/images/zz token/darz helgar-min.png";
+import DukeZalto from "./VirTable/images/zz token/duke zalto-min.png";
 import Zephyros from "./VirTable/images/zz token/zephyros.png";
 import ZiLiang from "./VirTable/images/zz token/zi liang.png";
 import Yusdrayl from "./VirTable/images/zz token/Yusdrayl.png";
@@ -48,48 +48,46 @@ import NarthTezrin from "./VirTable/images/zz token/narth tezrin.png";
 import MarkhamSouthwell from "./VirTable/images/zz token/markham southwell.png";
 import JarlGrugnur from "./VirTable/images/zz token/Jarl Grugnur.png";
 import GorvanIronheart from "./VirTable/images/zz token/Gorvan Ironheart.png";
-import DarathraShendrel from "./VirTable/images/zz token/darathra shendrel.png";
-import WinterWolf from "./VirTable/images/Beasts/Winter wolf.png";
-import GiantWasp from "./VirTable/images/Beasts/Wasps.png";
-import Worg from "./VirTable/images/Monstrositys/Worg.png";
-import TarrasqueDaddy from "./VirTable/images/Monstrositys/Tarrasque Daddy.png";
-import SandSquidKraken from "./VirTable/images/Monstrositys/Sand Squid Kracken.png";
-import Remorhaz from "./VirTable/images/Monstrositys/Remorhaz.png";
-import Minotaur from "./VirTable/images/Monstrositys/Minotaur.png";
-import MinotaurRager from "./VirTable/images/Monstrositys/Minotaur Rager.png";
-import MinotaurMorningstar from "./VirTable/images/Monstrositys/Minotaur Morningstar.png";
-import Mimic from "./VirTable/images/Monstrositys/Mimic.png";
-import Hippogriff from "./VirTable/images/Monstrositys/Hippogriff.png";
-import Harpy from "./VirTable/images/Monstrositys/harpy.png";
-import FlyingGolem from "./VirTable/images/Monstrositys/flying golem.png";
-import Chuul from "./VirTable/images/Monstrositys/Chuul.png";
-import Chul from "./VirTable/images/Monstrositys/Chul.png";
-import Bulette from "./VirTable/images/Monstrositys/bulette.png";
-import BlackMinotaur from "./VirTable/images/Monstrositys/Black Minotuar.png";
-import Tiger from "./VirTable/images/Beasts/tiger.png";
-import Snake from "./VirTable/images/Beasts/Snake.png";
-import Skunk from "./VirTable/images/Beasts/skunk.png";
-import Shark from "./VirTable/images/Beasts/Shark.png";
-import Rat from "./VirTable/images/Beasts/Rat.png";
-import PlagueRat from "./VirTable/images/Beasts/Plague Rat.png";
-import OwlBear from "./VirTable/images/Beasts/owlbear.png";
-import Mammoth from "./VirTable/images/Beasts/Mammoth.png";
-import Killerwhale from "./VirTable/images/Beasts/Killerwhale.png";
-import GiantIceToad from "./VirTable/images/Beasts/GiantIceToad.png";
-import GiantSnappingTurtle from "./VirTable/images/Beasts/Giant Snapping Turtle.png";
-import GiantShark from "./VirTable/images/Beasts/Giant Shark.png";
-import GiantElk from "./VirTable/images/Beasts/Giant Elk.png";
-import GiantApe from "./VirTable/images/Beasts/Giant Ape.png";
-import Eagle from "./VirTable/images/Beasts/Eagle.png";
-import DogmoleJuggernaut from "./VirTable/images/Beasts/Dogmole juggernaut.png";
-import Dino from "./VirTable/images/Beasts/Dino.png";
-import DinoTrex from "./VirTable/images/Beasts/Dino t rex.png";
-import Chicken from "./VirTable/images/Beasts/Chicken.png";
-import BrownBear from "./VirTable/images/Beasts/brown bear.png";
-import BlackDog from "./VirTable/images/Beasts/Black dog.png";
-import DwarfLeftSide from "./VirTable/images/zz token/dwarfleftside.png";
-import StatueRightSide from "./VirTable/images/zz token/statuerightside.png";
-import BgRightSide from "./VirTable/images/zz token/bgrightside.png";
+import DarathraShendrel from "./VirTable/images/zz token/darathra shendrel-min.png";
+import WinterWolf from "./VirTable/images/Beasts/Winter wolf-min.png";
+import GiantWasp from "./VirTable/images/Beasts/Wasps-min.png";
+import Worg from "./VirTable/images/Monstrositys/Worg-min.png";
+import TarrasqueDaddy from "./VirTable/images/Monstrositys/Tarrasque Daddy-min.png";
+import SandSquidKraken from "./VirTable/images/Monstrositys/Sand Squid Kracken-min.png";
+import Remorhaz from "./VirTable/images/Monstrositys/Remorhaz-min.png";
+import Minotaur from "./VirTable/images/Monstrositys/Minotaur-min.png";
+import MinotaurRager from "./VirTable/images/Monstrositys/Minotaur Rager-min.png";
+import MinotaurMorningstar from "./VirTable/images/Monstrositys/Minotaur Morningstar-min.png";
+import Mimic from "./VirTable/images/Monstrositys/Mimic-min.png";
+import Hippogriff from "./VirTable/images/Monstrositys/Hippogriff-min.png";
+import Harpy from "./VirTable/images/Monstrositys/harpy-min.png";
+import FlyingGolem from "./VirTable/images/Monstrositys/flying golem-min.png";
+import Chuul from "./VirTable/images/Monstrositys/Chuul-min.png";
+import Chul from "./VirTable/images/Monstrositys/Chul-min.png";
+import Bulette from "./VirTable/images/Monstrositys/bulette-min.png";
+import BlackMinotaur from "./VirTable/images/Monstrositys/Black Minotuar-min.png";
+import Tiger from "./VirTable/images/Beasts/tiger-min.png";
+import Skunk from "./VirTable/images/Beasts/skunk-min.png";
+import Shark from "./VirTable/images/Beasts/Shark-min.png";
+import Rat from "./VirTable/images/Beasts/Rat-min.png";
+import PlagueRat from "./VirTable/images/Beasts/Plague Rat-min.png";
+import OwlBear from "./VirTable/images/Beasts/owlbear-min.png";
+import Mammoth from "./VirTable/images/Beasts/Mammoth-min.png";
+import Killerwhale from "./VirTable/images/Beasts/Killerwhale-min.png";
+import GiantIceToad from "./VirTable/images/Beasts/GiantIceToad-min.png";
+import GiantSnappingTurtle from "./VirTable/images/Beasts/Giant Snapping Turtle-min.png";
+import GiantShark from "./VirTable/images/Beasts/Giant Shark-min.png";
+import GiantElk from "./VirTable/images/Beasts/Giant Elk-min.png";
+import GiantApe from "./VirTable/images/Beasts/Giant Ape-min.png";
+import Eagle from "./VirTable/images/Beasts/Eagle-min.png";
+import DogmoleJuggernaut from "./VirTable/images/Beasts/Dogmole juggernaut-min.png";
+import Dino from "./VirTable/images/Beasts/Dino-min.png";
+import DinoTrex from "./VirTable/images/Beasts/Dino t rex-min.png";
+import Chicken from "./VirTable/images/Beasts/Chicken-min.png";
+import BrownBear from "./VirTable/images/Beasts/brown bear-min.png";
+import BlackDog from "./VirTable/images/Beasts/Black dog-min.png";
+import DwarfLeftSide from "./VirTable/images/zz token/dwarfleftside-min.png";
+import BgRightSide from "./VirTable/images/zz token/bgrightside-min.png";
 
 const containerStyle = {
   height: "94vh",
@@ -276,10 +274,6 @@ const Beasts = [
   {
     name: "Spider",
     value: Spider,
-  },
-  {
-    name: "Snake",
-    value: Snake,
   },
   {
     name: "Tiger",
