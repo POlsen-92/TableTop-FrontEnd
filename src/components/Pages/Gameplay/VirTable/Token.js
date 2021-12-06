@@ -6,6 +6,8 @@ const tokenStyle = {
     fontSize: '1.8vh',
     fontWeight: 'bold',
     cursor: 'move',
+    position: "relative",
+    margin: "0px"
 };
 const Token = ({name,token_id,x,y,image}) => {
     console.log(name,"DRAGGINGGGG")
@@ -26,10 +28,10 @@ const Token = ({name,token_id,x,y,image}) => {
         <DragPreviewImage connect={preview} src={knightImage} />
         <div ref={drag} style={{
             ...tokenStyle,
-            opacity: isDragging ? 0.5 : 1
+            opacity: isDragging ? 0.5 : 1,
         }}>
-            <img className="center" style={{height:"8vh"}}src={image}/>
-            <div className="text-center" >{name}</div>
+            <img className="" style={{ height:"4em"}}src={image}/>
+            <div className="text-center" style={{}}>{name}</div>
         </div>
     </>);
 };
