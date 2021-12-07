@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import API from "../../../utils/API";
+import API from "../../../../utils/API";
 
 function Password(props) {
   const [updateFormState, setUpdateFormState] = useState({
