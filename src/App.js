@@ -7,13 +7,12 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/Pages/Home";
-import News from "./components/News";
 import Signup from "./components/Pages/Signup";
 import About from "./components/Pages/About";
 import Community from "./components/Pages/Community/Community";
 import Profile from "./components/Pages/Profile/Profile";
 import OtherProfile from "./components/Pages/Profile/Profile(Other)";
-import Campaign from "./components/Pages/Campaign";
+import Campaign from "./components/Pages/Campaign/Campaign";
 import NewBlogPost from "./components/Pages/Community/NewBlogPost";
 import Character from "./components/Pages/Character/Character"
 import CharacterView from "./components/Pages/Character/CharacterView";
@@ -111,7 +110,7 @@ const tokenFromStor = localStorage.getItem("token")
               />
             }
           />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<About/>} />
           <Route
             path="/signup"
             element={
@@ -142,7 +141,7 @@ const tokenFromStor = localStorage.getItem("token")
           />
           <Route
             path="/play/:id"
-            element={<Gameplay userState={userState} token={token} socket={socket}/>}
+            element={<Gameplay userState={userState} token={token}/>}
           />
           <Route
             path="/createcharacter/:id"
@@ -153,7 +152,6 @@ const tokenFromStor = localStorage.getItem("token")
             element={<Catalog userState={userState} token={token} />}
           />
         </Routes>
-        {/* <News /> */}
       </div>
     </Router>
   );

@@ -3,11 +3,10 @@ import { ItemTypes } from '../Gameboard/ItemTypes';
 import { knightImage } from '../Gameboard/knightImage';
 
 const tokenStyle = {
-    fontSize: '1.8vh',
     fontWeight: 'bold',
     cursor: 'move',
     position: "relative",
-    margin: "0px"
+    
 };
 const Token = ({name,token_id,x,y,image}) => {
     console.log(name,"DRAGGINGGGG")
@@ -30,8 +29,7 @@ const Token = ({name,token_id,x,y,image}) => {
             ...tokenStyle,
             opacity: isDragging ? 0.5 : 1,
         }}>
-            <img className="" style={{ height:"4em"}}src={image}/>
-            <div className="text-center" style={{}}>{name}</div>
+            <img className="" alt={name} style={{height:'8vh' }}src={image}/>
         </div>
     </>);
 };

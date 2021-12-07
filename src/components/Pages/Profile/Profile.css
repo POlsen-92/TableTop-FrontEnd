@@ -1,0 +1,34 @@
+.li{
+    list-style:none;
+    padding: 2%;
+    border-style:solid;
+    border-radius: 12px;
+    border-width: 5px;
+    border-color: black;
+    transition: all .2s ease-in-out;
+}
+
+.li:hover{
+    transform: scale(1.08);
+}
+
+ /*  CHANGING INPUT BOX COLOR */
+ .inputColor {
+    background-color: #222F3E;
+    color: white
+}
+
+.inputColor::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+#profile-picture-div{
+    border: solid black;
+    border-width: 5px;
+    border-radius: 12px;
+    background-color: #222F3E;
+    padding-bottom: 18px;
+    margin-left: 15%;
+    margin-right: 15%;
+}

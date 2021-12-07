@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useParams } from "react-router-dom";
 import Character from "../Character/Character";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Table from "./VirTable/Table";
 import API from "../../../utils/API";
+import {socket} from "../../../utils/socket"
 import { Button, Modal, FormControl, InputGroup } from "react-bootstrap";
 import Dice from "../Dice/Dice.js";
 import direWolf from "./VirTable/images/direwolf.png";
@@ -29,7 +31,6 @@ import BriskaneWalrog from "./VirTable/images/zz token/Wereboar.png";
 import vaasha from "./VirTable/images/zz token/vaasha.png";
 import vaal from "./VirTable/images/zz token/vaal.png";
 import UrgalaMeltimer from "./VirTable/images/zz token/urgala meltimer.png";
-import ThriKreen from "./VirTable/images/zz token/Thri-kreen.png";
 import TholtzDaggerdark from "./VirTable/images/zz token/tholtz daggerdark.png";
 import TarulVar from "./VirTable/images/zz token/Tarul Var.png";
 import Solar from "./VirTable/images/zz token/Solar.png";
@@ -69,7 +70,6 @@ import BlackMinotaur from "./VirTable/images/Monstrositys/Black Minotuar-min.png
 import Tiger from "./VirTable/images/Beasts/tiger-min.png";
 import Skunk from "./VirTable/images/Beasts/skunk-min.png";
 import Shark from "./VirTable/images/Beasts/Shark-min.png";
-import Rat from "./VirTable/images/Beasts/Rat-min.png";
 import PlagueRat from "./VirTable/images/Beasts/Plague Rat-min.png";
 import OwlBear from "./VirTable/images/Beasts/owlbear-min.png";
 import Mammoth from "./VirTable/images/Beasts/Mammoth-min.png";
@@ -258,10 +258,6 @@ const Beasts = [
   {
     name: "PlagueRat",
     value: PlagueRat,
-  },
-  {
-    name: "Rat",
-    value: Rat,
   },
   {
     name: "Shark",
@@ -473,11 +469,9 @@ const charTokens = [
 console.log(direWolf, "-------------------------wolf");
 function Gameplay(props) {
   console.log("my user_id", props.userState.id);
-  const { socket } = props;
   const { id } = useParams();
+  const chatRef = useRef(null);
 
-  const [tab, setTab] = useState("characters");
-  const [tabContents, setTabContents] = useState("");
   const [characters, setCharacters] = useState([]);
   const [CampaignName, setCampaignName] = useState("");
   const [newToken, setNewToken] = useState(0);
@@ -491,6 +485,8 @@ function Gameplay(props) {
   const [currentCategory, setCurrentCategory] = useState("Beasts");
   const [charTokenSelect, setCharTokenSelect] = useState("");
   const [charTokenName, setCharTokenName] = useState("");
+  const [chat,setChat] = useState([]);
+  const [chatInput,setChatInput] = useState("");
 
   // function that creates the token being passed into each li of character name as an onclick
   function createToken() {
@@ -581,20 +577,33 @@ function Gameplay(props) {
     setShow1(false);
   };
 
-  useEffect(() => {
-    socket.emit("join campaign room", id);
-  }, []);
+  const sendMessage = (e) => {
+    console.log(e);
+    e.preventDefault();
+    const socketObj = {user:props.userState.username, content:chatInput, id,}
+    const clientObj = {user:props.userState.username, content:chatInput}
+    socket.emit('msg sending', socketObj);
+    setChat([...chat,clientObj]);
+    setChatInput("");
+  }
+
+  useEffect(()=> {
+    socket.emit('join campaign room', id);
+  },[])
+
+  useEffect(()=> {
+    const chatDelivered = (socketObj) => {
+      setChat([...chat,socketObj]);
+    }
+    socket.on("msg delivering", chatDelivered);
+    return () => socket.removeListener("msg delivering", chatDelivered)
+  },[socket,chat]);
 
   // populates the characters state
   useEffect(() => {
     API.findCampaign(id, props.token).then((res) => {
       setCampaignName(res.data.name);
-      const myChars = res.data.Characters.filter(
-        (character) => character.user_id == props.userState.id
-      );
-      console.log("myChar", myChars);
-      setCharacters(myChars);
-      console.log("characters", characters);
+      setCharacters(res.data.Characters);
     });
   }, [props]);
 
@@ -608,28 +617,67 @@ function Gameplay(props) {
     });
   }, [newToken, deletedToken]);
 
-  useEffect(() => {
-    switch (tab) {
-      case "compendium":
-        setTabContents(
-          <div>
-            <h1 className="border text-center">Compendium</h1>
+  // let monsterList = []
+  return (
+    <div className="container-fluid p-0 m-0 " style={{
+      background: 'black'
+      }}>
+      <div className="row p-0 m-0">
+        <div className="col-3 char-menu scrollMe-Big" style={{
+            backgroundImage: `url(${DwarfLeftSide})`,
+            backgroundSize: "100% 100%",
+          }}>
+          <h2 className="border text-center col-11 bg-dark my-1 mx-1">Dice</h2>
+          <Dice />
+          <div className="row align-items-center justify-content-center  w-100">
+            <h2 className="text-center border col-11 bg-dark">Token List</h2>
+            <ul className="list-group m-3 align-items-center display-inline">
+              {tokensList.map((token) => {
+                return (
+                  <div className="d-inline">
+                    <li className="list-group-item text-center ">
+                    {token.name}
+                    <img className="" style={{ height:"4em"}}src={token.image}/>                      
+                    </li>
+                    <button
+                      className=""
+                      onClick={() => deleteNpcToken(token.token_id)}
+                    >
+                      Delete Token
+                    </button>
+                  </div>
+                );
+              })}
+            </ul>
           </div>
-        );
-        break;
-
-      case "settings":
-        setTabContents(
-          <div>
-            <h1 className="border text-center">Settings</h1>
-          </div>
-        );
-        break;
-
-      default:
-        setTabContents(
+        </div>
+        <div className="col-6 gameboard" style={containerStyle}>
+          <DndProvider backend={HTML5Backend}>
+            <Table
+              camp_id={id}
+              newToken={newToken}
+              deletedToken={deletedToken}
+            />
+          </DndProvider>
+        </div>
+        <Tabs 
+          className="mini-menu col-3"
+          style={{
+            backgroundImage: `url(${BgRightSide})`,
+            backgroundSize: "100% 100%",
+          }} 
+          defaultIndex={0}
+          >
+          <TabList>
+            <Tab>Tokens</Tab>
+            <Tab>Chat</Tab>
+          </TabList>
+          <TabPanel>
+            <div
+              className="mini-menu"
+            >
           <div className="text-center scrollMe-Big">
-            <h1 className="border text-center shadow-lg">Characters</h1>
+            <h1 className="border text-center shadow-lg bg-dark m-1">Tokens</h1>
             <ul class="list-group ">
               {characters.map((character) => {
                 return (
@@ -662,73 +710,40 @@ function Gameplay(props) {
                     <button
                       onClick={() => setShow1(true)}
                       className="align-item-center mx-5"
-                    >
-                      Place Token
-                    </button>
-                  </>
-                );
-              })}
-            </ul>
-            <button onClick={() => setShow(true)} className="m-3 ">
-              Create Custom Token
-            </button>
-            <img />
-          </div>
-        );
-        break;
-    }
-  }, [tab, characters]);
-  // let monsterList = []
-  return (
-    <div className="container-fluid p-0 m-0 ">
-      <div className="row p-0 m-0">
-        <div className="col-3 border border-primary border-4 char-menu scrollMe-Big">
-          <h2 className="border text-center">Dice</h2>
-          <Dice />
-          <div className="row align-items-center justify-content-center w-100">
-            <h2 className="text-center border col-11">Token List</h2>
-            <ul className="list-group col-2 m-3 align-items-center justify-content-center w-100">
-              {tokensList.map((token) => {
-                return (
+                      >
+                        Place Token
+                      </button>
+                      </>
+                      );
+                    })}
+                  </ul>
+                  <button onClick={() => setShow(true)} className="m-3 ">
+                    Create Custom Token
+                  </button>
+                  <img />
+                </div>
+              </div>
+          </TabPanel>
+          <TabPanel>
+            <div ref={chatRef} className="scrollMe">
+              {chat.map((msg)=>{
+                return(
                   <div>
-                    <li className="list-group-item text-center">
-                      {token.name}
-                    </li>
-                    <button
-                      className=""
-                      onClick={() => deleteNpcToken(token.token_id)}
-                    >
-                      Delete Token
-                    </button>
+                    <h6>{msg.user}</h6>
+                    <p>{msg.content}</p>
                   </div>
-                );
+                )
               })}
-            </ul>
-          </div>
-        </div>
-        <div className="col-7 gameboard" style={containerStyle}>
-          <DndProvider backend={HTML5Backend}>
-            <Table
-              camp_id={id}
-              newToken={newToken}
-              deletedToken={deletedToken}
-            />
-          </DndProvider>
-        </div>
-        <div
-          className="col-2 mini-menu"
-          style={{
-            backgroundImage: `url(${BgRightSide})`,
-            backgroundSize: "100% 100%",
-          }}
-        >
-          <div>
-            <button onClick={() => setTab("characters")}>Char</button>
-            <button onClick={() => setTab("compendium")}>Comp</button>
-            <button onClick={() => setTab("settings")}>Sett</button>
-          </div>
-          <div className="tab-contents">{tabContents}</div>
-        </div>
+            </div>
+            <form onSubmit={(e)=> sendMessage(e)}>
+              <input
+                onChange={(e)=> setChatInput(e.target.value)}
+                value={chatInput}
+              />
+              <button onClick={(e)=>sendMessage(e)}>Send</button>
+            </form>
+          </TabPanel>
+        </Tabs>
       </div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>

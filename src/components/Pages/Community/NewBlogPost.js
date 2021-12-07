@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import API from "../../../utils/API"
 import { useNavigate } from "react-router-dom";
 import { Editor } from "@tinymce/tinymce-react";
+import "bootstrap/dist/css/bootstrap.css";
 import "./community.css";
+import skulltreasurebg from "../../../style/skulltreasurebg.png";
 
 function NewBlogPost({ token }) {
-
+    document.body.style.backgroundImage = `url(${skulltreasurebg})`;
     const navigate = useNavigate();
 
     const [blogInputs, setBlogInputs] = useState({
@@ -40,26 +42,26 @@ function NewBlogPost({ token }) {
     }
 
     return (
-        <>
-            <form className="m-5 w-100" id="blog-post"
+        <div className="container">
+            <form className="w-100" id="blog-post"
                 onSubmit={createBlogPost}
             >
-                <h4>New Blog Post!</h4>
-                <input className="my-3 py-3 w-25 " id="blog-id"
+                <h1 className="text-center">New Blog Post!</h1>
+                <input className="my-3 py-3 w-100 inputColor" id="blog-id"
                     name="title"
                     onChange={handleBlogTitleChange}
                     type="text"
-                    placeholder="What Do You Want Your Blog To Be Called"
+                    placeholder="What Do You Want Your Blog To Be Called?"
                 />
                 <br />
                 <Editor
-                    initialValue="What Do You Want Your Blog To Say?"
+                    placeholder="What Do You Want Your Blog To Say?"
                     apiKey={process.env.REACT_APP_TINYAPI}
                     className= "mb-auto"
                     name="description"
                     init={{
                     height: 500,
-                    width: "60%",
+                    width: "100%",
                     menubar: true,
                     skin: "oxide-dark",
                     content_css: "dark",
@@ -78,9 +80,9 @@ function NewBlogPost({ token }) {
                 />
                 <br />
 
-                <button className="btn" id="signup-btn">Submit</button>
+                <button className="h3 p-2" id="signup-btn">Submit</button>
             </form>
-        </>
+        </div>
     );
 }
 

@@ -43,12 +43,12 @@ function Home(props) {
 
   return (
     <div  id="home-div">
-      <div className="row">
-        <div className="col-sm-12 col-md-4"><img src={logo}/> </div>
+      <div className="row mx-0">
+        <div className="col-sm-12 col-md-4"><img src={logo} alt="logo with flaming dice with double swords in the background"/> </div>
         <div className="col-sm-12 col-md-4 my-5 py-5 text-start" id="main-content">
           <div id="catch-phrase">
-            <h4 className="text-start">Quick catchy thing about our site</h4>
-            <p className="text-start"> Less quick explanation about our site and it will be saying something totally cool</p>
+            <h2 className="text-start">D&amp;D Made Simple</h2>
+            <p className="text-start">Welcome to TableTop, a browser based application that allow's adventurers across the globe to play Dungeons &amp; Dragons over the internet.</p>
           </div>
           {!props.userState.email ? <Link to="/Signup"><button className="btn" id="start-now-btn">
             Start Now
@@ -61,7 +61,7 @@ function Home(props) {
             </button>
           </Link>
         </div>
-        <div className="col-sm-12 col-md-4">
+        <div className="col-sm-12 col-md-4" >
         {!props.userState.email ?
 
           <form className=" my-5 py-5 text-center" id="login-form"
@@ -69,24 +69,24 @@ function Home(props) {
           >
             {props.errorMsg ? <Gandalf /> : null}
             <h4>Login</h4>
-            <input className="m-1" id="email-login"
+            <input className="h5 m-1 p-1 inputColor" id="email-login"
               value={loginFormState.email}
               name="email"
               onChange={handleLoginChange}
               type="email"
-              placeholder="email"
+              placeholder="Email"
             />
             <br />
-            <input className="m-1" id="password-login"
+            <input className="h5 m-1 p-1 inputColor" id="password-login"
               value={loginFormState.password}
               name="password"
               onChange={handleLoginChange}
               type="password"
-              placeholder="password"
+              placeholder="Password"
             />
             <br />
             <p>{props.errorMsg}</p>
-            <button className="btn m-1" id="submit-login">Submit</button>
+            <button className="h5 m-1 p-1" id="submit-login">Submit</button>
           </form> : null}
         </div>
       </div>
