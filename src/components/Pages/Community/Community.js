@@ -34,6 +34,7 @@ function Community({ userState }) {
         }
     }
 
+    // ADDING TIMESTAMPS TO BLOG POSTS
     const getDateTime = (dateTime) =>{
         const dateReturn = new Date(dateTime)
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

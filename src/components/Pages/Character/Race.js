@@ -66,7 +66,6 @@ export default function Race({
         .get(`https://www.dnd5eapi.co/api/subraces/${e.target.value}`)
         .then((response) => {
           setSubraceResponse(response.data);
-          console.log(response.data);
         });
     }
   };
@@ -152,7 +151,6 @@ export default function Race({
               <div className="col-sm-12 col-md-8">
                 {apiResponse.ability_bonuses
                   ? apiResponse.ability_bonuses.map((bonus, index) => {
-                      console.log(bonus.ability_score.name);
                       return (
                         <p key={index}>
                           {bonus.ability_score.name}:{bonus.bonus}
