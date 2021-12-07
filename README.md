@@ -191,7 +191,7 @@ Thank You for Your Interest and we Appreciate any feedback!
   ## Creators
   
   ### Carsdan Dvorachek - Project Manager, Full-Stack Developer
-  <img src="src/style/carsdan.png" width="100px" alt="Carsdan"> <br>
+  <img src="src/style/carsdan.jpeg" width="100px" alt="Carsdan"> <br>
   Contact at [Github](https://github.com/ChuckDvchek) or [Email](cdvchek@gmail.com)
 
 

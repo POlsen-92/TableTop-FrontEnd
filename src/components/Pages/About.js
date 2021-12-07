@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import marco from "./../../style/marco.jpg";
 import mark from "./../../style/mark.jpg";
 import paige from "./../../style/paige.png";
-import carsdan from "./../../style/carsdan.png";
+import carsdan from "./../../style/carsdan.jpeg";
 import bridgebg from "../../style/bridgebg.png";
 
 function About() {
