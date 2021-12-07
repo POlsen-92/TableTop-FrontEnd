@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import API from "../../utils/API";
 import Gandalf from "./Gandalf/Gandalf"
 import logo from "../../style/tabletop_logo_white-min.png"
+import thronesplash from "../../style/thronesplash.png";
 
 function Home(props) {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ function Home(props) {
 
   return (
     <div  id="home-div">
-      <div className="row">
+      <div className="row mx-0">
         <div className="col-sm-12 col-md-4"><img src={logo}/> </div>
         <div className="col-sm-12 col-md-4 my-5 py-5 text-start" id="main-content">
           <div id="catch-phrase">
@@ -61,7 +62,7 @@ function Home(props) {
             </button>
           </Link>
         </div>
-        <div className="col-sm-12 col-md-4">
+        <div className="col-sm-12 col-md-4" >
         {!props.userState.email ?
 
           <form className=" my-5 py-5 text-center" id="login-form"
@@ -69,24 +70,24 @@ function Home(props) {
           >
             {props.errorMsg ? <Gandalf /> : null}
             <h4>Login</h4>
-            <input className="m-1" id="email-login"
+            <input className="h5 m-1 p-1 inputColor" id="email-login"
               value={loginFormState.email}
               name="email"
               onChange={handleLoginChange}
               type="email"
-              placeholder="email"
+              placeholder="Email"
             />
             <br />
-            <input className="m-1" id="password-login"
+            <input className="h5 m-1 p-1 inputColor" id="password-login"
               value={loginFormState.password}
               name="password"
               onChange={handleLoginChange}
               type="password"
-              placeholder="password"
+              placeholder="Password"
             />
             <br />
             <p>{props.errorMsg}</p>
-            <button className="btn m-1" id="submit-login">Submit</button>
+            <button className="h5 m-1 p-1" id="submit-login">Submit</button>
           </form> : null}
         </div>
       </div>

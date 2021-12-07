@@ -1,121 +1,122 @@
-import React, { useState} from "react";
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import API from "../../utils/API";
+import treesplash from "../../style/treesplash.png";
+import bluemansplash from "../../style/bluemansplash.png";
 
-
+const treestyle = {
+  width: '100vh',
+  height: '100vh',
+  position: 'relative',
+  zIndex: '-1'
+};
+const bluemanstyle = {
+  position: 'relative',
+  zIndex: '-1',
+  width: '95vh',
+  height: '95vh',
+  marginLeft: '-300px'
+};
 export default function Signup(props) {
-    const navigate = useNavigate();
-    const [signupFormState, setSignupFormState] = useState({
-        email: "",
-        password: "",
-        username: "",
-        confirmPassword: "",
-      });
-
-    // old way
-    // const handleSignupChange = (event) => {
-    //     if (event.target.name === "email") {
-    //       setSignupFormState({
-    //         ...signupFormState,
-    //         email: event.target.value,
-    //       });
-    //     } else if (event.target.name === "password") {
-    //       setSignupFormState({
-    //         ...signupFormState,
-    //         password: event.target.value,
-    //       });
-    //     } else if(event.target.name === "username") {
-    //       setSignupFormState({
-    //         ...signupFormState,
-    //         username: event.target.value,
-    //       });
-    //     } else {
-    //       setSignupFormState({
-    //         ...signupFormState,
-    //         confirmPassword: event.target.value,
-    //       })
-    //     }
-    //   };
-
-    //new way
-      const handleSignupChange = e => {
-        const {name, value} = e.target;
-        setSignupFormState({
-          ...signupFormState,
-          [name]:value
-        })
-      }
+  const navigate = useNavigate();
+  const [signupFormState, setSignupFormState] = useState({
+    email: "",
+    password: "",
+    username: "",
+    confirmPassword: "",
+  });
 
 
-    const handleSignupSubmit = (e) => {
-        e.preventDefault();
-        if (signupFormState.password !== signupFormState.confirmPassword) {
-          props.setErrorMsg("Passwords don't match")
-        } else if (signupFormState.password.length < 8) {
-          props.setErrorMsg("Password needs to be a least 8 characters");
-        } else {
-        API.signup(signupFormState)
-          .then((res) => {
-            props.setErrorMsg("");
-            API.login(signupFormState)
-              .then((res) => {
-                props.setUserState({
-                  username: res.data.user.username,
-                  email: res.data.user.email,
-                  id: res.data.user.id,
-                  image_content: res.data.user.image_content
-                });
-                props.setToken(res.data.token);
-                localStorage.setItem("token", res.data.token);
-                navigate('/profile')
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          })
-          .catch((err) => {
-            props.setErrorMsg("User already exists please login");
-          });
-      }};
-
-    return (
-        <form className="my-5 py-5 text-center" id="signup-form"
-        onSubmit={handleSignupSubmit}
-        >
-            <h4>Signup</h4>
-            <input className="m-1" id="username-signup"
-                value={signupFormState.username}
-                name="username"
-                onChange={handleSignupChange}
-                placeholder="username"
-            />
-            <br/>
-            <input className="m-1" id="email-signup"
-                value={signupFormState.email}
-                name="email"
-                onChange={handleSignupChange}
-                type="email"
-                placeholder="email"
-            />
-            <br/>
-            <input className="m-1" id="password-signup"
-                value={signupFormState.password}
-                name="password"
-                onChange={handleSignupChange}
-                type="password"
-                placeholder="password"
-            /><br/>
-            <input className="m-1" id="confirmPassword-signup"
-                value={signupFormState.confirmPassword}
-                name="confirmPassword"
-                onChange={handleSignupChange}
-                type="password"
-                placeholder="confirm password"
-            /><br/>
-            
-            <p>{props.errorMsg}</p>
-            <button className="btn" id="signup-btn">Submit</button>
-            
-        </form>
-    );
+  //new way
+  const handleSignupChange = e => {
+    const { name, value } = e.target;
+    setSignupFormState({
+      ...signupFormState,
+      [name]: value
+    })
   }
+
+
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    if (signupFormState.password !== signupFormState.confirmPassword) {
+      props.setErrorMsg("Passwords don't match")
+    } else if (signupFormState.password.length < 8) {
+      props.setErrorMsg("Password needs to be a least 8 characters");
+    } else {
+      API.signup(signupFormState)
+        .then((res) => {
+          props.setErrorMsg("");
+          API.login(signupFormState)
+            .then((res) => {
+              props.setUserState({
+                username: res.data.user.username,
+                email: res.data.user.email,
+                id: res.data.user.id,
+                image_content: res.data.user.image_content
+              });
+              props.setToken(res.data.token);
+              localStorage.setItem("token", res.data.token);
+              navigate('/profile')
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          props.setErrorMsg("User already exists please login");
+        });
+    }
+  };
+
+  return (
+    <div >
+    <div className="row mx-0">
+      <div className="col-4 p-0">
+      <img src={treesplash} style={treestyle}/>
+      </div>
+      <form className="my-5 py-5 text-center col-4" id="signup-form"
+        onSubmit={handleSignupSubmit}
+      >
+        <h4>Signup</h4>
+        <input className="h5 m-1 p-1 inputColor" id="username-signup"
+          value={signupFormState.username}
+          name="username"
+          onChange={handleSignupChange}
+          placeholder="Username"
+        />
+        <br />
+        <input className="h5 m-1 p-1 inputColor" id="email-signup"
+          value={signupFormState.email}
+          name="email"
+          onChange={handleSignupChange}
+          type="email"
+          placeholder="Email"
+        />
+        <br />
+        <input className="h5 m-1 p-1 inputColor" id="password-signup"
+          value={signupFormState.password}
+          name="password"
+          onChange={handleSignupChange}
+          type="password"
+          placeholder="Password"
+        /><br />
+        <input className="h5 m-1 p-1 inputColor" id="confirmPassword-signup"
+          value={signupFormState.confirmPassword}
+          name="confirmPassword"
+          onChange={handleSignupChange}
+          type="password"
+          placeholder="Confirm Password"
+        /><br />
+
+        <p>{props.errorMsg}</p>
+        <button className="h5 m-1 p-2" id="signup-btn">Submit</button>
+
+      </form>
+      <div className="col-4">
+      <img src={bluemansplash} style={bluemanstyle} className=""/>
+      </div>
+    </div>
+    </div>
+  );
+}
