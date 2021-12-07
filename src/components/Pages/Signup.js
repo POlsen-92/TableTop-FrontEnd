@@ -73,7 +73,7 @@ export default function Signup(props) {
     <div >
     <div className="row mx-0">
       <div className="col-4 p-0">
-      <img src={treesplash} style={treestyle}/>
+      <img src={treesplash} style={treestyle} alt="tree spreading on left side to the bottom of page"/>
       </div>
       <form className="my-5 py-5 text-center col-4" id="signup-form"
         onSubmit={handleSignupSubmit}
@@ -114,7 +114,7 @@ export default function Signup(props) {
 
       </form>
       <div className="col-4">
-      <img src={bluemansplash} style={bluemanstyle} className=""/>
+      <img src={bluemansplash} style={bluemanstyle} className="" alt="elf holding bag of coins in front of them"/>
       </div>
     </div>
     </div>

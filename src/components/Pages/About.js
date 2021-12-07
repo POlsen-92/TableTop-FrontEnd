@@ -3,7 +3,6 @@ import marco from "./../../style/marco.jpg";
 import mark from "./../../style/mark.jpg";
 import paige from "./../../style/paige.png";
 import carsdan from "./../../style/carsdan.png";
-import dragonbg from "../../style/dragonbg.png";
 import bridgebg from "../../style/bridgebg.png";
 
 function About() {
@@ -75,6 +74,7 @@ function About() {
                 href={developer.github}
                 target="_blank"
                 style={{ color: "white" }}
+                rel="noreferrer"
               >
                 <img
                   key={index + 1}
