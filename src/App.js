@@ -20,20 +20,6 @@ import Catalog from "./components/Pages/Catalog/Catalog";
 import BlogPost from "./components/Pages/Community/BlogPost";
 import Gameplay from "./components/Pages/Gameplay/Gameplay";
 
-
-// Socket configuration
-import { io } from "socket.io-client";
-const socket = io("https://table-top-be.herokuapp.com", {
-  transports: ["websocket"],
-  extraHeaders: {
-    "my-custom-header": "1234",
-  },
-});
-
-socket.on("greeting", (greeting) => {
-  console.log(greeting);
-});
-
 function App() {
   const [campaign, setCampaign] = useState(-1);
   const handleCampaignChange = (campaignId) => setCampaign(campaignId);
