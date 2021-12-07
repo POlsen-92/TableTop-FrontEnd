@@ -2,15 +2,17 @@ import { DragPreviewImage, useDrag } from 'react-dnd';
 import { ItemTypes } from '../Gameboard/ItemTypes';
 import { knightImage } from '../Gameboard/knightImage';
 
+// TOKEN STYLING
 const tokenStyle = {
     fontWeight: 'bold',
     cursor: 'move',
     position: "relative",
     
 };
+
+// TOKEN DISPLAY FUNCTION
 const Token = ({name,token_id,x,y,image}) => {
-    console.log(name,"DRAGGINGGGG")
-    // console.log(token_id);
+    // MAKES THE TOKEN DRAGGABLE
     const [{ isDragging }, drag, preview] = useDrag(() => ({
         type: ItemTypes.TOKEN,
         item: {

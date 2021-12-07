@@ -9,6 +9,8 @@ import API from "../../../utils/API";
 import {socket} from "../../../utils/socket"
 import { Button, Modal, FormControl, InputGroup } from "react-bootstrap";
 import Dice from "../Dice/Dice.js";
+
+// importing our token images T.T
 import direWolf from "./VirTable/images/direwolf.png";
 import bukavac from "./VirTable/images/bukavac.png";
 import crab from "./VirTable/images/Beasts/Crab-min.png";
@@ -95,7 +97,11 @@ const containerStyle = {
   backgroundImage: `url(https://64.media.tumblr.com/2267f9cbe894a43c5d7170200035bfee/tumblr_p3yb76ZWh61x3jozbo1_1280.jpg)`,
   backgroundSize: "100% 100%",
 };
+
+// define token categories
 const tokenCategories = ["Beasts", "Monstrositys"];
+
+// monstrosity token data is stored here 
 const Monstrositys = [
   {
     name: "Armor Ant",
@@ -174,6 +180,8 @@ const Monstrositys = [
     value: YetiKing,
   },
 ];
+
+// monstrosity token data is stored here 
 const Beasts = [
   {
     name: "Black Dog",
@@ -284,6 +292,8 @@ const Beasts = [
     value: WinterWolf,
   },
 ];
+
+// monstrosity token data is stored here 
 const charTokens = [
   {
     name: "Briskane Walrog",
@@ -466,12 +476,14 @@ const charTokens = [
     gender: "Male",
   },
 ];
-console.log(direWolf, "-------------------------wolf");
+
+// iniate gameplay element
 function Gameplay(props) {
   console.log("my user_id", props.userState.id);
   const { id } = useParams();
   const chatRef = useRef(null);
 
+  // define states
   const [characters, setCharacters] = useState([]);
   const [CampaignName, setCampaignName] = useState("");
   const [newToken, setNewToken] = useState(0);
@@ -509,13 +521,11 @@ function Gameplay(props) {
       document.getElementById("charTokenSelect").selectedIndex = 0;
     });
   }
-  // function that creates npc tokens
 
+  // function that creates npc tokens
   function createNpcToken() {
-    // setCurrentImage(direWolf)
     API.findTokens(id).then((res) => {
       let data = res.data;
-      console.log(data.length);
       const createdToken = {
         name: npcName,
         token_id: data.length,
@@ -576,7 +586,8 @@ function Gameplay(props) {
   const handleClose1 = () => {
     setShow1(false);
   };
-
+  
+  // handles sending chat messages
   const sendMessage = (e) => {
     console.log(e);
     e.preventDefault();
@@ -587,10 +598,12 @@ function Gameplay(props) {
     setChatInput("");
   }
 
+  // joins campaign room
   useEffect(()=> {
     socket.emit('join campaign room', id);
   },[])
 
+  // delivers messages in the chat
   useEffect(()=> {
     const chatDelivered = (socketObj) => {
       setChat([...chat,socketObj]);
@@ -617,7 +630,7 @@ function Gameplay(props) {
     });
   }, [newToken, deletedToken]);
 
-  // let monsterList = []
+  // what is displayed to the page
   return (
     <div className="container-fluid p-0 m-0 " style={{
       background: 'black'
@@ -632,6 +645,7 @@ function Gameplay(props) {
           <div className="row align-items-center justify-content-center  w-100">
             <h2 className="text-center border col-11 bg-dark">Token List</h2>
             <ul className="list-group m-3 align-items-center display-inline">
+              {/* map through the token list and display each token */}
               {tokensList.map((token) => {
                 return (
                   <div className="d-inline">
@@ -651,6 +665,7 @@ function Gameplay(props) {
             </ul>
           </div>
         </div>
+        {/* display the gameboard to the page */}
         <div className="col-6 gameboard" style={containerStyle}>
           <DndProvider backend={HTML5Backend}>
             <Table
@@ -679,6 +694,7 @@ function Gameplay(props) {
           <div className="text-center scrollMe-Big">
             <h1 className="border text-center shadow-lg bg-dark m-1">Tokens</h1>
             <ul class="list-group ">
+              {/* map through the character list and display to the page  */}
               {characters.map((character) => {
                 return (
                   <>
@@ -707,6 +723,7 @@ function Gameplay(props) {
                         ></FormControl>
                       </InputGroup>
                     </li>
+                    {/* opens character token modal */}
                     <button
                       onClick={() => setShow1(true)}
                       className="align-item-center mx-5"
@@ -717,6 +734,7 @@ function Gameplay(props) {
                       );
                     })}
                   </ul>
+                  {/* opens custom token modal */}
                   <button onClick={() => setShow(true)} className="m-3 ">
                     Create Custom Token
                   </button>
@@ -745,6 +763,7 @@ function Gameplay(props) {
           </TabPanel>
         </Tabs>
       </div>
+      {/* custom token modal */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>Create a Token!</Modal.Title>
@@ -766,6 +785,7 @@ function Gameplay(props) {
               name="categorySelect"
               onChange={handleTokenInputChange}
             >
+              {/* map through the token categories and display them as options */}
               {tokenCategories.map((category) => {
                 return <option value={category}>{category}</option>;
               })}
@@ -778,6 +798,7 @@ function Gameplay(props) {
               <option>Choose Wisely...</option>
               {currentCategory === "Beasts" ? (
                 <>
+                {/* map through the beasts and display them as options */}
                   {Beasts.map((beast) => {
                     return <option value={beast.value}>{beast.name}</option>;
                   })}
@@ -785,6 +806,7 @@ function Gameplay(props) {
               ) : null}
               {currentCategory === "Monstrositys" ? (
                 <>
+                {/* map through the monstrositys and display them as options */}
                   {Monstrositys.map((monstrosity) => {
                     return (
                       <option value={monstrosity.value}>
@@ -806,7 +828,8 @@ function Gameplay(props) {
           </Button>
         </Modal.Footer>
       </Modal>
-
+      
+      {/* character token modal */}
       <Modal show={show1} onHide={handleClose1}>
         <Modal.Header>
           <Modal.Title>Select an image</Modal.Title>
@@ -820,6 +843,8 @@ function Gameplay(props) {
               onChange={handleTokenInputChange}
             >
               <option>Choose Wisely...</option>
+
+              {/* map through the character token list and display as options */}
               {charTokens.map((charToken) => {
                 return (
                   <option value={charToken.value}>
