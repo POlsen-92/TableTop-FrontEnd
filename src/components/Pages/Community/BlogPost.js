@@ -23,7 +23,6 @@ function BlogPost(props) {
 
     useEffect(() => {
         API.findBlogPost(id, props.token).then((res) => {
-            console.log(res.data)
             setPostData(res.data[0]);
             setCommentData(res.data[1]);
         })
@@ -112,8 +111,10 @@ function BlogPost(props) {
         <div>
             <div className="container py-4">
                 <div className = "border p-2 card textColor">
+                    {/* BLOG NAME */}
                     {editBlog ? (<input className="row m-1 h3 inputColor" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1 className="card-header">{postData.title}</h1>)}
                     <br />
+                    {/* BLOG CONTENT */}
                     {editBlog ? (
                         <div>
                             <Editor
@@ -147,6 +148,7 @@ function BlogPost(props) {
                     </p> : null}
                 </div>
                 <br />
+                {/* BLOG BUTTONS */}
                 {props.userState.id === postData.user_id ? (
                     <div>
                         <button className="m-2" onClick={()=>deleteBlogPost(id)} >Delete Post</button>
@@ -157,6 +159,7 @@ function BlogPost(props) {
                 <div>
                 <br />
                 <br />
+                {/* BLOG COMMENTS */}
                     {commentData.map((comment) => {
                         return (
                             <div className = "border-top p-3 my-2 card textColor">
@@ -172,6 +175,7 @@ function BlogPost(props) {
                         )
                     })}
                     <br />
+                    {/* ADD COMMENT FORM */}
                     <form className="border-top p-3" id="comment-form"
                         onSubmit={createComment}>
                         <div className="">

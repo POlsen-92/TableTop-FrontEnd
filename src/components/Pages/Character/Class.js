@@ -69,7 +69,6 @@ export default function Class({
         .get(`https://www.dnd5eapi.co/api/subclasses/${e.target.value}`)
         .then((response) => {
           setSubclassResponse(response.data);
-          console.log(response.data);
         });
     }
   };
@@ -91,7 +90,6 @@ export default function Class({
         const temp = [...proficiencies];
         temp.push(e.target.value);
         setProficiencies(temp);
-        console.log(temp);
       }
     }
   };

@@ -8,6 +8,7 @@ import skulltreasurebg from "../../../style/skulltreasurebg.png";
 
 function NewBlogPost({ token }) {
     document.body.style.backgroundImage = `url(${skulltreasurebg})`;
+    
     const navigate = useNavigate();
 
     const [blogInputs, setBlogInputs] = useState({
@@ -79,7 +80,6 @@ function NewBlogPost({ token }) {
                     onChange={handleBlogDescChange}
                 />
                 <br />
-
                 <button className="h3 p-2" id="signup-btn">Submit</button>
             </form>
         </div>

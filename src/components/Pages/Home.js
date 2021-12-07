@@ -3,8 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import API from "../../utils/API";
 import Gandalf from "./Gandalf/Gandalf"
 import logo from "../../style/tabletop_logo_white-min.png"
+import blueMoon from "../../style/blue-moon.jpg";
 
 function Home(props) {
+  document.body.style.backgroundImage = `url(${blueMoon})`;
   const navigate = useNavigate();
 
   const [loginFormState, setLoginFormState] = useState({
@@ -24,7 +26,6 @@ function Home(props) {
     e.preventDefault();
     API.login(loginFormState)
       .then((res) => {
-        // console.log(res);
         props.setErrorMsg("");
         props.setUserState({
           username: res.data.user.username,
@@ -36,7 +37,7 @@ function Home(props) {
         localStorage.setItem("token", res.data.token);
         navigate('/')
       })
-      .catch((err) => {
+      .catch(() => {
         props.setErrorMsg("Wrong email and/or password");
       });
   };

@@ -66,21 +66,18 @@ export default function Homebrew({
   // listen for changes with text form inputs
 
   const handleBackgroundChange = (e) => {
-    console.log("Content was updated:", e.target.getContent());
     setCharacterInfo({
       ...characterInfo,
       background: e.target.getContent(),
     });
   };
   const handlePersonalityChange = (e) => {
-    console.log("Content was updated:", e.target.getContent());
     setCharacterInfo({
       ...characterInfo,
       personality: e.target.getContent(),
     });
   };
   const handleAlignmentChange = (e) => {
-    console.log("Content was updated:", e.target.getContent());
     setCharacterInfo({
       ...characterInfo,
       alignment: e.target.getContent(),
@@ -159,7 +156,6 @@ export default function Homebrew({
       roll6.output,
     ];
     let total = [];
-    console.log(rolls);
     for (let i = 0; i < 6; i++) {
       let output = rolls[i];
       output = output
@@ -309,15 +305,12 @@ export default function Homebrew({
         window.location.toString().split("/").length - 1
       ];
       API.createCharacter(characterInfo, campaignId, token).then((res) => {
-        console.log(res.data.id);
-        console.log(res.data);
         if (proficiencies) {
           proficiencies.map((items) => {
             const data = {
               name: items,
             };
-            API.createNewProficiency(res.data.id, data, token).then((res) => {
-              console.log(res.data);
+            API.createNewProficiency(res.data.id, data, token).then(() => {
               navigate(`/campaign/${campaignId}`);
             });
           });

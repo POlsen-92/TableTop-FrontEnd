@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import API from "../../../utils/API";
 import { Editor } from "@tinymce/tinymce-react";
 import { Modal, Button } from "react-bootstrap";
@@ -7,9 +7,9 @@ import DOMPurify from "dompurify";
 import "bootstrap/dist/css/bootstrap.css";
 import "./Campaign.css"
 
-// DATA POPULATION NEEDS NEW ROUTING ( DATA[0] user campain),,,, (DATA[1] gm capmpaigns
+
 function Campaign(props) {
-    // console.log('props',props);
+  // GETTING ALL INFO ON PAGE LOAD
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -17,66 +17,30 @@ function Campaign(props) {
     const [campaignDesc, setCampaignDesc] = useState('');
     const [gmID, setGMID] = useState('');
     const [gm, setGM] = useState('')
-    const [edit, setEdit] = useState(false);
-    const [nameEdit, setNameEdit] = useState('');
-    const [descEdit, setDescEdit] = useState('');
-    const [invite, setInvite] = useState('');
     const [users, setUsers] = useState([]);
     const [characters, setCharacters] = useState([]);
-    const [inviteMsg, setInviteMsg] = useState("");
-    const [show,setShow] = useState(false);
-
+    
     useEffect(() => {
         API.findCampaign(id, props.token).then((res) => {
-            // console.log(res);
             setCampaignName(res.data.name);
             setCampaignDesc(res.data.description);
+            setUsers(res.data.Users);
+            setCharacters(res.data.Characters);
+            const campaignGM = res.data.Users.filter((user) => user.id === res.data.gm_id)
+            setGMID(res.data.gm_id);
+            setGM(campaignGM[0])
             setNameEdit(res.data.name);
             setDescEdit(res.data.description);
-            setGMID(res.data.gm_id);
-            setUsers(res.data.Users);
-            const campaignGM = res.data.Users.filter((user) => user.id === res.data.gm_id)
-            setGM(campaignGM[0])
-            setCharacters(res.data.Characters);
-
         })
     },[id,props])
 
+  // PURIFIES INPUT FROM TINYMCE SO THAT IT CAN BE READ PROPERLY
     useEffect(() => {
       setCampaignDesc({campaignDesc: DOMPurify.sanitize(campaignDesc)})
-  },[])
+    },[])
 
-    const createCharacter = () => {
-        navigate(`/createcharacter/${id}`)
-    }
 
-    const save = () => {
-        const update = {
-            name: nameEdit,
-            description: descEdit,
-        }
-        API.updateCampaign(id, update, props.token).then((res) => console.log(res));
-        setCampaignName(nameEdit);
-        setCampaignDesc(descEdit);
-        setEdit(false);
-    }
-
-    const sendInvite = () => {
-        API.findUserByEmail(invite, props.token).then((res) => {
-            const inviteObj = {
-                campaign_id: id,
-                user_id: res.data.id,
-            }
-            API.createInvite(inviteObj, props.token).then((response) => {
-                setInvite("");
-                setInviteMsg("Invite Sent");
-                setTimeout(() => {
-                    setInviteMsg("")
-                }, 5000);
-            });
-        })
-    }
-
+  // CAMPAIGN HEADER BUTTONS
     const deleteCampaign = (dltCmpgnId) => {
       if(window.confirm("Do You Really Want To Delete This Spell?")) {
           API.deleteCampaign(dltCmpgnId, props.token);
@@ -87,22 +51,75 @@ function Campaign(props) {
     };
 
     const leaveCampaign = (campaign_id) => {
-      API.userDelUserCampaign(campaign_id, props.token).then((res)=>{
-        console.log(res);
-      })
+      API.userDelUserCampaign(campaign_id, props.token)
       navigate('/profile')
     }
+    
     const kickPlayer = (campaign_id,user_id) => {
       API.gmDelUserCampaign(campaign_id,user_id,props.token);
       window.location.reload();
     }
 
+    const createCharacter = () => {
+        navigate(`/createcharacter/${id}`)
+    }
+
+  // EDIT CAMPAIGN INFORMATION
+    const [edit, setEdit] = useState(false);
+    const [nameEdit, setNameEdit] = useState('');
+    const [descEdit, setDescEdit] = useState('');
+
+    const save = () => {
+        const update = {
+            name: nameEdit,
+            description: descEdit,
+        }
+        API.updateCampaign(id, update, props.token).then(() => {
+          setCampaignName(nameEdit);
+          setCampaignDesc(descEdit);
+          setEdit(false);
+        }).catch((err) => {
+          console.log(err)
+        });
+    }
+
+  // CAMPAIGN INVITES
+    const [invite, setInvite] = useState('');
+    const [inviteMsg, setInviteMsg] = useState("");
+
+    const sendInvite = () => {
+        API.findUserByEmail(invite, props.token).then((res) => {
+            const inviteObj = {
+                campaign_id: id,
+                user_id: res.data.id,
+            }
+            API.createInvite(inviteObj, props.token).then(() => {
+                setInvite("");
+                setInviteMsg("Invite Sent");
+                setTimeout(() => {
+                    setInviteMsg("")
+                }, 5000);
+            }).catch((err) => {
+              console.log(err)
+            });
+        }).catch((err) => {
+          console.log(err)
+        });
+    }
+
+
+  // MODAL ACTIONS
+    const [show,setShow] = useState(false);
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+
 
     return (
     <div className="container">
       <br />
+      {/* CAMPAIGN HEADER AND BUTTONS */}
         {edit ? (<input id="cmpgnName-edit" className="row inputColor h1 py-1" value={nameEdit} onChange={(e)=>setNameEdit(e.target.value)}/>) : (<h1 className="row">{campaignName}</h1>)}
         <div className="row">
             <button 
@@ -117,6 +134,7 @@ function Campaign(props) {
             <button className="col-2 btn my-1 me-1" onClick={createCharacter}>Add Character</button>
             {(gmID !== props.userState.id) ? (<button className="col-2 btn my-1 me-1" onClick={()=> leaveCampaign(id)}>Leave Campaign</button>) : null}
         </div>
+        {/* CAMPAIGN DESCRIPTION */}
         <div className="row">
             {edit ? (
             <div className="col-sm-12 col-md-4 ">
@@ -144,6 +162,7 @@ function Campaign(props) {
               />
             </div>
             ) : (<div className="border col-sm-12 col-md-4 scrollMe"><span dangerouslySetInnerHTML={{__html: campaignDesc}}></span></div>)}
+            {/* CAMPAIGN PLAYERS */}
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>GM</h2>
                 <h4>{gm.username}</h4>
@@ -175,13 +194,14 @@ function Campaign(props) {
                                 <h4 key={index+5}>{user.username}</h4>
                               </li>
                             </div>
-                          )
-                    }
-                })}</ul>
+                      )}
+                })}
+                </ul>
                 <br />
                 <br />
                 {(gmID === props.userState.id) ? (<div className="row"><div className="col"><input value={invite} className="inputColor" placeholder="User Email" onChange={(e) => setInvite(e.target.value)} /><button className="btn m-1" onClick={() => sendInvite()}>Invite User</button><p>{inviteMsg}</p></div></div>) : ""}
             </div>
+            {/* CAMPAIGN CHARACTERS */}
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>Character(s)</h2>
                 <ul className="p-0 m-0">
@@ -202,6 +222,7 @@ function Campaign(props) {
                 })}</ul>
             </div>
             </div>
+            {/* KICK PLAYER MODAL */}
             <Modal show={show} onHide={handleClose}>
               <Modal.Header>
                 <Modal.Title>Users</Modal.Title>
