@@ -7,6 +7,8 @@
   This app was created with Virtual D&D players in mind, with this project you can meet up with friends to create a campaign or find new players within our community forum to group up with. Run or join as many campaigns as you like with our interactive campaign and character creation and track progress by adding to your inventory, proficiency and features list and update attributes. 
 
   Our Campaign Gameplay includes a virtual tabletop where a GM will be able to move character and NPC tokens around a map to indicate gameplay. We recommend playing through a third party video call such as Zoom or Discord where the GM is sharing their screen with the rest of the party.
+
+
   ## Table Of Contents
   
   - [Installation](#installation)
@@ -19,7 +21,8 @@
   ## Usage
 
   Our app is deployed through Heroku which you can access through this [link](https://table-top-fe.herokuapp.com/) and we recommend using a Chrome Browser. Upon entering the website you will see our a navbar at the top, our logo, a brief description of the website and a sign in form. 
-  If you haven't signed up there is a link in the navbar for that purpose
+
+  If you haven't signed up there is a link in the navbar for that purpose along with links for our About page, Community Page and once you're signed in there will also be a link for Profile
 
   <img src="src/style/screenshots/home_ss.png" width="600px" alt="ScreenShot of our HomePage"> <img src="src/style/screenshots/signup_ss.png" width="600px" alt="ScreenShot of our SignUp Page"> <br>
 
@@ -45,7 +48,7 @@
   
   <img src="src/style/screenshots/charview1_ss.png" width="600px" alt="ScreenShot of our Character View"> <img src="src/style/screenshots/charview2_ss.png" width="600px" alt="ScreenShot of our Character View"> <br>
 
-  Once your campaign is ready to begin you can click the Launch Campaign Page and begin playing with your friends via Zoom. We recommend that the GM controls the launch page and shares their screen with the other players. 
+  Once your campaign is ready to begin you can click the Launch Campaign Page and begin playing with your friends via Zoom. We recommend that the GM controls the launch page and shares their screen with the other players. However, if the gm and other players are active on the campaign page there is a chat function using socket, if you change to the chat tab then players and the gm can interact with eachother without needing zoom.
   
   When setting up the launch page it is important to add only one character token at a time. Add a token, it will appear at the top left portion of the map, and then move that token to another spot before adding another. You do need to choose a picture and type in the name of the character before the token is created. Once all the character tokens are made an NPC can add NPC tokens at will for the players to interact with. 
 
@@ -175,6 +178,7 @@ Thank You for Your Interest and we Appreciate any feedback!
 
   New Tech
    - [TinyMCE Editor](https://www.tiny.cloud/?gclid=CjwKCAiAhreNBhAYEiwAFGGKPAi6B199TCmwOyrfPF5k2rAq3YA6dTx_StVPoej9aQD6wxVrKS2xohoCNGUQAvD_BwE)
+   - [Socket.io](https://socket.io/)
 
   Other Techs Used
   - [axios](https://axios-http.com/docs/intro)
