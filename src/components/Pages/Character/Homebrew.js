@@ -22,13 +22,30 @@ export default function Homebrew({
 }) {
   const navigate = useNavigate();
   const [play] = useSound(rollSound);
+
+  // used to show save modal
+
   const [show, setShow] = useState(false);
+  
+  //used to show error modal
   const [error, setError] = useState(false);
+
+  // used to show form for rolling hitpoints when there is no class info for hit die
   const [noClass, setNoClass] = useState(false);
+
+  // used to show random numbers during a role
   const [rollingHitpoints, setRollingHitpoints] = useState("");
+
+  // used to show random numbers during a role
   const [rollingThunda, setRollingThunda] = useState("");
+
+  // used to hid roll button
   const [hideRoll, setHideRoll] = useState(true);
+
+  //used to hid bonus roll button
   const [hideBonusRoll, setHideBonusRoll] = useState(true);
+
+  // used to display bonus for chosen race
   const [showBonus, setShowBonus] = useState({
     strength: 0,
     dexterity: 0,
@@ -45,6 +62,8 @@ export default function Homebrew({
     wisdom: 0,
     charisma: 0,
   };
+
+  // listen for changes with text form inputs
 
   const handleBackgroundChange = (e) => {
     console.log("Content was updated:", e.target.getContent());
@@ -68,6 +87,8 @@ export default function Homebrew({
     });
   };
 
+  // listen for changes with all other forms
+
   const handleCharacterChange = (e) => {
     const { name, value } = e.target;
     setCharacterInfo({
@@ -76,12 +97,17 @@ export default function Homebrew({
     });
   };
 
+  // generates random name
+
   const randomName = () => {
     setCharacterInfo({
       ...characterInfo,
       charName: randomNameGenerator("sV'i"),
     });
   };
+
+  // calculates hit points based off of either the hit die or provided user input
+  // plays the dice sound, prints random numbers during sound then shows roll outcome
 
   const calculateHitpoints = () => {
     setCharacterInfo({
@@ -115,6 +141,8 @@ export default function Homebrew({
     }, 2300);
   };
 
+  // calculates attributes all at once, rolls 4 die, removes smallest number, and totals remainder
+
   const calculateAttributes = () => {
     const roll1 = new DiceRoll("4d6");
     const roll2 = new DiceRoll("4d6");
@@ -147,7 +175,6 @@ export default function Homebrew({
       output.splice(location, 1);
       total.push(output.reduce((partial, item) => partial + item));
     }
-    console.log(total);
     setHideRoll(true);
     play();
     const moving = setInterval(() => {
@@ -167,6 +194,9 @@ export default function Homebrew({
       });
     }, 2300);
   };
+
+  // grabs racial bonus based off of chosen race from apiResponse then adds the appropriate
+  // amount 
 
   const addRacialBonusAttributes = () => {
     setHideBonusRoll(true);
@@ -264,6 +294,9 @@ export default function Homebrew({
     });
   };
 
+  // handles the close options from the modal; if saving gets campaign id from URL and saves 
+  // character info
+
   const handleClose = (e) => {
     if (!e) {
       setShow(false);
@@ -293,6 +326,8 @@ export default function Homebrew({
       });
     }
   };
+
+  // if no character name show error, otherwise show save modal
 
   const handleShow = () => {
     if (characterInfo.charName !== "") {

@@ -17,8 +17,12 @@ export default function Class({
   const [classes, setClasses] = useState([]);
   const [subclasses, setSubClasses] = useState([]);
 
+  // when a class is chosen query the api for subclasses for that class
+  // then store information received into various states
+  // if the menu is moved back to "choose class" reset forms
+
   const fillSubClasses = (e) => {
-    if(document.getElementById("subclass")) {
+    if (document.getElementById("subclass")) {
       document.getElementById("subclass").selectedIndex = 0;
     }
     setCharacterInfo({
@@ -46,6 +50,9 @@ export default function Class({
       });
   };
 
+  // when subclass is chosen get the information and store it in state
+  // if "choose sub-class" is chosen reset form
+
   const pickSubClass = (e) => {
     if (e.target.value === "Choose Sub-Class") {
       setCharacterInfo({
@@ -67,6 +74,9 @@ export default function Class({
     }
   };
 
+  // ensure only the amount of proficiences can be chosen
+  // if the same proficiency is chosen remove it from the list
+
   const proficienciesControl = (e) => {
     if (proficiencies.includes(e.target.value)) {
       setProficiencies(
@@ -85,6 +95,10 @@ export default function Class({
       }
     }
   };
+
+  //populate the class dropdown form with the classes from the API if they aren't
+  //already - which would happen if user comes back to the form after
+  //already chosing a class
 
   useEffect(() => {
     axios.get("https://www.dnd5eapi.co/api/classes").then((response) => {
@@ -135,7 +149,7 @@ export default function Class({
                 {classapiResponse.hit_die}
               </div>
             </div>
-            <hr/>
+            <hr />
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Saving Throws</h2>
@@ -146,7 +160,7 @@ export default function Class({
                 })}
               </div>
             </div>
-            <hr/>
+            <hr />
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 <h2>Proficiency Choices</h2> (choose{" "}
@@ -159,7 +173,6 @@ export default function Class({
                       {classapiResponse.proficiency_choices[0].from.map(
                         (items, index) => {
                           return (
-                            // <div key={index} data-tip data-for={items.index}>
                             <button
                               data-tip
                               data-for={items.index}
@@ -168,7 +181,6 @@ export default function Class({
                             >
                               {items.name}
                             </button>
-                            // </div>
                           );
                         }
                       )}
@@ -186,7 +198,10 @@ export default function Class({
                         stunts, including dives, rolls, somersaults, and flips.
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip className="tooltip" id="skill-animal-handling">
+                    <ReactTooltip
+                      className="tooltip"
+                      id="skill-animal-handling"
+                    >
                       <p>
                         When there is any question whether you can calm down a
                         domesticated animal, <br />
@@ -237,7 +252,7 @@ export default function Class({
                         disputes, recent wars, and lost civilizations."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip  className="tooltip"id="skill-insight">
+                    <ReactTooltip className="tooltip" id="skill-insight">
                       <p>
                         "Your Wisdom (Insight) check decides whether you can
                         determine the true intentions of a <br />
@@ -331,7 +346,10 @@ export default function Class({
                         the practices of secret cults."
                       </p>
                     </ReactTooltip>
-                    <ReactTooltip className="tooltip" id="skill-sleight-of-hand">
+                    <ReactTooltip
+                      className="tooltip"
+                      id="skill-sleight-of-hand"
+                    >
                       <p>
                         "Whenever you attempt an act of legerdemain or manual
                         trickery, such as planting something on <br />
@@ -371,7 +389,7 @@ export default function Class({
                 </div>
               </div>
             </div>
-            <hr/>
+            <hr />
             <div className="row">
               <div className="col-sm-12 col-md-4">
                 {subclassResponse.desc ? <h2>Sub-Class Description</h2> : null}
@@ -381,7 +399,7 @@ export default function Class({
           </div>
         </div>
       ) : null}
-      <br/>
+      <br />
     </div>
   );
 }

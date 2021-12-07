@@ -26,8 +26,8 @@ export default function Signup(props) {
     confirmPassword: "",
   });
 
-
-  //new way
+  // listens for form changes
+  
   const handleSignupChange = e => {
     const { name, value } = e.target;
     setSignupFormState({
@@ -36,6 +36,10 @@ export default function Signup(props) {
     })
   }
 
+  // verifies password matches and is at least 8 characters
+  // if user email already exists display error
+  // if account is successfully created, populate userState with user info
+  // and navigate to profile page.
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
