@@ -111,8 +111,8 @@ function BlogPost(props) {
     return (
         <div>
             <div className="container py-4">
-                <div className = "border p-2">
-                    {editBlog ? (<input className="row m-1 h3 inputColor" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1 className="border-bottom">{postData.title}</h1>)}
+                <div className = "border p-2 card textColor">
+                    {editBlog ? (<input className="row m-1 h3 inputColor" defaultValue={postData.title} onChange={(e)=>setblogTitleEdit(e.target.value)}/>) : (<h1 className="card-header">{postData.title}</h1>)}
                     <br />
                     {editBlog ? (
                         <div>
@@ -141,7 +141,7 @@ function BlogPost(props) {
                                 onChange={(e)=>setblogDescEdit(e.target.getContent())}
                             />
                         </div>
-                    ) : (<span dangerouslySetInnerHTML={{__html: postData.description}}></span>)}
+                    ) : (<span className = "card-body" dangerouslySetInnerHTML={{__html: postData.description}}></span>)}
                     {postData.User ? <p><img src={postData.User.image_content} width="100px" height="100px" alt="profilepic"/>
                     {postData.User.username} on {getDateTime(postData.createdAt)}
                     </p> : null}
@@ -159,7 +159,7 @@ function BlogPost(props) {
                 <br />
                     {commentData.map((comment) => {
                         return (
-                            <div className = "border-top p-3">
+                            <div className = "border-top p-3 my-2 card textColor">
                                 <div key={comment.id}>
                                     <p>{comment.body}</p>
                                     <p> <img src={comment.User.image_content} width="100px" height="100px" alt="profilepic"/>

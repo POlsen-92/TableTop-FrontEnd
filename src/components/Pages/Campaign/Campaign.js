@@ -143,7 +143,7 @@ function Campaign(props) {
                 onChange={(e) => setDescEdit(e.target.getContent())}
               />
             </div>
-            ) : (<div className="border col-sm-12 col-md-4 "><span dangerouslySetInnerHTML={{__html: campaignDesc}}></span></div>)}
+            ) : (<div className="border col-sm-12 col-md-4 scrollMe"><span dangerouslySetInnerHTML={{__html: campaignDesc}}></span></div>)}
             <div className="border col-sm-12 col-md-4 text-center scrollMe">
                 <h2>GM</h2>
                 <h4>{gm.username}</h4>
