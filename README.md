@@ -58,7 +58,7 @@
 
   As a new User you can also utilize the Community Forum to find players for your campaign or find a campaign to join for yourself. You would have to interact within the comments with the GM in order for them to send you an invite to their campaign.
 
-  <img src="src/style/screenshots/community_ss.png" width="600px" alt="ScreenShot of our Community Page"> <img src="src/style/screenshots/blogedit_ss.png" width="600px" alt="ScreenShot of our Blog Post"> <br>
+  <img src="src/style/screenshots/community_ss.png" width="600px" alt="ScreenShot of our Community Page"> <img src="src/style/screenshots/blog_ss.png" width="600px" alt="ScreenShot of our Blog Post"> <br>
 
 Finally, if you view the about page you can see information about our team with links to our GitHub repos and information about our app!
 
