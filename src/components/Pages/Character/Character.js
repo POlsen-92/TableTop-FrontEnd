@@ -17,6 +17,9 @@ export default function Character({ token }) {
     }
   }, [token, navigate]);
 
+  // creates state to be used across character.js, race.js
+  // class.js, and homebrew.js
+
   const [characterInfo, setCharacterInfo] = useState({
     charName: "",
     personality: "",
@@ -39,16 +42,41 @@ export default function Character({ token }) {
     hitpoints: 0,
   });
 
+  // used to control what the left and right buttons do
+  // for navigation purposes
+
   const [currentPage, setCurrentPage] = useState({
     current: "Home",
     left: "Homebrew",
     right: "Race",
   });
+
+  // apiResponse is the information received from API concerning
+  // race choice
+
   const [apiResponse, setApiResponse] = useState([]);
+
+  // subraceResponse is the information received from API concerning
+  // subrace choice
+
   const [subraceResponse, setSubraceResponse] = useState([]);
+
+  // used to hold user choices concerning character proficiencies
+
   const [proficiencies, setProficiencies] = useState([]);
+
+  // classapiResponse is the information received from API concerning
+  // class choice
+
   const [classapiResponse, setClassApiResponse] = useState([]);
+
+  // subclassResponse is the information received from API concerning 
+  // subclass choice
+
   const [subclassResponse, setSubclassResponse] = useState([]);
+
+  // page handler logic telling the left and right button what to do 
+  // based off of the current page
 
   const pageHandler = (e) => {
     if (e.target.value === "left") {

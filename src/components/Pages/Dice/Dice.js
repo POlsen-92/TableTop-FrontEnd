@@ -2,17 +2,23 @@ import React, { useState } from 'react';
 import DiceForm from './DiceForm'
 import "bootstrap/dist/css/bootstrap.css";
 
+// used to be able to add multiple dice components
+
 const Input = () => {
     return <DiceForm />
 }
 
-function Test() {
+function Dice() {
 
     const [diceList, setDiceList] = useState([])
+
+    // adds a dice component
 
     const addDice = () => {
         setDiceList(diceList.concat(<Input key={diceList.length} />))
     }
+
+    // removes a dice component
 
     const removeDice = () => {
         const newArray = diceList.slice(0, -1)
@@ -35,4 +41,4 @@ function Test() {
 
 }
 
-export default Test;
+export default Dice;

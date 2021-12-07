@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./EachDice.css";
 
+// this displays a single die and rolls the number displayed until the sound
+// stops and then displays the outcome of the roll onto the dice
+
 export default function Dice(props) {
   const [diceNumber, setDiceNumber] = useState(1);
 

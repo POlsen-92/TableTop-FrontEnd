@@ -15,6 +15,10 @@ export default function Race({
 
   const [subraces, setSubRaces] = useState([]);
 
+   // when a race is chosen query the api for subclasses for that race
+  // then store information received into various states
+  // if the menu is moved back to "choose race" reset forms
+
   const fillSubRaces = (e) => {
     setSubraceResponse([]);
     if(document.getElementById("subrace")) {
@@ -50,6 +54,9 @@ export default function Race({
     }
   };
 
+  // when subrace is chosen get the information and store it in state
+  // if "choose sub-race" is chosen reset form
+
   const pickSubRace = (e) => {
     if (e.target.value === "Choose Sub-Race") {
       setCharacterInfo({
@@ -66,10 +73,13 @@ export default function Race({
         .get(`https://www.dnd5eapi.co/api/subraces/${e.target.value}`)
         .then((response) => {
           setSubraceResponse(response.data);
-          console.log(response.data);
         });
     }
   };
+
+   //populate the race dropdown form with the races from the API if they aren't
+  //already - which would happen if user comes back to the form after
+  //already chosing a race 
 
   useEffect(() => {
     axios.get("https://www.dnd5eapi.co/api/races").then((response) => {
@@ -152,7 +162,6 @@ export default function Race({
               <div className="col-sm-12 col-md-8">
                 {apiResponse.ability_bonuses
                   ? apiResponse.ability_bonuses.map((bonus, index) => {
-                      console.log(bonus.ability_score.name);
                       return (
                         <p key={index}>
                           {bonus.ability_score.name}:{bonus.bonus}

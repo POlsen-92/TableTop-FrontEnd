@@ -23,7 +23,6 @@ export default function CharacterView(props) {
 
     useEffect(() =>{
         API.findCharacter(id).then((res)=>{
-            console.log(res);
             setInventory(res.data.Inventories);
             setSpell(res.data.Spells);
             setFeature(res.data.Features);
@@ -117,9 +116,7 @@ export default function CharacterView(props) {
             charisma:chaEdit,
             speed:spdEdit,
         }
-        console.log(charUpdate)
-        console.log(id)
-        API.updateCharacter(charUpdate,id, props.token).then((res) => console.log(res));
+        API.updateCharacter(charUpdate,id, props.token);
         setEditChar(false);
         window.location.reload(false)
     }
@@ -127,8 +124,7 @@ export default function CharacterView(props) {
     const deleteChar = () => {
         if (window.confirm("Do You Really Want to Delete Your Character?")) {
             API.deleteCharacter(id,props.token)
-            .then(res=>{
-                console.log(res.data)
+            .then(()=>{
                 alert("Character has been Deleted")
                 navigate(`/Profile`)
             }).catch((err) => {
@@ -161,17 +157,15 @@ export default function CharacterView(props) {
             script: profScriptEdit,
             typicalSpeakers: profTSEdit,
         }
-        console.log(profUpdate)
-        console.log(profId)
-        API.updateProficiency(profId, profUpdate, props.token).then((res) => console.log(res));
+
+        API.updateProficiency(profId, profUpdate, props.token)
         setEditProf();
         window.location.reload(false)
     }
 
     const deleteProf = (profId) => {
         if (window.confirm("Do You Really Want to Delete This Proficiency?")) {
-            API.deleteProficiency(profId,props.token).then(res=>{
-                console.log(res.data)
+            API.deleteProficiency(profId,props.token).then(()=>{
                 window.location.reload(false)
             }).catch((err) => {
                 console.log(err)
@@ -195,9 +189,7 @@ export default function CharacterView(props) {
             description: featDescEdit,
             type: featTypeEdit,
         }
-        console.log(featUpdate)
-        console.log(featId)
-        API.updateFeature(featId, featUpdate, props.token).then((res) => console.log(res));
+        API.updateFeature(featId, featUpdate, props.token)
         setEditFeat();
         window.location.reload(false)
     }
@@ -205,8 +197,7 @@ export default function CharacterView(props) {
     const deleteFeat = (featId) => {
         if (window.confirm("Do You Really Want to Delete This Feature?")) {
             API.deleteFeature(featId,props.token)
-            .then(res=>{
-                console.log(res.data)
+            .then(()=>{
                 window.location.reload(false)
             }).catch((err) => {
                 console.log(err)
@@ -238,9 +229,7 @@ export default function CharacterView(props) {
             range: spellRngeEdit,
             attack: spellAtkEdit
         }
-        console.log(spellUpdate)
-        console.log(spellId)
-        API.updateSpell(spellId, spellUpdate, props.token).then((res) => console.log(res));
+        API.updateSpell(spellId, spellUpdate, props.token)
         setEditSpell();
         window.location.reload(false)
     }
@@ -248,8 +237,7 @@ export default function CharacterView(props) {
     const deleteSpell = (spellId) => {
         if (window.confirm("Do You Really Want to Delete This Spell?")) {
             API.deleteSpell(spellId,props.token)
-            .then(res=>{
-                console.log(res.data)
+            .then(()=>{
                 window.location.reload(false)
             }).catch((err) => {
                 console.log(err)
@@ -288,9 +276,7 @@ export default function CharacterView(props) {
             strength: equipStrEdit,
             stealth: equipStlEdit,
         }
-        console.log(equipUpdate)
-        console.log(equipId)
-        API.updateEquipment(equipId, equipUpdate, props.token).then((res) => console.log(res));
+        API.updateEquipment(equipId, equipUpdate, props.token)
         setEditEquip();
         window.location.reload(false)
     }
@@ -298,8 +284,7 @@ export default function CharacterView(props) {
     const deleteEquip = (equipId) => {
         if (window.confirm("Do You Really Want to Delete This Item?")) {
             API.deleteEquipment(equipId,props.token)
-            .then(res=>{
-                console.log(res.data)
+            .then(()=>{
                 window.location.reload(false)
             }).catch((err) => {
                 console.log(err)
@@ -316,6 +301,7 @@ export default function CharacterView(props) {
             <div className="container">
                 <div className="row">
                     <div className="col">
+                        {/* CHARACTER NAME AND BUTTONS */}
                         {editChar ? (<input className="row my-2 py-1 h1 inputColor" defaultValue={character.charName} onChange={(e)=>setnameEdit(e.target.value)}/>) : 
                         (<h1 className="row">{character.charName}</h1>)}
                         {(character.user_id === props.userState.id) ? (<button data-tip data-for="catalog" className="col-2 btn my-1 me-1" onClick={addCatalog}>Add to Character</button>) : ""}
@@ -436,6 +422,7 @@ export default function CharacterView(props) {
                                         ) : 
                                         (<span dangerouslySetInnerHTML={{__html: character.personality}}></span>)}</p>
                                     </div>
+                                    {/* CHARACTER ATTRIBUTES */}
                                     <div className="col-4">
                                         <h5 className="py-2">HitPoints: {editChar ? (<input className="row inputColor" defaultValue={character.hitpoints} onChange={(e)=>sethpEdit(e.target.value)}/>) : 
                                         (character.hitpoints)}</h5>

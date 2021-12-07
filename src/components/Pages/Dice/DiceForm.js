@@ -12,6 +12,8 @@ function App() {
   const [rollTotal, setRollTotal] = useState("");
   const [play] = useSound(rollSound);
 
+  // hide further option if none radio button is chosen
+
   const handleRadio = (e) => {
     if (e.target.value === "none") {
       setShowOptionQuantity(false);
@@ -19,6 +21,10 @@ function App() {
       setShowOptionQuantity(true);
     }
   };
+
+  // listens for form submit then builds proper string to use
+  // rpg-dice-roller based off of form answers
+  // additionally sets a random number to rollTotal to appear like dice rolling
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -33,11 +39,9 @@ function App() {
     if (e.target[4].checked) {
       option = "max";
     }
-    console.log(e)
     const roll1 = new DiceRoll(
       e.target[0].value + "d" + e.target[1].value + option + e.target[5].value
     );
-    console.log(roll1)
     setUpdateFormState(roll1);
     let count = 0;
     const moving = setInterval(() => {
@@ -50,10 +54,15 @@ function App() {
     })
   };
 
+  // resets form
+
   const clear = () => {
     setUpdateFormState("");
     setRollTotal("");
   };
+
+  // changes the string of information returned from rpg-dice-roller
+  // into usable numbers
 
   const test = () => {
     if (updateFormState) {
@@ -67,6 +76,8 @@ function App() {
         });
     }
   };
+
+  // places the dice rolling sound
 
   useEffect(() => {
     if (updateFormState) {
@@ -163,15 +174,6 @@ function App() {
             <option value="19">19</option>
             <option value="20">20</option>
         </select>
-            
-            // <input
-            //   type="number"
-            //   id="optionQuantity"
-            //   name="OptionQuantity"
-            //   defaultValue="1"
-            //   min="1"
-            //   max="99"
-            // />
           ) : null}
           <input onClick={clear} type="reset" value="Reset" />
           <input type="submit" value="Submit" />

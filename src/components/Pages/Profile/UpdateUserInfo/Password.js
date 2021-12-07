@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import API from "../../../../utils/API";
-import "bootstrap/dist/css/bootstrap.css";
-import "../Profile.css";
 
 function Password(props) {
   const [updateFormState, setUpdateFormState] = useState({
@@ -9,7 +7,11 @@ function Password(props) {
     confirmPassword: "",
   });
 
+  // for displaying message if passwords don't match
+
   const [errorMsg, setErrorMsg] = useState("");
+
+  // listens for form changes
 
   const handleUpdateChange = (event) => {
     if (event.target.name === "password") {
@@ -24,6 +26,11 @@ function Password(props) {
       });
     }
   };
+
+  // checks that passwords match and that the password is at least 8
+  // characters long; if not displays error message, otherwise
+  // sends info to back end for update and hides form with state from 
+  // profile.js
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +54,7 @@ function Password(props) {
         <section className="col-12" id="campaigns">
           <form onSubmit={handleFormSubmit} className="form">
             <input
-              className="m-1 inputColor"
+              className="m-1"
               value={updateFormState.password}
               name="password"
               type="password"
@@ -55,7 +62,7 @@ function Password(props) {
               placeholder="New Password"
             />
             <input
-              className="m-1 inputColor"
+              className="m-1"
               value={updateFormState.confirmPassword}
               name="confirmPassword"
               type="password"

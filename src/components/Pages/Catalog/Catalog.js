@@ -9,13 +9,12 @@ import "./Catalog.css"
 
 
 export default function Catalog(props) {
-
+// GET INFORMATION ON PAGE LOAD 
     const navigate = useNavigate();
     const { id } = useParams();
 
     useEffect(() =>{
         API.findCharacter(id).then((res)=>{
-            console.log(res)
             setCharacter(res.data)
         })
     },[id])
@@ -26,7 +25,7 @@ export default function Catalog(props) {
         navigate(`/character/${id}`)
     }
 
-    // ~~~~~~~~~~~~~~INVENTORY~~~~~~~~~~~~~~//
+// ~~~~~~~~~~~~~~INVENTORY~~~~~~~~~~~~~~//
     const [equipInputs, setEquipInputs] = useState({
         name: "",
         type: "",
@@ -49,8 +48,7 @@ export default function Catalog(props) {
     const addEquip = (e) => {
         e.preventDefault();
         API.createEquipment(id,equipInputs,props.token)
-         .then((res) => {
-             console.log(res.data)
+         .then(() => {
              window.location.reload(false)
          })
          .catch((err) => {
@@ -58,7 +56,7 @@ export default function Catalog(props) {
          })
     }
 
-    // ~~~~~~~~~~~~~~SPELLS~~~~~~~~~~~~~~//
+// ~~~~~~~~~~~~~~SPELLS~~~~~~~~~~~~~~//
     const [spellInputs, setSpellInputs] = useState({
         name: "",
         type: "",
@@ -78,8 +76,7 @@ export default function Catalog(props) {
     const addSpell = (e) => {
         e.preventDefault();
         API.createSpell(id,spellInputs,props.token)
-        .then((res) => {
-            console.log(res.data)
+        .then(() => {
             window.location.reload(false)
         })
         .catch((err) => {
@@ -87,7 +84,7 @@ export default function Catalog(props) {
         })
     }
 
-    // ~~~~~~~~~~~~~~FEATURES~~~~~~~~~~~~~~//
+// ~~~~~~~~~~~~~~FEATURES~~~~~~~~~~~~~~//
     const [featInputs, setFeatInputs] = useState({
         name: "",
         type: "",
@@ -103,8 +100,7 @@ export default function Catalog(props) {
     const addFeat = (e) => {
         e.preventDefault();
         API.createFeature(id,featInputs,props.token)
-        .then((res) => {
-            console.log(res.data)
+        .then(() => {
             window.location.reload(false)
         })
         .catch((err) => {
@@ -112,7 +108,7 @@ export default function Catalog(props) {
         })
     }
 
-    // ~~~~~~~~~~~~~~PROFICIENCIES~~~~~~~~~~~~~~//
+// ~~~~~~~~~~~~~~PROFICIENCIES~~~~~~~~~~~~~~//
     const [profInputs, setProfInputs] = useState({
         name: "",
         type: "",
@@ -132,8 +128,7 @@ export default function Catalog(props) {
     const addProf = (e) => {
         e.preventDefault();
         API.createNewProficiency(id,profInputs,props.token)
-        .then((res) => {
-            console.log(res.data)
+        .then(() => {
             window.location.reload(false)
         })
         .catch((err) => {
@@ -154,6 +149,7 @@ export default function Catalog(props) {
                             <Tab>Proficiency</Tab>
                         </TabList>
                         <TabPanel>
+                            {/* EQUIPMENT TAB */}
                             <form onSubmit={addEquip}>
                                 <label className="mx-2">Name
                                 <br /><input
@@ -238,7 +234,7 @@ export default function Catalog(props) {
                                 </label><br />
                                 <label className="mx-2">Description
                                 <br /><textarea
-                                    className="inputColor"
+                                    className="inputColor w-100"
                                     name="description"
                                     type="text"
                                     defaultValue=""
@@ -308,7 +304,7 @@ export default function Catalog(props) {
                                 </label><br />
                                 <label className="mx-2">Description
                                 <br /><textarea
-                                    className="inputColor"
+                                    className="inputColor w-100"
                                     type="text" 
                                     name="description"
                                     defaultValue={spellInputs.description || ""}
