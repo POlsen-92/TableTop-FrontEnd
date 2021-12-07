@@ -1,3 +1,5 @@
+// obtained from somerwhere deep, deep, DEEP, in the dungeon of the internet; can't remember where
+
 /**
  * @file A fantasy name generator library.
  * @version 1.0.0

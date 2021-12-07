@@ -3,6 +3,9 @@ import "./Gandalf.css";
 
 export default function Gandalf() {
 
+  // animated css creation modified from original
+  // code at https://codepen.io/anjanas_dh/pen/ZMqKwb
+
   return (
     <>
       <div className="gandalf">

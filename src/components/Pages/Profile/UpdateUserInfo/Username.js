@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import API from "../../../../utils/API";
-import "bootstrap/dist/css/bootstrap.css";
-import "../Profile.css";
+import API from "../../../utils/API";
 
 function Username(props) {
   const [updateFormState, setUpdateFormState] = useState("");
 
+  // listens for form changes
+
   const handleUpdateChange = (event) => {
     setUpdateFormState(event.target.value);
   }
+
+  // sends information to backend for update and hides form 
+  // with state from profile.js
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -23,7 +26,7 @@ function Username(props) {
       <div className="row text-center">
         <section className="col-12" id="campaigns">
           <form onSubmit={handleFormSubmit} className="form">
-            <input className="m-1 inputColor" id="username-signup"
+            <input className="m-1" id="username-signup"
               value={updateFormState}
               name="username"
               onChange={handleUpdateChange}
