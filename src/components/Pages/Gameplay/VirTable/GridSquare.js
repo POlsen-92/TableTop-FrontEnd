@@ -4,10 +4,10 @@ import { ItemTypes } from '../Gameboard/ItemTypes';
 import { Overlay, OverlayType } from '../Gameboard/Overlay';
 
 export const GridSquare = ({ x, y,tokens,dragHandler, children}) => { 
-    // tokens are appearing here    
-    // console.log(tokens) 
+    // HANDLE THE DROPPING OF DRAGGABLE ITEMS
     const [{isOver }, drop] = useDrop(() => ({
         accept: ItemTypes.TOKEN,
+        // FUNCTION RUNS WHEN A DRAGGABLE ITEM IS DROPPED
         drop: (item,monitor) => dragHandler(tokens,item,x,y),
          collect: (monitor) => ({
              isOver: !!monitor.isOver(),
@@ -21,8 +21,6 @@ export const GridSquare = ({ x, y,tokens,dragHandler, children}) => {
         height: '100%',
     }}>
         <Square >{children}</Square>
-        {/* {isOver && !canDrop && <Overlay type={OverlayType.IllegalMoveHover} />} */}
-         {/* {!isOver && <Overlay type={OverlayType.PossibleMove} />} */}
         {isOver && <Overlay type={OverlayType.LegalMoveHover} />}
     </div>);
 };
