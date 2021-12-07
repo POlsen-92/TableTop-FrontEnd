@@ -1,3 +1,7 @@
+ /* animated css creation modified from original */
+ /* code at https://codepen.io/anjanas_dh/pen/ZMqKwb */
+
+
 @keyframes floating {
   to {
     top: 33%;
