@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { GridSquare } from './GridSquare';
 import { Slot } from './Slot';
-import Token from './Token';
 import API from '../../../../utils/API';
 
 const tableStyle = {
